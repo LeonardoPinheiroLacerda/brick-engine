@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 3">
+
+    <rect
+        x="0"
+        y="0"
+        width="3"
+        height="3"
+        fill="rgb(172, 189, 173)"
+    />
+
+    <rect
+        x="0.3"
+        y="0.3"
+        width="2.5"
+        height="2.5"
+        stroke="rgb(161, 178, 160)"
+        stroke-width=".2"
+        fill="none"
+    />
+
+    <rect
+        x=".8"
+        y=".8"
+        width="1.5"
+        height="1.5"
+        fill="rgb(161, 178, 160)"
+    />
+
+</svg>
