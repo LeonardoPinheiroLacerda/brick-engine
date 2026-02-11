@@ -1,5 +1,7 @@
 import P5 from 'p5';
 
+import { SPLASH_SELECTOR } from '../constants';
+
 import applyColors from './theme/applyColors';
 import dimensions from './theme/dimensions';
 
@@ -111,7 +113,11 @@ export default class GameView {
         //Action button
         this.actionBtn       = BigButton(this.p, largeButtonContainer      , 'Action');
 
+        //Set dimensions
         dimensions(width, height, canvasWidth, canvasHeight);
+
+        //Hide splash screen
+        this.hideSplash();
 
         return { canvas, canvasWidth, canvasHeight };
     }
@@ -220,5 +226,17 @@ export default class GameView {
             clearTimeout(delayTimer);
             clearTimeout(holdTimer);
         });
+    }
+
+    /**
+     * Helper method to hide the splash screen after a delay.
+     *
+     * @param delay - The delay in milliseconds before hiding the splash screen.
+     */
+    private hideSplash(delay = 250) {
+        const splash: HTMLDivElement = document.querySelector(SPLASH_SELECTOR);
+        setTimeout(() => {
+            splash.style.display = 'none';
+        }, delay);
     }
 }
