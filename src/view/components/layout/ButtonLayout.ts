@@ -1,6 +1,29 @@
 import P5 from 'p5';
 
-export default function ButtonContainers(p: P5, container: P5.Element) {
+interface ButtonLayoutResponse {
+    smallButtonContainer: P5.Element;
+    mediumButtonContainer: P5.Element;
+    largeButtonContainer: P5.Element;
+    directionVerticalContainer: P5.Element;
+    directionHorizontalContainer: P5.Element;
+}
+
+/**
+ * Creates and organizes the layout containers for game control buttons.
+ *
+ * It constructs a hierarchy of div elements to separate small system buttons,
+ * inner group buttons, and directional pads.
+ *
+ * @param {P5} p - The P5 instance.
+ * @param {P5.Element} container - The parent container element.
+ * @returns {ButtonLayoutResponse} Object containing the button containers.
+ *  - smallButtonContainer: For system buttons (Reset, Sound, etc.).
+ *  - mediumButtonContainer: For direction controls.
+ *  - largeButtonContainer: For the main action button.
+ *  - directionVerticalContainer: For Up/Down buttons.
+ *  - directionHorizontalContainer: For Left/Right buttons.
+ */
+export default function ButtonLayout(p: P5, container: P5.Element): ButtonLayoutResponse {
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);
     buttonContainer.id('button-container');

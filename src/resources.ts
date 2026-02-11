@@ -1,9 +1,5 @@
 // Dynamically import all CSS files from public/style
-const styleContext = (require as any).context(
-    '../public/style',
-    false,
-    /\.css$/,
-);
+const styleContext = (require as any).context('../public/style', false, /\.css$/);
 styleContext.keys().forEach(styleContext);
 
 // // Dynamically import all WAV files from public/sounds

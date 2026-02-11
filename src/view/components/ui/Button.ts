@@ -1,5 +1,15 @@
 import P5 from 'p5';
 
+/**
+ * Creates a standard directional button.
+ *
+ * These buttons are used for the D-pad controls (Up, Down, Left, Right).
+ *
+ * @param {P5} p - The P5 instance.
+ * @param {P5.Element} container - The container element to attach the button to.
+ * @param {string} label - The text label for the button.
+ * @returns {P5.Element} The created button element.
+ */
 export default function Button(p: P5, container: P5.Element, label: string) {
     //Container
     const buttonContainer = p.createDiv();
