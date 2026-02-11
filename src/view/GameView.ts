@@ -1,6 +1,6 @@
 import P5 from 'p5';
 
-import { configs } from '../config/configs';
+import configs from '../config/configs';
 
 import applyColors from './theme/applyColors';
 import dimensions from './theme/dimensions';
@@ -14,6 +14,8 @@ import Button from './components/ui/Button';
 import Canvas from './components/ui/Canvas';
 import SmallButton from './components/ui/SmallButton';
 
+import Game from '../core/Game';
+
 // prettier-ignore
 /**
  * Responsible for rendering the game body and handling control events.
@@ -24,36 +26,36 @@ import SmallButton from './components/ui/SmallButton';
  * @class
  */
 export default class GameView {
-    private onOffBtn         : P5.Element;
-    private startPauseBtn    : P5.Element;
-    private soundBtn         : P5.Element;
-    private resetBtn         : P5.Element;
-    private exitBtn          : P5.Element;
-    private enableColorBtn   : P5.Element;
+    private _onOffBtn         : P5.Element;
+    private _startPauseBtn    : P5.Element;
+    private _soundBtn         : P5.Element;
+    private _resetBtn         : P5.Element;
+    private _exitBtn          : P5.Element;
+    private _enableColorBtn   : P5.Element;
 
-    private upBtn            : P5.Element;
-    private downBtn          : P5.Element;
-    private rightBtn         : P5.Element;
-    private leftBtn          : P5.Element;
+    private _upBtn            : P5.Element;
+    private _downBtn          : P5.Element;
+    private _rightBtn         : P5.Element;
+    private _leftBtn          : P5.Element;
 
-    private actionBtn        : P5.Element;
+    private _actionBtn        : P5.Element;
 
-    private pressOnOff       : (game: any) => void;
-    private pressStartPause  : (game: any) => void;
-    private pressSound       : (game: any) => void;
-    private pressReset       : (game: any) => void;
-    private pressExit        : (game: any) => void;
-    private pressEnableColor : (game: any) => void;
+    private _pressOnOff       : (game: Game) => void;
+    private _pressStartPause  : (game: Game) => void;
+    private _pressSound       : (game: Game) => void;
+    private _pressReset       : (game: Game) => void;
+    private _pressExit        : (game: Game) => void;
+    private _pressEnableColor : (game: Game) => void;
 
-    private pressUp          : (game: any) => void;
-    private pressDown        : (game: any) => void;
-    private pressRight       : (game: any) => void;
-    private pressLeft        : (game: any) => void;
+    private _pressUp          : (game: Game) => void;
+    private _pressDown        : (game: Game) => void;
+    private _pressRight       : (game: Game) => void;
+    private _pressLeft        : (game: Game) => void;
 
-    private pressAction      : (game: any) => void;
+    private _pressAction      : (game: Game) => void;
 
-    private parent           : HTMLElement;
-    private p                : P5;
+    private _parent           : HTMLElement;
+    private _p                : P5;
 
     /**
      * Creates an instance of GameView.
@@ -62,8 +64,8 @@ export default class GameView {
      * @param parent - The DOM element where the game view will be attached.
      */
     constructor(p: P5, parent: HTMLElement) {
-        this.parent = parent;
-        this.p = p;
+        this._parent = parent;
+        this._p = p;
     }
 
     /**
@@ -80,13 +82,13 @@ export default class GameView {
         applyColors();
 
         //Container
-        const { container, height, width } = ContainerLayout(this.p, this.parent);
+        const { container, height, width } = ContainerLayout(this._p, this._parent);
 
         //Frame
-        const frame = FrameLayout(this.p, container);
+        const frame = FrameLayout(this._p, container);
 
         //Canvas
-        const { canvas, canvasHeight, canvasWidth } = Canvas(this.p, frame, width);
+        const { canvas, canvasHeight, canvasWidth } = Canvas(this._p, frame, width);
 
         //Buttons
         const {
@@ -94,24 +96,24 @@ export default class GameView {
             smallButtonContainer,
             directionHorizontalContainer,
             directionVerticalContainer,
-        } = ButtonLayout(this.p, container);
+        } = ButtonLayout(this._p, container);
 
         //System buttons
-        this.onOffBtn        = SmallButton(this.p, smallButtonContainer    , 'On<br/>Off'        , true);
-        this.startPauseBtn   = SmallButton(this.p, smallButtonContainer    , 'Start<br/>Pause'   , false);
-        this.soundBtn        = SmallButton(this.p, smallButtonContainer    , 'Sound'             , true);
-        this.resetBtn        = SmallButton(this.p, smallButtonContainer    , 'Reset'             , false);
-        this.exitBtn         = SmallButton(this.p, smallButtonContainer    , 'Exit'              , true);
-        this.enableColorBtn  = SmallButton(this.p, smallButtonContainer    , 'Enable<br/>Colors' , false);
+        this._onOffBtn        = SmallButton(this._p, smallButtonContainer    , 'On<br/>Off'        , true);
+        this._startPauseBtn   = SmallButton(this._p, smallButtonContainer    , 'Start<br/>Pause'   , false);
+        this._soundBtn        = SmallButton(this._p, smallButtonContainer    , 'Sound'             , true);
+        this._resetBtn        = SmallButton(this._p, smallButtonContainer    , 'Reset'             , false);
+        this._exitBtn         = SmallButton(this._p, smallButtonContainer    , 'Exit'              , true);
+        this._enableColorBtn  = SmallButton(this._p, smallButtonContainer    , 'Enable<br/>Colors' , false);
 
         //Direction buttons
-        this.upBtn           = Button(this.p, directionVerticalContainer   , 'UP');
-        this.leftBtn         = Button(this.p, directionHorizontalContainer , 'LEFT');
-        this.downBtn         = Button(this.p, directionVerticalContainer   , 'DOWN');
-        this.rightBtn        = Button(this.p, directionHorizontalContainer , 'RIGHT');
+        this._upBtn           = Button(this._p, directionVerticalContainer   , 'UP');
+        this._leftBtn         = Button(this._p, directionHorizontalContainer , 'LEFT');
+        this._downBtn         = Button(this._p, directionVerticalContainer   , 'DOWN');
+        this._rightBtn        = Button(this._p, directionHorizontalContainer , 'RIGHT');
 
         //Action button
-        this.actionBtn       = BigButton(this.p, largeButtonContainer      , 'Action');
+        this._actionBtn       = BigButton(this._p, largeButtonContainer      , 'Action');
 
         //Set dimensions
         dimensions(width, height, canvasWidth, canvasHeight);
@@ -129,40 +131,40 @@ export default class GameView {
      *
      * @param game - The game instance containing the control logic and state methods.
      */
-    bound(game: any) {
+    bound(game: Game) {
 
         // Attach events
-        this.pressOnOff        = game.gameControls.pressOnOff;
-        this.pressStartPause   = game.gameControls.pressStartPause;
-        this.pressSound        = game.gameControls.pressSound;
-        this.pressReset        = game.gameControls.pressReset;
-        this.pressExit         = game.gameControls.pressExit;
-        this.pressEnableColor  = game.gameControls.pressEnableColor;
-        this.pressUp           = game.gameControls.pressUp;
-        this.pressDown         = game.gameControls.pressDown;
-        this.pressRight        = game.gameControls.pressRight;
-        this.pressLeft         = game.gameControls.pressLeft;
-        this.pressAction       = game.gameControls.pressAction;
+        this._pressOnOff        = game.gameControls.pressOnOff;
+        this._pressStartPause   = game.gameControls.pressStartPause;
+        this._pressSound        = game.gameControls.pressSound;
+        this._pressReset        = game.gameControls.pressReset;
+        this._pressExit         = game.gameControls.pressExit;
+        this._pressEnableColor  = game.gameControls.pressEnableColor;
+        this._pressUp           = game.gameControls.pressUp;
+        this._pressDown         = game.gameControls.pressDown;
+        this._pressRight        = game.gameControls.pressRight;
+        this._pressLeft         = game.gameControls.pressLeft;
+        this._pressAction       = game.gameControls.pressAction;
 
         //Click
-        this.onOffBtn.mouseClicked(()       => this.pressOnOff(game));
-        this.startPauseBtn.mouseClicked(()  => this.pressStartPause(game));
-        this.soundBtn.mouseClicked(()       => this.pressSound(game));
-        this.resetBtn.mouseClicked(()       => this.pressReset(game));
-        this.exitBtn.mouseClicked(()        => this.pressExit(game));
-        this.enableColorBtn.mouseClicked(() => this.pressEnableColor(game));
-        this.upBtn.mouseClicked(()          => this.pressUp(game));
-        this.downBtn.mouseClicked(()        => this.pressDown(game));
-        this.rightBtn.mouseClicked(()       => this.pressRight(game));
-        this.leftBtn.mouseClicked(()        => this.pressLeft(game));
-        this.actionBtn.mouseClicked(()      => this.pressAction(game));
+        this._onOffBtn.mouseClicked(()       => this._pressOnOff(game));
+        this._startPauseBtn.mouseClicked(()  => this._pressStartPause(game));
+        this._soundBtn.mouseClicked(()       => this._pressSound(game));
+        this._resetBtn.mouseClicked(()       => this._pressReset(game));
+        this._exitBtn.mouseClicked(()        => this._pressExit(game));
+        this._enableColorBtn.mouseClicked(() => this._pressEnableColor(game));
+        this._upBtn.mouseClicked(()          => this._pressUp(game));
+        this._downBtn.mouseClicked(()        => this._pressDown(game));
+        this._rightBtn.mouseClicked(()       => this._pressRight(game));
+        this._leftBtn.mouseClicked(()        => this._pressLeft(game));
+        this._actionBtn.mouseClicked(()      => this._pressAction(game));
 
         //On hold
-        this.bindHoldAction(this.upBtn       , () => this.pressUp(game));
-        this.bindHoldAction(this.downBtn     , () => this.pressDown(game));
-        this.bindHoldAction(this.rightBtn    , () => this.pressRight(game));
-        this.bindHoldAction(this.leftBtn     , () => this.pressLeft(game));
-        this.bindHoldAction(this.actionBtn   , () => this.pressAction(game));
+        this.bindHoldAction(this._upBtn       , () => this._pressUp(game));
+        this.bindHoldAction(this._downBtn     , () => this._pressDown(game));
+        this.bindHoldAction(this._rightBtn    , () => this._pressRight(game));
+        this.bindHoldAction(this._leftBtn     , () => this._pressLeft(game));
+        this.bindHoldAction(this._actionBtn   , () => this._pressAction(game));
     }
 
     /**
@@ -172,34 +174,34 @@ export default class GameView {
      * (e.g., when the game is paused or stopped).
      */
     unbound() {
-        this.onOffBtn.mouseClicked(()        => {});
-        this.startPauseBtn.mouseClicked(()   => {});
-        this.soundBtn.mouseClicked(()        => {});
-        this.resetBtn.mouseClicked(()        => {});
-        this.exitBtn.mouseClicked(()         => {});
-        this.enableColorBtn.mouseClicked(()  => {});
+        this._onOffBtn.mouseClicked(()        => {});
+        this._startPauseBtn.mouseClicked(()   => {});
+        this._soundBtn.mouseClicked(()        => {});
+        this._resetBtn.mouseClicked(()        => {});
+        this._exitBtn.mouseClicked(()         => {});
+        this._enableColorBtn.mouseClicked(()  => {});
 
-        this.upBtn.mouseClicked(()           => {});
-        this.downBtn.mouseClicked(()         => {});
-        this.rightBtn.mouseClicked(()        => {});
-        this.leftBtn.mouseClicked(()         => {});
+        this._upBtn.mouseClicked(()           => {});
+        this._downBtn.mouseClicked(()         => {});
+        this._rightBtn.mouseClicked(()        => {});
+        this._leftBtn.mouseClicked(()         => {});
 
-        this.actionBtn.mouseClicked(()       => {});
+        this._actionBtn.mouseClicked(()       => {});
 
-        this.upBtn.mousePressed(()           => {});
-        this.upBtn.mouseReleased(()          => {});
+        this._upBtn.mousePressed(()           => {});
+        this._upBtn.mouseReleased(()          => {});
 
-        this.downBtn.mousePressed(()         => {});
-        this.downBtn.mouseReleased(()        => {});
+        this._downBtn.mousePressed(()         => {});
+        this._downBtn.mouseReleased(()        => {});
 
-        this.rightBtn.mousePressed(()        => {});
-        this.rightBtn.mouseReleased(()       => {});
+        this._rightBtn.mousePressed(()        => {});
+        this._rightBtn.mouseReleased(()       => {});
 
-        this.leftBtn.mousePressed(()         => {});
-        this.leftBtn.mouseReleased(()        => {});
+        this._leftBtn.mousePressed(()         => {});
+        this._leftBtn.mouseReleased(()        => {});
 
-        this.actionBtn.mousePressed(()       => {});
-        this.actionBtn.mouseReleased(()      => {});
+        this._actionBtn.mousePressed(()       => {});
+        this._actionBtn.mouseReleased(()      => {});
     }
 
     /**

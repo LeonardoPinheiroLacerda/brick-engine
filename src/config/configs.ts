@@ -1,12 +1,12 @@
-export const configs = {
+export default {
     /** Colors used for styling the game interface. */
     colors: {
         /** Primary background color for the game screen. */
         background: 'rgb(172, 189, 173)',
-        /** Standard font color for active text. */
-        font: 'rgb(19, 26, 18)',
-        /** Font color for inactive/turned-off elements. */
-        mutedFont: 'rgb(161, 178, 160)',
+        /** Active Font/Cell color. */
+        active: 'rgb(19, 26, 18)',
+        /** Inactive Font/Cell color. */
+        inactive: 'rgba(161, 178, 160, 1)',
 
         /** Main theme color for the game device body. */
         bodyMain: 'rgb(0, 68, 187)',
@@ -30,7 +30,9 @@ export const configs = {
         /** Logical display settings within the container. */
         display: {
             width: 0.65,
+            height: 0.95,
             margin: 0.025,
+            borderWeight: 0.0075,
         },
 
         /** Predefined font scale factors relative to container size. */
@@ -44,8 +46,8 @@ export const configs = {
 
         /** Sizing and spacing for individual grid cells. */
         cell: {
-            outerMargin: 0.1,
-            innerMargin: 0.3,
+            margin: 0.1,
+            padding: 0.3,
             strokeWeight: 0.075,
         },
     },

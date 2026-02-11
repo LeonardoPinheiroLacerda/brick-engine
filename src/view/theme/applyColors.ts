@@ -1,6 +1,6 @@
 import { colord } from 'colord';
 
-import { configs } from '../../config/configs';
+import configs from '../../config/configs';
 
 // prettier-ignore
 /**

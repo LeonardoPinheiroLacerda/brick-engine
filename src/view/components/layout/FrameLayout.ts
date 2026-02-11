@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { configs } from '../../../config/configs';
+import configs from '../../../config/configs';
 
 /**
  * Creates the decorative frame for the game.

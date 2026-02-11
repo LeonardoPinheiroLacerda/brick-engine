@@ -1,6 +1,6 @@
 import P5 from 'p5';
 
-import { configs } from '../../../config/configs';
+import configs from '../../../config/configs';
 
 /**
  * Response object containing canvas dimensions and element reference.
@@ -22,11 +22,7 @@ interface CanvasResponse {
  * @param {number} width - The width of the outer container, used to calculate canvas dimensions with `configs.viewLayout.canvas.widthRatio`.
  * @returns {CanvasResponse} Object containing the canvas element and its calculated dimensions.
  */
-export default function Canvas(
-    p: P5,
-    container: P5.Element,
-    width: number,
-): CanvasResponse {
+export default function Canvas(p: P5, container: P5.Element, width: number): CanvasResponse {
     const canvasWidth = width * configs.viewLayout.canvas.widthRatio;
     const canvasHeight = canvasWidth * configs.viewLayout.canvas.aspectRatio;
 

@@ -1,4 +1,4 @@
-import { configs } from '../../config/configs';
+import configs from '../../config/configs';
 
 // prettier-ignore
 /**

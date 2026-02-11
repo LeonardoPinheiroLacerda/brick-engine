@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { configs } from '../../../config/configs';
+import configs from '../../../config/configs';
 
 /**
  * Response object containing container dimensions and element reference.
@@ -22,10 +22,7 @@ interface ContainerResponse {
  * @param {HTMLElement} parent - The DOM element where the container will be appended.
  * @returns {ContainerResponse} Object containing the container element and its calculated width/height.
  */
-export default function ContainerLayout(
-    p: P5,
-    parent: HTMLElement,
-): ContainerResponse {
+export default function ContainerLayout(p: P5, parent: HTMLElement): ContainerResponse {
     const container = p.createDiv();
     container.parent(configs.selectors.parent);
     container.id(configs.selectors.viewElementIds.container);
@@ -41,9 +38,7 @@ export default function ContainerLayout(
     }
 
     // Calcula a largura máxima baseada na altura disponível
-    const maxHeightWidth =
-        parent.clientHeight /
-        (configs.viewLayout.bodyHeightWidthMultiplier * 1.05);
+    const maxHeightWidth = parent.clientHeight / (configs.viewLayout.bodyHeightWidthMultiplier * 1.05);
 
     // A largura final é o menor valor entre a largura disponível e a largura limitada pela altura
     width = Math.min(parent.clientWidth, maxHeightWidth);
