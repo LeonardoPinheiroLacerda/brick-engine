@@ -1,0 +1,160 @@
+#session-modal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#session-modal.invisible {
+    display: none;
+}
+
+#session-modal > div {
+    position: relative;
+
+    width: 70%;
+    max-width: 35em;
+    height: 16rem;
+    background-color: var(--main-color);
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    display: flex;
+    justify-content: center;
+    padding: 2rem 2rem 1rem 2rem;
+    flex-direction: column;
+
+    box-shadow:
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) black,
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
+}
+
+#session-modal-display {
+    width: 100%;
+    height: 60%;
+    border: var(--border);
+    background-color: rgb(172, 189, 173);
+    display: flex;
+    align-items: center;
+
+    box-shadow:
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow-reflexion);
+}
+
+#session-modal-display > p {
+    font-family: 'retro-gamming';
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    margin: 1rem;
+}
+
+#session-modal-buttons {
+    width: 100%;
+    height: 40%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+}
+
+#session-modal-buttons > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--button-color);
+    width: 10rem;
+    height: 3rem;
+    margin: 1rem;
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    font-family: 'retro-gamming';
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    user-select: none;
+    outline: none;
+
+    transition-property: transform box-shadow;
+    transition-duration: var(--button-animation-duration);
+
+    -webkit-tap-highlight-color: transparent;
+
+    box-shadow:
+        calc(var(--width) * -0.0075) calc(var(--width) * 0.0075) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.0075) calc(var(--width) * 0.0075) var(--dispersion) var(--button-color-reflexion) inset;
+}
+
+#session-modal-buttons > button:active {
+    box-shadow:
+        calc(var(--width) * -0.002) calc(var(--width) * 0.002) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.0015) calc(var(--width) * 0.0015) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translateX(calc(var(--width) * -0.0025)) translateY(calc(var(--width) * 0.0025));
+}
+
+@media only screen and (max-width: 600px) {
+    #session-modal-display > p {
+        font-size: 1.5rem;
+        line-height: 1.5rem;
+    }
+
+    #session-modal-display {
+        background-size: 7.5% !important;
+    }
+
+    #session-modal-display {
+        box-shadow:
+            calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow),
+            calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow-reflexion);
+    }
+
+    #session-modal > div {
+        position: relative;
+
+        width: 80%;
+
+        display: flex;
+        justify-content: center;
+        padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+        flex-direction: column;
+
+        box-shadow:
+            calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) black,
+            calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
+            calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow) inset;
+    }
+
+    #session-modal-buttons > button {
+        box-shadow:
+            calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) var(--color-shadow),
+            calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+    }
+
+    #session-modal-buttons > button:active {
+        box-shadow:
+            calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--color-shadow),
+            calc(var(--width) * -0.003) calc(var(--width) * 0.003) var(--dispersion) var(--button-color-reflexion) inset;
+        transform: translateX(calc(var(--width) * -0.005)) translateY(calc(var(--width) * 0.005));
+    }
+
+    #session-modal-buttons {
+        justify-content: center;
+        align-items: center;
+    }
+}

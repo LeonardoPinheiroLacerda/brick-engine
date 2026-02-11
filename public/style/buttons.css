@@ -1,0 +1,233 @@
+/* BUTTONS */
+
+.sm-btn,
+.btn,
+.lg-btn {
+    z-index: 999;
+}
+
+.sm-btn {
+    box-shadow:
+        calc(var(--width) * -0.0075) calc(var(--width) * 0.0075) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--button-color-reflexion) inset;
+}
+
+.sm-btn:active {
+    box-shadow:
+        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translateX(calc(var(--width) * -0.0025)) translateY(calc(var(--width) * 0.0025));
+}
+
+.btn {
+    box-shadow:
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+}
+
+.btn:active {
+    box-shadow:
+        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translateX(calc(var(--width) * -0.005)) translateY(calc(var(--width) * 0.005));
+}
+
+.lg-btn {
+    box-shadow:
+        calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+}
+
+.lg-btn:active {
+    box-shadow:
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translateX(calc(var(--width) * -0.0075)) translateY(calc(var(--width) * 0.0075));
+}
+
+.sm-btn-p,
+.btn-p,
+.lg-btn-p {
+    font-family: 'retro-gamming';
+    color: white;
+    text-align: center;
+
+    user-select: none;
+}
+
+.sm-btn-container,
+.btn-container,
+.lg-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sm-btn,
+.btn,
+.lg-btn {
+    outline: none;
+
+    border-radius: 50%;
+    border: var(--button-border);
+
+    transition-property: transform box-shadow;
+    transition-duration: var(--button-animation-duration);
+
+    background-color: var(--button-color);
+}
+
+.sm-btn-container {
+    flex-direction: column;
+}
+
+.sm-btn {
+    width: var(--sm-button-size);
+    height: var(--sm-button-size);
+}
+
+.sm-btn-p {
+    font-family: 'retro-gamming';
+    color: white;
+    text-align: center;
+
+    user-select: none;
+
+    font-size: calc(var(--width) * 0.03);
+
+    /* width: calc(var(--width) * 0.08); */
+    margin-top: calc(var(--width) * 0.01);
+
+    line-height: calc(var(--width) * 0.03);
+    height: calc(var(--width) * 0.06);
+
+    text-shadow:
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) 0 var(--color-shadow),
+        calc(var(--width) * 0.002) calc(var(--width) * -0.002) 0 var(--color-shadow-reflexion);
+}
+
+.btn-container {
+    flex-direction: column-reverse;
+}
+
+.btn {
+    width: var(--button-size);
+    height: var(--button-size);
+}
+
+.btn-p {
+    font-weight: bold;
+    font-size: calc(var(--width) * 0.04);
+    margin-bottom: calc(var(--width) * 0.015);
+    line-height: calc(var(--width) * 0.03);
+}
+
+.lg-btn-container {
+    flex-direction: column;
+}
+
+.lg-btn {
+    width: var(--lg-button-size);
+    height: var(--lg-button-size);
+}
+
+.lg-btn-p {
+    font-weight: bold;
+    font-size: calc(var(--width) * 0.05);
+    margin-bottom: calc(var(--width) * 0.015);
+    line-height: calc(var(--width) * 0.03);
+}
+
+.btn,
+.lg-btn {
+    font-family: 'retro-gamming';
+    font-size: calc(var(--width) * 0.045);
+    font-weight: bold;
+    color: white;
+    text-shadow:
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) 0 var(--button-color-shadow),
+        calc(var(--width) * 0.002) calc(var(--width) * -0.002) 0 var(--button-color-reflexion);
+}
+
+/* BUTTON CONTAINERS */
+
+#button-container,
+#small-button-container,
+#inner-button-container,
+#medium-button-container,
+#large-button-container {
+    width: 100%;
+    height: auto;
+}
+
+#button-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+#small-button-container {
+    display: flex;
+    flex-grow: 0.1;
+    justify-content: space-evenly;
+
+    max-height: 150px;
+
+    position: relative;
+}
+
+.sm-btn-container-top {
+    position: relative;
+    top: -20%;
+}
+
+.sm-btn-container-bottom {
+    position: relative;
+    bottom: -20%;
+}
+
+#inner-button-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+#medium-button-container {
+    display: flex;
+    flex-shrink: 1;
+
+    position: relative;
+}
+
+#large-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 1.5;
+}
+
+#direction-vertical-container,
+#direction-horizontal-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: calc(var(--width) * 0.115);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#direction-vertical-container {
+    flex-direction: column;
+}
+
+#direction-horizontal-container {
+    flex-direction: row;
+}

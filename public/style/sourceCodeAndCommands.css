@@ -1,0 +1,74 @@
+#source-code {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+#controls {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+}
+
+#source-code,
+#controls {
+    background-color: var(--main-color);
+    padding: 0.75rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+#source-code > #source-code-button,
+#controls > #controls-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#source-code > #source-code-button > img,
+#controls > #controls-button > img {
+    width: 2.5rem;
+    filter: invert();
+}
+#source-code:hover,
+#controls:hover {
+    background-color: var(--color-shadow-reflexion);
+}
+#source-code:active,
+#controls:active {
+    filter: brightness(1.15);
+}
+
+#source-code::after,
+#controls::after {
+    font-family: 'retro-gamming';
+    padding: 0.5rem;
+    width: 6rem;
+    background-color: white;
+    text-align: center;
+    border-radius: 0.25rem;
+    border: 1px black solid;
+    box-shadow: 0.25rem 0.25rem black;
+    opacity: 0;
+    transition: 0.25s opacity;
+}
+
+#source-code:hover::after,
+#controls:hover::after {
+    opacity: 1;
+}
+
+#source-code::after {
+    content: 'source code';
+    position: absolute;
+    top: 75px;
+    left: -65px;
+}
+
+#controls::after {
+    content: 'Controls';
+    position: absolute;
+    top: 75px;
+    left: 15px;
+}

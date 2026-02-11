@@ -1,0 +1,137 @@
+@font-face {
+    font-family: retro-gamming;
+    src: url(./../fonts/digital-7.monoitalic.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    user-select: none;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgb(0, 158, 247);
+    background: linear-gradient(300deg, rgb(48, 179, 255) 0%, rgba(0, 158, 247, 1) 100%);
+}
+
+#version {
+    font-family: 'retro-gamming';
+    font-size: 1rem;
+    color: white;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+    #source-code,
+    #controls {
+        display: none;
+    }
+
+    body,
+    #container {
+        width: 100% !important;
+        height: 100vh !important;
+        /* height: 100dvh !important; */
+        border-radius: 0px !important;
+    }
+
+    #frame > canvas {
+        width: 85% !important;
+        height: auto !important;
+        aspect-ratio: 9/10 !important;
+    }
+
+    #frame {
+        width: 85% !important;
+        padding: 7.5%¨ !important;
+    }
+
+    #small-button-container {
+        margin-top: 3.5%;
+    }
+    #direction-vertical-container,
+    #direction-horizontal-container {
+        gap: calc(var(--width) * 0.13);
+    }
+
+    #large-button-container {
+        flex-shrink: 1.75;
+    }
+
+    .sm-btn {
+        width: var(--sm-button-size-mobile) !important;
+        height: var(--sm-button-size-mobile) !important;
+    }
+
+    .btn {
+        width: var(--button-size-mobile) !important;
+        height: var(--button-size-mobile) !important;
+        margin: var(--button-size-mobile-spacing) !important;
+        font-size: var(--button-size-mobile-font-size) !important;
+    }
+
+    .lg-btn {
+        width: var(--lg-button-size-mobile) !important;
+        height: var(--lg-button-size-mobile) !important;
+        font-size: var(--lg-button-size-mobile-font-size) !important;
+    }
+
+    .sm-btn-p {
+        font-size: var(--sm-button-size-mobile-font-size) !important;
+        line-height: var(--sm-button-size-mobile-line-height) !important;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    #wasd {
+        width: 10.5rem !important;
+    }
+
+    .key {
+        width: 3rem !important;
+    }
+
+    .key-description {
+        font-size: 1.5rem !important;
+    }
+
+    .command {
+        gap: 0.5rem !important;
+    }
+}
+
+@media only screen and (max-width: 815px) {
+    #controls-tutorial {
+        gap: 0rem;
+        flex-direction: column !important;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .key-description {
+        font-size: 1.2rem !important;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    #wasd {
+        width: 9rem !important;
+    }
+
+    .key {
+        width: 2.5rem !important;
+    }
+    .key-description {
+        font-size: 1rem !important;
+    }
+}

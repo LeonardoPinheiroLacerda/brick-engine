@@ -1,0 +1,154 @@
+#modal {
+    box-shadow:
+        -0.75rem 0.75rem var(--dispersion) black,
+        -0.5rem 0.5rem var(--dispersion) var(--color-shadow-reflexion) inset,
+        0.4rem -0.4rem var(--dispersion) var(--color-shadow) inset;
+}
+
+#modal-display {
+    box-shadow:
+        -0.3rem 0.3rem var(--dispersion) var(--color-shadow),
+        0.2rem -0.2rem var(--dispersion) var(--color-shadow-reflexion);
+}
+
+#controls-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+#controls-modal.visible {
+    display: flex !important;
+    opacity: 1 !important;
+    justify-content: center;
+    align-items: center;
+}
+
+#controls-modal > #modal {
+    width: 80%;
+    max-width: 1000px;
+    height: 50%;
+    max-height: 600px;
+    border-radius: 1rem;
+    background-color: var(--main-color);
+    position: relative;
+    border: 3px solid black;
+    overflow: auto;
+}
+
+#controls-modal > #modal > #close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: var(--main-color);
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+#modal-display {
+    border: 2px solid black;
+    position: absolute;
+    top: 4rem;
+    bottom: 4rem;
+    right: 4rem;
+    left: 4rem;
+    border-radius: 1rem;
+    background-color: rgb(172, 189, 173);
+    overflow: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+#controls-modal > #modal > #close-btn > img {
+    cursor: pointer;
+    width: 2.5rem;
+}
+
+#controls-modal > #modal > #close-btn > img:hover {
+    filter: contrast(0.8);
+}
+
+#controls-modal > #modal > #close-btn > img:active {
+    filter: contrast(0.7);
+}
+#modal-frame {
+    border: 3px solid black;
+    position: absolute;
+    top: 2rem;
+    bottom: 2rem;
+    right: 2rem;
+    left: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+#modal-frame > label {
+    font-family: 'retro-gamming';
+    background-color: var(--main-color);
+    font-size: 2rem;
+    font-weight: bold;
+    position: relative;
+    top: -1rem;
+    width: 10rem;
+    text-align: center;
+}
+
+#controls-tutorial,
+#commands-tutorial {
+    width: 100%;
+    height: 50%;
+    margin: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#commands-tutorial .command {
+    width: 50% !important;
+}
+
+#controls-tutorial {
+    gap: 3rem;
+}
+
+#wasd {
+    display: flex;
+    flex-direction: row;
+    width: 13.5rem;
+    flex-wrap: wrap;
+}
+.w-key {
+    margin-right: 35% !important;
+    margin-left: 35% !important;
+}
+
+.key {
+    width: 4rem;
+    margin: 0.25rem;
+}
+
+.key-description {
+    font-family: 'retro-gamming';
+    font-size: 2rem;
+}
+
+.command {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
