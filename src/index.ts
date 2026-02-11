@@ -1,7 +1,7 @@
 import P5 from 'p5';
 import GameView from './view/GameView';
 
-import './resources';
+import './config/resources';
 
 export const P5Instance = new P5((p: P5) => {
     const view = new GameView(p, document.body);
