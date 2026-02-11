@@ -1,7 +1,6 @@
 import P5 from 'p5';
 
-import { SELECTORS } from '../config/selectors';
-import { VIEW } from '../config/view';
+import { configs } from '../config/configs';
 
 import applyColors from './theme/applyColors';
 import dimensions from './theme/dimensions';
@@ -208,7 +207,7 @@ export default class GameView {
      *
      * It sets up a sequence where pressing the button triggers a delayed start,
      * followed by a repeated action execution (interval) while the button is held down,
-     * using `VIEW.HOLD_INTERVAL_MS` and `VIEW.HOLD_DELAY_MS`.
+     * using `configs.buttonHold.holdIntervalMs` and `configs.buttonHold.holdDelayMs`.
      * Releasing the button clears both timers.
      *
      * @param btn - The P5 button element to bind.
@@ -220,8 +219,8 @@ export default class GameView {
 
         btn.mousePressed(() => {
             delayTimer = setTimeout(() => {
-                holdTimer = setInterval(action, VIEW.HOLD_INTERVAL_MS);
-            }, VIEW.HOLD_DELAY_MS);
+                holdTimer = setInterval(action, configs.buttonHold.holdIntervalMs);
+            }, configs.buttonHold.holdDelayMs);
         });
 
         btn.mouseReleased(() => {
@@ -233,10 +232,10 @@ export default class GameView {
     /**
      * Helper method to hide the splash screen after a delay.
      *
-     * @param delay - The delay in milliseconds (defaults to `VIEW.SPLASH_HIDE_DELAY_MS`).
+     * @param delay - The delay in milliseconds (defaults to `configs.viewLayout.splashHideDelayMs`).
      */
-    private hideSplash(delay = VIEW.SPLASH_HIDE_DELAY_MS) {
-        const splash: HTMLDivElement = document.querySelector(SELECTORS.SPLASH);
+    private hideSplash(delay = configs.viewLayout.splashHideDelayMs) {
+        const splash: HTMLDivElement = document.querySelector(configs.selectors.splash);
         setTimeout(() => {
             splash.style.display = 'none';
         }, delay);

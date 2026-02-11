@@ -1,6 +1,4 @@
-import { COLORS } from '../../config/colors';
-import { THEME } from '../../config/theme';
-import { LAYOUT } from '../../config/layout';
+import { configs } from '../../config/configs';
 
 // prettier-ignore
 /**
@@ -23,7 +21,7 @@ export default function dimensions(
 ) {
     const root: HTMLElement = document.querySelector(':root');
 
-    root.style.setProperty('--dispersion'                        , LAYOUT.SHADOW_DISPERSION);
+    root.style.setProperty('--dispersion'                        , configs.viewLayout.shadowDispersion);
 
     root.style.setProperty('--width'                             , `${width}px`);
     root.style.setProperty('--height'                            , `${height}px`);
@@ -31,25 +29,25 @@ export default function dimensions(
     root.style.setProperty('--canvas-width'                      , `${canvasWidth}px`);
     root.style.setProperty('--canvas-height'                     , `${canvasHeight}px`);
 
-    root.style.setProperty('--border-radius'                     , `${width * THEME.DIMENSIONS.BORDER_RADIUS_RATIO}px`);
-    root.style.setProperty('--border'                            , `${width * THEME.DIMENSIONS.BORDER_WIDTH_RATIO}px solid black`);
+    root.style.setProperty('--border-radius'                     , `${width * configs.viewLayout.dimensions.borderRadiusRatio}px`);
+    root.style.setProperty('--border'                            , `${width * configs.viewLayout.dimensions.borderWidthRatio}px solid black`);
 
-    root.style.setProperty('--sm-button-size'                    , `${width * THEME.DIMENSIONS.BUTTON.SM_SIZE_RATIO}px`);
-    root.style.setProperty('--button-size'                       , `${width * THEME.DIMENSIONS.BUTTON.MD_SIZE_RATIO}px`);
-    root.style.setProperty('--lg-button-size'                    , `${width * THEME.DIMENSIONS.BUTTON.LG_SIZE_RATIO}px`);
+    root.style.setProperty('--sm-button-size'                    , `${width * configs.viewLayout.dimensions.button.smSizeRatio}px`);
+    root.style.setProperty('--button-size'                       , `${width * configs.viewLayout.dimensions.button.mdSizeRatio}px`);
+    root.style.setProperty('--lg-button-size'                    , `${width * configs.viewLayout.dimensions.button.lgSizeRatio}px`);
 
-    root.style.setProperty('--sm-button-size-mobile'             , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_SIZE_RATIO}px`);
-    root.style.setProperty('--button-size-mobile'                , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.MD_SIZE_RATIO}px`);
-    root.style.setProperty('--lg-button-size-mobile'             , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.LG_SIZE_RATIO}px`);
+    root.style.setProperty('--sm-button-size-mobile'             , `${width * configs.viewLayout.dimensions.button.mobile.smSizeRatio}px`);
+    root.style.setProperty('--button-size-mobile'                , `${width * configs.viewLayout.dimensions.button.mobile.mdSizeRatio}px`);
+    root.style.setProperty('--lg-button-size-mobile'             , `${width * configs.viewLayout.dimensions.button.mobile.lgSizeRatio}px`);
 
-    root.style.setProperty('--sm-button-size-mobile-font-size'   , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_FONT_RATIO}px`);
-    root.style.setProperty('--sm-button-size-mobile-line-height' , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_FONT_RATIO}px`);
+    root.style.setProperty('--sm-button-size-mobile-font-size'   , `${width * configs.viewLayout.dimensions.button.mobile.smFontRatio}px`);
+    root.style.setProperty('--sm-button-size-mobile-line-height' , `${width * configs.viewLayout.dimensions.button.mobile.smFontRatio}px`);
 
-    root.style.setProperty('--button-size-mobile-font-size'      , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.FONT_RATIO}px`);
-    root.style.setProperty('--lg-button-size-mobile-font-size'   , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.LG_FONT_RATIO}px`);
+    root.style.setProperty('--button-size-mobile-font-size'      , `${width * configs.viewLayout.dimensions.button.mobile.fontRatio}px`);
+    root.style.setProperty('--lg-button-size-mobile-font-size'   , `${width * configs.viewLayout.dimensions.button.mobile.lgFontRatio}px`);
 
-    root.style.setProperty('--button-size-mobile-spacing'        , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SPACING_RATIO}px`);
+    root.style.setProperty('--button-size-mobile-spacing'        , `${width * configs.viewLayout.dimensions.button.mobile.spacingRatio}px`);
 
-    root.style.setProperty('--button-border'                     , `${width * THEME.DIMENSIONS.BUTTON.BORDER_RATIO}px solid black`);
-    root.style.setProperty('--button-animation-duration'         , THEME.DIMENSIONS.BUTTON.ANIMATION_DURATION);
+    root.style.setProperty('--button-border'                     , `${width * configs.viewLayout.dimensions.button.borderRatio}px solid black`);
+    root.style.setProperty('--button-animation-duration'         , configs.viewLayout.dimensions.button.animationDuration);
 }

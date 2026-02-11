@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { SELECTORS } from '../../../config/selectors';
+import { configs } from '../../../config/configs';
 
 /**
  * Creates the decorative frame for the game.
@@ -13,7 +13,7 @@ import { SELECTORS } from '../../../config/selectors';
 export default function FrameLayout(p: P5, container: P5.Element): P5.Element {
     const frame = p.createDiv();
     frame.parent(container);
-    frame.id(SELECTORS.VIEW_ELEMENT_IDS.FRAME);
+    frame.id(configs.selectors.viewElementIds.frame);
 
     const div = p.createDiv();
     div.parent(frame);

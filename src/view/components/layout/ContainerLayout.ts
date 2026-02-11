@@ -1,7 +1,5 @@
 import P5 from 'p5';
-import { LAYOUT } from '../../../config/layout';
-import { SELECTORS } from '../../../config/selectors';
-import { VIEW } from '../../../config/view';
+import { configs } from '../../../config/configs';
 
 /**
  * Response object containing container dimensions and element reference.
@@ -16,8 +14,8 @@ interface ContainerResponse {
  * Creates the main game container and calculates its optimal dimensions.
  *
  * It ensures the game container fits within the parent element (usually the window or a specific div)
- * while maintaining a fixed aspect ratio defined by `LAYOUT.BODY_HEIGHT_WIDTH_MULTIPLIER`.
- * On smaller screens (<= VIEW.MOBILE_BREAKPOINT width), it attempts to fill the parent width.
+ * while maintaining a fixed aspect ratio defined by `configs.viewLayout.bodyHeightWidthMultiplier`.
+ * On smaller screens (<= configs.viewLayout.mobileBreakpoint width), it attempts to fill the parent width.
  * On larger screens, it calculates the maximum dimensions that fit without overflowing vertically.
  *
  * @param {P5} p - The P5 instance.
@@ -29,13 +27,13 @@ export default function ContainerLayout(
     parent: HTMLElement,
 ): ContainerResponse {
     const container = p.createDiv();
-    container.parent(SELECTORS.PARENT);
-    container.id(SELECTORS.VIEW_ELEMENT_IDS.CONTAINER);
+    container.parent(configs.selectors.parent);
+    container.id(configs.selectors.viewElementIds.container);
 
     let width: number;
     let height: number;
 
-    if (parent.clientWidth <= VIEW.MOBILE_BREAKPOINT) {
+    if (parent.clientWidth <= configs.viewLayout.mobileBreakpoint) {
         width = parent.clientWidth;
         height = parent.clientHeight;
 
@@ -44,13 +42,14 @@ export default function ContainerLayout(
 
     // Calcula a largura máxima baseada na altura disponível
     const maxHeightWidth =
-        parent.clientHeight / (LAYOUT.BODY_HEIGHT_WIDTH_MULTIPLIER * 1.05);
+        parent.clientHeight /
+        (configs.viewLayout.bodyHeightWidthMultiplier * 1.05);
 
     // A largura final é o menor valor entre a largura disponível e a largura limitada pela altura
     width = Math.min(parent.clientWidth, maxHeightWidth);
 
     // A altura é calculada com base na proporção original
-    height = width * LAYOUT.BODY_HEIGHT_WIDTH_MULTIPLIER;
+    height = width * configs.viewLayout.bodyHeightWidthMultiplier;
 
     return { container, width, height };
 }

@@ -1,14 +1,13 @@
 import { colord } from 'colord';
 
-import { PARAMS } from '../../config/params';
-import { COLORS } from '../../config/colors';
+import { configs } from '../../config/configs';
 
 // prettier-ignore
 /**
  * Applies color themes to the application by setting CSS variables.
  *
- * It checks for `PARAMS.MAIN_COLOR` and `PARAMS.BUTTON_COLOR` query parameters in the URL.
- * If present, these values are used; otherwise, default `COLORS` are applied.
+ * It checks for `configs.inputQueryParams.mainColor` and `configs.inputQueryParams.buttonColor` query parameters in the URL.
+ * If present, these values are used; otherwise, default `configs.colors` are applied.
  * It also calculates and sets shadow and reflection variations for these colors.
  *
  * @returns {void}
@@ -21,13 +20,13 @@ export default function applyColors() {
     );
     const searchParams = new URLSearchParams(paramsString);
 
-    const mainColor = searchParams.has(PARAMS.MAIN_COLOR)
-        ? searchParams.get(PARAMS.MAIN_COLOR)
-        : COLORS.BODY_MAIN;
+    const mainColor = searchParams.has(configs.inputQueryParams.mainColor)
+        ? searchParams.get(configs.inputQueryParams.mainColor)
+        : configs.colors.bodyMain;
 
-    const buttonColor = searchParams.has(PARAMS.BUTTON_COLOR)
-        ? searchParams.get(PARAMS.BUTTON_COLOR)
-        : COLORS.BODY_BUTTON;
+    const buttonColor = searchParams.has(configs.inputQueryParams.buttonColor)
+        ? searchParams.get(configs.inputQueryParams.buttonColor)
+        : configs.colors.bodyButton;
 
     root.style.setProperty('--main-color'            , mainColor);
     root.style.setProperty('--button-color'          , buttonColor);
