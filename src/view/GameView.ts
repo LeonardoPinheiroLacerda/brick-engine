@@ -56,8 +56,8 @@ export default class GameView {
     /**
      * Creates an instance of GameView.
      *
-     * @param {P5} p - The P5 instance used for rendering and event handling.
-     * @param {HTMLElement} parent - The DOM element where the game view will be attached.
+     * @param p - The P5 instance used for rendering and event handling.
+     * @param parent - The DOM element where the game view will be attached.
      */
     constructor(p: P5, parent: HTMLElement) {
         this.parent = parent;
@@ -69,7 +69,7 @@ export default class GameView {
      *
      * It initializes themes, layouts (frames, containers, buttons), and calculates responsive dimensions.
      *
-     * @returns {object} An object containing the canvas element and its explicit dimensions.
+     * @returns An object containing the canvas element and its explicit dimensions.
      * - canvas: The P5 element for the canvas.
      * - canvasWidth: The calculated width of the canvas.
      * - canvasHeight: The calculated height of the canvas.
@@ -121,7 +121,7 @@ export default class GameView {
      *
      * Connects click and hold events from the UI buttons to the game logic controllers.
      *
-     * @param {any} game - The game instance containing the control logic and state methods.
+     * @param game - The game instance containing the control logic and state methods.
      */
     bound(game: any) {
 
@@ -203,8 +203,8 @@ export default class GameView {
      * followed by a repeated action execution (interval) while the button is held down.
      * Releasing the button clears both timers.
      *
-     * @param {P5.Element} btn - The P5 button element to bind.
-     * @param {() => void} action - The function to execute repeatedly while the button is held.
+     * @param btn - The P5 button element to bind.
+     * @param action - The function to execute repeatedly while the button is held.
      */
     private bindHoldAction(btn: P5.Element, action: () => void) {
         let delayTimer: NodeJS.Timeout;

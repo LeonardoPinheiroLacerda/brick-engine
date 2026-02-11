@@ -5,9 +5,9 @@ import P5 from 'p5';
  *
  * Adds a visual frame around the game area and includes the branding text "Brick Game".
  *
- * @param {P5} p - The P5 instance.
- * @param {P5.Element} container - The parent container element.
- * @returns {P5.Element} The created frame element.
+ * @param p - The P5 instance.
+ * @param container - The parent container element.
+ * @returns The created frame element.
  */
 export default function FrameLayout(p: P5, container: P5.Element): P5.Element {
     const frame = p.createDiv();
