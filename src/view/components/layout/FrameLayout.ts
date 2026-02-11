@@ -13,7 +13,7 @@ import { SELECTORS } from '../../../config/selectors';
 export default function FrameLayout(p: P5, container: P5.Element): P5.Element {
     const frame = p.createDiv();
     frame.parent(container);
-    frame.id(SELECTORS.IDS.FRAME);
+    frame.id(SELECTORS.VIEW_ELEMENT_IDS.FRAME);
 
     const div = p.createDiv();
     div.parent(frame);

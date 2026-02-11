@@ -30,7 +30,7 @@ export default function ContainerLayout(
 ): ContainerResponse {
     const container = p.createDiv();
     container.parent(SELECTORS.PARENT);
-    container.id(SELECTORS.IDS.CONTAINER);
+    container.id(SELECTORS.VIEW_ELEMENT_IDS.CONTAINER);
 
     let width: number;
     let height: number;

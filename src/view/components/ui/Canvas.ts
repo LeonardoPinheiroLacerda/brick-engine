@@ -33,7 +33,7 @@ export default function Canvas(
 
     const canvas = p.createCanvas(canvasWidth, canvasHeight);
     canvas.parent(container);
-    canvas.id(SELECTORS.IDS.CANVAS);
+    canvas.id(SELECTORS.VIEW_ELEMENT_IDS.CANVAS);
 
     return { canvasWidth, canvasHeight, canvas };
 }

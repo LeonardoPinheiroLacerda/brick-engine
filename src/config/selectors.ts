@@ -4,17 +4,22 @@
 export const SELECTORS = {
     /** Root container where the P5 instance is attached. */
     PARENT: '#brick-game',
-    /** Modal shown when continuing a previous session. */
-    SESSION_MODAL: '#session-modal',
-    /** Confirmation button in the session modal. */
-    SESSION_CONTINUE_YES: '#session-modal-yes',
-    /** Cancellation button in the session modal. */
-    SESSION_CONTINUE_NO: '#session-modal-no',
+
     /** Splash screen shown during initial load. */
     SPLASH: '#splash',
 
+    /** Modal IDs used for session continuation. */
+    MODAL_IDS: {
+        /** Modal shown when continuing a previous session. */
+        SESSION_MODAL: '#session-modal',
+        /** Confirmation button in the session modal. */
+        SESSION_CONTINUE_YES: '#session-modal-yes',
+        /** Cancellation button in the session modal. */
+        SESSION_CONTINUE_NO: '#session-modal-no',
+    },
+
     /** Explicit IDs assigned to dynamically created DOM elements. */
-    IDS: {
+    VIEW_ELEMENT_IDS: {
         CANVAS: 'brick-game-canvas',
         CONTAINER: 'container',
         FRAME: 'frame',
