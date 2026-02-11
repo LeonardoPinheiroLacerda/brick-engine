@@ -1,4 +1,5 @@
 import P5 from 'p5';
+import { SELECTORS } from '../../../config/selectors';
 
 interface ButtonLayoutResponse {
     smallButtonContainer: P5.Element;
@@ -17,40 +18,45 @@ interface ButtonLayoutResponse {
  * @param {P5} p - The P5 instance.
  * @param {P5.Element} container - The parent container element.
  * @returns {ButtonLayoutResponse} Object containing the button containers.
- *  - smallButtonContainer: For system buttons (Reset, Sound, etc.).
- *  - mediumButtonContainer: For direction controls.
- *  - largeButtonContainer: For the main action button.
+ *  - smallButtonContainer: For system buttons (Reset, Sound, etc.), uses `SELECTORS.IDS.SMALL_BUTTON_CONTAINER`.
+ *  - mediumButtonContainer: For direction controls, uses `SELECTORS.IDS.MEDIUM_BUTTON_CONTAINER`.
+ *  - largeButtonContainer: For the main action button, uses `SELECTORS.IDS.LARGE_BUTTON_CONTAINER`.
  *  - directionVerticalContainer: For Up/Down buttons.
  *  - directionHorizontalContainer: For Left/Right buttons.
  */
-export default function ButtonLayout(p: P5, container: P5.Element): ButtonLayoutResponse {
+export default function ButtonLayout(
+    p: P5,
+    container: P5.Element,
+): ButtonLayoutResponse {
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);
-    buttonContainer.id('button-container');
+    buttonContainer.id(SELECTORS.IDS.BUTTON_CONTAINER);
 
     const smallButtonContainer = p.createDiv();
     smallButtonContainer.parent(buttonContainer);
-    smallButtonContainer.id('small-button-container');
+    smallButtonContainer.id(SELECTORS.IDS.SMALL_BUTTON_CONTAINER);
 
     const innerButtonContainer = p.createDiv();
     innerButtonContainer.parent(buttonContainer);
-    innerButtonContainer.id('inner-button-container');
+    innerButtonContainer.id(SELECTORS.IDS.INNER_BUTTON_CONTAINER);
 
     const mediumButtonContainer = p.createDiv();
     mediumButtonContainer.parent(innerButtonContainer);
-    mediumButtonContainer.id('medium-button-container');
+    mediumButtonContainer.id(SELECTORS.IDS.MEDIUM_BUTTON_CONTAINER);
 
     const directionVerticalContainer = p.createDiv();
     directionVerticalContainer.parent(mediumButtonContainer);
-    directionVerticalContainer.id('direction-vertical-container');
+    directionVerticalContainer.id(SELECTORS.IDS.DIRECTION_VERTICAL_CONTAINER);
 
     const directionHorizontalContainer = p.createDiv();
     directionHorizontalContainer.parent(mediumButtonContainer);
-    directionHorizontalContainer.id('direction-horizontal-container');
+    directionHorizontalContainer.id(
+        SELECTORS.IDS.DIRECTION_HORIZONTAL_CONTAINER,
+    );
 
     const largeButtonContainer = p.createDiv();
     largeButtonContainer.parent(innerButtonContainer);
-    largeButtonContainer.id('large-button-container');
+    largeButtonContainer.id(SELECTORS.IDS.LARGE_BUTTON_CONTAINER);
 
     return {
         smallButtonContainer,

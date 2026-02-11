@@ -1,4 +1,6 @@
-import { SHADOW_DISPERSION } from '../../constants';
+import { COLORS } from '../../config/colors';
+import { THEME } from '../../config/theme';
+import { LAYOUT } from '../../config/layout';
 
 // prettier-ignore
 /**
@@ -21,7 +23,7 @@ export default function dimensions(
 ) {
     const root: HTMLElement = document.querySelector(':root');
 
-    root.style.setProperty('--dispersion'                        , SHADOW_DISPERSION);
+    root.style.setProperty('--dispersion'                        , LAYOUT.SHADOW_DISPERSION);
 
     root.style.setProperty('--width'                             , `${width}px`);
     root.style.setProperty('--height'                            , `${height}px`);
@@ -29,25 +31,25 @@ export default function dimensions(
     root.style.setProperty('--canvas-width'                      , `${canvasWidth}px`);
     root.style.setProperty('--canvas-height'                     , `${canvasHeight}px`);
 
-    root.style.setProperty('--border-radius'                     , `${width * 0.05}px`);
-    root.style.setProperty('--border'                            , `${width * 0.006}px solid black`);
+    root.style.setProperty('--border-radius'                     , `${width * THEME.DIMENSIONS.BORDER_RADIUS_RATIO}px`);
+    root.style.setProperty('--border'                            , `${width * THEME.DIMENSIONS.BORDER_WIDTH_RATIO}px solid black`);
 
-    root.style.setProperty('--sm-button-size'                    , `${width * 0.08}px`);
-    root.style.setProperty('--button-size'                       , `${width * 0.18}px`);
-    root.style.setProperty('--lg-button-size'                    , `${width * 0.25}px`);
+    root.style.setProperty('--sm-button-size'                    , `${width * THEME.DIMENSIONS.BUTTON.SM_SIZE_RATIO}px`);
+    root.style.setProperty('--button-size'                       , `${width * THEME.DIMENSIONS.BUTTON.MD_SIZE_RATIO}px`);
+    root.style.setProperty('--lg-button-size'                    , `${width * THEME.DIMENSIONS.BUTTON.LG_SIZE_RATIO}px`);
 
-    root.style.setProperty('--sm-button-size-mobile'             , `${width * 0.13}px`);
-    root.style.setProperty('--button-size-mobile'                , `${width * 0.26}px`);
-    root.style.setProperty('--lg-button-size-mobile'             , `${width * 0.35}px`);
+    root.style.setProperty('--sm-button-size-mobile'             , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_SIZE_RATIO}px`);
+    root.style.setProperty('--button-size-mobile'                , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.MD_SIZE_RATIO}px`);
+    root.style.setProperty('--lg-button-size-mobile'             , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.LG_SIZE_RATIO}px`);
 
-    root.style.setProperty('--sm-button-size-mobile-font-size'   , `${width * 0.04}px`);
-    root.style.setProperty('--sm-button-size-mobile-line-height' , `${width * 0.04}px`);
+    root.style.setProperty('--sm-button-size-mobile-font-size'   , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_FONT_RATIO}px`);
+    root.style.setProperty('--sm-button-size-mobile-line-height' , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SM_FONT_RATIO}px`);
 
-    root.style.setProperty('--button-size-mobile-font-size'      , `${width * 0.05}px`);
-    root.style.setProperty('--lg-button-size-mobile-font-size'   , `${width * 0.055}px`);
+    root.style.setProperty('--button-size-mobile-font-size'      , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.FONT_RATIO}px`);
+    root.style.setProperty('--lg-button-size-mobile-font-size'   , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.LG_FONT_RATIO}px`);
 
-    root.style.setProperty('--button-size-mobile-spacing'        , `${width * 0.018}px`);
+    root.style.setProperty('--button-size-mobile-spacing'        , `${width * THEME.DIMENSIONS.BUTTON.MOBILE.SPACING_RATIO}px`);
 
-    root.style.setProperty('--button-border'                     , `${width * 0.0045}px solid black`);
-    root.style.setProperty('--button-animation-duration'         , `0.15s`);
+    root.style.setProperty('--button-border'                     , `${width * THEME.DIMENSIONS.BUTTON.BORDER_RATIO}px solid black`);
+    root.style.setProperty('--button-animation-duration'         , THEME.DIMENSIONS.BUTTON.ANIMATION_DURATION);
 }
