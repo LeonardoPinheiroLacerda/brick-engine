@@ -1,4 +1,5 @@
 import Color from '../enum/Color';
+import Coordinate from './Coordinate';
 
 /**
  *
@@ -15,4 +16,8 @@ export default interface Cell {
      * The color that should be used for rendering if the colorEnabled is equal to true on the game state property
      */
     color: Color;
+    /**
+     * The coordinate of the cell
+     */
+    coordinate: Coordinate;
 }

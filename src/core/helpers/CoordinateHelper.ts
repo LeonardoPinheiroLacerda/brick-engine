@@ -22,15 +22,4 @@ export default class CoordinateHelper {
     getRelativeHeight(size: number): number {
         return size * this._p.height;
     }
-
-    getCellCoordinate(
-        { x, y }: Coordinate,
-        cellSize: number,
-        margin: number,
-    ): Coordinate {
-        return {
-            x: x * cellSize + margin,
-            y: y * cellSize + margin,
-        };
-    }
 }
