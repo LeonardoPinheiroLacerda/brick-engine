@@ -1,31 +1,25 @@
 import { ControlKey } from '../../types/enums';
 import { Control } from '../../types/modules';
 import { ControlCallback, ControlEventType, GameEvent, GameModules } from '../../types/Types';
+import SystemEventsSubscriber from './SystemEventsSubscriber';
+import GameControlKeyBinding from './GameControlKeyBinding';
 
 export default class GameControl implements Control {
     private _modules: GameModules;
+
+    private _keyBinding: GameControlKeyBinding;
     private _subscribers: Map<ControlKey, Map<ControlEventType, Set<ControlCallback>>> = new Map();
 
     setup() {
-        this._subscribeSystemControls();
+        this._keyBinding = new GameControlKeyBinding(this);
+
+        this._keyBinding.bound();
+        new SystemEventsSubscriber(this).subscribe();
     }
 
-    private _subscribeSystemControls(): void {
-        this.subscribe(ControlKey.POWER, 'pressed', event => event.modules.state.toggleOn());
-        this.subscribe(ControlKey.SOUND, 'pressed', event => event.modules.state.toggleMuted());
-        this.subscribe(ControlKey.COLOR, 'pressed', event => event.modules.state.toggleColorEnabled());
-        this.subscribe(ControlKey.RESET, 'pressed', event => {
-            event.modules.grid.resetGrid();
-            if (event.modules.state.gameOver) {
-                event.modules.state.toggleGameOver();
-            }
-        });
-        this.subscribe(ControlKey.START_PAUSE, 'pressed', event => {
-            if (!event.modules.state.start) {
-                event.modules.state.toggleStart();
-            }
-            event.modules.state.toggleRunning();
-        });
+    unbound() {
+        this._keyBinding.unbound();
+        this._subscribers.clear();
     }
 
     setModules(modules: GameModules): void {
