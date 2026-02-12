@@ -6,6 +6,7 @@ import Coordinate from '../../interface/Coordinate';
 import Cell from '../../interface/Cell';
 import Color from '../../enum/Color';
 import Renderer from './Renderer';
+import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 export default class DisplayRenderer implements Renderer {
     private _p: P5;
@@ -36,8 +37,8 @@ export default class DisplayRenderer implements Renderer {
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
 
         // 1. Calculate main display dimensions
-        this._displayWidth = CoordinateHelper.getRelativeWidth(this._p, width);
-        this._displayHeight = CoordinateHelper.getRelativeHeight(this._p, height);
+        this._displayWidth = RelativeValuesHelper.getRelativeWidth(this._p, width);
+        this._displayHeight = RelativeValuesHelper.getRelativeHeight(this._p, height);
         this._gridOrigin = CoordinateHelper.getRelativeCoordinate(this._p, {
             x: displayMargin,
             y: displayMargin,
@@ -85,7 +86,7 @@ export default class DisplayRenderer implements Renderer {
 
         this._p.push();
 
-        this._p.strokeWeight(CoordinateHelper.getRelativeWidth(this._p, borderWeight));
+        this._p.strokeWeight(RelativeValuesHelper.getRelativeWidth(this._p, borderWeight));
         this._p.noFill();
         this._p.stroke(configs.colors.active);
         this._p.rect(this._gridOrigin.x, this._gridOrigin.y, this._displayWidth, this._displayHeight);
@@ -130,5 +131,21 @@ export default class DisplayRenderer implements Renderer {
                 this.renderCell(cell);
             });
         });
+    }
+
+    get displayWidth(): number {
+        return this._displayWidth;
+    }
+
+    get displayHeight(): number {
+        return this._displayHeight;
+    }
+
+    get displayOrigin(): Coordinate {
+        return this._gridOrigin;
+    }
+
+    get cellSize(): number {
+        return this._cellSize;
     }
 }

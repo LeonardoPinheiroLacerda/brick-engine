@@ -30,7 +30,7 @@ export default class GameGrid {
      *
      * @returns {Cell[][]} The underlying grid data.
      */
-    public get grid(): Cell[][] {
+    public getGrid(): Cell[][] {
         return this._grid;
     }
 

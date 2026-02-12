@@ -30,7 +30,7 @@ export default {
         /** Logical display settings within the container. */
         display: {
             width: 0.65,
-            height: 0.954,
+            height: 0.956,
             margin: 0.022,
             borderWeight: 0.0075,
         },
