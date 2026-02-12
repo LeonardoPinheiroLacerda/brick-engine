@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { Coordinate } from '../interface/Types';
+import { Coordinate } from '../types/Types';
 import configs from '../../config/configs';
 import RelativeValuesHelper from './RelativeValuesHelper';
 

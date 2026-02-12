@@ -1,5 +1,5 @@
-import { Color } from '../interface/enums';
-import { Cell, Coordinate } from '../interface/Types';
+import { Color } from '../types/enums';
+import { Cell, Coordinate } from '../types/Types';
 
 export default class CellHelper {
     static emptyCell(coordinate: Coordinate): Cell {

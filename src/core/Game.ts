@@ -2,10 +2,11 @@ import P5 from 'p5';
 import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
 import GameText from './module/text/GameText';
+import GameState from './module/state/GameState';
 import { FontSize, FontAlign, FontVerticalAlign } from './types/enums';
 import { Initializable } from './types/Interfaces';
 import { DisplayMetrics } from './types/Types';
-import { Grid, RendererComposite, Text } from './interface/modules';
+import { Grid, RendererComposite, Text, State } from './types/modules';
 
 export default class Game implements Initializable {
     gameControls: any;
@@ -14,6 +15,7 @@ export default class Game implements Initializable {
     private _renderer: RendererComposite;
     private _grid: Grid;
     private _text: Text;
+    private _state: State;
 
     private _displayMetrics: DisplayMetrics;
 
@@ -25,6 +27,7 @@ export default class Game implements Initializable {
         this._renderer = new GameRenderer(this._p);
         this._grid = new GameGrid();
         this._text = new GameText(this._p);
+        this._state = new GameState();
     }
 
     setup() {
@@ -33,6 +36,7 @@ export default class Game implements Initializable {
         this._grid.setup();
         this._renderer.setup();
         this._text.setup();
+        this._state.setup();
 
         this._displayMetrics = this._renderer.displayMetrics;
         this._text.setDisplayMetrics(this._displayMetrics);

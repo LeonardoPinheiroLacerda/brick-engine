@@ -155,18 +155,18 @@ export default {
     /** Storage keys for persisting data in LocalStorage. */
     storageKeys: {
         /** Key for audio muting preference. */
-        muted: 'MUTED',
+        muted: 'STATE.MUTED',
         /** Key for color mode preference. */
-        colorEnabled: 'COLOR_ENABLED',
+        colorEnabled: 'STATE.COLOR_ENABLED',
 
         /** Key for the current game grid state. */
-        grid: 'GRID',
+        grid: 'GAME.GRID',
         /** Key for the current HUD grid state. */
-        hudGrid: 'HUD_GRID',
+        hudGrid: 'GAME.HUD_GRID',
         /** Key for the game speed/tick interval. */
-        tickInterval: 'TICK_INTERVAL',
+        tickInterval: 'GAME.TICK_INTERVAL',
         /** Key for the user's high score. */
-        score: 'SCORE',
+        score: 'GAME.SCORE',
     },
     /** Button hold settings. */
     buttonHold: {

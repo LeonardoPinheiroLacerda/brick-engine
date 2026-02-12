@@ -54,3 +54,5 @@ export interface DisplayMetrics {
         size: number;
     };
 }
+
+export type StateProperty = 'on' | 'start' | 'running' | 'gameOver' | 'colorEnabled' | 'muted';

@@ -5,7 +5,7 @@ import { Coordinate, DisplayMetrics } from '../../types/Types';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import { Initializable } from '../../types/Interfaces';
-import { Text } from '../../interface/modules';
+import { Text } from '../../types/modules';
 
 /**
  * Handles text rendering and font management within the game.

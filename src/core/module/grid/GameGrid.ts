@@ -2,7 +2,7 @@ import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
 import CellHelper from '../../helpers/CellHelper';
 import { Cell, Coordinate } from '../../types/Types';
-import { Grid } from '../../interface/modules';
+import { Grid } from '../../types/modules';
 
 /**
  * Manages the game's logical grid state and operations.
