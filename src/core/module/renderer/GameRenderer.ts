@@ -1,7 +1,7 @@
 import P5 from 'p5';
-import DisplayRenderer from './DisplayRenderer';
 import { Cell, DisplayMetrics } from '../../types/Types';
 import { Renderer } from '../../types/Interfaces';
+import DisplayRenderer from './DisplayRenderer';
 
 // Implementa o padrão Strategy Composite
 export default class GameRenderer implements Renderer {
