@@ -1,6 +1,6 @@
 import P5 from 'p5';
-import GameRenderer from './module/renderer/GameRenderer';
 import GameGrid from './module/grid/GameGrid';
+import GameRenderer from './module/renderer/GameRenderer';
 
 export default class Game {
     gameControls: any;
