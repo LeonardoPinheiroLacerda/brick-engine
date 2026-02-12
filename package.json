@@ -7,11 +7,10 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "genimi-start": "webpack serve --mode development",
-    "gemini-build": "webpack --mode production",
     "start": "webpack serve --open",
-    "check-prettier": "npx prettier -c .",
-    "write-prettier": "npx prettier -w ."
+    "build": "webpack --mode production",
+    "check-format": "npx prettier -c .",
+    "format": "npx prettier -w ."
   },
   "devDependencies": {
     "@types/p5": "^1.7.7",
