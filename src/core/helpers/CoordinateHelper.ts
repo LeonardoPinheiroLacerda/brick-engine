@@ -2,24 +2,18 @@ import P5 from 'p5';
 import Coordinate from '../interface/Coordinate';
 
 export default class CoordinateHelper {
-    private _p: P5;
-
-    constructor(p: P5) {
-        this._p = p;
-    }
-
-    getRelativeCoordinate({ x, y }: Coordinate): Coordinate {
+    static getRelativeCoordinate(p: P5, coordinate: Coordinate): Coordinate {
         return {
-            x: this.getRelativeWidth(x),
-            y: this.getRelativeHeight(y),
+            x: this.getRelativeWidth(p, coordinate.x),
+            y: this.getRelativeHeight(p, coordinate.y),
         };
     }
 
-    getRelativeWidth(size: number): number {
-        return size * this._p.width;
+    static getRelativeWidth(p: P5, size: number): number {
+        return size * p.width;
     }
 
-    getRelativeHeight(size: number): number {
-        return size * this._p.height;
+    static getRelativeHeight(p: P5, size: number): number {
+        return size * p.height;
     }
 }

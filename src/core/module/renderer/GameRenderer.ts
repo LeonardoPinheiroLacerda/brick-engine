@@ -4,11 +4,10 @@ import configs from '../../../config/configs';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import Coordinate from '../../interface/Coordinate';
 import Cell from '../../interface/Cell';
+import Color from '../../enum/Color';
 
 export default class GameRenderer {
     private _p: P5;
-
-    private _coordinateHelper: CoordinateHelper;
 
     private _cellSize: number;
     private _displayWidth: number;
@@ -28,7 +27,6 @@ export default class GameRenderer {
 
     constructor(p: P5) {
         this._p = p;
-        this._coordinateHelper = new CoordinateHelper(p);
     }
 
     setup() {
@@ -37,9 +35,9 @@ export default class GameRenderer {
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
 
         // 1. Calculate main display dimensions
-        this._displayWidth = this._coordinateHelper.getRelativeWidth(width);
-        this._displayHeight = this._coordinateHelper.getRelativeHeight(height);
-        this._gridOrigin = this._coordinateHelper.getRelativeCoordinate({
+        this._displayWidth = CoordinateHelper.getRelativeWidth(this._p, width);
+        this._displayHeight = CoordinateHelper.getRelativeHeight(this._p, height);
+        this._gridOrigin = CoordinateHelper.getRelativeCoordinate(this._p, {
             x: displayMargin,
             y: displayMargin,
         });
@@ -55,6 +53,16 @@ export default class GameRenderer {
             paddingSize: this._cellSize - cellPadding * this._cellSize * 2,
             strokeWeight: cellStrokeWeight * this._cellSize,
         };
+    }
+
+    render(grid: Cell[][]) {
+        this._p.push();
+
+        this.renderBackground();
+        this.renderGameGridBorder();
+        this.renderGrid(grid);
+
+        this._p.pop();
     }
 
     /**
@@ -74,19 +82,10 @@ export default class GameRenderer {
 
         this._p.push();
 
-        this._p.strokeWeight(this._coordinateHelper.getRelativeWidth(borderWeight));
+        this._p.strokeWeight(CoordinateHelper.getRelativeWidth(this._p, borderWeight));
         this._p.noFill();
         this._p.stroke(configs.colors.active);
         this._p.rect(this._gridOrigin.x, this._gridOrigin.y, this._displayWidth, this._displayHeight);
-
-        this._p.pop();
-    }
-
-    renderFrame() {
-        this._p.push();
-
-        this.renderBackground();
-        this.renderGameGridBorder();
 
         this._p.pop();
     }
@@ -98,6 +97,10 @@ export default class GameRenderer {
     protected renderCell({ coordinate, color, value }: Cell) {
         const { x, y } = coordinate;
         const { innerOffset, innerSize, paddingOffset, paddingSize, strokeWeight } = this._cellPreCalculatedGeometry;
+
+        if (value === 0) {
+            color = Color.INACTIVE;
+        }
 
         this._p.push();
 
@@ -116,5 +119,13 @@ export default class GameRenderer {
         this._p.rect(paddingOffset, paddingOffset, paddingSize, paddingSize);
 
         this._p.pop();
+    }
+
+    protected renderGrid(grid: Cell[][]) {
+        grid.forEach(row => {
+            row.forEach(cell => {
+                this.renderCell(cell);
+            });
+        });
     }
 }

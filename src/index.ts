@@ -3,10 +3,11 @@ import GameView from './view/GameView';
 
 import './config/resources';
 import Game from './core/Game';
+import Color from './core/enum/Color';
 
 export const P5Instance = new P5((p: P5) => {
     const view = new GameView(p, document.body);
-    const { renderer } = new Game(p);
+    const { renderer, grid } = new Game(p);
 
     p.setup = () => {
         view.build();
@@ -14,6 +15,6 @@ export const P5Instance = new P5((p: P5) => {
     };
 
     p.draw = () => {
-        renderer.renderFrame();
+        renderer.render(grid.grid);
     };
 }, document.body);
