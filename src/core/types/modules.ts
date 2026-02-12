@@ -2,50 +2,208 @@ import { Color, FontAlign, FontSize, FontVerticalAlign } from './enums';
 import { Initializable } from './Interfaces';
 import { Cell, Coordinate, DisplayMetrics, StateProperty } from './Types';
 
+/**
+ * Interface for the renderer module.
+ */
 export interface Renderer extends Initializable {
+    /**
+     * Renders the grid.
+     * @param grid The grid to render.
+     */
     render(grid: Cell[][]): void;
 }
 
+/**
+ * Interface for the composite renderer module.
+ */
 export interface RendererComposite extends Renderer {
+    /**
+     * Adds a renderer to the composite renderer.
+     * @param renderer The renderer to add.
+     */
     addRenderer(renderer: Renderer): void;
+    /**
+     * The display metrics of the renderer.
+     */
     displayMetrics: DisplayMetrics;
 }
 
+/**
+ * Interface for the text module.
+ */
 export interface Text extends Initializable {
+    /**
+     * Sets the display metrics for the text module.
+     * @param displayMetrics The display metrics to set.
+     */
     setDisplayMetrics(displayMetrics: DisplayMetrics): void;
+    /**
+     * Sets the active text.
+     */
     setActiveText(): void;
+    /**
+     * Sets the inactive text.
+     */
     setInactiveText(): void;
+    /**
+     * Sets the font size for the text module.
+     * @param fontSize The font size to set.
+     */
     setTextSize(fontSize: FontSize): void;
+    /**
+     * Sets the text alignment for the text module.
+     * @param fontAlign The font alignment to set.
+     * @param fontVerticalAlign The font vertical alignment to set.
+     */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void;
+    /**
+     * Displays text on the HUD.
+     * @param text The text to display.
+     * @param coordinate The coordinate to display the text at.
+     */
     textOnHud(text: string, coordinate: Coordinate): void;
     textOnDisplay(text: string, coordinate: Coordinate): void;
 }
 
+/**
+ * Interface for the grid module.
+ */
 export interface Grid extends Initializable {
+    /**
+     * Gets the grid.
+     * @returns The grid.
+     */
     getGrid(): Cell[][];
+    /**
+     * The width of the grid.
+     */
     width: number;
+    /**
+     * The height of the grid.
+     */
     height: number;
+    /**
+     * Resets the grid.
+     */
     resetGrid(): void;
+    /**
+     * Iterates over the grid.
+     * @param callback The callback to execute for each cell.
+     */
     forEach(callback: (cell: Cell) => void): void;
+    /**
+     * Checks if a coordinate is valid.
+     * @param coordinate The coordinate to check.
+     * @returns True if the coordinate is valid, false otherwise.
+     */
     isValidCoordinate(coordinate: Coordinate): boolean;
+    /**
+     * Gets the cell at a specific coordinate.
+     * @param coordinate The coordinate to get the cell from.
+     * @returns The cell at the specified coordinate.
+     */
     getCell(coordinate: Coordinate): Cell | null;
+    /**
+     * Sets the value of a cell.
+     * @param coordinate The coordinate to set the cell value at.
+     * @param value The value to set.
+     */
     setCellValue(coordinate: Coordinate, value: number): void;
+    /**
+     * Sets the color of a cell.
+     * @param coordinate The coordinate to set the cell color at.
+     * @param color The color to set.
+     */
     setCellColor(coordinate: Coordinate, color: Color): void;
+    /**
+     * Checks if a cell is active.
+     * @param coordinate The coordinate to check.
+     * @returns True if the cell is active, false otherwise.
+     */
     isCellActive(coordinate: Coordinate): boolean;
+    /**
+     * Checks if a cell is inactive.
+     * @param coordinate The coordinate to check.
+     * @returns True if the cell is inactive, false otherwise.
+     */
     isCellInactive(coordinate: Coordinate): boolean;
+    /**
+     * Checks if a row is full.
+     * @param y The y-coordinate of the row.
+     * @returns True if the row is full, false otherwise.
+     */
     isRowFull(y: number): boolean;
+    /**
+     * Checks if a row is empty.
+     * @param y The y-coordinate of the row.
+     * @returns True if the row is empty, false otherwise.
+     */
     isRowEmpty(y: number): boolean;
+    /**
+     * Clears a row.
+     * @param y The y-coordinate of the row.
+     */
     clearRow(y: number): void;
+    /**
+     * Shifts rows down.
+     * @param fromY The y-coordinate to start shifting from.
+     */
     shiftRowsDown(fromY: number): void;
+    /**
+     * Shifts rows up.
+     * @param fromY The y-coordinate to start shifting from.
+     */
     shiftRowsUp(fromY: number): void;
+    /**
+     * Clears full rows.
+     * @returns The number of cleared rows.
+     */
     clearFullRows(): number;
+    /**
+     * Checks if a column is full.
+     * @param x The x-coordinate of the column.
+     * @returns True if the column is full, false otherwise.
+     */
     isColumnFull(x: number): boolean;
+    /**
+     * Checks if a column is empty.
+     * @param x The x-coordinate of the column.
+     * @returns True if the column is empty, false otherwise.
+     */
     isColumnEmpty(x: number): boolean;
+    /**
+     * Clears a column.
+     * @param x The x-coordinate of the column.
+     */
     clearColumn(x: number): void;
+    /**
+     * Shifts columns right.
+     * @param fromX The x-coordinate to start shifting from.
+     */
     shiftColumnsRight(fromX: number): void;
+    /**
+     * Shifts columns left.
+     * @param fromX The x-coordinate to start shifting from.
+     */
     shiftColumnsLeft(fromX: number): void;
+    /**
+     * Clears full columns.
+     * @returns The number of cleared columns.
+     */
     clearFullColumns(): number;
+    /**
+     * Checks if an area is occupied.
+     * @param coordinates The coordinates to check.
+     * @returns True if the area is occupied, false otherwise.
+     */
     isAreaOccupied(coordinates: Coordinate[]): boolean;
+    /**
+     * Fills an area.
+     * @param start The starting coordinate of the area.
+     * @param end The ending coordinate of the area.
+     * @param value The value to fill the area with.
+     * @param color The color to fill the area with.
+     */
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void;
     /**
      * Applies a value and color to multiple coordinates simultaneously.
