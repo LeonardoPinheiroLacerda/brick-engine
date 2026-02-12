@@ -14,7 +14,7 @@ import FontVerticalAlign from '../../enum/FontVerticalAlign';
  * This class orchestrates font initialization, sizing, alignment, and
  * provides methods to render text on specific areas (HUD or Display).
  */
-export default class GameTexts {
+export default class GameText {
     /** The default font family used for game text. */
     protected defaultFontFamily: string = 'retro-gamming';
 
