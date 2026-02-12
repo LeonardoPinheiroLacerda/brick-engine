@@ -7,6 +7,7 @@ import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
 import { Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
+import { ControlKey } from './types/enums';
 
 export default class Game implements Initializable {
     private _p: P5;
@@ -45,6 +46,14 @@ export default class Game implements Initializable {
         text.setRendererMetrics(renderer.rendererMetrics);
 
         this._view.bound(control);
+
+        control.subscribe(ControlKey.ACTION, 'pressed', () => {
+            console.log('Action pressed');
+        });
+
+        control.subscribe(ControlKey.ACTION, 'held', () => {
+            console.log('Action held');
+        });
     }
 
     draw() {
