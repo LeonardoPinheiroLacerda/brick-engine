@@ -5,14 +5,15 @@ import GameText from './module/text/GameText';
 import { FontSize, FontAlign, FontVerticalAlign } from './types/enums';
 import { Initializable } from './types/Interfaces';
 import { DisplayMetrics } from './types/Types';
+import { Grid, RendererComposite, Text } from './interface/modules';
 
 export default class Game implements Initializable {
     gameControls: any;
     private _p: P5;
 
-    private _renderer: GameRenderer;
-    private _grid: GameGrid;
-    private _text: GameText;
+    private _renderer: RendererComposite;
+    private _grid: Grid;
+    private _text: Text;
 
     private _displayMetrics: DisplayMetrics;
 
@@ -20,10 +21,14 @@ export default class Game implements Initializable {
         this._p = p;
     }
 
-    setup() {
+    private _createModules() {
         this._renderer = new GameRenderer(this._p);
         this._grid = new GameGrid();
         this._text = new GameText(this._p);
+    }
+
+    setup() {
+        this._createModules();
 
         this._grid.setup();
         this._renderer.setup();

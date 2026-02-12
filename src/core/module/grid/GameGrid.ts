@@ -2,7 +2,7 @@ import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
 import CellHelper from '../../helpers/CellHelper';
 import { Cell, Coordinate } from '../../types/Types';
-import { Initializable } from '../../types/Interfaces';
+import { Grid } from '../../interface/modules';
 
 /**
  * Manages the game's logical grid state and operations.
@@ -10,7 +10,7 @@ import { Initializable } from '../../types/Interfaces';
  * Provides a robust API for cell manipulation, row/column management,
  * collision detection, and mass grid modifications.
  */
-export default class GameGrid implements Initializable {
+export default class GameGrid implements Grid {
     /**
      * The internal 2D array representing the game grid [y][x].
      */
@@ -23,7 +23,7 @@ export default class GameGrid implements Initializable {
      *
      * @returns {Cell[][]} The underlying grid data.
      */
-    public getGrid(): Cell[][] {
+    getGrid(): Cell[][] {
         return this._grid;
     }
 
@@ -32,7 +32,7 @@ export default class GameGrid implements Initializable {
      *
      * @returns {number} The grid width.
      */
-    public get width(): number {
+    get width(): number {
         return this._grid[0]?.length || 0;
     }
 
@@ -41,7 +41,7 @@ export default class GameGrid implements Initializable {
      *
      * @returns {number} The grid height.
      */
-    public get height(): number {
+    get height(): number {
         return this._grid.length;
     }
 

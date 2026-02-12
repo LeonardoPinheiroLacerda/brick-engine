@@ -5,6 +5,7 @@ import { Coordinate, DisplayMetrics } from '../../types/Types';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import { Initializable } from '../../types/Interfaces';
+import { Text } from '../../interface/modules';
 
 /**
  * Handles text rendering and font management within the game.
@@ -12,7 +13,7 @@ import { Initializable } from '../../types/Interfaces';
  * This class orchestrates font initialization, sizing, alignment, and
  * provides methods to render text on specific areas (HUD or Display).
  */
-export default class GameText implements Initializable {
+export default class GameText implements Text {
     /** The default font family used for game text. */
     protected defaultFontFamily: string = 'retro-gamming';
 
