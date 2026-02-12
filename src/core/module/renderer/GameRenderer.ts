@@ -1,15 +1,7 @@
 import P5 from 'p5';
 import DisplayRenderer from './DisplayRenderer';
-import Cell from '../../interface/Cell';
-import Renderer from './Renderer';
-import Coordinate from '../../interface/Coordinate';
-
-export interface DisplayMetrics {
-    displayWidth: number;
-    displayHeight: number;
-    displayOrigin: Coordinate;
-    cellSize: number;
-}
+import { Cell, DisplayMetrics } from '../../types/Types';
+import { Renderer } from '../../types/Interfaces';
 
 // Implementa o padrão Strategy Composite
 export default class GameRenderer implements Renderer {
@@ -38,10 +30,19 @@ export default class GameRenderer implements Renderer {
 
     get displayMetrics(): DisplayMetrics {
         return {
-            displayWidth: this._displayRenderer.displayWidth,
-            displayHeight: this._displayRenderer.displayHeight,
-            displayOrigin: this._displayRenderer.displayOrigin,
-            cellSize: this._displayRenderer.cellSize,
+            display: {
+                width: this._displayRenderer.displayWidth,
+                height: this._displayRenderer.displayHeight,
+                origin: this._displayRenderer.displayOrigin,
+            },
+            hud: {
+                width: null,
+                height: null,
+                origin: null,
+            },
+            cell: {
+                size: this._displayRenderer.cellSize,
+            },
         };
     }
 }

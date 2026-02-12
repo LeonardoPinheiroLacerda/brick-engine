@@ -2,10 +2,9 @@ import P5 from 'p5';
 
 import configs from '../../../config/configs';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
-import Coordinate from '../../interface/Coordinate';
-import Cell from '../../interface/Cell';
-import Color from '../../enum/Color';
-import Renderer from './Renderer';
+import { Color } from '../../types/enums';
+import { Cell, Coordinate } from '../../types/Types';
+import { Renderer } from '../../types/Interfaces';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 export default class DisplayRenderer implements Renderer {

@@ -1,12 +1,10 @@
 import P5 from 'p5';
-import CoordinateHelper from '../../helpers/CoordinateHelper';
 import configs from '../../../config/configs';
-import FontSize from '../../enum/FontSize';
-import FontAlign from '../../enum/FontAlign';
-import Coordinate from '../../interface/Coordinate';
-import { DisplayMetrics } from '../renderer/GameRenderer';
+import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
+import { Coordinate, DisplayMetrics } from '../../types/Types';
+import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
-import FontVerticalAlign from '../../enum/FontVerticalAlign';
+import { Initializable } from '../../types/Interfaces';
 
 /**
  * Handles text rendering and font management within the game.
@@ -14,7 +12,7 @@ import FontVerticalAlign from '../../enum/FontVerticalAlign';
  * This class orchestrates font initialization, sizing, alignment, and
  * provides methods to render text on specific areas (HUD or Display).
  */
-export default class GameText {
+export default class GameText implements Initializable {
     /** The default font family used for game text. */
     protected defaultFontFamily: string = 'retro-gamming';
 
@@ -36,15 +34,16 @@ export default class GameText {
         this._p = p;
     }
 
+    // prettier-ignore
     /**
-     * Initializes the font and pre-calculates relative font sizes.
+     * Setup the font and pre-calculates relative font sizes.
      *
      * Uses configuration values to define a set of pixel-perfect font sizes
      * based on current container width.
      *
      * @returns {void}
      */
-    defineFont(): void {
+    setup(): void {
         const { extraSmall, small, medium, large, extraLarge } = configs.screenLayout.fontSize;
 
         this._p.textFont(this.defaultFontFamily);
@@ -52,11 +51,11 @@ export default class GameText {
         //Define o tamanho das fontes
         this.fontSizes = [];
 
-        this.fontSizes.push(RelativeValuesHelper.getRelativeWidth(this._p, extraSmall));
-        this.fontSizes.push(RelativeValuesHelper.getRelativeWidth(this._p, small));
-        this.fontSizes.push(RelativeValuesHelper.getRelativeWidth(this._p, medium));
-        this.fontSizes.push(RelativeValuesHelper.getRelativeWidth(this._p, large));
-        this.fontSizes.push(RelativeValuesHelper.getRelativeWidth(this._p, extraLarge));
+        this.fontSizes[FontSize.EXTRA_SMALL] = RelativeValuesHelper.getRelativeWidth(this._p, extraSmall);
+        this.fontSizes[FontSize.SMALL]       = RelativeValuesHelper.getRelativeWidth(this._p, small);
+        this.fontSizes[FontSize.MEDIUM]      = RelativeValuesHelper.getRelativeWidth(this._p, medium);
+        this.fontSizes[FontSize.LARGE]       = RelativeValuesHelper.getRelativeWidth(this._p, large);
+        this.fontSizes[FontSize.EXTRA_LARGE] = RelativeValuesHelper.getRelativeWidth(this._p, extraLarge);
     }
 
     /**
@@ -65,7 +64,7 @@ export default class GameText {
      * @param {DisplayMetrics} displayMetrics - The current display dimensions and origin.
      * @returns {void}
      */
-    defineDisplayMetrics(displayMetrics: DisplayMetrics): void {
+    setDisplayMetrics(displayMetrics: DisplayMetrics): void {
         this._displayMetrics = displayMetrics;
     }
 
@@ -127,8 +126,8 @@ export default class GameText {
      * @returns {void}
      */
     textOnHud(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._displayMetrics.displayWidth);
-        const y = CoordinateHelper.getHudPosY(this._p, coordinate.y, this._displayMetrics.displayHeight);
+        const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._displayMetrics.display.width);
+        const y = CoordinateHelper.getHudPosY(this._p, coordinate.y, this._displayMetrics.display.height);
 
         this._p.text(text, x, y);
     }
@@ -141,8 +140,8 @@ export default class GameText {
      * @returns {void}
      */
     textOnDisplay(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getDisplayPosX(this._p, this._displayMetrics.displayWidth, coordinate.x);
-        const y = CoordinateHelper.getDisplayPosY(this._p, this._displayMetrics.displayHeight, coordinate.y);
+        const x = CoordinateHelper.getDisplayPosX(this._p, this._displayMetrics.display.width, coordinate.x);
+        const y = CoordinateHelper.getDisplayPosY(this._p, this._displayMetrics.display.height, coordinate.y);
 
         this._p.text(text, x, y);
     }

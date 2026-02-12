@@ -1,8 +1,8 @@
 import configs from '../../../config/configs';
-import Color from '../../enum/Color';
+import { Color } from '../../types/enums';
 import CellHelper from '../../helpers/CellHelper';
-import Cell from '../../interface/Cell';
-import Coordinate from '../../interface/Coordinate';
+import { Cell, Coordinate } from '../../types/Types';
+import { Initializable } from '../../types/Interfaces';
 
 /**
  * Manages the game's logical grid state and operations.
@@ -10,18 +10,11 @@ import Coordinate from '../../interface/Coordinate';
  * Provides a robust API for cell manipulation, row/column management,
  * collision detection, and mass grid modifications.
  */
-export default class GameGrid {
+export default class GameGrid implements Initializable {
     /**
      * The internal 2D array representing the game grid [y][x].
      */
     protected _grid: Cell[][] = [];
-
-    /**
-     * Creates an instance of GameGrid and initializes its state.
-     */
-    constructor() {
-        this.initalizeGrid();
-    }
 
     // --- CORE & UTILITIES ---
 
@@ -57,7 +50,7 @@ export default class GameGrid {
      *
      * @returns {void}
      */
-    initalizeGrid(): void {
+    setup(): void {
         this.resetGrid();
     }
 
