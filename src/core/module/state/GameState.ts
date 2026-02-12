@@ -164,4 +164,21 @@ export default class GameState implements State {
         }
         this._subscribers.get(property)?.push(callback);
     }
+
+    /**
+     * Unsubscribes from changes in specific state properties.
+     *
+     * @param {string} property - The state property to monitor (e.g., 'on', 'running').
+     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @returns {void}
+     */
+    public unsubscribe(property: StateProperty, callback: (value: boolean) => void): void {
+        const callbacks = this._subscribers.get(property);
+        if (callbacks) {
+            this._subscribers.set(
+                property,
+                callbacks.filter(cb => cb !== callback),
+            );
+        }
+    }
 }

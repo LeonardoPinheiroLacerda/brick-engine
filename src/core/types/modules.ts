@@ -121,6 +121,15 @@ export interface State extends Initializable {
      */
     subscribe(property: StateProperty, callback: (value: boolean) => void): void;
 
+    /**
+     * Unsubscribes from changes in specific state properties.
+     *
+     * @param {string} property - The state property to monitor (e.g., 'on', 'running').
+     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @returns {void}
+     */
+    unsubscribe(property: StateProperty, callback: (value: boolean) => void): void;
+
     /** Toggles the 'on' state. */
     toggleOn(): void;
     /** Toggles the 'start' state. */
