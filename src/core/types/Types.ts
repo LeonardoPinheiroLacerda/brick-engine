@@ -1,4 +1,5 @@
-import { Color } from './enums';
+import { Color, ControlKey } from './enums';
+import { Control, Grid, RendererComposite, State, Text } from './modules';
 
 /**
  *
@@ -35,11 +36,11 @@ export type Coordinate = {
 };
 
 /**
- * Interface representing the display metrics.
+ * Interface representing the renderer metrics.
  *
  * @interface
  */
-export interface DisplayMetrics {
+export interface RendererMetrics {
     display: {
         width: number;
         height: number;
@@ -56,3 +57,33 @@ export interface DisplayMetrics {
 }
 
 export type StateProperty = 'on' | 'start' | 'running' | 'gameOver' | 'colorEnabled' | 'muted';
+
+/**
+ * Enumerates all available control event types.
+ */
+export type ControlEventType = 'pressed' | 'held';
+
+/**
+ * Interface representing the game modules.
+ */
+export type GameModules = {
+    grid: Grid;
+    text: Text;
+    state: State;
+    control: Control;
+    renderer: RendererComposite;
+};
+
+/**
+ * Interface representing a game event.
+ */
+export interface GameEvent {
+    key: ControlKey;
+    type: ControlEventType;
+    modules: GameModules;
+}
+
+/**
+ * Type representing a control callback.
+ */
+export type ControlCallback = (event: GameEvent) => void;

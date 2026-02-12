@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { Cell, DisplayMetrics } from '../../types/Types';
+import { Cell, RendererMetrics } from '../../types/Types';
 import { Renderer } from '../../types/Interfaces';
 import DisplayRenderer from './DisplayRenderer';
 import { RendererComposite } from '../../types/modules';
@@ -29,7 +29,7 @@ export default class GameRenderer implements RendererComposite {
         this._renderers.forEach(renderer => renderer.render(grid));
     }
 
-    get displayMetrics(): DisplayMetrics {
+    get rendererMetrics(): RendererMetrics {
         return {
             display: {
                 width: this._displayRenderer.displayWidth,

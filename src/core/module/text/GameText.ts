@@ -1,7 +1,7 @@
 import P5 from 'p5';
 import configs from '../../../config/configs';
 import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
-import { Coordinate, DisplayMetrics } from '../../types/Types';
+import { Coordinate, RendererMetrics } from '../../types/Types';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import { Initializable } from '../../types/Interfaces';
@@ -21,7 +21,7 @@ export default class GameText implements Text {
     private fontSizes: number[] = [0];
 
     /** Stores the current display metrics for relative positioning. */
-    private _displayMetrics: DisplayMetrics;
+    private _rendererMetrics: RendererMetrics;
 
     /** The P5 instance used for rendering. */
     private _p: P5;
@@ -62,11 +62,11 @@ export default class GameText implements Text {
     /**
      * Sets the display metrics used for relative text positioning.
      *
-     * @param {DisplayMetrics} displayMetrics - The current display dimensions and origin.
+     * @param {RendererMetrics} rendererMetrics - The current renderer dimensions and origin.
      * @returns {void}
      */
-    setDisplayMetrics(displayMetrics: DisplayMetrics): void {
-        this._displayMetrics = displayMetrics;
+    setRendererMetrics(rendererMetrics: RendererMetrics): void {
+        this._rendererMetrics = rendererMetrics;
     }
 
     /**
@@ -127,8 +127,8 @@ export default class GameText implements Text {
      * @returns {void}
      */
     textOnHud(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._displayMetrics.display.width);
-        const y = CoordinateHelper.getHudPosY(this._p, coordinate.y, this._displayMetrics.display.height);
+        const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._rendererMetrics.display.width);
+        const y = CoordinateHelper.getHudPosY(this._p, coordinate.y, this._rendererMetrics.display.height);
 
         this._p.text(text, x, y);
     }
@@ -141,8 +141,8 @@ export default class GameText implements Text {
      * @returns {void}
      */
     textOnDisplay(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getDisplayPosX(this._p, this._displayMetrics.display.width, coordinate.x);
-        const y = CoordinateHelper.getDisplayPosY(this._p, this._displayMetrics.display.height, coordinate.y);
+        const x = CoordinateHelper.getDisplayPosX(this._p, this._rendererMetrics.display.width, coordinate.x);
+        const y = CoordinateHelper.getDisplayPosY(this._p, this._rendererMetrics.display.height, coordinate.y);
 
         this._p.text(text, x, y);
     }

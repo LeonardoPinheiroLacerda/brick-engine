@@ -73,3 +73,22 @@ export enum Sound {
     SHOT = './sounds/sound_12.wav',
     START_THEME = './sounds/sound_10.wav',
 }
+
+/**
+ * Enumerates all available control keys.
+ *
+ * @enum
+ */
+export enum ControlKey {
+    UP = 'up',
+    DOWN = 'down',
+    LEFT = 'left',
+    RIGHT = 'right',
+    ACTION = 'action',
+    POWER = 'power', // on/off
+    START_PAUSE = 'start_pause',
+    SOUND = 'sound',
+    RESET = 'reset',
+    EXIT = 'exit',
+    COLOR = 'color', // enableColors
+}

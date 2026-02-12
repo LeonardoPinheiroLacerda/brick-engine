@@ -1,6 +1,6 @@
-import { Color, FontAlign, FontSize, FontVerticalAlign } from './enums';
+import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign } from './enums';
 import { Initializable } from './Interfaces';
-import { Cell, Coordinate, DisplayMetrics, StateProperty } from './Types';
+import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
 
 /**
  * Interface for the renderer module.
@@ -25,7 +25,7 @@ export interface RendererComposite extends Renderer {
     /**
      * The display metrics of the renderer.
      */
-    displayMetrics: DisplayMetrics;
+    rendererMetrics: RendererMetrics;
 }
 
 /**
@@ -34,9 +34,9 @@ export interface RendererComposite extends Renderer {
 export interface Text extends Initializable {
     /**
      * Sets the display metrics for the text module.
-     * @param displayMetrics The display metrics to set.
+     * @param rendererMetrics The renderer metrics to set.
      */
-    setDisplayMetrics(displayMetrics: DisplayMetrics): void;
+    setRendererMetrics(rendererMetrics: RendererMetrics): void;
     /**
      * Sets the active text.
      */
@@ -300,4 +300,38 @@ export interface State extends Initializable {
     toggleColorEnabled(): void;
     /** Toggles the 'muted' state. */
     toggleMuted(): void;
+}
+
+/**
+ * Interface for the control module.
+ */
+export interface Control extends Initializable {
+    /**
+     * Triggers a control event. Used by input drivers (Keyboard, UI).
+     * @param key The key to trigger.
+     * @param type The event type ('pressed', 'held', 'released').
+     */
+    notify(key: ControlKey, type: ControlEventType): void;
+
+    /**
+     * Sets the modules required for the GameEvent context.
+     * @param modules The game modules.
+     */
+    setModules(modules: GameModules): void;
+
+    /**
+     * Subscribes to a control event.
+     * @param key The key to listen for.
+     * @param type The event type ('pressed', 'held', 'released').
+     * @param callback The function to call when the event occurs, receiving the game event info.
+     */
+    subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Unsubscribes from a control event.
+     * @param key The key to stop listening for.
+     * @param type The event type.
+     * @param callback The function to remove.
+     */
+    unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 }

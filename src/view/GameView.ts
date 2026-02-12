@@ -13,8 +13,8 @@ import BigButton from './components/ui/BigButton';
 import Button from './components/ui/Button';
 import Canvas from './components/ui/Canvas';
 import SmallButton from './components/ui/SmallButton';
-
-import Game from '../core/Game';
+import { ControlKey } from '../core/types/enums';
+import { Control } from '../core/types/modules';
 
 // prettier-ignore
 /**
@@ -39,20 +39,6 @@ export default class GameView {
     private _leftBtn          : P5.Element;
 
     private _actionBtn        : P5.Element;
-
-    private _pressOnOff       : (game: Game) => void;
-    private _pressStartPause  : (game: Game) => void;
-    private _pressSound       : (game: Game) => void;
-    private _pressReset       : (game: Game) => void;
-    private _pressExit        : (game: Game) => void;
-    private _pressEnableColor : (game: Game) => void;
-
-    private _pressUp          : (game: Game) => void;
-    private _pressDown        : (game: Game) => void;
-    private _pressRight       : (game: Game) => void;
-    private _pressLeft        : (game: Game) => void;
-
-    private _pressAction      : (game: Game) => void;
 
     private _parent           : HTMLElement;
     private _p                : P5;
@@ -119,7 +105,7 @@ export default class GameView {
         dimensions(width, height, canvasWidth, canvasHeight);
 
         //Hide splash screen
-        this.hideSplash();
+        this._hideSplash();
 
         return { canvas, canvasWidth, canvasHeight };
     }
@@ -129,42 +115,43 @@ export default class GameView {
      *
      * Connects click and hold events from the UI buttons to the game logic controllers.
      *
-     * @param game - The game instance containing the control logic and state methods.
+     * @param control - The control module instance.
      */
-    bound(game: Game) {
+    bound(control: Control) {
+        //System buttons
+        this._onOffBtn      .mouseClicked(()       => control.notify(ControlKey.POWER      , 'pressed'));
+        this._startPauseBtn .mouseClicked(()       => control.notify(ControlKey.START_PAUSE, 'pressed'));
+        this._soundBtn      .mouseClicked(()       => control.notify(ControlKey.SOUND      , 'pressed'));
+        this._resetBtn      .mouseClicked(()       => control.notify(ControlKey.RESET      , 'pressed'));
+        this._exitBtn       .mouseClicked(()       => control.notify(ControlKey.EXIT       , 'pressed'));
+        this._enableColorBtn.mouseClicked(()       => control.notify(ControlKey.COLOR      , 'pressed'));
 
-        // Attach events
-        this._pressOnOff        = game.gameControls.pressOnOff;
-        this._pressStartPause   = game.gameControls.pressStartPause;
-        this._pressSound        = game.gameControls.pressSound;
-        this._pressReset        = game.gameControls.pressReset;
-        this._pressExit         = game.gameControls.pressExit;
-        this._pressEnableColor  = game.gameControls.pressEnableColor;
-        this._pressUp           = game.gameControls.pressUp;
-        this._pressDown         = game.gameControls.pressDown;
-        this._pressRight        = game.gameControls.pressRight;
-        this._pressLeft         = game.gameControls.pressLeft;
-        this._pressAction       = game.gameControls.pressAction;
+        //Direction buttons
+        this._upBtn         .mouseClicked(()       => control.notify(ControlKey.UP         , 'pressed'));
+        this._downBtn       .mouseClicked(()       => control.notify(ControlKey.DOWN       , 'pressed'));
+        this._rightBtn      .mouseClicked(()       => control.notify(ControlKey.RIGHT      , 'pressed'));
+        this._leftBtn       .mouseClicked(()       => control.notify(ControlKey.LEFT       , 'pressed'));
 
-        //Click
-        this._onOffBtn.mouseClicked(()       => this._pressOnOff(game));
-        this._startPauseBtn.mouseClicked(()  => this._pressStartPause(game));
-        this._soundBtn.mouseClicked(()       => this._pressSound(game));
-        this._resetBtn.mouseClicked(()       => this._pressReset(game));
-        this._exitBtn.mouseClicked(()        => this._pressExit(game));
-        this._enableColorBtn.mouseClicked(() => this._pressEnableColor(game));
-        this._upBtn.mouseClicked(()          => this._pressUp(game));
-        this._downBtn.mouseClicked(()        => this._pressDown(game));
-        this._rightBtn.mouseClicked(()       => this._pressRight(game));
-        this._leftBtn.mouseClicked(()        => this._pressLeft(game));
-        this._actionBtn.mouseClicked(()      => this._pressAction(game));
+        //Action button
+        this._actionBtn     .mouseClicked(()       => control.notify(ControlKey.ACTION     , 'pressed'));
 
         //On hold
-        this.bindHoldAction(this._upBtn       , () => this._pressUp(game));
-        this.bindHoldAction(this._downBtn     , () => this._pressDown(game));
-        this.bindHoldAction(this._rightBtn    , () => this._pressRight(game));
-        this.bindHoldAction(this._leftBtn     , () => this._pressLeft(game));
-        this.bindHoldAction(this._actionBtn   , () => this._pressAction(game));
+        //System buttons
+        this._bindHeldEvent(this._onOffBtn      , ControlKey.POWER      , control);
+        this._bindHeldEvent(this._startPauseBtn , ControlKey.START_PAUSE, control);
+        this._bindHeldEvent(this._soundBtn      , ControlKey.SOUND      , control);
+        this._bindHeldEvent(this._resetBtn      , ControlKey.RESET      , control);
+        this._bindHeldEvent(this._exitBtn       , ControlKey.EXIT       , control);
+        this._bindHeldEvent(this._enableColorBtn, ControlKey.COLOR      , control);
+
+        //Direction buttons
+        this._bindHeldEvent(this._upBtn         , ControlKey.UP         , control);
+        this._bindHeldEvent(this._downBtn       , ControlKey.DOWN       , control);
+        this._bindHeldEvent(this._rightBtn      , ControlKey.RIGHT      , control);
+        this._bindHeldEvent(this._leftBtn       , ControlKey.LEFT       , control);
+
+        //Action button
+        this._bindHeldEvent(this._actionBtn     , ControlKey.ACTION     , control);
     }
 
     /**
@@ -174,34 +161,34 @@ export default class GameView {
      * (e.g., when the game is paused or stopped).
      */
     unbound() {
-        this._onOffBtn.mouseClicked(()        => {});
-        this._startPauseBtn.mouseClicked(()   => {});
-        this._soundBtn.mouseClicked(()        => {});
-        this._resetBtn.mouseClicked(()        => {});
-        this._exitBtn.mouseClicked(()         => {});
-        this._enableColorBtn.mouseClicked(()  => {});
+        this._onOffBtn      .mouseClicked(()       => {});
+        this._startPauseBtn .mouseClicked(()       => {});
+        this._soundBtn      .mouseClicked(()       => {});
+        this._resetBtn      .mouseClicked(()       => {});
+        this._exitBtn       .mouseClicked(()       => {});
+        this._enableColorBtn.mouseClicked(()       => {});
 
-        this._upBtn.mouseClicked(()           => {});
-        this._downBtn.mouseClicked(()         => {});
-        this._rightBtn.mouseClicked(()        => {});
-        this._leftBtn.mouseClicked(()         => {});
+        this._upBtn         .mouseClicked(()       => {});
+        this._downBtn       .mouseClicked(()       => {});
+        this._rightBtn      .mouseClicked(()       => {});
+        this._leftBtn       .mouseClicked(()       => {});
 
-        this._actionBtn.mouseClicked(()       => {});
+        this._actionBtn     .mouseClicked(()       => {});
 
-        this._upBtn.mousePressed(()           => {});
-        this._upBtn.mouseReleased(()          => {});
+        this._upBtn         .mousePressed(()       => {});
+        this._upBtn         .mouseReleased(()      => {});
 
-        this._downBtn.mousePressed(()         => {});
-        this._downBtn.mouseReleased(()        => {});
+        this._downBtn       .mousePressed(()       => {});
+        this._downBtn       .mouseReleased(()      => {});
 
-        this._rightBtn.mousePressed(()        => {});
-        this._rightBtn.mouseReleased(()       => {});
+        this._rightBtn      .mousePressed(()       => {});
+        this._rightBtn      .mouseReleased(()      => {});
 
-        this._leftBtn.mousePressed(()         => {});
-        this._leftBtn.mouseReleased(()        => {});
+        this._leftBtn       .mousePressed(()       => {});
+        this._leftBtn       .mouseReleased(()      => {});
 
-        this._actionBtn.mousePressed(()       => {});
-        this._actionBtn.mouseReleased(()      => {});
+        this._actionBtn     .mousePressed(()       => {});
+        this._actionBtn     .mouseReleased(()      => {});
     }
 
     /**
@@ -213,15 +200,16 @@ export default class GameView {
      * Releasing the button clears both timers.
      *
      * @param btn - The P5 button element to bind.
-     * @param action - The function to execute repeatedly while the button is held.
+     * @param key - The control key to notify.
+     * @param control - The control module instance.
      */
-    private bindHoldAction(btn: P5.Element, action: () => void) {
+    private _bindHeldEvent(btn: P5.Element, key: ControlKey, control: Control) {
         let delayTimer: NodeJS.Timeout;
         let holdTimer: NodeJS.Timeout;
 
         btn.mousePressed(() => {
             delayTimer = setTimeout(() => {
-                holdTimer = setInterval(action, configs.buttonHold.holdIntervalMs);
+                holdTimer = setInterval(() => control.notify(key, 'held'), configs.buttonHold.holdIntervalMs);
             }, configs.buttonHold.holdDelayMs);
         });
 
@@ -236,7 +224,7 @@ export default class GameView {
      *
      * @param delay - The delay in milliseconds (defaults to `configs.viewLayout.splashHideDelayMs`).
      */
-    private hideSplash(delay = configs.viewLayout.splashHideDelayMs) {
+    private _hideSplash(delay = configs.viewLayout.splashHideDelayMs) {
         const splash: HTMLDivElement = document.querySelector(configs.selectors.splash);
         setTimeout(() => {
             splash.style.display = 'none';

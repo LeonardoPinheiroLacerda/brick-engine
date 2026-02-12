@@ -6,10 +6,9 @@ import Game from './core/Game';
 
 export const P5Instance = new P5((p: P5) => {
     const view = new GameView(p, document.body);
-    const game = new Game(p);
+    const game = new Game(p, view);
 
     p.setup = () => {
-        view.build();
         game.setup();
     };
 
