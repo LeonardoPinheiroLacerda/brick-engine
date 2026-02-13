@@ -2,11 +2,11 @@ import P5 from 'p5';
 import GameView from './view/GameView';
 
 import './config/resources';
-import Game from './core/Game';
+import GameTmpTest from './GameTmpTest';
 
 export const P5Instance = new P5((p: P5) => {
     const view = new GameView(p, document.body);
-    const game = new Game(p, view);
+    const game = new GameTmpTest(p, view);
 
     p.setup = () => {
         game.setup();
