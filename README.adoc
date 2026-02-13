@@ -1,0 +1,56 @@
+= Brick Engine Documentation
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+== Objective
+
+The **Brick Engine** is a modular, TypeScript-based game engine designed for creating retro grid-based games (like Tetris, Snake, Breakout) that run in a browser. It leverages **P5.js** for rendering and simulates the experience of a classic handheld gaming device, complete with a dot-matrix style display, a HUD (Head-Up Display), and physical button controls.
+
+== Key Features
+
+* **Grid-Based Logic**: Built-in support for 2D grid management, collision detection, and row/column manipulations.
+* **Retro Aesthetic**: Simulates a physical device with customizable colors and responsive layout.
+* **Modular Architecture**: core functionality is split into distinct modules (Grid, Control, Renderer, State, Text, Time) for clean separation of concerns.
+* **Input Handling**: Unified control system supporting keyboard and on-screen button inputs.
+* **Game Loop**: Separated logic ticks (game speed) from rendering frames (60fps smooth animations).
+
+== Getting Started
+
+To create a game, you must extend the abstract `Game` class and implement its core abstract methods.
+
+=== Example
+
+[source,typescript]
+----
+import Game from './core/Game';
+
+export default class MyGame extends Game {
+    // Called every game tick (controlled by tickInterval)
+    // Use this for game logic: movement, collision, state updates
+    processTick(deltaTime: number) {
+        // ... game logic ...
+    }
+
+    // Called every frame (60 times per second)
+    // Use this for visual effects or animations independent of game logic
+    processFrame() {
+        // ... visual effects ...
+    }
+}
+----
+
+== Structure
+
+The engine is organized into the following core modules:
+
+* xref:docs/reference/Game.adoc[Game (Core)]: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
+* xref:docs/reference/GameGrid.adoc[GameGrid]: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection.
+* xref:docs/reference/GameControl.adoc[GameControl]: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
+* xref:docs/reference/GameRenderer.adoc[GameRenderer]: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.
+* xref:docs/reference/GameState.adoc[GameState]: Tracks global game properties like `running`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).
+* xref:docs/reference/GameText.adoc[GameText]: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.
+* xref:docs/reference/GameTime.adoc[GameTime]: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.

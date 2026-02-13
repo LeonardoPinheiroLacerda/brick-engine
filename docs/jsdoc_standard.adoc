@@ -1,29 +1,37 @@
-# Documentation Standard (JSDoc)
+= Documentation Standard (JSDoc)
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
 
 This document establishes the standards for documenting code in this project using JSDoc.
 The goal is to provide a clear, technical, and detailed reference for all developers.
 
-## General Principles
+== General Principles
 
-1.  **Language**: All documentation must be written in **English**.
-2.  **Tone**: Technical, concise, and descriptive. Avoid first-person ("I", "we").
-3.  **Completeness**: All exported functions, classes, methods, and interfaces must be documented.
+. **Language**: All documentation must be written in **English**.
+. **Tone**: Technical, concise, and descriptive. Avoid first-person ("I", "we").
+. **Completeness**: All exported functions, classes, methods, and interfaces must be documented.
 
-## Typing Requirement
+== Typing Requirement
 
-Strict typing is **mandatory** for all methods and functions documented.
+IMPORTANT: Strict typing is **mandatory** for all methods and functions documented.
 
-- **Inputs**: All parameters must have their types explicitly declared in JSDoc (`@param {Type} name`).
-- **Outputs**: All methods/functions must explicitly declare their return type (`@returns {Type}` or `@returns {void}`).
+* **Inputs**: All parameters must have their types explicitly declared in JSDoc (`@param {Type} name`).
+* **Outputs**: All methods/functions must explicitly declare their return type (`@returns {Type}` or `@returns {void}`).
 
-## Classes
+== Classes
 
 Classes must have a description explaining their responsibility.
-**CRITICAL**: All class public properties must be documented, explaining what they store.
 
-### Example
+WARNING: All class public properties must be documented, explaining what they store.
 
-```typescript
+=== Example
+
+[source,typescript]
+----
 /**
  * Manages the game view layer and user interactions.
  *
@@ -48,22 +56,23 @@ export default class GameView {
         this.parent = parent;
     }
 }
-```
+----
 
-## Functions and Methods
+== Functions and Methods
 
 Every function must explain **what** it does, **how** it behaves (if complex), and describing all parameters and return values.
 
-### Structure
+=== Structure
 
-1.  **Short Description**: One-line summary.
-2.  **Detailed Description**: (Optional) More context, side-effects, or algorithm details.
-3.  **@param**: One for each argument, with type and description.
-4.  **@returns**: The return type and description of what is returned.
+. **Short Description**: One-line summary.
+. **Detailed Description**: (Optional) More context, side-effects, or algorithm details.
+. **@param**: One for each argument, with type and description.
+. **@returns**: The return type and description of what is returned.
 
-### Example
+=== Example
 
-```typescript
+[source,typescript]
+----
 /**
  * Calculates the optimal dimensions for the game container.
  *
@@ -77,15 +86,16 @@ Every function must explain **what** it does, **how** it behaves (if complex), a
 function calculateDimensions(availableWidth: number, availableHeight: number): Dimensions {
     // ...
 }
-```
+----
 
-## Interfaces and Types
+== Interfaces and Types
 
 Interfaces must describe what object shape they represent and document each property.
 
-### Example
+=== Example
 
-```typescript
+[source,typescript]
+----
 /**
  * Represents the layout response containing container references.
  */
@@ -96,4 +106,4 @@ interface ButtonLayoutResponse {
     /** The container for directional buttons. */
     mediumButtonContainer: P5.Element;
 }
-```
+----

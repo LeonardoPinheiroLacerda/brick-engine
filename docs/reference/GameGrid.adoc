@@ -1,0 +1,64 @@
+= GameGrid Module
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `GameGrid` module manages the state of the 2D grid which is central to most retro games. It handles cell values, colors, and row/column manipulations.
+
+== Core Concepts
+
+* **Coordinates**: `{ x: number, y: number }` objects. (0,0) is top-left.
+* **Cells**: Objects containing `{ value: number, color: string }`.
+** `value > 0`: Active (occupied).
+** `value === 0`: Inactive (empty).
+
+== Key Methods
+
+=== Grid Access
+
+* `getGrid()`: Returns the full 2D array of cells `Cell[][]`.
+* `getCell(coordinate)`: Returns a `Cell` or `null` if out of bounds.
+* `isValidCoordinate(coordinate)`: Returns `true` if within grid bounds.
+
+=== Modification
+
+* `setCellValue(coordinate, value)`: Sets the numeric value of a cell.
+* `setCellColor(coordinate, color)`: Sets the color of a cell. Use `Color` enum.
+* `fillArea(start, end, value, color)`: Fills a rectangular area.
+* `stampPiece(coordinates, value, color)`: Sets multiple specific coordinates at once (useful for placing game pieces).
+
+=== Row & Column Operations
+
+* `isRowFull(y)`: Checks if a row has no empty cells.
+* `clearFullRows()`: Scans grid, clears full rows, and shifts everything down. Returns number of cleared rows.
+* `isColumnFull(x)`: Checks if a column is full.
+* `shiftRowsDown(fromY)`: Shifts rows down starting from `fromY`.
+
+=== Queries
+
+* `isCellActive(coordinate)`: Returns `true` if cell value > 0.
+* `isAreaOccupied(coordinates)`: Returns `true` if _any_ coordinate in the list is active or out of bounds.
+
+== Example Usage
+
+[source,typescript]
+----
+const { grid } = this.modules;
+
+// Check collision
+if (grid.isAreaOccupied(nextPieceCoordinates)) {
+    // Collision detected!
+}
+
+// Lock piece into grid
+grid.stampPiece(currentPieceCoordinates, 1, Color.RED);
+
+// Clear lines
+const linesCleared = grid.clearFullRows();
+if (linesCleared > 0) {
+    // Add score
+}
+----

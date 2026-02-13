@@ -1,0 +1,34 @@
+= GameTime Module
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `GameTime` module manages the game loop timing. It separates game logic "ticks" from rendering frames, allowing for consistent game speed regardless of frame rate.
+
+== Concepts
+
+* **Tick**: A single step of game logic (e.g., moving a piece down one cell).
+* **Tick Interval**: The time in milliseconds between ticks. A lower interval means the game runs faster.
+
+== API Methods
+
+=== Time Management
+
+* `shouldTick()`: Returns `true` if enough time has passed since the last tick to run logic again.
+* `update(deltaTime)`: Adds elapsed time to the internal accumulator. Called automatically by `Game`.
+
+=== Speed Control
+
+* `tickInterval`: Getter/Setter for the interval in ms.
+** Example: `time.tickInterval = 500;` (2 ticks per second).
+* `incrementTickInterval(amount)`: Increases the interval (slower game).
+* `decrementTickInterval(amount)`: Decreases the interval (faster game).
+
+This is commonly used to increase difficulty as the player progresses.
+
+=== Performance
+
+There is a `GameTimeWithPerformance` variant that tracks logic execution time, mostly used for debugging and profiling.

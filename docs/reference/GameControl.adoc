@@ -1,0 +1,50 @@
+= GameControl Module
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `GameControl` module handles user input from keyboard and virtual UI buttons. It provides an event-based system for reacting to player actions.
+
+== Supported Keys (`ControlKey`)
+
+The engine maps physical keys (Arrow keys, WASD, Space, Enter) to virtual keys:
+
+* `UP` / `DOWN` / `LEFT` / `RIGHT`: Directional controls.
+* `ACTION`: Primary action (e.g., Spacebar).
+* `START_PAUSE`: Pausing or starting game (e.g., Enter/P).
+* `RESET`: Reset game.
+* `SOUND`: Toggle sound.
+* `COLOR`: Toggle color mode.
+* `POWER`: Turn console on/off.
+* `EXIT`: Exit game (if supported by environment).
+
+== Event Types (`ControlEventType`)
+
+* `ControlEventType.PRESSED` (`'pressed'`): Triggered once when key is pressed.
+* `ControlEventType.HELD` (`'held'`): Triggered repeatedly while key is held down (interval defined in config).
+
+== API Methods
+
+=== `subscribe(key, type, callback)`
+
+Register a callback for a specific key and event type.
+
+[source,typescript]
+----
+const { control } = this.modules;
+
+control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
+    this.shoot();
+});
+----
+
+=== `unsubscribe(key, type, callback)`
+
+Remove a previously registered callback.
+
+=== `notify(key, type)`
+
+Manually trigger an event (mostly used internally by the input system).

@@ -1,34 +1,41 @@
-# GameState Module
+= GameState Module
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
 
 The `GameState` module acts as the central hub for tracking the game's lifecycle and user preferences. It handles persistence to `localStorage` for settings like sound and color mode.
 
-## State Properties
+== State Properties
 
 The module exposes several boolean properties that represent the game's current status:
 
-- `on`: Is the device turned "on"?
-- `start`: Has the "Start" button been pressed?
-- `running`: Is the game loop actively updating logic?
-- `gameOver`: Has the player lost?
-- `muted`: Is sound disabled? (Persisted)
-- `colorEnabled`: Is color mode active? (Persisted)
+* `on`: Is the device turned "on"?
+* `start`: Has the "Start" button been pressed?
+* `running`: Is the game loop actively updating logic?
+* `gameOver`: Has the player lost?
+* `muted`: Is sound disabled? (Persisted)
+* `colorEnabled`: Is color mode active? (Persisted)
 
-## Methods
+== Methods
 
-### Toggles
+=== Toggles
 
-- `toggleOn()`
-- `toggleStart()`
-- `toggleRunning()`
-- `toggleGameOver()`
-- `toggleMuted()`
-- `toggleColorEnabled()`
+* `toggleOn()`
+* `toggleStart()`
+* `toggleRunning()`
+* `toggleGameOver()`
+* `toggleMuted()`
+* `toggleColorEnabled()`
 
-### Subscription
+=== Subscription
 
 You can subscribe to changes on any of these properties. This is useful for triggering UI updates or sound effects.
 
-```typescript
+[source,typescript]
+----
 const { state } = this.modules;
 
 state.subscribe('gameOver', isOver => {
@@ -37,8 +44,8 @@ state.subscribe('gameOver', isOver => {
         // Show game over screen
     }
 });
-```
+----
 
-### Persistence
+=== Persistence
 
 The module automatically saves `muted` and `colorEnabled` preferences to the browser's `localStorage` using keys defined in `configs.ts`.
