@@ -10,6 +10,7 @@
     "start": "webpack serve --open",
     "build": "webpack --mode production",
     "lint": "eslint .",
+    "docs:diagram": "./scripts/generate-diagrams.sh",
     "format": "npx prettier -w .",
     "check-format": "npx prettier -c ."
   },
