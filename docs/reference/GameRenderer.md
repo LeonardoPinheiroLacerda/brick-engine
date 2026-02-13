@@ -1,0 +1,34 @@
+# GameRenderer Module
+
+The `GameRenderer` module handles the visualization of the game state on the HTML5 canvas using P5.js.
+
+It follows a **Strategy Composite** pattern, allowing multiple render layers, but the primary renderer is `DisplayRenderer`.
+
+## Features
+
+- **Automatic Scaling**: Adjusts the game grid to fit the container while maintaining aspect ratio.
+- **Retro Styling**: Renders cells with a grid gap and "LCD" style look.
+- **Metrics**: Exposes calculated dimensions for other modules (like Text) to align content correctly.
+
+## API Methods
+
+### `render(grid: Cell[][])`
+
+Called automatically by the main `Game` loop. Draws the current state of the grid.
+
+### `rendererMetrics`
+
+Returns an object containing:
+
+- `display`: Dimensions (`width`, `height`) and `origin` (`x`, `y`) of the main game screen area.
+- `cell`: Size of a single grid cell (`size`).
+
+This is useful if you need to perform custom drawing (e.g., particles) aligned with the grid.
+
+```typescript
+const { renderer } = this.modules;
+const { cell } = renderer.rendererMetrics;
+
+// Draw a custom effect at grid position (5, 5)
+p5.circle(5 * cell.size, 5 * cell.size, 10);
+```
