@@ -1,5 +1,4 @@
 import { Color, ControlKey } from './enums';
-import { Control, Grid, RendererComposite, State, Text } from './modules';
 
 /**
  *
@@ -66,12 +65,15 @@ export type ControlEventType = 'pressed' | 'held';
 /**
  * Interface representing the game modules.
  */
+import { Control, Grid, RendererComposite, State, Text, Time } from './modules';
+
 export type GameModules = {
     grid: Grid;
     text: Text;
     state: State;
     control: Control;
     renderer: RendererComposite;
+    time: Time;
 };
 
 /**

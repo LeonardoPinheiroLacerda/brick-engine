@@ -1,3 +1,4 @@
+import P5 from 'p5';
 import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign } from './enums';
 import { Initializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
@@ -334,4 +335,50 @@ export interface Control extends Initializable {
      * @param callback The function to remove.
      */
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+}
+
+/**
+ * Interface for the time module.
+ */
+export interface Time extends Initializable {
+    /**
+     * Updates the time accumulator.
+     * @param deltaTime Time elapsed since last frame in milliseconds.
+     */
+    update(deltaTime: number): void;
+
+    /**
+     * Checks if enough time has passed for a game tick.
+     * @returns True if a tick should occur.
+     */
+    shouldTick(): boolean;
+
+    /**
+     * Resets the time accumulator.
+     */
+    reset(): void;
+
+    /**
+     * Sets the tick interval.
+     * @param interval The new tick interval in milliseconds.
+     */
+    tickInterval: number;
+
+    /**
+     * Increments the tick interval.
+     * @param amount The amount to increment the tick interval by.
+     */
+    incrementTickInterval(amount: number): void;
+
+    /**
+     * Decrements the tick interval.
+     * @param amount The amount to decrement the tick interval by.
+     */
+    decrementTickInterval(amount: number): void;
+
+    /**
+     * Renders debug information overlay.
+     * @param p The P5 instance to render with.
+     */
+    renderDebug(p: P5): void;
 }

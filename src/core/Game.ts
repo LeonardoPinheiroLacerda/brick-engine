@@ -5,8 +5,10 @@ import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
 import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
+import GameTime from './module/time/GameTime';
 import { Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
+import configs from '../config/configs';
 
 export default abstract class Game implements Initializable {
     private _p: P5;
@@ -14,9 +16,13 @@ export default abstract class Game implements Initializable {
     private _modules: GameModules;
     private _view: GameView;
 
+    protected _frameInterval: number;
+
     constructor(p: P5, view: GameView) {
         this._p = p;
         this._view = view;
+
+        this._frameInterval = configs.game.frameInterval;
     }
 
     get modules(): GameModules {
@@ -32,6 +38,7 @@ export default abstract class Game implements Initializable {
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
+            time: new GameTime(configs.game.tickInterval),
         };
 
         Object.values(this._modules).forEach(module => {
@@ -48,7 +55,26 @@ export default abstract class Game implements Initializable {
     }
 
     draw() {
-        const { renderer, grid } = this._modules;
+        const { renderer, grid, time } = this._modules;
+
+        // Update time accumulator
+        time.update(this._p.deltaTime);
+
+        // Process Logic Tick
+        if (time.shouldTick()) {
+            this.processTick(this._p.deltaTime);
+        }
+
         renderer.render(grid.getGrid());
+
+        if (this._frameInterval === 0 || this._p.frameCount % this._frameInterval === 0) {
+            this.processFrame();
+        }
+
+        // Debug Overlay
+        time.renderDebug(this._p);
     }
+
+    abstract processTick(deltaTime: number): void;
+    abstract processFrame(): void;
 }
