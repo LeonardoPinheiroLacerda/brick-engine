@@ -19,18 +19,23 @@ The `GameTime` module manages the game loop timing. It separates game logic "tic
 
 Returns `true` if enough time has passed since the last tick to run logic again.
 
-*   **Params**:
-    *   None
-*   **Returns**:
-    *   `boolean`: `true` if a tick should occur.
-*   **Behavior**:
-    *   Checks if accumulated time >= tick interval.
-    *   Subtracts tick interval from accumulator if true.
-*   **Example**:
+**Returns**
+
+`boolean` - `true` if a tick should occur.
+
+**Behavior**
+
+Checks if accumulated time >= tick interval. If true, subtracts tick interval from accumulator and returns `true`.
+
+**Example**
 
 [source,typescript]
 ----
-if (this.modules.time.shouldTick()) {
+while (this.modules.time.shouldTick()) {
+    this.processTick();
+}
+----
+
 === `update(deltaTime: number): void`
 
 Accumulates time from the render loop.
@@ -42,7 +47,6 @@ Accumulates time from the render loop.
 |Name |Type |Description
 |`deltaTime` |`number` |Time elapsed since last frame (ms).
 |===
-
 
 **Behavior**
 
@@ -56,39 +60,35 @@ Adds `deltaTime` to the internal accumulator.
 this.modules.time.update(p.deltaTime);
 ----
 
-=== `shouldTick(): boolean`
+=== `reset(): void`
 
-Determines if a game logic tick should occur.
-
-
-**Returns**
-
-`boolean` - `true` if accumulator >= tick interval.
+Resets the time accumulator to zero.
 
 **Behavior**
 
-Checks if enough time has passed. If yes, subtracts the interval from the accumulator and returns `true`.
-
-**Example**
-
-[source,typescript]
-----
-while (this.modules.time.shouldTick()) {
-    this.processTick();
-}
-----
+Useful when restarting a game or coming back from a pause to prevent a "burst" of ticks.
 
 === `tickInterval: number`
 
 Getter/Setter for the logic tick interval in milliseconds.
 
-*   **Params**:
-    *   `value`: New interval in ms (Setter).
-*   **Returns**:
-    *   `number`: Current interval in ms (Getter).
-*   **Behavior**:
-    *   Lower values make the game run faster (more ticks per second).
-*   **Example**:
+**Parameters (Setter)**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`value` |`number` |New interval in ms.
+|===
+
+**Returns (Getter)**
+
+`number` - Current interval in ms.
+
+**Behavior**
+
+Lower values make the game run faster (more ticks per second).
+
+**Example**
 
 [source,typescript]
 ----
@@ -100,13 +100,19 @@ this.modules.time.tickInterval = 250;
 
 Increases the interval (slower game).
 
-*   **Params**:
-    *   `amount`: Milliseconds to add.
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Adds `amount` to current `tickInterval`.
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |Milliseconds to add.
+|===
+
+**Behavior**
+
+Adds `amount` to current `tickInterval`.
+
+**Example**
 
 [source,typescript]
 ----
@@ -117,19 +123,41 @@ this.modules.time.incrementTickInterval(50);
 
 Decreases the interval (faster game).
 
-*   **Params**:
-    *   `amount`: Milliseconds to subtract.
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Subtracts `amount` from `tickInterval`.
-    *   Clamps to a minimum value (e.g., 10ms).
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |Milliseconds to subtract.
+|===
+
+**Behavior**
+
+Subtracts `amount` from `tickInterval`, clamped to a minimum value.
+
+**Example**
 
 [source,typescript]
 ----
 this.modules.time.decrementTickInterval(50);
 ----
+
+=== `renderPerformanceMonitor(p: P5): void`
+
+Renders a performance overlay (TPS/FPS) if enabled.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`P5` |The P5 instance to render with.
+|===
+
+**Behavior**
+
+Draws logic and render performance metrics to the screen. Works in conjunction with `GameTimeWithPerformanceMonitor`.
+
 
 This is commonly used to increase difficulty as the player progresses.
 

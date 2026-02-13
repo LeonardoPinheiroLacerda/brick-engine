@@ -18,6 +18,22 @@ It follows a **Strategy Composite** pattern, allowing multiple render layers, bu
 
 == API Reference
 
+=== `addRenderer(renderer: Renderer): void`
+
+Adds a new rendering layer to the stack.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`renderer` |`Renderer` |The renderer implementation to add.
+|===
+
+**Behavior**
+
+Appends the renderer to the internal list. Renderers are executed in the order they were added.
+
 === `render(grid: Cell[][]): void`
 
 Called automatically by the main `Game` loop. Draws the current state of the grid.
@@ -30,10 +46,9 @@ Called automatically by the main `Game` loop. Draws the current state of the gri
 |`grid` |`Cell[][]` |The 2D array of cells to render.
 |===
 
-
 **Behavior**
 
-Iterates through the grid and draws each active cell. Draws the background grid.
+Iterates through all registered renderers and calls their `render()` method with the grid.
 
 **Example**
 
@@ -46,10 +61,9 @@ this.modules.renderer.render(currentGrid);
 
 Read-only property containing calculated dimensions.
 
-
 **Returns**
 
-`RendererMetrics` - Object with display and cell dimensions.
+`RendererMetrics` - Object with display, hud, and cell dimensions.
 
 **Behavior**
 
