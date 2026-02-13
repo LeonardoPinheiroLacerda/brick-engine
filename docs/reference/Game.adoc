@@ -36,14 +36,20 @@ class MyGame extends Game { ... }
 
 Abstract method called once per "Game Tick".
 
-*   **Params**:
-    *   `deltaTime`: Time elapsed since the last tick (in ms).
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Executed at a fixed time step defined by `configs.game.tickInterval`.
-    *   Should contain all state-changing game logic.
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`deltaTime` |`number` |Time elapsed since the last tick (in ms).
+|===
+
+
+**Behavior**
+
+Executed at a fixed time step defined by `configs.game.tickInterval`. Should contain all state-changing game logic.
+
+**Example**
 
 [source,typescript]
 ----
@@ -56,14 +62,13 @@ processTick(deltaTime: number): void {
 
 Abstract method called every frame.
 
-*   **Params**:
-    *   None
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Executed every render frame (typically 60fps).
-    *   Used for interpolation, particles, or visual effects not affecting game state.
-*   **Example**:
+
+
+**Behavior**
+
+Executed every render frame (typically 60fps). Used for interpolation, particles, or visual effects not affecting game state.
+
+**Example**
 
 [source,typescript]
 ----
@@ -76,14 +81,16 @@ processFrame(): void {
 
 Abstract method called after initialization.
 
-*   **Params**:
-    *   None
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Called once after all engine modules are set up and linked.
-    *   Ideal place for subscribing to controls and setting initial state.
-*   **Example**:
+
+**Returns**
+
+`void`
+
+**Behavior**
+
+Called once after all engine modules are set up and linked. Ideal place for subscribing to controls and setting initial state.
+
+**Example**
 
 [source,typescript]
 ----

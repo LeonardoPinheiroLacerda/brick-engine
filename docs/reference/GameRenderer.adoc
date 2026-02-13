@@ -22,14 +22,20 @@ It follows a **Strategy Composite** pattern, allowing multiple render layers, bu
 
 Called automatically by the main `Game` loop. Draws the current state of the grid.
 
-*   **Params**:
-    *   `grid`: The 2D array of cells to render.
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Iterates through the grid and draws each active cell.
-    *   Draws the background grid.
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`grid` |`Cell[][]` |The 2D array of cells to render.
+|===
+
+
+**Behavior**
+
+Iterates through the grid and draws each active cell. Draws the background grid.
+
+**Example**
 
 [source,typescript]
 ----
@@ -40,12 +46,16 @@ this.modules.renderer.render(currentGrid);
 
 Read-only property containing calculated dimensions.
 
-*   **Returns**:
-    *   `RendererMetrics`: Object with display and cell dimensions.
-*   **Behavior**:
-    *   Values are calculated during `setup()` based on screen size.
-    *   Used for aligning HUD elements and custom drawing.
-*   **Example**:
+
+**Returns**
+
+`RendererMetrics` - Object with display and cell dimensions.
+
+**Behavior**
+
+Values are calculated during `setup()` based on screen size. Used for aligning HUD elements and custom drawing.
+
+**Example**
 
 [source,typescript]
 ----

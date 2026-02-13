@@ -45,88 +45,115 @@ This ensures that any module requiring persistent state (not just Sound) is auto
 
 == API Reference
 
-=== `play(sound: Sound)`
+=== `play(sound: Sound): Promise<void>`
 
 Plays a sound effect using the Web Audio API.
 
-*   **Params**:
-    *   `sound`: The `Sound` enum identifier to play.
-*   **Returns**:
-    *   `Promise<void>`: Resolves when playback starts.
-*   **Behavior**:
-    *   Resumes `AudioContext` if suspended.
-    *   Creates a source node and connects it to the master gain.
-    *   Starts playback immediately.
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`sound` |`Sound` |The `Sound` enum identifier to play.
+|===
+
+**Returns**
+
+`Promise<void>` - Resolves when playback starts.
+
+**Behavior**
+
+Resumes `AudioContext` if suspended. Creates a source node, connects it to the master gain, and starts playback immediately.
+
+**Example**
 
 [source,typescript]
 ----
 this.modules.sound.play(Sound.ACTION_1);
 ----
 
-=== `stop(sound: Sound)`
+=== `stop(sound: Sound): void`
 
 Stops all specific instances of a sound type.
 
-*   **Params**:
-    *   `sound`: The `Sound` enum identifier to stop.
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Iterates through active sources and stops those matching the sound type.
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`sound` |`Sound` |The `Sound` enum identifier to stop.
+|===
+
+
+**Behavior**
+
+Iterates through active sources and stops those matching the sound type.
+
+**Example**
 
 [source,typescript]
 ----
 this.modules.sound.stop(Sound.THEME_MUSIC);
 ----
 
-=== `stopAll()`
+=== `stopAll(): void`
 
 Stops all currently playing sounds.
 
-*   **Params**:
-    *   None
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Immediately stops and disconnects all active sound sources.
-*   **Example**:
+
+
+**Behavior**
+
+Immediately stops and disconnects all active sound sources.
+
+**Example**
 
 [source,typescript]
 ----
 this.modules.sound.stopAll();
 ----
 
-=== `setMute(muted: boolean)`
+=== `setMute(muted: boolean): void`
 
 Sets the global mute state.
 
-*   **Params**:
-    *   `muted`: `true` to silence audio, `false` to enable it.
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Updates internal state.
-    *   Sets Master `GainNode` gain to `0` (muted) or `1` (unmuted).
-*   **Example**:
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`muted` |`boolean` |`true` to silence audio, `false` to enable it.
+|===
+
+
+**Behavior**
+
+Updates internal state and sets Master `GainNode` gain to `0` (muted) or `1` (unmuted).
+
+**Example**
 
 [source,typescript]
 ----
 this.modules.sound.setMute(true);
 ----
 
-=== `toggleMute()`
+=== `toggleMute(): void`
 
 Toggles the current mute state.
 
-*   **Params**:
-    *   None
-*   **Returns**:
-    *   `void`
-*   **Behavior**:
-    *   Inverts the current mute state and calls `setMute`.
-*   **Example**:
+**Parameters**
+
+None.
+
+**Returns**
+
+`void`
+
+**Behavior**
+
+Inverts the current mute state and calls `setMute`.
+
+**Example**
 
 [source,typescript]
 ----

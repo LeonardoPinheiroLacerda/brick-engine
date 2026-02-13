@@ -26,7 +26,7 @@ image::docs/images/lifecycle.svg[Engine Lifecycle]
 
 == Getting Started
 
-To create a game, you must extend the abstract `Game` class and implement its core abstract methods.
+To create a game, you must extend the abstract `Game` class and implement its three core abstract methods: `setupGame`, `processTick`, and `processFrame`.
 
 === Example
 
@@ -35,15 +35,25 @@ To create a game, you must extend the abstract `Game` class and implement its co
 import Game from './core/Game';
 
 export default class MyGame extends Game {
-    // Called every game tick (controlled by tickInterval)
-    // Use this for game logic: movement, collision, state updates
-    processTick(deltaTime: number) {
+    
+    // 1. Setup: Called once after engine initialization
+    setupGame(): void {
+        // Initialize your game state here
+        this.modules.state.toggleStart();
+        this.modules.text.setTextSize(FontSize.MEDIUM);
+    }
+
+    // 2. Game Logic: Called every game tick (controlled by tickInterval)
+    // Use this for movement, collision, state limits
+    processTick(deltaTime: number): void {
+        if (!this.modules.state.running) return;
+        
         // ... game logic ...
     }
 
-    // Called every frame (60 times per second)
-    // Use this for visual effects or animations independent of game logic
-    processFrame() {
+    // 3. Rendering: Called every frame (60 times per second)
+    // Use this for visual effects independent of game logic (particles, animations)
+    processFrame(): void {
         // ... visual effects ...
     }
 }
