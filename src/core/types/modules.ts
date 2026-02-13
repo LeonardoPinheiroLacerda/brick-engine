@@ -274,7 +274,7 @@ export interface State extends Initializable {
     /**
      * Subscribes to changes in specific state properties.
      *
-     * @param {string} property - The state property to monitor (e.g., 'on', 'running').
+     * @param {StateProperty} property - The state property to monitor.
      * @param {function(boolean): void} callback - The function to execute when the property changes.
      * @returns {void}
      */
@@ -283,7 +283,7 @@ export interface State extends Initializable {
     /**
      * Unsubscribes from changes in specific state properties.
      *
-     * @param {string} property - The state property to monitor (e.g., 'on', 'running').
+     * @param {StateProperty} property - The state property to monitor.
      * @param {function(boolean): void} callback - The function to execute when the property changes.
      * @returns {void}
      */
@@ -310,7 +310,7 @@ export interface Control extends Initializable {
     /**
      * Triggers a control event. Used by input drivers (Keyboard, UI).
      * @param key The key to trigger.
-     * @param type The event type ('pressed', 'held', 'released').
+     * @param type The event type (ControlEventType).
      */
     notify(key: ControlKey, type: ControlEventType): void;
 
@@ -323,7 +323,7 @@ export interface Control extends Initializable {
     /**
      * Subscribes to a control event.
      * @param key The key to listen for.
-     * @param type The event type ('pressed', 'held', 'released').
+     * @param type The event type (ControlEventType).
      * @param callback The function to call when the event occurs, receiving the game event info.
      */
     subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;

@@ -1,4 +1,4 @@
-import { ControlKey } from '../types/enums';
+import { ControlEventType, ControlKey } from '../types/Types';
 import { Control } from '../types/modules';
 import configs from '../../config/configs';
 
@@ -23,12 +23,12 @@ export default class ControlInputHandlerHelper {
         if (this._activeKeys.has(key)) return; // Prevent double handling
 
         // 1. Notify Pressed
-        this._control.notify(key, 'pressed');
+        this._control.notify(key, ControlEventType.PRESSED);
 
         // 2. Schedule Hold
         const delayTimer = setTimeout(() => {
             const holdTimer = setInterval(() => {
-                this._control.notify(key, 'held');
+                this._control.notify(key, ControlEventType.HELD);
             }, configs.buttonHold.holdIntervalMs);
 
             // Update map with hold timer

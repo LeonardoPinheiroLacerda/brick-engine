@@ -13,12 +13,12 @@ The engine maps physical keys (Arrow keys, WASD, Space, Enter) to virtual keys:
 - `SOUND`: Toggle sound.
 - `COLOR`: Toggle color mode.
 - `POWER`: Turn console on/off.
+- `EXIT`: Exit game (if supported by environment).
 
 ## Event Types (`ControlEventType`)
 
-- `PRESS`: Triggered once when key is pressed.
-- `RELEASE`: Triggered once when key is released.
-- `HOLD`: Triggered repeatedly while key is held down (interval defined in config).
+- `ControlEventType.PRESSED` (`'pressed'`): Triggered once when key is pressed.
+- `ControlEventType.HELD` (`'held'`): Triggered repeatedly while key is held down (interval defined in config).
 
 ## API Methods
 
@@ -29,7 +29,7 @@ Register a callback for a specific key and event type.
 ```typescript
 const { control } = this.modules;
 
-control.subscribe(ControlKey.ACTION, ControlEventType.PRESS, () => {
+control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
     this.shoot();
 });
 ```

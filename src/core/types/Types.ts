@@ -1,4 +1,6 @@
-import { Color, ControlKey } from './enums';
+import { Color, ControlKey, ControlEventType, StateProperty } from './enums';
+
+export { Color, ControlKey, ControlEventType, StateProperty };
 
 /**
  *
@@ -55,12 +57,9 @@ export interface RendererMetrics {
     };
 }
 
-export type StateProperty = 'on' | 'start' | 'running' | 'gameOver' | 'colorEnabled' | 'muted';
-
 /**
  * Enumerates all available control event types.
  */
-export type ControlEventType = 'pressed' | 'held';
 
 /**
  * Interface representing the game modules.

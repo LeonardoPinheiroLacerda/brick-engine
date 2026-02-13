@@ -1,4 +1,4 @@
-import { ControlKey } from '../../types/enums';
+import { ControlEventType, ControlKey } from '../../types/Types';
 import { Control } from '../../types/modules';
 
 export default class SystemEventsSubscriber {
@@ -9,16 +9,16 @@ export default class SystemEventsSubscriber {
     }
 
     subscribe(): void {
-        this._control.subscribe(ControlKey.POWER, 'pressed', event => event.modules.state.toggleOn());
-        this._control.subscribe(ControlKey.SOUND, 'pressed', event => event.modules.state.toggleMuted());
-        this._control.subscribe(ControlKey.COLOR, 'pressed', event => event.modules.state.toggleColorEnabled());
-        this._control.subscribe(ControlKey.RESET, 'pressed', event => {
+        this._control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, event => event.modules.state.toggleOn());
+        this._control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, event => event.modules.state.toggleMuted());
+        this._control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, event => event.modules.state.toggleColorEnabled());
+        this._control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, event => {
             event.modules.grid.resetGrid();
             if (event.modules.state.gameOver) {
                 event.modules.state.toggleGameOver();
             }
         });
-        this._control.subscribe(ControlKey.START_PAUSE, 'pressed', event => {
+        this._control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, event => {
             if (!event.modules.state.start) {
                 event.modules.state.toggleStart();
             }

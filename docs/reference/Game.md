@@ -39,10 +39,10 @@ This method is called every frame (typically 60 times per second, dependent on `
 You can access any module via `this.modules`.
 
 ```typescript
-const { grid, control, state, text, time } = this.modules;
+const { grid, control, state, text, time, renderer } = this.modules;
 
 // Example: Move a piece
-if (control.isPressed('DOWN')) {
-    // ...
-}
+control.subscribe(ControlKey.DOWN, ControlEventType.PRESSED, () => {
+    // ... move piece down ...
+});
 ```

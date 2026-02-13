@@ -17,7 +17,7 @@ export default class GameState implements State {
     private _muted: boolean = false;
 
     /** Map to store property names and their associated subscription callbacks. */
-    private _subscribers: Map<string, Array<(value: boolean) => void>> = new Map();
+    private _subscribers: Map<StateProperty, Array<(value: boolean) => void>> = new Map();
 
     setup(): void {
         this._loadPersistentState();
@@ -63,7 +63,7 @@ export default class GameState implements State {
     public set on(value: boolean) {
         if (this._on !== value) {
             this._on = value;
-            this._notify('on', value);
+            this._notify(StateProperty.ON, value);
         }
     }
 
@@ -74,7 +74,7 @@ export default class GameState implements State {
     public set start(value: boolean) {
         if (this._start !== value) {
             this._start = value;
-            this._notify('start', value);
+            this._notify(StateProperty.START, value);
         }
     }
 
@@ -85,7 +85,7 @@ export default class GameState implements State {
     public set running(value: boolean) {
         if (this._running !== value) {
             this._running = value;
-            this._notify('running', value);
+            this._notify(StateProperty.RUNNING, value);
         }
     }
 
@@ -96,7 +96,7 @@ export default class GameState implements State {
     public set gameOver(value: boolean) {
         if (this._gameOver !== value) {
             this._gameOver = value;
-            this._notify('gameOver', value);
+            this._notify(StateProperty.GAME_OVER, value);
         }
     }
 
@@ -110,7 +110,7 @@ export default class GameState implements State {
         if (this._colorEnabled !== value) {
             this._colorEnabled = value;
             localStorage.setItem(colorEnabled, JSON.stringify(value));
-            this._notify('colorEnabled', value);
+            this._notify(StateProperty.COLOR_ENABLED, value);
         }
     }
 
@@ -124,7 +124,7 @@ export default class GameState implements State {
         if (this._muted !== value) {
             this._muted = value;
             localStorage.setItem(muted, JSON.stringify(value));
-            this._notify('muted', value);
+            this._notify(StateProperty.MUTED, value);
         }
     }
 

@@ -92,3 +92,27 @@ export enum ControlKey {
     EXIT = 'exit',
     COLOR = 'color', // enableColors
 }
+
+/**
+ * Enumerates all available control event types.
+ *
+ * @enum
+ */
+export enum ControlEventType {
+    PRESSED = 'pressed',
+    HELD = 'held',
+}
+
+/**
+ * Enumerates all available state properties.
+ *
+ * @enum
+ */
+export enum StateProperty {
+    ON = 'on',
+    START = 'start',
+    RUNNING = 'running',
+    GAME_OVER = 'gameOver',
+    COLOR_ENABLED = 'colorEnabled',
+    MUTED = 'muted',
+}

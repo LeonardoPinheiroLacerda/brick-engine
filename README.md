@@ -40,10 +40,10 @@ export default class MyGame extends Game {
 
 The engine is organized into the following core modules:
 
-- [Game (Core)](docs/reference/Game.md) - The main entry point and orchestrator.
-- [GameGrid](docs/reference/GameGrid.md) - Manages the 2D grid state, cells, and collision.
-- [GameControl](docs/reference/GameControl.md) - Handles user input from keyboard and UI buttons.
-- [GameRenderer](docs/reference/GameRenderer.md) - Handles drawing the grid and UI to the canvas.
-- [GameState](docs/reference/GameState.md) - Manages global game states (Running, Paused, Game Over).
-- [GameText](docs/reference/GameText.md) - Renders retro-style text on the specific grid areas.
-- [GameTime](docs/reference/GameTime.md) - Manages the game loop and speed (tick rate).
+- **[Game (Core)](docs/reference/Game.md)**: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
+- **[GameGrid](docs/reference/GameGrid.md)**: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection.
+- **[GameControl](docs/reference/GameControl.md)**: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
+- **[GameRenderer](docs/reference/GameRenderer.md)**: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.
+- **[GameState](docs/reference/GameState.md)**: Tracks global game properties like `running`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).
+- **[GameText](docs/reference/GameText.md)**: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.
+- **[GameTime](docs/reference/GameTime.md)**: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.
