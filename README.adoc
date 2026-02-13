@@ -18,6 +18,33 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 * **Input Handling**: Unified control system supporting keyboard and on-screen button inputs.
 * **Game Loop**: Separated logic ticks (game speed) from rendering frames (60fps smooth animations).
 
+== Engine Lifecycle
+
+The engine follows a strict loop to ensure logic consistency and visual smoothness.
+
+[mermaid]
+....
+graph TD
+    Start([Start]) --> Setup[Setup Modules]
+    Setup --> DrawLoop{Draw Loop}
+    
+    subgraph "Each Frame (Draw)"
+        DrawLoop --> TimeUpdate[Time Update]
+        TimeUpdate --> CheckTick{"Should Tick?"}
+        CheckTick -- Yes --> ProcessTick["Process Logic (Tick) [processTick()]"]
+        CheckTick -- No --> RenderGrid
+        ProcessTick --> RenderGrid[Render Grid]
+        RenderGrid --> CheckFrame{"Frame Interval?"}
+        CheckFrame -- Yes --> ProcessFrame["Process Visuals (Frame) [processFrame()]"]
+        CheckFrame -- No --> CheckPerf
+        ProcessFrame --> CheckPerf{"Performance Monitor Enabled?"}
+        CheckPerf -- Yes --> RenderPerf[Render Performance Monitor]
+    end
+    
+    CheckPerf -- No --> DrawLoop
+    RenderPerf --> DrawLoop
+....
+
 == Getting Started
 
 To create a game, you must extend the abstract `Game` class and implement its core abstract methods.

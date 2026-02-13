@@ -182,10 +182,10 @@ export default {
         /** Interval between frame updates (in milliseconds). 0 = every frame */
         frameInterval: 1000 / 60, // 60 frames per second
 
-        /** Performance settings. */
-        performance: {
+        /** Performance Monitor settings. */
+        performanceMonitor: {
             /** Number of ticks to count before updating the performance. */
-            tickInterval: 5,
+            tickInterval: 60,
             /** Enable performance overlay. */
             enabled: true,
         },

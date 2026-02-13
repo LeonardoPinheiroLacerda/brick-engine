@@ -2,15 +2,14 @@ import P5 from 'p5';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import configs from '../../../config/configs';
 
-export default class TimePerformance {
-    // Tick Rate Measurement
-    private _ticksThisSecond: number = 0;
-    private _timeSinceLastTpsUpdate: number = 0;
-    private _actualTickRate: number = 0;
-
+export default class TimePerformanceMonitor {
     // Rendering
     private _performanceUpdateCounter: number = 0;
     private _cachedPerformanceInfo: { fps: string; tickRate: string; interval: string; delta: string } | null = null;
+
+    private _lastTickTime: number = 0;
+    private _tickCounter: number = 0;
+    private _lastTickRate: number = 0;
 
     private _layout: {
         canvasWidth: number;
@@ -19,31 +18,42 @@ export default class TimePerformance {
         text: { size: number; padding: number; lineHeight: number };
     } | null = null;
 
-    constructor(initialTickRate: number) {
-        this._actualTickRate = initialTickRate;
+    constructor(initialTickInterval: number) {
+        this._lastTickTime = performance.now();
+        // Initialize with expected tick rate based on interval
+        this._lastTickRate = 1000 / initialTickInterval;
     }
 
-    update(deltaTime: number) {
-        // TPS Calculation
-        this._timeSinceLastTpsUpdate += deltaTime;
-        if (this._timeSinceLastTpsUpdate >= 1000) {
-            this._actualTickRate = (this._ticksThisSecond * 1000) / this._timeSinceLastTpsUpdate;
-            this._ticksThisSecond = 0;
-            this._timeSinceLastTpsUpdate = 0;
+    get enabled(): boolean {
+        return configs.game.performanceMonitor.enabled;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    update(_deltaTime: number) {
+        if (!this.enabled) return;
+
+        // Calculate actual tick rate
+        const currentTime = performance.now();
+        const elapsed = currentTime - this._lastTickTime;
+        if (elapsed >= 1000) {
+            // Update tick rate every second
+            this._lastTickRate = (this._tickCounter * 1000) / elapsed;
+            this._tickCounter = 0;
+            this._lastTickTime = currentTime;
         }
     }
 
     logTick() {
-        this._ticksThisSecond++;
+        this._tickCounter++;
     }
 
     render(p: P5, tickInterval: number) {
-        const performanceTickInterval = configs.game.performance.tickInterval;
+        const performanceTickInterval = configs.game.performanceMonitor.tickInterval;
 
         if (this._performanceUpdateCounter % performanceTickInterval === 0 || !this._cachedPerformanceInfo) {
             this._cachedPerformanceInfo = {
                 fps: p.frameRate().toFixed(0),
-                tickRate: this._actualTickRate.toFixed(1),
+                tickRate: this._lastTickRate.toFixed(1),
                 interval: tickInterval.toFixed(0),
                 delta: p.deltaTime.toFixed(1),
             };

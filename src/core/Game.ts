@@ -5,7 +5,7 @@ import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
 import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
-import GameTimeWithPerformance from './module/time/GameTimeWithPerformance';
+import GameTimeWithPerformanceMonitor from './module/time/GameTimeWithPerformanceMonitor';
 import GameTime from './module/time/GameTime';
 
 import { Initializable } from './types/Interfaces';
@@ -46,7 +46,7 @@ export default abstract class Game implements Initializable {
      * Called automatically by the engine.
      */
     setup() {
-        const performanceMonitorEnabled = configs.game.performance.enabled;
+        const performanceMonitorEnabled = configs.game.performanceMonitor.enabled;
 
         this._view.build();
 
@@ -56,7 +56,7 @@ export default abstract class Game implements Initializable {
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
-            time: performanceMonitorEnabled ? new GameTimeWithPerformance(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
+            time: performanceMonitorEnabled ? new GameTimeWithPerformanceMonitor(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
         };
 
         Object.values(this._modules).forEach(module => {
@@ -93,8 +93,8 @@ export default abstract class Game implements Initializable {
             this.processFrame();
         }
 
-        // Performance Overlay
-        time.renderPerformance(this._p);
+        // Performance Monitor Overlay
+        time.renderPerformanceMonitor(this._p);
     }
 
     /**

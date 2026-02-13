@@ -29,6 +29,6 @@ The `GameTime` module manages the game loop timing. It separates game logic "tic
 
 This is commonly used to increase difficulty as the player progresses.
 
-=== Performance
+=== Performance Monitor
 
-There is a `GameTimeWithPerformance` variant that tracks logic execution time, mostly used for debugging and profiling.
+There is a `GameTimeWithPerformanceMonitor` variant that tracks logic execution time, mostly used for debugging and profiling.

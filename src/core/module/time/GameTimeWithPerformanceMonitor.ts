@@ -1,16 +1,16 @@
 import P5 from 'p5';
 import GameTime from './GameTime';
-import TimePerformance from './TimePerformance';
+import TimePerformanceMonitor from './TimePerformanceMonitor';
 
 /**
  * Manages game time and tick intervals, with performance overlay capabilities.
  */
-export default class GameTimeWithPerformance extends GameTime {
-    private _performance: TimePerformance;
+export default class GameTimeWithPerformanceMonitor extends GameTime {
+    private _performance: TimePerformanceMonitor;
 
     constructor(tickInterval: number) {
         super(tickInterval);
-        this._performance = new TimePerformance(1000 / tickInterval);
+        this._performance = new TimePerformanceMonitor(tickInterval);
     }
 
     /**
@@ -27,18 +27,18 @@ export default class GameTimeWithPerformance extends GameTime {
      * @returns True if a tick should occur.
      */
     shouldTick(): boolean {
-        if (super.shouldTick()) {
+        const tick = super.shouldTick();
+        if (tick) {
             this._performance.logTick();
-            return true;
         }
-        return false;
+        return tick;
     }
 
     /**
      * Renders performance information overlay.
      * @param p The P5 instance to render with.
      */
-    renderPerformance(p: P5) {
+    renderPerformanceMonitor(p: P5) {
         this._performance.render(p, this.tickInterval);
     }
 }

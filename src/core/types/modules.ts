@@ -380,13 +380,13 @@ export interface Time extends Initializable {
      * Renders performance information overlay.
      * @param p The P5 instance to render with.
      */
-    renderPerformance(p: P5): void;
+    renderPerformanceMonitor(p: P5): void;
 }
 
 /**
  * Interface for the time performance module.
  */
-export interface TimePerformance {
+export interface TimePerformanceMonitor {
     /**
      * Whether the performance overlay is enabled.
      */
