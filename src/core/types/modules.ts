@@ -377,8 +377,36 @@ export interface Time extends Initializable {
     decrementTickInterval(amount: number): void;
 
     /**
-     * Renders debug information overlay.
+     * Renders performance information overlay.
      * @param p The P5 instance to render with.
      */
-    renderDebug(p: P5): void;
+    renderPerformance(p: P5): void;
+}
+
+/**
+ * Interface for the time performance module.
+ */
+export interface TimePerformance {
+    /**
+     * Whether the performance overlay is enabled.
+     */
+    enabled: boolean;
+
+    /**
+     * Updates the performance module logic (e.g. TPS calculation).
+     * @param deltaTime Time elapsed since last frame.
+     */
+    update(deltaTime: number): void;
+
+    /**
+     * Logs a game tick for TPS measurement.
+     */
+    logTick(): void;
+
+    /**
+     * Renders the performance overlay.
+     * @param p The P5 instance.
+     * @param tickInterval The current tick interval.
+     */
+    render(p: P5, tickInterval: number): void;
 }

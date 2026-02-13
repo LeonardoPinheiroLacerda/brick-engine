@@ -5,7 +5,9 @@ import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
 import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
+import GameTimeWithPerformance from './module/time/GameTimeWithPerformance';
 import GameTime from './module/time/GameTime';
+
 import { Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
 import configs from '../config/configs';
@@ -30,6 +32,8 @@ export default abstract class Game implements Initializable {
     }
 
     setup() {
+        const performanceMonitorEnabled = configs.game.performance.enabled;
+
         this._view.build();
 
         this._modules = {
@@ -38,7 +42,7 @@ export default abstract class Game implements Initializable {
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
-            time: new GameTime(configs.game.tickInterval),
+            time: performanceMonitorEnabled ? new GameTimeWithPerformance(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
         };
 
         Object.values(this._modules).forEach(module => {
@@ -71,8 +75,8 @@ export default abstract class Game implements Initializable {
             this.processFrame();
         }
 
-        // Debug Overlay
-        time.renderDebug(this._p);
+        // Performance Overlay
+        time.renderPerformance(this._p);
     }
 
     abstract processTick(deltaTime: number): void;
