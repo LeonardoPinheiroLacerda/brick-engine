@@ -27,10 +27,31 @@ The engine provides responsive font sizes via the `FontSize` enum:
 
 == API Reference
 
-=== Configuration
+=== `setTextSize(size: FontSize): void`
+
+Sets the scale logic for the text.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`size` |`FontSize` |Enum value (SMALL, MEDIUM, LARGE).
+|===
 
 
-==== `setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void`
+**Behavior**
+
+Updates the `fontSize` property. Does not automatically redraw; `draw()` must be called to see changes.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.text.setTextSize(FontSize.LARGE);
+----
+
+=== `setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void`
 
 Configures text alignment.
 
@@ -54,7 +75,7 @@ Sets P5 `textAlign`.
 text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.CENTER);
 ----
 
-==== `setText(text: string): void`
+=== `setText(text: string): void`
 
 Updates the text to be displayed.
 
@@ -127,7 +148,7 @@ Iterates through the text's pixel data and draws active pixels to the screen usi
 this.modules.text.draw(2, 2);
 ----
 
-==== `setActiveText(): void`
+=== `setActiveText(): void`
 
 Sets the text color to the active theme color.
 
@@ -142,7 +163,7 @@ Changes fill color to `active` config value.
 text.setActiveText();
 ----
 
-==== `setInactiveText(): void`
+=== `setInactiveText(): void`
 
 Sets the text color to the inactive theme color.
 
@@ -157,9 +178,7 @@ Changes fill color to `inactive` config value.
 text.setInactiveText();
 ----
 
-=== Rendering
-
-==== `textOnDisplay(text: string, coordinate: Coordinate): void`
+=== `textOnDisplay(text: string, coordinate: Coordinate): void`
 
 Renders text on the main display area.
 
@@ -183,7 +202,7 @@ Calculates pixel position based on Display metrics and draws text.
 text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
 ----
 
-==== `textOnHud(text: string, coordinate: Coordinate): void`
+=== `textOnHud(text: string, coordinate: Coordinate): void`
 
 Renders text on the HUD area.
 

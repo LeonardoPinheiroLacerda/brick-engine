@@ -37,6 +37,8 @@ All `.adoc` files in `docs/reference/` must follow this strict structure for met
 
 === Method Structure
 
+All methods should be listed directly under the `== API Reference` section using `===` headers. **Do not group methods into sub-categories** (e.g., "Configuration", "Render") as this breaks the standard flat structure.
+
 [source,asciidoc]
 ----
 === `methodName(param1: Type, param2: Type): ReturnType`
@@ -69,6 +71,9 @@ instance.methodName('arg1', 123);
 ----
 
 === Style Rules
+.   **Hierarchy**:
+    *   Use `===` for all methods.
+    *   Maintain a **flat list** of methods under `== API Reference`.
 .   **Parameters**:
     *   Use a table for arguments.
     *   **OMIT this section completely** if there are no parameters.

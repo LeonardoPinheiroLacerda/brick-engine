@@ -17,15 +17,10 @@ The `GameGrid` module manages the state of the 2D grid which is central to most 
 
 == API Reference
 
-=== Grid Access
-
-==== `getGrid(): Cell[][]`
+=== `getGrid(): Cell[][]`
 
 Returns the full 2D array of cells.
 
-**Parameters**
-
-None.
 
 **Returns**
 
@@ -42,7 +37,7 @@ Provides direct access to the internal grid state.
 const gridState = this.modules.grid.getGrid();
 ----
 
-==== `getCell(coordinate: Coordinate): Cell | null`
+=== `getCell(coordinate: Coordinate): Cell | null`
 
 Returns a `Cell` object or `null` if out of bounds.
 
@@ -69,7 +64,7 @@ Safe accessor that checks bounds before access.
 const cell = this.modules.grid.getCell({ x: 5, y: 5 });
 ----
 
-==== `isValidCoordinate(coordinate: Coordinate): boolean`
+=== `isValidCoordinate(coordinate: Coordinate): boolean`
 
 Returns `true` if the coordinate is within grid bounds.
 
@@ -96,9 +91,7 @@ Checks if `0 <= x < width` and `0 <= y < height`.
 if (this.modules.grid.isValidCoordinate(nextPos)) { ... }
 ----
 
-=== Modification
-
-==== `setCellValue(coordinate: Coordinate, value: number): void`
+=== `setCellValue(coordinate: Coordinate, value: number): void`
 
 Sets the numeric value of a cell.
 
@@ -111,9 +104,6 @@ Sets the numeric value of a cell.
 |`value` |`number` |New numeric value (e.g., `1` for active).
 |===
 
-**Returns**
-
-`void`
 
 **Behavior**
 
@@ -126,7 +116,7 @@ Updates the `value` property of the cell at the given coordinate. Ignores out-of
 this.modules.grid.setCellValue({ x: 0, y: 0 }, 1);
 ----
 
-==== `setCellColor(coordinate: Coordinate, color: Color): void`
+=== `setCellColor(coordinate: Coordinate, color: Color): void`
 
 Sets the color of a cell.
 
@@ -151,7 +141,7 @@ Updates the `color` property of the cell.
 this.modules.grid.setCellColor({ x: 0, y: 0 }, Color.RED);
 ----
 
-==== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
+=== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
 
 Fills a rectangular area defined by two corners.
 
@@ -178,7 +168,7 @@ Iterates over the rectangle (inclusive) and updates all cells.
 this.modules.grid.fillArea({x:0, y:0}, {x:5, y:5}, 1, Color.BLUE);
 ----
 
-==== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
+=== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
 
 Sets multiple specific coordinates at once.
 
@@ -204,9 +194,7 @@ Useful for placing irregular shapes (like Tetris pieces) onto the grid.
 this.modules.grid.stampPiece(piece.getCells(), 1, Color.GREEN);
 ----
 
-=== Row & Column Operations
-
-==== `isRowFull(y: number): boolean`
+=== `isRowFull(y: number): boolean`
 
 Checks if a row has no empty cells.
 
@@ -233,7 +221,7 @@ Returns false if any cell has value 0.
 if (this.modules.grid.isRowFull(19)) { ... }
 ----
 
-==== `clearFullRows(): number`
+=== `clearFullRows(): number`
 
 Scans grid, clears full rows, and shifts everything down.
 
@@ -253,7 +241,7 @@ Iterates from bottom to top. If a row is full, it's cleared, and rows above are 
 const score = this.modules.grid.clearFullRows() * 100;
 ----
 
-==== `isColumnFull(x: number): boolean`
+=== `isColumnFull(x: number): boolean`
 
 Checks if a column is full.
 
@@ -280,7 +268,7 @@ Similar to `isRowFull` but vertical.
 if (this.modules.grid.isColumnFull(5)) { ... }
 ----
 
-==== `shiftRowsDown(fromY: number): void`
+=== `shiftRowsDown(fromY: number): void`
 
 Shifts rows down starting from `fromY`.
 
@@ -292,9 +280,6 @@ Shifts rows down starting from `fromY`.
 |`fromY` |`number` |The starting row index (bottom-most row to move).
 |===
 
-**Returns**
-
-`void`
 
 **Behavior**
 
@@ -307,9 +292,7 @@ Moves row `y-1` to `y` for all `y <= fromY`. Top row becomes empty.
 this.modules.grid.shiftRowsDown(10);
 ----
 
-=== Queries
-
-==== `isCellActive(coordinate: Coordinate): boolean`
+=== `isCellActive(coordinate: Coordinate): boolean`
 
 Checks if a specific cell accepts collision.
 
@@ -336,7 +319,7 @@ Returns false for empty cells (0) or out of bounds.
 if (this.modules.grid.isCellActive({ x: 5, y: 5 })) { ... }
 ----
 
-==== `isAreaOccupied(coordinates: Coordinate[]): boolean`
+=== `isAreaOccupied(coordinates: Coordinate[]): boolean`
 
 Checks if a shape collides with anything in the grid.
 

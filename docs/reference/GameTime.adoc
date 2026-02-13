@@ -15,9 +15,7 @@ The `GameTime` module manages the game loop timing. It separates game logic "tic
 
 == API Reference
 
-=== Time Management
-
-==== `shouldTick(): boolean`
+=== `shouldTick(): boolean`
 
 Returns `true` if enough time has passed since the last tick to run logic again.
 
@@ -33,7 +31,7 @@ Returns `true` if enough time has passed since the last tick to run logic again.
 [source,typescript]
 ----
 if (this.modules.time.shouldTick()) {
-==== `update(deltaTime: number): void`
+=== `update(deltaTime: number): void`
 
 Accumulates time from the render loop.
 
@@ -80,9 +78,7 @@ while (this.modules.time.shouldTick()) {
 }
 ----
 
-=== Speed Control
-
-==== `tickInterval: number`
+=== `tickInterval: number`
 
 Getter/Setter for the logic tick interval in milliseconds.
 
@@ -100,7 +96,7 @@ Getter/Setter for the logic tick interval in milliseconds.
 this.modules.time.tickInterval = 250;
 ----
 
-==== `incrementTickInterval(amount: number): void`
+=== `incrementTickInterval(amount: number): void`
 
 Increases the interval (slower game).
 
@@ -117,7 +113,7 @@ Increases the interval (slower game).
 this.modules.time.incrementTickInterval(50);
 ----
 
-==== `decrementTickInterval(amount: number): void`
+=== `decrementTickInterval(amount: number): void`
 
 Decreases the interval (faster game).
 
@@ -137,6 +133,6 @@ this.modules.time.decrementTickInterval(50);
 
 This is commonly used to increase difficulty as the player progresses.
 
-=== Performance Monitor
+== Performance Monitor
 
 There is a `GameTimeWithPerformanceMonitor` variant that tracks logic execution time, mostly used for debugging and profiling.

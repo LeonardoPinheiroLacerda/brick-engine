@@ -141,9 +141,6 @@ this.modules.sound.setMute(true);
 
 Toggles the current mute state.
 
-**Parameters**
-
-None.
 
 **Returns**
 
