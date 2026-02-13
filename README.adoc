@@ -23,7 +23,7 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 The engine follows a strict loop to ensure logic consistency and visual smoothness.
 
 [mermaid]
-....
+----
 graph TD
     Start([Start]) --> Setup[Setup Modules]
     Setup --> DrawLoop{Draw Loop}
@@ -43,7 +43,7 @@ graph TD
     
     CheckPerf -- No --> DrawLoop
     RenderPerf --> DrawLoop
-....
+----
 
 == Getting Started
 
