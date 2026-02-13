@@ -189,5 +189,9 @@ export default {
             /** Enable performance overlay. */
             enabled: true,
         },
+
+        sound: {
+            volume: 0.025,
+        },
     },
 } as const;

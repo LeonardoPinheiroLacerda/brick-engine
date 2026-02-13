@@ -60,3 +60,4 @@ The engine is organized into the following core modules:
 * xref:docs/reference/GameState.adoc[GameState]: Tracks global game properties like `running`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).
 * xref:docs/reference/GameText.adoc[GameText]: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.
 * xref:docs/reference/GameTime.adoc[GameTime]: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.
+* xref:docs/reference/GameSound.adoc[GameSound]: Manages audio playback using the **Web Audio API**. Supports multiple simultaneous sounds, volume control, and automatically syncs mute state with `GameState`.

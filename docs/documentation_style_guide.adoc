@@ -1,0 +1,99 @@
+= Documentation Style Guide & Lessons Learned
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+This document serves as the **authoritative reference** for creating and maintaining documentation in the Brick Engine project. It consolidates lessons learned during development and defines the standards for future contributions.
+
+== Architectural Patterns
+
+These patterns must be reflected in both the code and the documentation.
+
+=== 1. Centralized Persistence
+*   **Principle**: `GameState` is the **single source of truth** for all persistent data (e.g., `muted`, `highScore`, `colorEnabled`).
+*   **Rule**: Other modules (e.g., `GameSound`, `GameRenderer`) must **NOT** implement their own `localStorage` logic.
+*   **Pattern**:
+    .   **Initialization**: `Game.ts` calls `state.syncModules(modules)` after setup.
+    .   **Sync**: `GameState` pushes initial values to modules.
+    .   **Updates**: Modules subscribe to `GameState` changes via `state.subscribe()`.
+
+=== 2. Event-Driven State
+*   **Principle**: Reactivity over polling.
+*   **Mechanism**:
+    *   State properties are encapsulated with **getters/setters**.
+    *   Setters automatically trigger `_notify(property, value)`.
+    *   Subscribers receive the new value immediately.
+
+=== 3. Strict Module Interfaces
+*   **Principle**: Coupling through interfaces, not implementation.
+*   **Guideline**: Define module shapes in `src/core/types/modules.ts` (e.g., `Sound`, `Grid`, `Time`).
+
+== API Documentation Standards
+
+All `.adoc` files in `docs/reference/` must follow this strict structure for methods.
+
+=== Method Structure
+
+[source,asciidoc]
+----
+=== `methodName(param1: Type, param2: Type): ReturnType`
+
+<Brief description of what the method does.>
+
+*   **Params**:
+    *   `param1`: Description of parameter 1.
+    *   `param2`: Description of parameter 2.
+*   **Returns**:
+    *   `ReturnType`: Description of the return value.
+*   **Behavior**:
+    *   <Bulleted list of side effects, logic details, or important notes.>
+    *   <e.g., "Triggers a notification event.">
+*   **Example**:
+
+[source,typescript]
+\----
+instance.methodName('arg1', 123);
+\----
+----
+
+=== Style Rules
+.   **Types**: Always specify types in the header and params list.
+.   **Behavior**: Focus on *how* it works and *side effects* (e.g., "Resets the timer", "Allocates new memory").
+.   **Examples**: Provide realistic usage scenarios, preferably showing interaction between modules.
+
+== Formatting Guidelines
+
+=== AsciiDoc Features
+We use **AsciiDoc** (`.adoc`) for all documentation to leverage advanced features.
+
+*   **Headers**: Use `=` for document titles, `==` for sections.
+*   **Code Blocks**: Use `[source,typescript]` for syntax highlighting.
+*   **Admonitions**: Use `NOTE:`, `TIP:`, `WARNING:` for emphasis.
+*   **Diagrams**: Use Mermaid via `mermaid-cli` for generation (embedded as generic images).
+
+=== JSDoc (Source Code)
+Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
+*   **Enforce**: `@param` and `@returns` for every method.
+*   **Strict Typing**: No `any`.
+
+== Lessons Learned
+
+=== Audio Latency
+*   **Issue**: `AudioContext` autoplay policy and startup latency.
+*   **Solution**:
+    .   Use `latencyHint: 'interactive'`.
+    .   Preload all sounds into `AudioBuffer`s during `setup()`.
+    .   Resume context on first user interaction if suspended.
+
+=== Enumerations
+*   **Issue**: String literals ('pressed', 'held') caused typos and refactoring pain.
+*   **Solution**: Use TypeScript `enum` (e.g., `ControlEventType`) for all fixed sets of values.
+
+=== Coordinate Systems
+*   **Standard**:
+    *   **Grid**: Integers `{x, y}` representing column/row index.
+    *   **Display**: Normalized floats `0.0` to `1.0` (percentage of screen).
+    *   Use `CoordinateHelper` methods to convert between Grid, Display, and Pixel values.

@@ -16,20 +16,42 @@ It follows a **Strategy Composite** pattern, allowing multiple render layers, bu
 * **Retro Styling**: Renders cells with a grid gap and "LCD" style look.
 * **Metrics**: Exposes calculated dimensions for other modules (like Text) to align content correctly.
 
-== API Methods
+== API Reference
 
-=== `render(grid: Cell[][])`
+=== `render(grid: Cell[][]): void`
 
 Called automatically by the main `Game` loop. Draws the current state of the grid.
 
-=== `rendererMetrics`
+*   **Params**:
+    *   `grid`: The 2D array of cells to render.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Iterates through the grid and draws each active cell.
+    *   Draws the background grid.
+*   **Example**:
 
-Returns an object containing:
+[source,typescript]
+----
+this.modules.renderer.render(currentGrid);
+----
 
-* `display`: Dimensions (`width`, `height`) and `origin` (`x`, `y`) of the main game screen area.
-* `cell`: Size of a single grid cell (`size`).
+=== `rendererMetrics: RendererMetrics`
 
-This is useful if you need to perform custom drawing (e.g., particles) aligned with the grid.
+Read-only property containing calculated dimensions.
+
+*   **Returns**:
+    *   `RendererMetrics`: Object with display and cell dimensions.
+*   **Behavior**:
+    *   Values are calculated during `setup()` based on screen size.
+    *   Used for aligning HUD elements and custom drawing.
+*   **Example**:
+
+[source,typescript]
+----
+const { cell } = this.modules.renderer.rendererMetrics;
+const pixelX = gridX * cell.size;
+----
 
 [source,typescript]
 ----

@@ -15,32 +15,247 @@ The `GameGrid` module manages the state of the 2D grid which is central to most 
 ** `value > 0`: Active (occupied).
 ** `value === 0`: Inactive (empty).
 
-== Key Methods
+== API Reference
 
 === Grid Access
 
-* `getGrid()`: Returns the full 2D array of cells `Cell[][]`.
-* `getCell(coordinate)`: Returns a `Cell` or `null` if out of bounds.
-* `isValidCoordinate(coordinate)`: Returns `true` if within grid bounds.
+==== `getGrid(): Cell[][]`
+
+Returns the full 2D array of cells.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `Cell[][]`: The matrix representing the grid.
+*   **Behavior**:
+    *   Provides direct access to the internal grid state.
+*   **Example**:
+
+[source,typescript]
+----
+const gridState = this.modules.grid.getGrid();
+----
+
+==== `getCell(coordinate: Coordinate): Cell | null`
+
+Returns a `Cell` object or `null` if out of bounds.
+
+*   **Params**:
+    *   `coordinate`: Point `{x, y}` to query.
+*   **Returns**:
+    *   `Cell | null`: The cell object or null.
+*   **Behavior**:
+    *   Safe accessor that checks bounds before access.
+*   **Example**:
+
+[source,typescript]
+----
+const cell = this.modules.grid.getCell({ x: 5, y: 5 });
+----
+
+==== `isValidCoordinate(coordinate: Coordinate): boolean`
+
+Returns `true` if the coordinate is within grid bounds.
+
+*   **Params**:
+    *   `coordinate`: Point `{x, y}` to check.
+*   **Returns**:
+    *   `boolean`: Validity of coordinate.
+*   **Behavior**:
+    *   Checks if `0 <= x < width` and `0 <= y < height`.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.grid.isValidCoordinate(nextPos)) { ... }
+----
 
 === Modification
 
-* `setCellValue(coordinate, value)`: Sets the numeric value of a cell.
-* `setCellColor(coordinate, color)`: Sets the color of a cell. Use `Color` enum.
-* `fillArea(start, end, value, color)`: Fills a rectangular area.
-* `stampPiece(coordinates, value, color)`: Sets multiple specific coordinates at once (useful for placing game pieces).
+==== `setCellValue(coordinate: Coordinate, value: number): void`
+
+Sets the numeric value of a cell.
+
+*   **Params**:
+    *   `coordinate`: Target position.
+    *   `value`: New numeric value (e.g., `1` for active).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Updates the `value` property of the cell at the given coordinate.
+    *   Ignores out-of-bounds coordinates.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.grid.setCellValue({ x: 0, y: 0 }, 1);
+----
+
+==== `setCellColor(coordinate: Coordinate, color: Color): void`
+
+Sets the color of a cell.
+
+*   **Params**:
+    *   `coordinate`: Target position.
+    *   `color`: Enum value from `Color`.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Updates the `color` property of the cell.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.grid.setCellColor({ x: 0, y: 0 }, Color.RED);
+----
+
+==== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
+
+Fills a rectangular area defined by two corners.
+
+*   **Params**:
+    *   `start`, `end`: Corner coordinates.
+    *   `value`: Cell value to apply.
+    *   `color`: Cell color to apply.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Iterates over the rectangle (inclusive) and updates all cells.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.grid.fillArea({x:0, y:0}, {x:5, y:5}, 1, Color.BLUE);
+----
+
+==== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
+
+Sets multiple specific coordinates at once.
+
+*   **Params**:
+    *   `coordinates`: Array of points to update.
+    *   `value`: Value to apply.
+    *   `color`: Color to apply.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Useful for placing irregular shapes (like Tetris pieces) onto the grid.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.grid.stampPiece(piece.getCells(), 1, Color.GREEN);
+----
 
 === Row & Column Operations
 
-* `isRowFull(y)`: Checks if a row has no empty cells.
-* `clearFullRows()`: Scans grid, clears full rows, and shifts everything down. Returns number of cleared rows.
-* `isColumnFull(x)`: Checks if a column is full.
-* `shiftRowsDown(fromY)`: Shifts rows down starting from `fromY`.
+==== `isRowFull(y: number): boolean`
+
+Checks if a row has no empty cells.
+
+*   **Params**:
+    *   `y`: Row index to check.
+*   **Returns**:
+    *   `boolean`: `true` if all cells in row > 0.
+*   **Behavior**:
+    *   Returns false if any cell has value 0.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.grid.isRowFull(19)) { ... }
+----
+
+==== `clearFullRows(): number`
+
+Scans grid, clears full rows, and shifts everything down.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `number`: Count of cleared rows.
+*   **Behavior**:
+    *   Iterates from bottom to top.
+    *   If a row is full, it's cleared, and rows above are shifted down.
+*   **Example**:
+
+[source,typescript]
+----
+const score = this.modules.grid.clearFullRows() * 100;
+----
+
+==== `isColumnFull(x: number): boolean`
+
+Checks if a column is full.
+
+*   **Params**:
+    *   `x`: Column index.
+*   **Returns**:
+    *   `boolean`: `true` if no empty cells in column.
+*   **Behavior**:
+    *   Similar to `isRowFull` but vertical.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.grid.isColumnFull(5)) { ... }
+----
+
+==== `shiftRowsDown(fromY: number): void`
+
+Shifts rows down starting from `fromY`.
+
+*   **Params**:
+    *   `fromY`: The starting row index (bottom-most row to move).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Moves row `y-1` to `y` for all `y <= fromY`.
+    *   Top row becomes empty.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.grid.shiftRowsDown(10);
+----
 
 === Queries
 
-* `isCellActive(coordinate)`: Returns `true` if cell value > 0.
-* `isAreaOccupied(coordinates)`: Returns `true` if _any_ coordinate in the list is active or out of bounds.
+==== `isCellActive(coordinate: Coordinate): boolean`
+
+Checks if a specific cell accepts collision.
+
+*   **Params**:
+    *   `coordinate`: Point to check.
+*   **Returns**:
+    *   `boolean`: `true` if value > 0.
+*   **Behavior**:
+    *   Returns false for empty cells (0) or out of bounds.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.grid.isCellActive({ x: 5, y: 5 })) { ... }
+----
+
+==== `isAreaOccupied(coordinates: Coordinate[]): boolean`
+
+Checks if a shape collides with anything in the grid.
+
+*   **Params**:
+    *   `coordinates`: Array of points representing the shape.
+*   **Returns**:
+    *   `boolean`: `true` if collision detected.
+*   **Behavior**:
+    *   Returns `true` if *any* point in the list is active OR out of bounds.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.grid.isAreaOccupied(piece.nextPosition())) {
+    // Collision! Stop movement.
+}
+----
 
 == Example Usage
 

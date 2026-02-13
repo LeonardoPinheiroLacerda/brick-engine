@@ -1,4 +1,5 @@
 import { Color, ControlKey, ControlEventType, StateProperty } from './enums';
+import { Control, Grid, RendererComposite, Sound, State, Text, Time } from './modules';
 
 export { Color, ControlKey, ControlEventType, StateProperty };
 
@@ -58,14 +59,8 @@ export interface RendererMetrics {
 }
 
 /**
- * Enumerates all available control event types.
- */
-
-/**
  * Interface representing the game modules.
  */
-import { Control, Grid, RendererComposite, State, Text, Time } from './modules';
-
 export type GameModules = {
     grid: Grid;
     text: Text;
@@ -73,6 +68,7 @@ export type GameModules = {
     control: Control;
     renderer: RendererComposite;
     time: Time;
+    sound: Sound;
 };
 
 /**

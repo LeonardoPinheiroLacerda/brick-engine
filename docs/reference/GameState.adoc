@@ -17,35 +17,99 @@ The module exposes several boolean properties that represent the game's current 
 * `running`: Is the game loop actively updating logic?
 * `gameOver`: Has the player lost?
 * `muted`: Is sound disabled? (Persisted)
+* `muted`: Is sound disabled? (Persisted)
 * `colorEnabled`: Is color mode active? (Persisted)
 
-== Methods
+NOTE: Modifying these properties directly (e.g., `state.gameOver = true`) automatically triggers the notification system, informing all subscribers.
 
-=== Toggles
+== API Reference
 
-* `toggleOn()`
-* `toggleStart()`
-* `toggleRunning()`
-* `toggleGameOver()`
-* `toggleMuted()`
-* `toggleColorEnabled()`
+=== `toggle[Property]()`
 
-=== Subscription
+Toggles the boolean state of the corresponding property.
 
-You can subscribe to changes on any of these properties. This is useful for triggering UI updates or sound effects.
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Inverts the current boolean value (e.g., `muted = !muted`).
+    *   Automatically triggers a notification event to subscribers.
+    *   Persists the new value if the property is `muted` or `colorEnabled`.
+*   **Example**:
 
 [source,typescript]
 ----
-const { state } = this.modules;
+this.modules.state.toggleMuted();
+----
 
-state.subscribe('gameOver', isOver => {
+=== `subscribe(property: StateProperty, callback: (value: boolean) => void): void`
+
+Subscribes to changes in a specific state property.
+
+*   **Params**:
+    *   `property`: The state property to monitor (e.g., `StateProperty.GAME_OVER`).
+    *   `callback`: Function to execute when the property changes.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Adds the callback to the list of listeners for the given property.
+    *   The callback is invoked whenever the property's setter is called.
+*   **Example**:
+
+[source,typescript]
+----
+state.subscribe(StateProperty.GAME_OVER, isOver => {
     if (isOver) {
         console.log('Game Over!');
-        // Show game over screen
     }
 });
+----
+
+=== `unsubscribe(property: StateProperty, callback: (value: boolean) => void): void`
+
+Unsubscribes a previously registered callback.
+
+*   **Params**:
+    *   `property`: The state property.
+    *   `callback`: The function reference to remove.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Removes the callback from the list.
+*   **Example**:
+
+[source,typescript]
+----
+state.unsubscribe(StateProperty.GAME_OVER, onGameOver);
 ----
 
 === Persistence
 
 The module automatically saves `muted` and `colorEnabled` preferences to the browser's `localStorage` using keys defined in `configs.ts`.
+
+== Central Persistence Responsibility
+
+**GameState is the single source of truth for persistent state.**
+
+Other modules (like `GameSound`) should **not** implement their own persistence logic. Instead, they should rely on `GameState` to inform them of the initial state and any subsequent changes.
+
+=== `syncModules(modules: GameModules): void`
+
+Synchronizes the game state with all other modules.
+
+*   **Params**:
+    *   `modules`: The object containing all game modules.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Called during `Game.setup()`.
+    *   Applies initial values of persistent states (like `muted`) to other modules.
+    *   Sets up internal subscriptions to keep modules in sync.
+*   **Example**:
+
+[source,typescript]
+----
+// Internal usage in Game.ts
+this._modules.state.syncModules(this._modules);
+----

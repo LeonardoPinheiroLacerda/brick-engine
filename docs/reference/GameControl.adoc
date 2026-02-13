@@ -26,25 +26,65 @@ The engine maps physical keys (Arrow keys, WASD, Space, Enter) to virtual keys:
 * `ControlEventType.PRESSED` (`'pressed'`): Triggered once when key is pressed.
 * `ControlEventType.HELD` (`'held'`): Triggered repeatedly while key is held down (interval defined in config).
 
-== API Methods
+== API Reference
 
-=== `subscribe(key, type, callback)`
+=== `subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
 
 Register a callback for a specific key and event type.
 
+*   **Params**:
+    *   `key`: The key to listen for (e.g., `ControlKey.ACTION`).
+    *   `type`: The event type (e.g., `ControlEventType.PRESSED`).
+    *   `callback`: Function to execute when event triggers.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Adds the callback to the internal list for the specified key and type.
+    *   Multiple callbacks can be registered for the same event.
+*   **Example**:
+
 [source,typescript]
 ----
-const { control } = this.modules;
-
 control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
     this.shoot();
 });
 ----
 
-=== `unsubscribe(key, type, callback)`
+=== `unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
 
 Remove a previously registered callback.
 
-=== `notify(key, type)`
+*   **Params**:
+    *   `key`: The key to listen for.
+    *   `type`: The event type.
+    *   `callback`: The reference to the function to remove.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Removes the specific callback from the subscription list.
+    *   Does nothing if the callback is not found.
+*   **Example**:
 
-Manually trigger an event (mostly used internally by the input system).
+[source,typescript]
+----
+control.unsubscribe(ControlKey.ACTION, ControlEventType.PRESSED, myCallback);
+----
+
+=== `notify(key: ControlKey, type: ControlEventType): void`
+
+Manually trigger an event.
+
+*   **Params**:
+    *   `key`: The key identifier.
+    *   `type`: The event type (pressed/held).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Executes all callbacks associated with the key/type pair.
+    *   Mostly used internally by the input system but can simulate inputs.
+*   **Example**:
+
+[source,typescript]
+----
+control.notify(ControlKey.EXIT, ControlEventType.PRESSED);
+----

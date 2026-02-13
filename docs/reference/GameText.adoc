@@ -25,18 +25,116 @@ The engine provides responsive font sizes via the `FontSize` enum:
 * `LARGE`
 * `EXTRA_LARGE`
 
-== API Methods
+== API Reference
 
 === Configuration
 
-* `setTextSize(fontSize: FontSize)`: Sets the current font size.
-* `setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign)`: Sets alignment (CENTER, LEFT, RIGHT, TOP, BOTTOM).
-* `setActiveText()` / `setInactiveText()`: Sets the color to the theme's active or inactive color.
+==== `setTextSize(fontSize: FontSize): void`
+
+Sets the current font size from predefined values.
+
+*   **Params**:
+    *   `fontSize`: Enum `FontSize` (EXTRA_SMALL to EXTRA_LARGE).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Updates the internal P5 text size based on responsive calculations.
+*   **Example**:
+
+[source,typescript]
+----
+text.setTextSize(FontSize.MEDIUM);
+----
+
+==== `setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void`
+
+Configures text alignment.
+
+*   **Params**:
+    *   `align`: Horizontal (LEFT, CENTER, RIGHT).
+    *   `verticalAlign`: Vertical (TOP, CENTER, BOTTOM).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Sets P5 `textAlign`.
+*   **Example**:
+
+[source,typescript]
+----
+text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.CENTER);
+----
+
+==== `setActiveText(): void`
+
+Sets the text color to the active theme color.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Changes fill color to `active` config value.
+*   **Example**:
+
+[source,typescript]
+----
+text.setActiveText();
+----
+
+==== `setInactiveText(): void`
+
+Sets the text color to the inactive theme color.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Changes fill color to `inactive` config value.
+*   **Example**:
+
+[source,typescript]
+----
+text.setInactiveText();
+----
 
 === Rendering
 
-* `textOnDisplay(text: string, coordinate: Coordinate)`: Renders text on the main display. Coordinates are normalized (0 to 1).
-* `textOnHud(text: string, coordinate: Coordinate)`: Renders text on the HUD. Coordinates are relative to the HUD grid.
+==== `textOnDisplay(text: string, coordinate: Coordinate): void`
+
+Renders text on the main display area.
+
+*   **Params**:
+    *   `text`: The string to render.
+    *   `coordinate`: Point `{x, y}` normalized (0-1).
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Calculates pixel position based on Display metrics and draws text.
+*   **Example**:
+
+[source,typescript]
+----
+text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
+----
+
+==== `textOnHud(text: string, coordinate: Coordinate): void`
+
+Renders text on the HUD area.
+
+*   **Params**:
+    *   `text`: The string to render.
+    *   `coordinate`: Point `{x, y}` normalized (0-1) relative to HUD.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Calculates pixel position relative to HUD area and draws text.
+*   **Example**:
+
+[source,typescript]
+----
+text.textOnHud('SCORE: 100', { x: 0.1, y: 0.1 });
+----
 
 === Example
 

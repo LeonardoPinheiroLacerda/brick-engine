@@ -7,6 +7,7 @@ import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
 import GameTimeWithPerformanceMonitor from './module/time/GameTimeWithPerformanceMonitor';
 import GameTime from './module/time/GameTime';
+import GameSound from './module/sound/GameSound';
 
 import { Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
@@ -57,6 +58,7 @@ export default abstract class Game implements Initializable {
             state: new GameState(),
             control: new GameControl(),
             time: performanceMonitorEnabled ? new GameTimeWithPerformanceMonitor(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
+            sound: new GameSound(),
         };
 
         Object.values(this._modules).forEach(module => {
@@ -70,6 +72,10 @@ export default abstract class Game implements Initializable {
         text.setRendererMetrics(renderer.rendererMetrics);
 
         this._view.bound(control);
+
+        this._modules.state.syncModules(this._modules);
+
+        this.setupGame();
     }
 
     /**
@@ -109,4 +115,10 @@ export default abstract class Game implements Initializable {
      * Called every frame (depending on frameInterval).
      */
     abstract processFrame(): void;
+
+    /**
+     * Abstract method for setting up the game.
+     * Called after the game modules are initialized.
+     */
+    abstract setupGame(): void;
 }

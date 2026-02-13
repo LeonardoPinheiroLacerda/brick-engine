@@ -1,5 +1,5 @@
 import P5 from 'p5';
-import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign } from './enums';
+import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound as SoundEnum } from './enums';
 import { Initializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
 
@@ -289,6 +289,11 @@ export interface State extends Initializable {
      */
     unsubscribe(property: StateProperty, callback: (value: boolean) => void): void;
 
+    /**
+     * Syncs states with all other modules.
+     */
+    syncModules(modules: GameModules): void;
+
     /** Toggles the 'on' state. */
     toggleOn(): void;
     /** Toggles the 'start' state. */
@@ -381,6 +386,39 @@ export interface Time extends Initializable {
      * @param p The P5 instance to render with.
      */
     renderPerformanceMonitor(p: P5): void;
+}
+
+/**
+ * Interface for the sound module.
+ */
+export interface Sound extends Initializable {
+    /**
+     * Plays a sound effect.
+     * @param sound The sound to play.
+     */
+    play(sound: SoundEnum): Promise<void>;
+
+    /**
+     * Stops a specific sound effect.
+     * @param sound The sound to stop.
+     */
+    stop(sound: SoundEnum): Promise<void>;
+
+    /**
+     * Stops all playing sounds.
+     */
+    stopAll(): Promise<void>;
+
+    /**
+     * Toggles the mute state.
+     */
+    toggleMute(): void;
+
+    /**
+     * Sets the mute state.
+     * @param muted Whether the sound should be muted.
+     */
+    setMute(muted: boolean): void;
 }
 
 /**

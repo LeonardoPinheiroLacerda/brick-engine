@@ -13,19 +13,101 @@ The `GameTime` module manages the game loop timing. It separates game logic "tic
 * **Tick**: A single step of game logic (e.g., moving a piece down one cell).
 * **Tick Interval**: The time in milliseconds between ticks. A lower interval means the game runs faster.
 
-== API Methods
+== API Reference
 
 === Time Management
 
-* `shouldTick()`: Returns `true` if enough time has passed since the last tick to run logic again.
-* `update(deltaTime)`: Adds elapsed time to the internal accumulator. Called automatically by `Game`.
+==== `shouldTick(): boolean`
+
+Returns `true` if enough time has passed since the last tick to run logic again.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `boolean`: `true` if a tick should occur.
+*   **Behavior**:
+    *   Checks if accumulated time >= tick interval.
+    *   Subtracts tick interval from accumulator if true.
+*   **Example**:
+
+[source,typescript]
+----
+if (this.modules.time.shouldTick()) {
+    this.processTick(deltaTime);
+}
+----
+
+==== `update(deltaTime: number): void`
+
+Adds elapsed time to the internal accumulator.
+
+*   **Params**:
+    *   `deltaTime`: Time in milliseconds since last frame.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Called automatically by the main game loop.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.time.update(p5.deltaTime);
+----
 
 === Speed Control
 
-* `tickInterval`: Getter/Setter for the interval in ms.
-** Example: `time.tickInterval = 500;` (2 ticks per second).
-* `incrementTickInterval(amount)`: Increases the interval (slower game).
-* `decrementTickInterval(amount)`: Decreases the interval (faster game).
+==== `tickInterval: number`
+
+Getter/Setter for the logic tick interval in milliseconds.
+
+*   **Params**:
+    *   `value`: New interval in ms (Setter).
+*   **Returns**:
+    *   `number`: Current interval in ms (Getter).
+*   **Behavior**:
+    *   Lower values make the game run faster (more ticks per second).
+*   **Example**:
+
+[source,typescript]
+----
+// Double speed
+this.modules.time.tickInterval = 250;
+----
+
+==== `incrementTickInterval(amount: number): void`
+
+Increases the interval (slower game).
+
+*   **Params**:
+    *   `amount`: Milliseconds to add.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Adds `amount` to current `tickInterval`.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.time.incrementTickInterval(50);
+----
+
+==== `decrementTickInterval(amount: number): void`
+
+Decreases the interval (faster game).
+
+*   **Params**:
+    *   `amount`: Milliseconds to subtract.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Subtracts `amount` from `tickInterval`.
+    *   Clamps to a minimum value (e.g., 10ms).
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.time.decrementTickInterval(50);
+----
 
 This is commonly used to increase difficulty as the player progresses.
 

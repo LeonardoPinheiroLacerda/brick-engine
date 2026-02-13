@@ -1,0 +1,134 @@
+= GameSound Module Reference
+:toc: macro
+:toc-title:
+:source-highlighter: highlight.js
+
+toc::[]
+
+== Overview
+
+The `GameSound` module manages the audio playback for the engine. It utilizes the **Web Audio API** to provide low-latency, high-performance sound effects.
+
+It is designed to handle:
+
+*   **Preloading**: Decodes all audio assets into `AudioBuffer`s at startup for instant playback.
+*   **Concurrency**: Supports playing multiple overlapping sounds (e.g., rapid-fire effects) without cutting off previous ones.
+*   **Volume Control**: Uses a global `GainNode` to control the master volume.
+*   **State Synchronization**: Automatically syncs its mute state with the global `GameState`.
+
+== Usage
+
+The sound module is accessible via the `Game.modules.sound` property.
+
+[source,typescript]
+----
+// Playing a sound
+this.modules.sound.play(Sound.ACTION_1);
+
+// Muting usage (usually handled by GameControl -> GameState -> GameSound sync)
+this.modules.sound.toggleMute();
+----
+
+== Interaction with GameState
+
+The `GameSound` module follows the engine's architectural pattern of **centralized state persistence**. It does not persist its own settings (like mute status). Instead, it relies on `GameState` as the single source of truth.
+
+The `Game` class synchronizes all modules with `GameState` during initialization using the `syncModules` method:
+
+[source,typescript]
+----
+// In Game.ts setup()
+this._modules.state.syncModules(this._modules);
+----
+
+This ensures that any module requiring persistent state (not just Sound) is automatically updated when the game loads or when the state changes.
+
+== API Reference
+
+=== `play(sound: Sound)`
+
+Plays a sound effect using the Web Audio API.
+
+*   **Params**:
+    *   `sound`: The `Sound` enum identifier to play.
+*   **Returns**:
+    *   `Promise<void>`: Resolves when playback starts.
+*   **Behavior**:
+    *   Resumes `AudioContext` if suspended.
+    *   Creates a source node and connects it to the master gain.
+    *   Starts playback immediately.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.sound.play(Sound.ACTION_1);
+----
+
+=== `stop(sound: Sound)`
+
+Stops all specific instances of a sound type.
+
+*   **Params**:
+    *   `sound`: The `Sound` enum identifier to stop.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Iterates through active sources and stops those matching the sound type.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.sound.stop(Sound.THEME_MUSIC);
+----
+
+=== `stopAll()`
+
+Stops all currently playing sounds.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Immediately stops and disconnects all active sound sources.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.sound.stopAll();
+----
+
+=== `setMute(muted: boolean)`
+
+Sets the global mute state.
+
+*   **Params**:
+    *   `muted`: `true` to silence audio, `false` to enable it.
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Updates internal state.
+    *   Sets Master `GainNode` gain to `0` (muted) or `1` (unmuted).
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.sound.setMute(true);
+----
+
+=== `toggleMute()`
+
+Toggles the current mute state.
+
+*   **Params**:
+    *   None
+*   **Returns**:
+    *   `void`
+*   **Behavior**:
+    *   Inverts the current mute state and calls `setMute`.
+*   **Example**:
+
+[source,typescript]
+----
+this.modules.sound.toggleMute();
+----
