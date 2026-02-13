@@ -4,7 +4,6 @@ import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
 import { Coordinate, RendererMetrics } from '../../types/Types';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
-import { Initializable } from '../../types/Interfaces';
 import { Text } from '../../types/modules';
 
 /**

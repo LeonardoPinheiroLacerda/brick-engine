@@ -81,6 +81,7 @@ export default class GameTime implements Time {
      * Renders performance information overlay.
      * @param p The P5 instance to render with.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     renderPerformance(p: P5) {
         // No-op in base implementation
     }

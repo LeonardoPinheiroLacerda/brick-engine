@@ -1,31 +1,37 @@
 {
   "name": "brick-engine",
   "version": "0.0.1-snapshot",
-  "description": "",
+  "description": "A lightweight brick engine built with p5.js and TypeScript",
+  "private": true,
+  "type": "commonjs",
   "license": "ISC",
   "author": "LeonardoPinheiroLacerda",
-  "type": "commonjs",
-  "private": true,
   "scripts": {
     "start": "webpack serve --open",
     "build": "webpack --mode production",
-    "check-format": "npx prettier -c .",
-    "format": "npx prettier -w ."
-  },
-  "devDependencies": {
-    "@types/p5": "^1.7.7",
-    "css-loader": "^7.1.3",
-    "html-webpack-plugin": "^5.6.6",
-    "mini-css-extract-plugin": "^2.10.0",
-    "prettier": "^3.8.1",
-    "ts-loader": "^9.5.4",
-    "typescript": "^5.9.3",
-    "webpack": "^5.105.1",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.3"
+    "lint": "eslint .",
+    "format": "npx prettier -w .",
+    "check-format": "npx prettier -c ."
   },
   "dependencies": {
-    "colord": "^2.9.3",
-    "p5": "^2.2.0"
+    "p5": "^2.2.0",
+    "colord": "^2.9.3"
+  },
+  "devDependencies": {
+    "webpack": "^5.105.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3",
+    "html-webpack-plugin": "^5.6.6",
+    "ts-loader": "^9.5.4",
+    "css-loader": "^7.1.3",
+    "mini-css-extract-plugin": "^2.10.0",
+    "typescript": "^5.9.3",
+    "eslint": "^9.39.2",
+    "typescript-eslint": "^8.55.0",
+    "@eslint/js": "^9.39.2",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "@types/p5": "^1.7.7",
+    "@types/webpack-env": "^1.18.8"
   }
 }
