@@ -7,14 +7,15 @@ type StateMetadata = {
     storageKey?: string;
 };
 
+// prettier-ignore
 const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
-    [StateProperty.ON]: { defaultValue: false },
-    [StateProperty.START]: { defaultValue: false },
-    [StateProperty.RUNNING]: { defaultValue: false },
-    [StateProperty.GAME_OVER]: { defaultValue: false },
-    [StateProperty.COLOR_ENABLED]: { defaultValue: true, storageKey: configs.storageKeys.colorEnabled },
-    [StateProperty.MUTED]: { defaultValue: false, storageKey: configs.storageKeys.muted },
-    [StateProperty.HIGH_SCORE]: { defaultValue: 0, storageKey: configs.storageKeys.score },
+    [StateProperty.ON]              : { defaultValue: false },
+    [StateProperty.START]           : { defaultValue: false },
+    [StateProperty.RUNNING]         : { defaultValue: false },
+    [StateProperty.GAME_OVER]       : { defaultValue: false },
+    [StateProperty.COLOR_ENABLED]   : { defaultValue: true  , storageKey: configs.storageKeys.colorEnabled },
+    [StateProperty.MUTED]           : { defaultValue: false , storageKey: configs.storageKeys.muted },
+    [StateProperty.HIGH_SCORE]      : { defaultValue: 0     , storageKey: configs.storageKeys.score },
 };
 
 /**
