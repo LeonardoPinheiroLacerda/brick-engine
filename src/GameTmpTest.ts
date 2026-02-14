@@ -19,4 +19,8 @@ export default class GameTmpTest extends Game {
     processFrame() {
         // console.log('frame');
     }
+
+    getPersistenceKey(): string {
+        return 'game-tmp-test';
+    }
 }
