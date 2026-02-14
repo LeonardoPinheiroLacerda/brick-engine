@@ -1,7 +1,6 @@
 import { ControlKey } from '../../types/enums';
 import { Control } from '../../types/modules';
 import { ControlCallback, ControlEventType, GameEvent, GameModules } from '../../types/Types';
-import SystemEventsSubscriber from './SystemEventsSubscriber';
 import GameControlKeyBinding from './GameControlKeyBinding';
 
 export default class GameControl implements Control {
@@ -14,7 +13,6 @@ export default class GameControl implements Control {
         this._keyBinding = new GameControlKeyBinding(this);
 
         this._keyBinding.bound();
-        new SystemEventsSubscriber(this).subscribe();
     }
 
     unbound() {

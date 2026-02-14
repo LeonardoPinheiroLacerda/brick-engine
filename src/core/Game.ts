@@ -11,7 +11,7 @@ import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
 import { Initializable, StateSyncable } from './types/Interfaces';
-import { GameModules } from './types/Types';
+import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
 
 /**
@@ -109,6 +109,32 @@ export default abstract class Game implements Initializable {
 
         // Performance Monitor Overlay
         time.renderPerformanceMonitor(this._p);
+    }
+
+    private _subscribeSystemControls(): void {
+        const { control, state, grid } = this._modules;
+
+        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => state.toggleOn());
+        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
+        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
+
+        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
+            grid.resetGrid();
+            if (state.gameOver) {
+                state.toggleGameOver();
+            }
+        });
+
+        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
+            if (!state.start) {
+                state.toggleStart();
+            }
+            state.toggleRunning();
+        });
+
+        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
+            this._p.noLoop();
+        });
     }
 
     /**
