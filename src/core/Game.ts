@@ -8,6 +8,7 @@ import GameText from './module/text/GameText';
 import GameTimeWithPerformanceMonitor from './module/time/GameTimeWithPerformanceMonitor';
 import GameTime from './module/time/GameTime';
 import GameSound from './module/sound/GameSound';
+import GameScore from './module/score/GameScore';
 
 import { Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
@@ -59,15 +60,17 @@ export default abstract class Game implements Initializable {
             control: new GameControl(),
             time: performanceMonitorEnabled ? new GameTimeWithPerformanceMonitor(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
             sound: new GameSound(),
+            score: new GameScore(),
         };
 
         Object.values(this._modules).forEach(module => {
             (module as Initializable).setup();
         });
 
-        const { text, control, renderer } = this._modules;
+        const { text, control, renderer, score, state } = this._modules;
 
         control.setModules(this._modules);
+        score.setState(state);
 
         text.setRendererMetrics(renderer.rendererMetrics);
 

@@ -1,0 +1,139 @@
+= GameScore Module
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `GameScore` module tracks the player's current session score, manages game levels and multipliers, and interacts with the `GameState` module to persist high scores.
+
+== State Management
+
+The module maintains:
+* `score`: The current session's score (transient).
+* `level`: The current game level.
+* `multiplier`: The current score multiplier.
+
+It interacts with `GameState` to update:
+* `highScore`: The all-time high score (persistent).
+
+== API Reference
+
+=== `increaseScore(amount: number): void`
+
+Increases the current score by the specified amount *multiplied by the current multiplier*. Automatically checks and updates the high score in `GameState`.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |The base points to add to the score.
+|===
+
+**Behavior**
+
+Adds `amount * multiplier` to internal score. If the new score exceeds `state.highScore`, it updates `state.highScore`.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.increaseScore(100);
+----
+
+=== `resetScore(): void`
+
+Resets the current session score to 0.
+
+**Behavior**
+
+Sets internal `_score` to 0. Does not affect high score.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.resetScore();
+----
+
+=== `getFormattedScore(digits: number = 6): string`
+
+Returns the current score formatted as a string with leading zeros.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`digits` |`number` |The total number of digits (default: 6).
+|===
+
+**Returns**
+
+`string` - The formatted score string (e.g., "000150").
+
+**Example**
+
+[source,typescript]
+----
+text.textOnHud(this.modules.score.getFormattedScore(), { x: 0, y: 0 });
+----
+
+=== `multiplier`
+
+Getter and Setter for the score multiplier.
+
+**Type**
+
+`number`
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.multiplier = 2; // Double points
+----
+
+=== `level`
+
+Getter for the current game level.
+
+**Type**
+
+`number`
+
+=== `increaseLevel(): void`
+
+Increases the current level by the specified amount.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |The base points to add to the level.
+|===
+
+**Behavior**
+
+Adds `amount` to internal level.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.increaseLevel(1);
+----
+
+=== `resetLevel(): void`
+
+Resets the game level to 1.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.resetLevel();
+----

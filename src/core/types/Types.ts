@@ -1,5 +1,5 @@
 import { Color, ControlKey, ControlEventType, StateProperty } from './enums';
-import { Control, Grid, RendererComposite, Sound, State, Text, Time } from './modules';
+import { Control, Grid, RendererComposite, Score, Sound, State, Text, Time } from './modules';
 
 export { Color, ControlKey, ControlEventType, StateProperty };
 
@@ -69,6 +69,7 @@ export type GameModules = {
     renderer: RendererComposite;
     time: Time;
     sound: Sound;
+    score: Score;
 };
 
 /**

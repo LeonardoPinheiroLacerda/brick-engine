@@ -452,3 +452,56 @@ export interface TimePerformanceMonitor {
      */
     render(p: P5, tickInterval: number): void;
 }
+
+/**
+ * Interface for the score module.
+ */
+export interface Score extends Initializable {
+    /**
+     * Current session score.
+     */
+    score: number;
+
+    /**
+     * Increases score by amount, applying current multiplier.
+     * @param amount The amount to increase by.
+     */
+    increaseScore(amount: number): void;
+
+    /**
+     * Resets current score to 0.
+     */
+    resetScore(): void;
+
+    /**
+     * Helper to get score with leading zeros.
+     * @param digits Number of digits (default 6).
+     */
+    getFormattedScore(digits?: number): string;
+
+    /**
+     * Current score multiplier.
+     */
+    multiplier: number;
+
+    /**
+     * Current game level.
+     */
+    level: number;
+
+    /**
+     * Increases the game level.
+     */
+    increaseLevel(amount: number): void;
+
+    /**
+     * Resets the game level to 1.
+     */
+    resetLevel(): void;
+
+    /**
+     * Sets the state module required for the Score context.
+     * @param state The game state module.
+     */
+    setState(state: State): void;
+}
