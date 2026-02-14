@@ -99,7 +99,7 @@ export default class GameState implements State {
     }
 
     get on(): boolean {
-        return this._state.get(StateProperty.ON);
+        return this._state.get(StateProperty.ON) as boolean;
     }
 
     set on(value: boolean) {
@@ -107,7 +107,7 @@ export default class GameState implements State {
     }
 
     get start(): boolean {
-        return this._state.get(StateProperty.START);
+        return this._state.get(StateProperty.START) as boolean;
     }
 
     set start(value: boolean) {
@@ -115,7 +115,7 @@ export default class GameState implements State {
     }
 
     get running(): boolean {
-        return this._state.get(StateProperty.RUNNING);
+        return this._state.get(StateProperty.RUNNING) as boolean;
     }
 
     set running(value: boolean) {
@@ -123,7 +123,7 @@ export default class GameState implements State {
     }
 
     get gameOver(): boolean {
-        return this._state.get(StateProperty.GAME_OVER);
+        return this._state.get(StateProperty.GAME_OVER) as boolean;
     }
 
     set gameOver(value: boolean) {
@@ -131,7 +131,7 @@ export default class GameState implements State {
     }
 
     get colorEnabled(): boolean {
-        return this._state.get(StateProperty.COLOR_ENABLED);
+        return this._state.get(StateProperty.COLOR_ENABLED) as boolean;
     }
 
     set colorEnabled(value: boolean) {
@@ -139,7 +139,7 @@ export default class GameState implements State {
     }
 
     get muted(): boolean {
-        return this._state.get(StateProperty.MUTED);
+        return this._state.get(StateProperty.MUTED) as boolean;
     }
 
     set muted(value: boolean) {
@@ -147,7 +147,7 @@ export default class GameState implements State {
     }
 
     get highScore(): number {
-        return this._state.get(StateProperty.HIGH_SCORE);
+        return this._state.get(StateProperty.HIGH_SCORE) as number;
     }
 
     set highScore(value: number) {
@@ -225,6 +225,10 @@ export default class GameState implements State {
         sound.muted = this.muted;
 
         // Subscribe to changes
-        this.subscribe(StateProperty.MUTED, value => (sound.muted = value));
+        this.subscribe(StateProperty.MUTED, (value: boolean | number) => {
+            if (typeof value === 'boolean') {
+                sound.muted = value;
+            }
+        });
     }
 }
