@@ -83,6 +83,7 @@ export default abstract class Game implements Initializable {
 
         this.setupGame();
 
+        this._subscribeSystemControls();
         this._view.bound(control);
     }
 
