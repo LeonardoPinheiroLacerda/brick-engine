@@ -29,19 +29,9 @@ this.modules.sound.play(Sound.ACTION_1);
 this.modules.state.toggleMuted();
 ----
 
-== Interaction with GameState
+The `GameSound` module follows the engine's architectural pattern of **centralized state persistence**. It does not persist its own settings (like mute status). Instead, it implements the `StateSyncable` interface and relies on `GameState` as the single source of truth.
 
-The `GameSound` module follows the engine's architectural pattern of **centralized state persistence**. It does not persist its own settings (like mute status). Instead, it relies on `GameState` as the single source of truth.
-
-The `Game` class synchronizes all modules with `GameState` during initialization using the `syncModules` method:
-
-[source,typescript]
-----
-// In Game.ts setup()
-this._modules.state.syncModules(this._modules);
-----
-
-This ensures that any module requiring persistent state (not just Sound) is automatically updated when the game loads or when the state changes.
+The `Game` class synchronizes all modules with `GameState` during initialization by calling `syncState(state)` on every module that implements the interface. This ensures that the sound module's gain control is correctly initialized based on the persistent `muted` setting in `GameState`.
 
 == API Reference
 
@@ -114,3 +104,52 @@ this.modules.sound.stopAll();
 ----
 
 
+=== `toggleMute(): void`
+
+Toggles the game's mute state.
+
+**Behavior**
+
+Inverts the `muted` property in the linked `GameState`. This change is automatically persisted.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.sound.toggleMute();
+----
+
+=== `muted`
+
+Getter and Setter for the current mute state.
+
+**Type**
+
+`boolean`
+
+**Behavior**
+
+When set, triggers an internal volume update. Note: Preferred usage is through `GameState` or `toggleMute()`.
+
+=== `syncState(state: State): void`
+
+Synchronizes the sound module with the game state.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`state` |`State` |The game state module.
+|===
+
+**Behavior**
+
+Part of the `StateSyncable` interface. Initializes the internal state reference and applies the current `muted` setting to the audio system.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.sound.syncState(this.modules.state);
+----

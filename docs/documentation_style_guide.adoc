@@ -16,8 +16,9 @@ These patterns must be reflected in both the code and the documentation.
 *   **Principle**: `GameState` is the **single source of truth** for all persistent data (e.g., `muted`, `highScore`, `colorEnabled`).
 *   **Rule**: Other modules (e.g., `GameSound`, `GameRenderer`) must **NOT** implement their own `localStorage` logic.
 *   **Pattern**:
-    .   **Initialization**: `Game.ts` calls `state.syncModules(modules)` after setup.
-    .   **Sync**: `GameState` pushes initial values to modules.
+    .   **Interface**: Modules requiring state must implement `StateSyncable`.
+    .   **Initialization**: `Game.ts` iterates over modules and calls `syncState(state)` on those that implement the interface.
+    .   **Decoupling**: `GameState` must **NOT** have dependencies on other game modules.
     .   **Updates**: Modules subscribe to `GameState` changes via `state.subscribe()`.
 
 === 2. Event-Driven State
@@ -116,3 +117,7 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
     *   **Grid**: Integers `{x, y}` representing column/row index.
     *   **Display**: Normalized floats `0.0` to `1.0` (percentage of screen).
     *   Use `CoordinateHelper` methods to convert between Grid, Display, and Pixel values.
+
+=== Decoupled State Sync
+*   **Issue**: `GameState.syncModules` creates a circular dependency or high coupling by making the state module know about every other module.
+*   **Solution**: Use the `StateSyncable` interface. The `Game` class (owner) handles the linking, allowing `GameState` to remain an independent "data store" module.

@@ -1,10 +1,12 @@
+import { StateSyncable } from '../../types/Interfaces';
 import { Score, State } from '../../types/modules';
 
-export default class GameScore implements Score {
+export default class GameScore implements Score, StateSyncable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
-    private _state: State;
+
+    _state: State;
 
     /**
      * Sets the state module required for the Score context.
@@ -84,5 +86,9 @@ export default class GameScore implements Score {
 
     get score(): number {
         return this._score;
+    }
+
+    syncState(state: State): void {
+        this._state = state;
     }
 }

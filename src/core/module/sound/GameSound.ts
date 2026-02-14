@@ -1,8 +1,10 @@
 import configs from '../../../config/configs';
 import { Sound } from '../../types/enums';
-import { Sound as SoundInterface } from '../../types/modules';
+import { StateSyncable } from '../../types/Interfaces';
+import { Sound as SoundInterface, State } from '../../types/modules';
 
-export default class GameSound implements SoundInterface {
+export default class GameSound implements SoundInterface, StateSyncable {
+    muted: boolean;
     // O AudioContext é o "motor" de áudio do navegador.
     // Ele gerencia toda a criação e reprodução de sons.
     // Pense nele como uma mesa de som virtual.
@@ -20,8 +22,9 @@ export default class GameSound implements SoundInterface {
     // Necessário para poder parar sons específicos (como música de fundo ou loops).
     private _activeSources: Map<Sound, AudioBufferSourceNode[]> = new Map();
 
-    private _mute: boolean = false;
     private _volume: number = 1.0;
+
+    _state: State;
 
     setup() {
         const { volume } = configs.game.sound;
@@ -107,15 +110,12 @@ export default class GameSound implements SoundInterface {
         }
     }
 
-    set muted(value: boolean) {
-        this._mute = value;
-        this._updateGain();
-    }
-
     private _updateGain() {
         // setValueAtTime é a forma segura de mudar parâmetros de áudio no Web Audio API.
         // Se mudo, volume é 0. Se não, usa o volume configurado.
-        if (this._mute) {
+        const isMuted = this._state ? this._state.muted : false;
+
+        if (isMuted) {
             this._gainNode.gain.setValueAtTime(0, this._audioContext.currentTime);
         } else {
             this._gainNode.gain.setValueAtTime(this._volume, this._audioContext.currentTime);
@@ -138,5 +138,15 @@ export default class GameSound implements SoundInterface {
         });
 
         await Promise.all(loadPromises);
+    }
+
+    toggleMute(): void {
+        this._state.muted = !this._state.muted;
+        this._updateGain();
+    }
+
+    syncState(state: State): void {
+        this._state = state;
+        this._updateGain();
     }
 }

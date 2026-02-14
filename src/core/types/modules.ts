@@ -299,11 +299,6 @@ export interface State extends Initializable {
 
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
-    /**
-     * Syncs states with all other modules.
-     */
-    syncModules(modules: GameModules): void;
-
     /** Toggles the 'on' state. */
     toggleOn(): void;
     /** Toggles the 'start' state. */
@@ -418,6 +413,11 @@ export interface Sound extends Initializable {
      * Stops all playing sounds.
      */
     stopAll(): Promise<void>;
+
+    /**
+     * Toggles the mute state.
+     */
+    toggleMute(): void;
 
     /**
      * Sets the mute state.

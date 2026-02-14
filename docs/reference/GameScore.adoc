@@ -15,8 +15,14 @@ The module maintains:
 * `level`: The current game level.
 * `multiplier`: The current score multiplier.
 
-It interacts with `GameState` to update:
-* `highScore`: The all-time high score (persistent).
+== Interaction with GameState
+
+The `GameScore` module follows the engine's architectural pattern of **centralized state persistence**. While it manages session-specific data like the current `score`, it implements the `StateSyncable` interface to link with `GameState` for persistent data.
+
+The `Game` class synchronizes all modules with `GameState` during initialization by calling `syncState(state)` on every module that implements the interface. For the score module, this connection is vital to:
+
+*   **Validate High Scores**: Compare current performance against the persisted `highScore`.
+*   **Persist Records**: Automatically update the all-time high score in `GameState` whenever a record is broken.
 
 == API Reference
 
@@ -136,4 +142,49 @@ Resets the game level to 1.
 [source,typescript]
 ----
 this.modules.score.resetLevel();
+----
+=== `setState(state: State): void`
+
+Sets the state module required for the Score context.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`state` |`State` |The game state module.
+|===
+
+**Behavior**
+
+Initializes the internal reference to the `GameState` module. This is required for high score validation and persistence.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.setState(this.modules.state);
+----
+
+=== `syncState(state: State): void`
+
+Synchronizes the score module with the game state.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`state` |`State` |The game state module.
+|===
+
+**Behavior**
+
+Part of the `StateSyncable` interface. Updates the internal state reference. Called automatically by the engine's initialization loop.
+
+**Example**
+
+[source,typescript]
+----
+this.modules.score.syncState(this.modules.state);
 ----

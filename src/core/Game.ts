@@ -10,7 +10,7 @@ import GameTime from './module/time/GameTime';
 import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
-import { Initializable } from './types/Interfaces';
+import { Initializable, StateSyncable } from './types/Interfaces';
 import { GameModules } from './types/Types';
 import configs from '../config/configs';
 
@@ -64,17 +64,22 @@ export default abstract class Game implements Initializable {
         };
 
         Object.values(this._modules).forEach(module => {
-            (module as Initializable).setup();
+            if ('setup' in module) {
+                module.setup();
+            }
         });
 
-        const { text, control, renderer, score, state } = this._modules;
+        Object.values(this._modules).forEach(module => {
+            if ('syncState' in module && !(module instanceof GameState)) {
+                (module as unknown as StateSyncable).syncState(this._modules.state);
+            }
+        });
+
+        const { text, control, renderer } = this._modules;
 
         control.setModules(this._modules);
-        score.setState(state);
 
         text.setRendererMetrics(renderer.rendererMetrics);
-
-        this._modules.state.syncModules(this._modules);
 
         this.setupGame();
 

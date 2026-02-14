@@ -1,6 +1,6 @@
 import configs from '../../../config/configs';
 import { State } from '../../types/modules';
-import { GameModules, StateProperty } from '../../types/Types';
+import { StateProperty } from '../../types/Types';
 
 type StateMetadata = {
     defaultValue: boolean | number;
@@ -209,27 +209,5 @@ export default class GameState implements State {
                 callbacks.filter(cb => cb !== callback),
             );
         }
-    }
-
-    /**
-     * Synchronizes the game state with all other modules.
-     *
-     * This method acts as the central hub for applying persistent state (like mute settings)
-     * to the respective modules (e.g., GameSound) upon initialization or state changes.
-     * IT IS THE ONLY SOURCE OF TRUTH FOR PERSISTENT STATE.
-     *
-     * @param {GameModules} modules - The game modules to sync with.
-     */
-    syncModules(modules: GameModules): void {
-        const { sound } = modules;
-        // Sync Initial State
-        sound.muted = this.muted;
-
-        // Subscribe to changes
-        this.subscribe(StateProperty.MUTED, (value: boolean | number) => {
-            if (typeof value === 'boolean') {
-                sound.muted = value;
-            }
-        });
     }
 }
