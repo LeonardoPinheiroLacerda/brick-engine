@@ -74,11 +74,11 @@ export default abstract class Game implements Initializable {
 
         text.setRendererMetrics(renderer.rendererMetrics);
 
-        this._view.bound(control);
-
         this._modules.state.syncModules(this._modules);
 
         this.setupGame();
+
+        this._view.bound(control);
     }
 
     /**
