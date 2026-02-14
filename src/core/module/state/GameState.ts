@@ -29,6 +29,8 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
  * (like mute settings) from LocalStorage. Other modules should NOT access LocalStorage directly.
  */
 export default class GameState implements State {
+    private _persistenceKey: string = '';
+
     private _state: Map<StateProperty, boolean | number> = new Map();
 
     /** Map to store property names and their associated subscription callbacks. */
@@ -77,7 +79,7 @@ export default class GameState implements State {
 
             const config = STATE_CONFIG[property];
             if (config.storageKey) {
-                localStorage.setItem(config.storageKey, JSON.stringify(value));
+                localStorage.setItem(`${this._persistenceKey}.${config.storageKey}`, JSON.stringify(value));
             }
 
             this._notify(property, value);
@@ -209,5 +211,22 @@ export default class GameState implements State {
                 callbacks.filter(cb => cb !== callback),
             );
         }
+    }
+
+    /**
+     * Sets the persistence key for the state.
+     * This key is used to generate unique keys for each state property in LocalStorage.
+     * @param {string} key - The persistence key.
+     */
+    setPersistenceKey(key: string): void {
+        this._persistenceKey = key;
+    }
+
+    /**
+     * Gets the persistence key for the state.
+     * @returns {string} The persistence key.
+     */
+    getPersistenceKey(): string {
+        return this._persistenceKey;
     }
 }

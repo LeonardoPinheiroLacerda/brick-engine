@@ -311,6 +311,18 @@ export interface State extends Initializable {
     toggleColorEnabled(): void;
     /** Toggles the 'muted' state. */
     toggleMuted(): void;
+
+    /**
+     * Sets the persistence key.
+     * @param key The persistence key.
+     */
+    setPersistenceKey(key: string): void;
+
+    /**
+     * Gets the persistence key.
+     * @returns The persistence key.
+     */
+    getPersistenceKey(): string;
 }
 
 /**

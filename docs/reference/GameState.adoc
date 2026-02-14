@@ -93,9 +93,40 @@ Removes the callback from the list.
 state.unsubscribe(StateProperty.GAME_OVER, onGameOver);
 ----
 
+=== `setPersistenceKey(key: string): void`
+
+Sets the unique persistence key for the game.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |`string` |The unique identifier for the game instance.
+|===
+
+**Behavior**
+
+This key is used as a prefix for all `localStorage` keys (e.g., `my-game.muted`). It ensures that multiple games using the same engine do not overwrite each other's settings.
+
+**Example**
+
+[source,typescript]
+----
+state.setPersistenceKey('super-brick-v1');
+----
+
+=== `getPersistenceKey(): string`
+
+Returns the currently set persistence key.
+
+**Returns**
+
+`string` - The persistence key.
+
 === Persistence
 
-The module automatically saves `muted`, `colorEnabled`, and `highScore` preferences to the browser's `localStorage` using keys defined in `configs.ts`.
+The module automatically saves `muted`, `colorEnabled`, and `highScore` preferences to the browser's `localStorage`. All keys are prefixed with the game's persistence key in the format: `${persistenceKey}.${storageKey}`.
 
 == Central Persistence Responsibility
 

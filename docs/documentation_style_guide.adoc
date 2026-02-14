@@ -19,6 +19,7 @@ These patterns must be reflected in both the code and the documentation.
     .   **Interface**: Modules requiring state must implement `StateSyncable`.
     .   **Initialization**: `Game.ts` iterates over modules and calls `syncState(state)` on those that implement the interface.
     .   **Decoupling**: `GameState` must **NOT** have dependencies on other game modules.
+    .   **Persistence Key**: The `Game` class must provide a unique key to `GameState` to prefix all `localStorage` entries.
     .   **Updates**: Modules subscribe to `GameState` changes via `state.subscribe()`.
 
 === 2. Event-Driven State
@@ -32,7 +33,12 @@ These patterns must be reflected in both the code and the documentation.
 *   **Principle**: Coupling through interfaces, not implementation.
 *   **Guideline**: Define module shapes in `src/core/types/modules.ts` (e.g., `Sound`, `Grid`, `Time`).
 
-== API Documentation Standards
+
+=== Entry Point Responsibility
+
+The `README.adoc` is the **main entry point** of the application and contains the "Getting Started" guide. 
+
+**Rule**: Whenever adding new abstract methods to the `Game` class or making breaking changes to the initialization flow, you **MUST** verify and update the code snippet in `README.adoc` to ensure it remains a valid boilerplate for developers.
 
 All `.adoc` files in `docs/reference/` must follow this strict structure for methods.
 
@@ -121,3 +127,7 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 === Decoupled State Sync
 *   **Issue**: `GameState.syncModules` creates a circular dependency or high coupling by making the state module know about every other module.
 *   **Solution**: Use the `StateSyncable` interface. The `Game` class (owner) handles the linking, allowing `GameState` to remain an independent "data store" module.
+
+=== Persistence Namespacing
+*   **Issue**: If multiple games built with the engine are hosted on the same domain, they share the same `localStorage`, leading to property collisions (e.g., both games trying to store `highScore`).
+*   **Solution**: Require an abstract `getPersistenceKey()` method in the `Game` class and use its return value as a prefix in `GameState` (e.g., `localStorage.setItem(`${prefix}.${key}`, value)`).

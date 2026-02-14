@@ -69,6 +69,8 @@ export default abstract class Game implements Initializable {
             }
         });
 
+        this._modules.state.setPersistenceKey(this.getPersistenceKey());
+
         Object.values(this._modules).forEach(module => {
             if ('syncState' in module && !(module instanceof GameState)) {
                 (module as unknown as StateSyncable).syncState(this._modules.state);
@@ -156,4 +158,10 @@ export default abstract class Game implements Initializable {
      * Called after the game modules are initialized.
      */
     abstract setupGame(): void;
+
+    /**
+     * Abstract method for getting the persistence key.
+     * Called after the game modules are initialized and sets itself in the state module.
+     */
+    abstract getPersistenceKey(): string;
 }

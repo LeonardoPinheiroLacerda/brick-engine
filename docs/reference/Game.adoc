@@ -99,6 +99,29 @@ setupGame(): void {
 }
 ----
 
+=== `getPersistenceKey(): string` (Abstract)
+
+Subclasses **must** implement this method to provide a unique identifier for the game's persistent storage.
+
+**Returns**
+
+`string` - A unique key (e.g., 'tetris-v1').
+
+**Behavior**
+
+This key is used by the `GameState` module to prefix all `localStorage` entries, preventing collisions between different games built with the engine.
+
+== Automated System Controls
+
+The `Game` base class automatically registers listeners for system-level buttons. You do **not** need to handle these in your `setupGame()` method:
+
+*   **POWER**: Toggles the engine on/off.
+*   **SOUND**: Toggles master volume.
+*   **COLOR**: Toggles color mode.
+*   **RESET**: Resets the grid and clears Game Over status.
+*   **START_PAUSE**: Handles game start and pausing.
+*   **EXIT**: Stops the P5.js draw loop.
+
 == Accessing Modules
 
 You can access any module via `this.modules`.
