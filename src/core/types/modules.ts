@@ -272,22 +272,32 @@ export interface State extends Initializable {
     muted: boolean;
 
     /**
+     * The highest score achieved by the user.
+     * Persisted across sessions.
+     *
+     * @type {number}
+     */
+    highScore: number;
+
+    /**
      * Subscribes to changes in specific state properties.
      *
      * @param {StateProperty} property - The state property to monitor.
-     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
      * @returns {void}
      */
-    subscribe(property: StateProperty, callback: (value: boolean) => void): void;
+
+    subscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Unsubscribes from changes in specific state properties.
      *
      * @param {StateProperty} property - The state property to monitor.
-     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
      * @returns {void}
      */
-    unsubscribe(property: StateProperty, callback: (value: boolean) => void): void;
+
+    unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Syncs states with all other modules.

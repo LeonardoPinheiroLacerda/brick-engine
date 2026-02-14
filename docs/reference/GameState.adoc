@@ -18,6 +18,7 @@ The module exposes several boolean properties that represent the game's current 
 * `gameOver`: Has the player lost?
 * `muted`: Is sound disabled? (Persisted)
 * `colorEnabled`: Is color mode active? (Persisted)
+* `highScore`: The highest score achieved by the player. (Persisted)
 
 NOTE: Modifying these properties directly (e.g., `state.gameOver = true`) automatically triggers the notification system, informing all subscribers.
 
@@ -38,7 +39,7 @@ Inverts the current boolean value. Automatically triggers a notification event t
 this.modules.state.toggleMuted();
 ----
 
-=== `subscribe(property: StateProperty, callback: (value: boolean) => void): void`
+=== `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
 Subscribes to changes in a specific state property.
 
@@ -48,7 +49,7 @@ Subscribes to changes in a specific state property.
 |===
 |Name |Type |Description
 |`property` |`StateProperty` |The state property to monitor (e.g., `StateProperty.GAME_OVER`).
-|`callback` |`(value: boolean) => void` |Function to execute when the property changes.
+|`callback` |`(value: boolean \| number) => void` |Function to execute when the property changes.
 |===
 
 
@@ -67,7 +68,7 @@ state.subscribe(StateProperty.GAME_OVER, isOver => {
 });
 ----
 
-=== `unsubscribe(property: StateProperty, callback: (value: boolean) => void): void`
+=== `unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
 Unsubscribes a previously registered callback.
 
@@ -77,7 +78,7 @@ Unsubscribes a previously registered callback.
 |===
 |Name |Type |Description
 |`property` |`StateProperty` |The state property.
-|`callback` |`(value: boolean) => void` |The function reference to remove.
+|`callback` |`(value: boolean \| number) => void` |The function reference to remove.
 |===
 
 
@@ -94,7 +95,7 @@ state.unsubscribe(StateProperty.GAME_OVER, onGameOver);
 
 === Persistence
 
-The module automatically saves `muted` and `colorEnabled` preferences to the browser's `localStorage` using keys defined in `configs.ts`.
+The module automatically saves `muted`, `colorEnabled`, and `highScore` preferences to the browser's `localStorage` using keys defined in `configs.ts`.
 
 == Central Persistence Responsibility
 

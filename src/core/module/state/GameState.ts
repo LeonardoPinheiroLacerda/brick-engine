@@ -2,6 +2,21 @@ import configs from '../../../config/configs';
 import { State } from '../../types/modules';
 import { GameModules, StateProperty } from '../../types/Types';
 
+type StateMetadata = {
+    defaultValue: boolean | number;
+    storageKey?: string;
+};
+
+const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
+    [StateProperty.ON]: { defaultValue: false },
+    [StateProperty.START]: { defaultValue: false },
+    [StateProperty.RUNNING]: { defaultValue: false },
+    [StateProperty.GAME_OVER]: { defaultValue: false },
+    [StateProperty.COLOR_ENABLED]: { defaultValue: true, storageKey: configs.storageKeys.colorEnabled },
+    [StateProperty.MUTED]: { defaultValue: false, storageKey: configs.storageKeys.muted },
+    [StateProperty.HIGH_SCORE]: { defaultValue: 0, storageKey: configs.storageKeys.score },
+};
+
 /**
  * Manages the core boolean states of the game and handles state-change events.
  *
@@ -13,17 +28,19 @@ import { GameModules, StateProperty } from '../../types/Types';
  * (like mute settings) from LocalStorage. Other modules should NOT access LocalStorage directly.
  */
 export default class GameState implements State {
-    private _on: boolean = false;
-    private _start: boolean = false;
-    private _running: boolean = false;
-    private _gameOver: boolean = false;
-    private _colorEnabled: boolean = true;
-    private _muted: boolean = false;
+    private _state: Map<StateProperty, boolean | number> = new Map();
 
     /** Map to store property names and their associated subscription callbacks. */
-    private _subscribers: Map<StateProperty, Array<(value: boolean) => void>> = new Map();
+
+    private _subscribers: Map<StateProperty, Array<(value: boolean | number) => void>> = new Map();
 
     setup(): void {
+        // Initialize default values
+        Object.values(StateProperty).forEach(property => {
+            const config = STATE_CONFIG[property];
+            this._state.set(property, config.defaultValue);
+        });
+
         this._loadPersistentState();
     }
 
@@ -33,16 +50,36 @@ export default class GameState implements State {
      * @private
      */
     private _loadPersistentState(): void {
-        const { colorEnabled, muted } = configs.storageKeys;
+        Object.values(StateProperty).forEach(property => {
+            const config = STATE_CONFIG[property];
+            if (config.storageKey) {
+                const storedValue = localStorage.getItem(config.storageKey);
+                if (storedValue !== null) {
+                    this._state.set(property, JSON.parse(storedValue));
+                }
+            }
+        });
+    }
 
-        const storedColor = localStorage.getItem(colorEnabled);
-        if (storedColor !== null) {
-            this._colorEnabled = JSON.parse(storedColor);
-        }
+    /**
+     * Sets a state property value, handling persistence and notification.
+     *
+     * @param {StateProperty} property - The property to set.
+     * @param {any} value - The value to set.
+     * @private
+     */
 
-        const storedMuted = localStorage.getItem(muted);
-        if (storedMuted !== null) {
-            this._muted = JSON.parse(storedMuted);
+    private _set(property: StateProperty, value: boolean | number): void {
+        const currentValue = this._state.get(property);
+        if (currentValue !== value) {
+            this._state.set(property, value);
+
+            const config = STATE_CONFIG[property];
+            if (config.storageKey) {
+                localStorage.setItem(config.storageKey, JSON.stringify(value));
+            }
+
+            this._notify(property, value);
         }
     }
 
@@ -50,109 +87,94 @@ export default class GameState implements State {
      * Notifies all subscribers of a property change.
      *
      * @param {string} property - The property that changed.
-     * @param {boolean} value - The new value of the property.
+     * @param {any} value - The new value of the property.
      * @private
      */
-    private _notify(property: StateProperty, value: boolean): void {
+
+    private _notify(property: StateProperty, value: boolean | number): void {
         const callbacks = this._subscribers.get(property);
         if (callbacks) {
             callbacks.forEach(callback => callback(value));
         }
     }
 
-    public get on(): boolean {
-        return this._on;
+    get on(): boolean {
+        return this._state.get(StateProperty.ON);
     }
 
-    public set on(value: boolean) {
-        if (this._on !== value) {
-            this._on = value;
-            this._notify(StateProperty.ON, value);
-        }
+    set on(value: boolean) {
+        this._set(StateProperty.ON, value);
     }
 
-    public get start(): boolean {
-        return this._start;
+    get start(): boolean {
+        return this._state.get(StateProperty.START);
     }
 
-    public set start(value: boolean) {
-        if (this._start !== value) {
-            this._start = value;
-            this._notify(StateProperty.START, value);
-        }
+    set start(value: boolean) {
+        this._set(StateProperty.START, value);
     }
 
-    public get running(): boolean {
-        return this._running;
+    get running(): boolean {
+        return this._state.get(StateProperty.RUNNING);
     }
 
-    public set running(value: boolean) {
-        if (this._running !== value) {
-            this._running = value;
-            this._notify(StateProperty.RUNNING, value);
-        }
+    set running(value: boolean) {
+        this._set(StateProperty.RUNNING, value);
     }
 
-    public get gameOver(): boolean {
-        return this._gameOver;
+    get gameOver(): boolean {
+        return this._state.get(StateProperty.GAME_OVER);
     }
 
-    public set gameOver(value: boolean) {
-        if (this._gameOver !== value) {
-            this._gameOver = value;
-            this._notify(StateProperty.GAME_OVER, value);
-        }
+    set gameOver(value: boolean) {
+        this._set(StateProperty.GAME_OVER, value);
     }
 
-    public get colorEnabled(): boolean {
-        return this._colorEnabled;
+    get colorEnabled(): boolean {
+        return this._state.get(StateProperty.COLOR_ENABLED);
     }
 
-    public set colorEnabled(value: boolean) {
-        const { colorEnabled } = configs.storageKeys;
-
-        if (this._colorEnabled !== value) {
-            this._colorEnabled = value;
-            localStorage.setItem(colorEnabled, JSON.stringify(value));
-            this._notify(StateProperty.COLOR_ENABLED, value);
-        }
+    set colorEnabled(value: boolean) {
+        this._set(StateProperty.COLOR_ENABLED, value);
     }
 
-    public get muted(): boolean {
-        return this._muted;
+    get muted(): boolean {
+        return this._state.get(StateProperty.MUTED);
     }
 
-    public set muted(value: boolean) {
-        const { muted } = configs.storageKeys;
-
-        if (this._muted !== value) {
-            this._muted = value;
-            localStorage.setItem(muted, JSON.stringify(value));
-            this._notify(StateProperty.MUTED, value);
-        }
+    set muted(value: boolean) {
+        this._set(StateProperty.MUTED, value);
     }
 
-    public toggleOn(): void {
+    get highScore(): number {
+        return this._state.get(StateProperty.HIGH_SCORE);
+    }
+
+    set highScore(value: number) {
+        this._set(StateProperty.HIGH_SCORE, value);
+    }
+
+    toggleOn(): void {
         this.on = !this.on;
     }
 
-    public toggleStart(): void {
+    toggleStart(): void {
         this.start = !this.start;
     }
 
-    public toggleRunning(): void {
+    toggleRunning(): void {
         this.running = !this.running;
     }
 
-    public toggleGameOver(): void {
+    toggleGameOver(): void {
         this.gameOver = !this.gameOver;
     }
 
-    public toggleColorEnabled(): void {
+    toggleColorEnabled(): void {
         this.colorEnabled = !this.colorEnabled;
     }
 
-    public toggleMuted(): void {
+    toggleMuted(): void {
         this.muted = !this.muted;
     }
 
@@ -160,9 +182,10 @@ export default class GameState implements State {
      * Subscribes to changes in specific state properties.
      *
      * @param {string} property - The state property to monitor.
-     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @param {function(any): void} callback - The function to execute when the property changes.
      */
-    public subscribe(property: StateProperty, callback: (value: boolean) => void): void {
+
+    subscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
         if (!this._subscribers.has(property)) {
             this._subscribers.set(property, []);
         }
@@ -173,10 +196,11 @@ export default class GameState implements State {
      * Unsubscribes from changes in specific state properties.
      *
      * @param {string} property - The state property to monitor (e.g., 'on', 'running').
-     * @param {function(boolean): void} callback - The function to execute when the property changes.
+     * @param {function(any): void} callback - The function to execute when the property changes.
      * @returns {void}
      */
-    public unsubscribe(property: StateProperty, callback: (value: boolean) => void): void {
+
+    unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
         const callbacks = this._subscribers.get(property);
         if (callbacks) {
             this._subscribers.set(
