@@ -4,8 +4,8 @@ import { ControlEventType, ControlKey, Sound } from './core/types/enums';
 //Essa classe serve apenas para testes
 export default class GameTmpTest extends Game {
     setupGame() {
-        const { sound, control } = this.modules;
-        sound.setMute(false);
+        const { sound, control, state } = this.modules;
+        state.muted = false;
 
         control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
             sound.play(Sound.ACTION_1);

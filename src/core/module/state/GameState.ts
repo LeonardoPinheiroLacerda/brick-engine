@@ -198,9 +198,9 @@ export default class GameState implements State {
     syncModules(modules: GameModules): void {
         const { sound } = modules;
         // Sync Initial State
-        sound.setMute(this.muted);
+        sound.muted = this.muted;
 
         // Subscribe to changes
-        this.subscribe(StateProperty.MUTED, value => sound.setMute(value));
+        this.subscribe(StateProperty.MUTED, value => (sound.muted = value));
     }
 }

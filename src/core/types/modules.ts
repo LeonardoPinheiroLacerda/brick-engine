@@ -410,15 +410,9 @@ export interface Sound extends Initializable {
     stopAll(): Promise<void>;
 
     /**
-     * Toggles the mute state.
-     */
-    toggleMute(): void;
-
-    /**
      * Sets the mute state.
-     * @param muted Whether the sound should be muted.
      */
-    setMute(muted: boolean): void;
+    muted: boolean;
 }
 
 /**

@@ -107,12 +107,8 @@ export default class GameSound implements SoundInterface {
         }
     }
 
-    toggleMute() {
-        this.setMute(!this._mute);
-    }
-
-    setMute(muted: boolean) {
-        this._mute = muted;
+    set muted(value: boolean) {
+        this._mute = value;
         this._updateGain();
     }
 
