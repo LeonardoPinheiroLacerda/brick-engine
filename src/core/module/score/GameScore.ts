@@ -5,6 +5,7 @@ export default class GameScore implements Score, StateSyncable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
+    private _maxLevel: number = 1;
 
     _state: State;
 
@@ -86,6 +87,14 @@ export default class GameScore implements Score, StateSyncable {
 
     get score(): number {
         return this._score;
+    }
+
+    get maxLevel(): number {
+        return this._maxLevel;
+    }
+
+    set maxLevel(value: number) {
+        this._maxLevel = value;
     }
 
     syncState(state: State): void {

@@ -1,5 +1,5 @@
 import { State } from './modules';
-import { Cell } from './Types';
+import { RendererMetrics } from './Types';
 
 export interface Initializable {
     setup(): void;
@@ -10,6 +10,6 @@ export interface StateSyncable {
     syncState(state: State): void;
 }
 
-export interface Renderer extends Initializable {
-    render(grid: Cell[][]): void;
+export interface RendererInitializable {
+    setup(rendererMetrics: RendererMetrics): void;
 }

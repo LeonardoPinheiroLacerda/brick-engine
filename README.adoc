@@ -69,7 +69,7 @@ export default class MyGame extends Game {
 The engine is organized into the following core modules:
 
 * xref:docs/reference/Game.adoc[Game (Core)]: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
-* xref:docs/reference/GameGrid.adoc[GameGrid]: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection.
+* xref:docs/reference/GameGrid.adoc[GameGrid]: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection. The engine also includes `GameHudGrid`, a specialized 4x4 grid instance. It is a separate module that developers can manipulate freely (e.g., clearing it, setting specific cells) to display custom content like the "Next Piece" in Tetris.
 * xref:docs/reference/GameControl.adoc[GameControl]: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
 * xref:docs/reference/GameRenderer.adoc[GameRenderer]: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.
 * xref:docs/reference/GameState.adoc[GameState]: Tracks global game properties like `running`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).

@@ -1,28 +1,33 @@
 import P5 from 'p5';
 import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound as SoundEnum } from './enums';
-import { Initializable } from './Interfaces';
+import { Initializable, RendererInitializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
 
 /**
  * Interface for the renderer module.
  */
-export interface Renderer extends Initializable {
+export interface Renderer extends RendererInitializable {
     /**
      * Renders the grid.
      * @param grid The grid to render.
      */
-    render(grid: Cell[][]): void;
+    render(grid: Cell[][], modules: GameModules): void;
 }
 
 /**
  * Interface for the composite renderer module.
  */
-export interface RendererComposite extends Renderer {
+export interface RendererComposite {
     /**
      * Adds a renderer to the composite renderer.
      * @param renderer The renderer to add.
      */
     addRenderer(renderer: Renderer): void;
+    /**
+     * Renders the grid.
+     * @param grid The grid to render.
+     */
+    render(grid: Cell[][], modules: GameModules): void;
     /**
      * The display metrics of the renderer.
      */
@@ -63,6 +68,11 @@ export interface Text extends Initializable {
      * @param coordinate The coordinate to display the text at.
      */
     textOnHud(text: string, coordinate: Coordinate): void;
+    /**
+     * Displays text on the display.
+     * @param text The text to display.
+     * @param coordinate The coordinate to display the text at.
+     */
     textOnDisplay(text: string, coordinate: Coordinate): void;
 }
 
@@ -500,6 +510,11 @@ export interface Score extends Initializable {
      * Current game level.
      */
     level: number;
+
+    /**
+     * Maximum game level.
+     */
+    maxLevel: number;
 
     /**
      * Increases the game level.

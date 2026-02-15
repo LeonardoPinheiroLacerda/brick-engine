@@ -16,6 +16,13 @@ It follows a **Strategy Composite** pattern, allowing multiple render layers, bu
 * **Retro Styling**: Renders cells with a grid gap and "LCD" style look.
 * **Metrics**: Exposes calculated dimensions for other modules (like Text) to align content correctly.
 
+== Implementation Details
+
+For developers interested in the specific rendering logic of the game grid and HUD, refer to:
+
+* xref:DisplayRenderer.adoc[DisplayRenderer]: Handles the main game grid and cell rendering.
+* xref:HudRenderer.adoc[HudRenderer]: Handles the HUD layout and static elements.
+
 == API Reference
 
 === `addRenderer(renderer: Renderer): void`
@@ -67,7 +74,7 @@ Read-only property containing calculated dimensions.
 
 **Behavior**
 
-Values are calculated during `setup()` based on screen size. Used for aligning HUD elements and custom drawing.
+Values are calculated during `setup()` based on screen size and configuration. The `GameRenderer` calculates these once and passes them to all child renderers, ensuring a single source of truth for layout metrics.
 
 **Example**
 

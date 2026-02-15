@@ -63,6 +63,7 @@ export interface RendererMetrics {
  */
 export type GameModules = {
     grid: Grid;
+    hudGrid: Grid;
     text: Text;
     state: State;
     control: Control;

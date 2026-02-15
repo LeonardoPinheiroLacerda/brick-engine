@@ -1,18 +1,15 @@
 import P5 from 'p5';
 
 import configs from '../../../config/configs';
-import CoordinateHelper from '../../helpers/CoordinateHelper';
 import { Color } from '../../types/enums';
-import { Cell, Coordinate } from '../../types/Types';
-import { Renderer } from '../../types/Interfaces';
+import { Cell, RendererMetrics } from '../../types/Types';
+import { Renderer } from '../../types/modules';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 export default class DisplayRenderer implements Renderer {
     private _p: P5;
 
-    private _cellSize: number;
-    private _displayWidth: number;
-    private _displayHeight: number;
+    private _rendererMetrics: RendererMetrics;
 
     // Pre-calculated cell geometry
     private _cellPreCalculatedGeometry: {
@@ -23,74 +20,61 @@ export default class DisplayRenderer implements Renderer {
         strokeWeight: number;
     };
 
-    // Grid start position in pixels
-    private _gridOrigin: Coordinate;
+    // Static graphics buffer for optimized rendering
+    private _staticGraphics: P5.Graphics;
 
     constructor(p: P5) {
         this._p = p;
     }
 
-    setup() {
-        const { width, height, margin: displayMargin } = configs.screenLayout.display;
-        const { x: gridColumns } = configs.screenLayout.grid;
+    setup(rendererMetrics: RendererMetrics) {
+        this._rendererMetrics = rendererMetrics;
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
 
-        // 1. Calculate main display dimensions
-        this._displayWidth = RelativeValuesHelper.getRelativeWidth(this._p, width);
-        this._displayHeight = RelativeValuesHelper.getRelativeHeight(this._p, height);
-        this._gridOrigin = CoordinateHelper.getRelativeCoordinate(this._p, {
-            x: displayMargin,
-            y: displayMargin,
-        });
-
-        // 2. Calculate cell size
-        this._cellSize = this._displayWidth / gridColumns;
+        // Use pre-calculated cell size
+        const cellSize = this._rendererMetrics.cell.size;
 
         // 3. Pre-calculate localized cell geometry (relative to cell 0,0)
         this._cellPreCalculatedGeometry = {
-            innerOffset: cellMargin * this._cellSize,
-            innerSize: this._cellSize - cellMargin * this._cellSize * 2,
-            paddingOffset: cellPadding * this._cellSize,
-            paddingSize: this._cellSize - cellPadding * this._cellSize * 2,
-            strokeWeight: cellStrokeWeight * this._cellSize,
+            innerOffset: cellMargin * cellSize,
+            innerSize: cellSize - cellMargin * cellSize * 2,
+            paddingOffset: cellPadding * cellSize,
+            paddingSize: cellSize - cellPadding * cellSize * 2,
+            strokeWeight: cellStrokeWeight * cellSize,
         };
 
-        // TODO: Implement createGraphics buffer to optimize static rendering (background and borders)
+        // Initialize static graphics buffer and render static elements
+        this._renderStaticElements();
     }
 
     render(grid: Cell[][]) {
         this._p.push();
 
-        this.renderBackground();
-        this.renderGameGridBorder();
+        this._p.image(this._staticGraphics, 0, 0);
         this.renderGrid(grid);
 
         this._p.pop();
     }
 
     /**
-     * Renders the background of the game
+     * Renders static elements (background and borders) to an off-screen buffer.
      */
-    protected renderBackground() {
-        this._p.push();
-
-        this._p.background(configs.colors.background);
-
-        this._p.pop();
-    }
-
-    /** Renders the border of the game grid */
-    protected renderGameGridBorder() {
+    private _renderStaticElements() {
         const { borderWeight } = configs.screenLayout.display;
 
-        this._p.push();
+        this._staticGraphics = this._p.createGraphics(this._p.width, this._p.height);
 
-        this._p.strokeWeight(RelativeValuesHelper.getRelativeWidth(this._p, borderWeight));
-        this._p.noFill();
-        this._p.stroke(configs.colors.active);
-        this._p.rect(this._gridOrigin.x, this._gridOrigin.y, this._displayWidth, this._displayHeight);
+        this._staticGraphics.background(configs.colors.background);
 
-        this._p.pop();
+        this._staticGraphics.strokeWeight(RelativeValuesHelper.getRelativeWidth(this._p, borderWeight));
+        this._staticGraphics.noFill();
+        this._staticGraphics.stroke(configs.colors.active);
+        this._staticGraphics.rect(
+            this._rendererMetrics.display.origin.x,
+            this._rendererMetrics.display.origin.y,
+            this._rendererMetrics.display.width,
+            this._rendererMetrics.display.height,
+        );
     }
 
     /**
@@ -108,7 +92,10 @@ export default class DisplayRenderer implements Renderer {
         this._p.push();
 
         // Move to the specific cell position
-        this._p.translate(this._gridOrigin.x + x * this._cellSize, this._gridOrigin.y + y * this._cellSize);
+        this._p.translate(
+            this._rendererMetrics.display.origin.x + x * this._rendererMetrics.cell.size,
+            this._rendererMetrics.display.origin.y + y * this._rendererMetrics.cell.size,
+        );
 
         this._p.strokeWeight(strokeWeight);
         this._p.stroke(color);
@@ -130,21 +117,5 @@ export default class DisplayRenderer implements Renderer {
                 this.renderCell(cell);
             });
         });
-    }
-
-    get displayWidth(): number {
-        return this._displayWidth;
-    }
-
-    get displayHeight(): number {
-        return this._displayHeight;
-    }
-
-    get displayOrigin(): Coordinate {
-        return this._gridOrigin;
-    }
-
-    get cellSize(): number {
-        return this._cellSize;
     }
 }

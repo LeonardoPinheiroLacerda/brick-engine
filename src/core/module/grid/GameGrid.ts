@@ -33,7 +33,7 @@ export default class GameGrid implements Grid {
      * @returns {number} The grid width.
      */
     get width(): number {
-        return this._grid[0]?.length || 0;
+        return configs.screenLayout.grid.x;
     }
 
     /**
@@ -42,7 +42,7 @@ export default class GameGrid implements Grid {
      * @returns {number} The grid height.
      */
     get height(): number {
-        return this._grid.length;
+        return configs.screenLayout.grid.y;
     }
 
     /**
@@ -62,12 +62,10 @@ export default class GameGrid implements Grid {
      * @returns {void}
      */
     resetGrid(): void {
-        const { x: gridX, y: gridY } = configs.screenLayout.grid;
-
         this._grid = [];
-        for (let y = 0; y < gridY; y++) {
+        for (let y = 0; y < this.height; y++) {
             this._grid[y] = [];
-            for (let x = 0; x < gridX; x++) {
+            for (let x = 0; x < this.width; x++) {
                 this._grid[y][x] = CellHelper.emptyCell({ x, y });
             }
         }

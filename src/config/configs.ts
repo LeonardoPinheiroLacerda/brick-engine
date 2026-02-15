@@ -187,7 +187,7 @@ export default {
             /** Number of ticks to count before updating the performance. */
             tickInterval: 60,
             /** Enable performance overlay. */
-            enabled: true,
+            enabled: false,
         },
 
         sound: {

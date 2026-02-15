@@ -13,6 +13,7 @@ import GameScore from './module/score/GameScore';
 import { Initializable, StateSyncable } from './types/Interfaces';
 import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
+import GameHudGrid from './module/grid/GameHudGrid';
 
 /**
  * Base abstract class for the game.
@@ -55,6 +56,7 @@ export default abstract class Game implements Initializable {
         this._modules = {
             renderer: new GameRenderer(this._p),
             grid: new GameGrid(),
+            hudGrid: new GameHudGrid(),
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
@@ -104,7 +106,7 @@ export default abstract class Game implements Initializable {
             this.processTick(this._p.deltaTime);
         }
 
-        renderer.render(grid.getGrid());
+        renderer.render(grid.getGrid(), this._modules);
 
         if (this._frameInterval === 0 || this._p.frameCount % this._frameInterval === 0) {
             this.processFrame();
