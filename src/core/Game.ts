@@ -143,6 +143,23 @@ export default abstract class Game implements Initializable {
     }
 
     /**
+     * Destroys the game instance, cleaning up all event listeners and stopping the loop.
+     * Call this before switching to another game or when the game is no longer needed.
+     */
+    destroy() {
+        this._p.noLoop();
+
+        if (this._modules) {
+            this._modules.control.unbound();
+            this._modules.sound.stopAll();
+        }
+
+        if (this._view) {
+            this._view.unbound();
+        }
+    }
+
+    /**
      * Abstract method for processing game logic.
      * Called every tick.
      * @param deltaTime Time elapsed since last tick.

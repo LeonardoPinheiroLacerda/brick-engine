@@ -107,9 +107,22 @@ Subclasses **must** implement this method to provide a unique identifier for the
 
 `string` - A unique key (e.g., 'tetris-v1').
 
+
 **Behavior**
 
-This key is used by the `GameState` module to prefix all `localStorage` entries, preventing collisions between different games built with the engine.
+This key is used by the `GameState` module to prefix all `localStorage` entries, preventing checking collisions between different games built with the engine.
+
+=== `destroy(): void`
+
+Clean up the game instance.
+
+**Returns**
+
+`void`
+
+**Behavior**
+
+Stops the game loop, unbinds all control event listeners, and stops all sounds. Call this method when switching games or when the game instance is no longer needed to prevent memory leaks and input conflicts.
 
 == Automated System Controls
 

@@ -20,6 +20,10 @@ export default class GameControl implements Control {
         this._subscribers.clear();
     }
 
+    bound() {
+        this._keyBinding.bound();
+    }
+
     setModules(modules: GameModules): void {
         this._modules = modules;
     }

@@ -30,24 +30,29 @@ const DEFAULT_KEY_MAP: Record<string, ControlKey> = {
 export default class GameControlKeyBinding {
     private _inputHandler: ControlInputHandler;
 
+    private _boundHandleKeyDown: (event: KeyboardEvent) => void;
+    private _boundHandleKeyUp: (event: KeyboardEvent) => void;
+
     constructor(control: Control) {
         this._inputHandler = new ControlInputHandler(control);
+        this._boundHandleKeyDown = this._handleKeyDown.bind(this);
+        this._boundHandleKeyUp = this._handleKeyUp.bind(this);
     }
 
     /**
      * Binds keyboard events to the window.
      */
     bound() {
-        window.addEventListener('keydown', event => this._handleKeyDown(event));
-        window.addEventListener('keyup', event => this._handleKeyUp(event));
+        window.addEventListener('keydown', this._boundHandleKeyDown);
+        window.addEventListener('keyup', this._boundHandleKeyUp);
     }
 
     /**
      * Unbinds keyboard events from the window.
      */
     unbound() {
-        window.removeEventListener('keydown', event => this._handleKeyDown(event));
-        window.removeEventListener('keyup', event => this._handleKeyUp(event));
+        window.removeEventListener('keydown', this._boundHandleKeyDown);
+        window.removeEventListener('keyup', this._boundHandleKeyUp);
     }
 
     private _handleKeyDown(event: KeyboardEvent) {

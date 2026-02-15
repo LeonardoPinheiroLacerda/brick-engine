@@ -367,6 +367,15 @@ export interface Control extends Initializable {
      * @param callback The function to remove.
      */
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+    /**
+     * Unbinds all control events.
+     */
+    unbound(): void;
+
+    /**
+     * Binds all control events.
+     */
+    bound(): void;
 }
 
 /**
