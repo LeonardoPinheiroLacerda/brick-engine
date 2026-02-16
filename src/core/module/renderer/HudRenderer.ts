@@ -1,5 +1,5 @@
 import { Renderer } from '../../types/modules';
-import { Cell, GameModules, RendererMetrics } from '../../types/Types';
+import { Cell, Coordinate, GameModules, RendererMetrics } from '../../types/Types';
 import P5 from 'p5';
 import { Color, FontAlign, FontSize, FontVerticalAlign } from '../../types/enums';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
@@ -9,12 +9,11 @@ import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 export default class HudRenderer implements Renderer {
     private _p: P5;
 
-    private _coordX: number;
-    private _coordY: number;
+    private _gridOrigin: Coordinate;
 
     private _cellSize: number;
 
-    private _rectValues: {
+    private _hudBorderRect: {
         x: number;
         y: number;
         w: number;
@@ -27,12 +26,14 @@ export default class HudRenderer implements Renderer {
 
     setup(rendererMetrics: RendererMetrics): void {
         this._cellSize = rendererMetrics.cell.size;
-        this._coordX = CoordinateHelper.getHudPosX(this._p, 0.078, rendererMetrics.display.width);
-        this._coordY = CoordinateHelper.getHudPosY(this._p, 0.375, rendererMetrics.display.height);
+        this._gridOrigin = {
+            x: CoordinateHelper.getHudPosX(this._p, 0.078, rendererMetrics.display.width),
+            y: CoordinateHelper.getHudPosY(this._p, 0.375, rendererMetrics.display.height),
+        };
 
-        this._rectValues = {
-            x: this._coordX - RelativeValuesHelper.getRelativeWidth(this._p, 0.005),
-            y: this._coordY - RelativeValuesHelper.getRelativeHeight(this._p, 0.005),
+        this._hudBorderRect = {
+            x: this._gridOrigin.x - RelativeValuesHelper.getRelativeWidth(this._p, 0.005),
+            y: this._gridOrigin.y - RelativeValuesHelper.getRelativeHeight(this._p, 0.005),
             w: this._cellSize * 4 + RelativeValuesHelper.getRelativeWidth(this._p, 0.01),
             h: this._cellSize * 4 + RelativeValuesHelper.getRelativeHeight(this._p, 0.01),
         };
@@ -118,8 +119,8 @@ export default class HudRenderer implements Renderer {
             this.drawCellElement({
                 w: this._cellSize,
                 h: this._cellSize,
-                posX: this._coordX + this._cellSize * x,
-                posY: this._coordY + this._cellSize * y,
+                posX: this._gridOrigin.x + this._cellSize * x,
+                posY: this._gridOrigin.y + this._cellSize * y,
                 color,
             });
         });
@@ -127,7 +128,7 @@ export default class HudRenderer implements Renderer {
         this._p.noFill();
         this._p.stroke(state.isOn() ? Color.DEFAULT : Color.INACTIVE);
 
-        this._p.rect(this._rectValues.x, this._rectValues.y, this._rectValues.w, this._rectValues.h);
+        this._p.rect(this._hudBorderRect.x, this._hudBorderRect.y, this._hudBorderRect.w, this._hudBorderRect.h);
 
         this._p.pop();
     }

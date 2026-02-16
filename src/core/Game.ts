@@ -84,7 +84,7 @@ export default abstract class Game implements Initializable {
         this.setupGame();
 
         this._subscribeSystemControls();
-        this._view.bound(control);
+        this._view.bindControls(control);
 
         this._debugger = new Debugger(this._modules);
         this._debugger.setup();
@@ -168,12 +168,12 @@ export default abstract class Game implements Initializable {
         this._p.noLoop();
 
         if (this._modules) {
-            this._modules.control.unbound();
+            this._modules.control.unbindControls();
             this._modules.sound.stopAll();
         }
 
         if (this._view) {
-            this._view.unbound();
+            this._view.unbindControls();
         }
     }
 

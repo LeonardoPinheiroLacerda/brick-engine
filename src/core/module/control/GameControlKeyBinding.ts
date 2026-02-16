@@ -42,7 +42,7 @@ export default class GameControlKeyBinding {
     /**
      * Binds keyboard events to the window.
      */
-    bound() {
+    bindControls() {
         window.addEventListener('keydown', this._boundHandleKeyDown);
         window.addEventListener('keyup', this._boundHandleKeyUp);
     }
@@ -50,7 +50,7 @@ export default class GameControlKeyBinding {
     /**
      * Unbinds keyboard events from the window.
      */
-    unbound() {
+    unbindControls() {
         window.removeEventListener('keydown', this._boundHandleKeyDown);
         window.removeEventListener('keyup', this._boundHandleKeyUp);
     }

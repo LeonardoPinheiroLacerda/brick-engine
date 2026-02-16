@@ -399,12 +399,12 @@ export interface Control extends Initializable {
     /**
      * Unbinds all control events.
      */
-    unbound(): void;
+    unbindControls(): void;
 
     /**
      * Binds all control events.
      */
-    bound(): void;
+    bindControls(): void;
 }
 
 /**

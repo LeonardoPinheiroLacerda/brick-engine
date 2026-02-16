@@ -17,14 +17,14 @@ export default {
     screenLayout: {
         /** Main game grid dimensions. */
         grid: {
-            x: 11,
-            y: 18,
+            columns: 11,
+            rows: 18,
         },
 
         /** Head-Up Display (HUD) grid dimensions. */
         hudGrid: {
-            x: 4,
-            y: 4,
+            columns: 4,
+            rows: 4,
         },
 
         /** Logical display settings within the container. */

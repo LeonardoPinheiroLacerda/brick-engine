@@ -44,7 +44,7 @@ export default class GameRenderer implements RendererComposite, Debuggable {
 
     private _calculateMetrics() {
         const { width, height, margin: displayMargin } = configs.screenLayout.display;
-        const { x: gridColumns } = configs.screenLayout.grid;
+        const { columns: gridColumns } = configs.screenLayout.grid;
 
         // 1. Calculate main display dimensions
         const displayWidth = RelativeValuesHelper.getRelativeWidth(this._p, width);

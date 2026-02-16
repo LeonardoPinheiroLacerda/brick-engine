@@ -34,7 +34,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {number} The grid width.
      */
     get width(): number {
-        return configs.screenLayout.grid.x;
+        return configs.screenLayout.grid.columns;
     }
 
     /**
@@ -43,7 +43,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {number} The grid height.
      */
     get height(): number {
-        return configs.screenLayout.grid.y;
+        return configs.screenLayout.grid.rows;
     }
 
     /**

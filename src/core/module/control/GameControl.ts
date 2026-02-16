@@ -13,16 +13,16 @@ export default class GameControl implements Control, Debuggable {
     setup() {
         this._keyBinding = new GameControlKeyBinding(this);
 
-        this._keyBinding.bound();
+        this._keyBinding.bindControls();
     }
 
-    unbound() {
-        this._keyBinding.unbound();
+    unbindControls() {
+        this._keyBinding.unbindControls();
         this._subscribers.clear();
     }
 
-    bound() {
-        this._keyBinding.bound();
+    bindControls() {
+        this._keyBinding.bindControls();
     }
 
     setModules(modules: GameModules): void {

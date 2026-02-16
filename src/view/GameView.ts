@@ -119,7 +119,7 @@ export default class GameView {
      *
      * @param control - The control module instance.
      */
-    bound(control: Control) {
+    bindControls(control: Control) {
         this._inputHandler = new ControlInputHandler(control);
 
         //System buttons
@@ -146,7 +146,7 @@ export default class GameView {
      * Replaces all event listeners with empty functions to prevent interaction
      * (e.g., when the game is paused or stopped).
      */
-    unbound() {
+    unbindControls() {
         this._onOffBtn      .mousePressed(() => {}).mouseReleased(() => {});
         this._startPauseBtn .mousePressed(() => {}).mouseReleased(() => {});
         this._soundBtn      .mousePressed(() => {}).mouseReleased(() => {});

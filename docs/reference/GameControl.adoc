@@ -87,7 +87,7 @@ Removes the specific callback from the subscription list. Does nothing if the ca
 control.unsubscribe(ControlKey.ACTION, ControlEventType.PRESSED, myCallback);
 ----
 
-=== `bound(): void`
+=== `bindControls(): void`
 
 Bind control event listeners to the window/document.
 
@@ -95,7 +95,7 @@ Bind control event listeners to the window/document.
 
 Attaches the keyboard event listeners (`keydown`, `keyup`). This is called automatically by `Game.setup()`, but can be called manually if you need to re-attach controls after unbinding.
 
-=== `unbound(): void`
+=== `unbindControls(): void`
 
 Unbind all control event listeners.
 
