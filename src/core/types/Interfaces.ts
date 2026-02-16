@@ -13,3 +13,7 @@ export interface StateSyncable {
 export interface RendererInitializable {
     setup(rendererMetrics: RendererMetrics): void;
 }
+
+export interface Debuggable {
+    getDebugData(): Record<string, string | number | boolean>;
+}

@@ -1,7 +1,7 @@
-import { StateSyncable } from '../../types/Interfaces';
+import { Debuggable, StateSyncable } from '../../types/Interfaces';
 import { Score, State } from '../../types/modules';
 
-export default class GameScore implements Score, StateSyncable {
+export default class GameScore implements Score, StateSyncable, Debuggable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
@@ -99,5 +99,14 @@ export default class GameScore implements Score, StateSyncable {
 
     syncState(state: State): void {
         this._state = state;
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            score: this._score,
+            multiplier: this._multiplier,
+            level: this._level,
+            max_level: this._maxLevel,
+        };
     }
 }

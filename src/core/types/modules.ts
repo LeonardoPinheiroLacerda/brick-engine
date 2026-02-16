@@ -416,12 +416,6 @@ export interface Time extends Initializable {
      * @param amount The amount to decrement the tick interval by.
      */
     decrementTickInterval(amount: number): void;
-
-    /**
-     * Renders performance information overlay.
-     * @param p The P5 instance to render with.
-     */
-    renderPerformanceMonitor(p: P5): void;
 }
 
 /**

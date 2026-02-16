@@ -5,7 +5,6 @@ import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
 import GameState from './module/state/GameState';
 import GameText from './module/text/GameText';
-import GameTimeWithPerformanceMonitor from './module/time/GameTimeWithPerformanceMonitor';
 import GameTime from './module/time/GameTime';
 import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
@@ -14,6 +13,7 @@ import { Initializable, StateSyncable } from './types/Interfaces';
 import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
 import GameHudGrid from './module/grid/GameHudGrid';
+import Debugger from './Debugger';
 
 /**
  * Base abstract class for the game.
@@ -26,6 +26,8 @@ export default abstract class Game implements Initializable {
 
     private _modules: GameModules;
     private _view: GameView;
+
+    private _debugger: Debugger;
 
     constructor(p: P5, view: GameView) {
         this._p = p;
@@ -45,8 +47,6 @@ export default abstract class Game implements Initializable {
      * Called automatically by the engine.
      */
     setup() {
-        const performanceMonitorEnabled = configs.game.performanceMonitor.enabled;
-
         this._view.build();
 
         this._modules = {
@@ -56,7 +56,7 @@ export default abstract class Game implements Initializable {
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
-            time: performanceMonitorEnabled ? new GameTimeWithPerformanceMonitor(configs.game.tickInterval) : new GameTime(configs.game.tickInterval),
+            time: new GameTime(configs.game.tickInterval),
             sound: new GameSound(),
             score: new GameScore(),
         };
@@ -85,6 +85,9 @@ export default abstract class Game implements Initializable {
 
         this._subscribeSystemControls();
         this._view.bound(control);
+
+        this._debugger = new Debugger(this._modules);
+        this._debugger.setup();
     }
 
     /**
@@ -107,8 +110,7 @@ export default abstract class Game implements Initializable {
             this.processFrame();
         }
 
-        // Performance Monitor Overlay
-        time.renderPerformanceMonitor(this._p);
+        this._debugger.update();
     }
 
     private _subscribeSystemControls(): void {

@@ -1,0 +1,60 @@
+#debugger {
+    font-family: retro-gamming;
+
+    background-color: black;
+    color: #9ccc9c;
+    padding: 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    width: 250px;
+    max-height: calc(100vh - 20px);
+    overflow-y: auto;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.debugger-module {
+    margin: 0.5rem;
+}
+
+.debugger-module-summary {
+    border-bottom: 1px solid #9ccc9c;
+    cursor: pointer;
+}
+
+.debugger-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin: 0.1rem;
+}
+
+.debugger-container:hover,
+.debugger-module-summary:hover {
+    filter: brightness(1.2);
+}
+
+.debugger-container:active,
+.debugger-module-summary:active {
+    filter: brightness(0.8);
+}
+
+.debugger-container.highlight {
+    background-color: #323e32;
+}
+
+.debugger-container p {
+    font-weight: bolder;
+}
+
+.debugger-container span {
+    color: white;
+}

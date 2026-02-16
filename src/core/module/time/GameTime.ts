@@ -1,4 +1,3 @@
-import P5 from 'p5';
 import { Time } from '../../types/modules';
 
 /**
@@ -75,14 +74,5 @@ export default class GameTime implements Time {
     decrementTickInterval(amount: number) {
         const newInterval = Math.max(10, this._tickInterval - amount);
         this.tickInterval = newInterval;
-    }
-
-    /**
-     * Renders performance information overlay.
-     * @param p The P5 instance to render with.
-     */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    renderPerformanceMonitor(_p: P5) {
-        // Base implementation does nothing
     }
 }

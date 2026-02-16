@@ -1,4 +1,5 @@
 import configs from '../../../config/configs';
+import { Debuggable } from '../../types/Interfaces';
 import { State } from '../../types/modules';
 import { StateProperty } from '../../types/Types';
 
@@ -28,7 +29,7 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
  * This class is the SOLE responsible for persisting and loading player state
  * (like mute settings) from LocalStorage. Other modules should NOT access LocalStorage directly.
  */
-export default class GameState implements State {
+export default class GameState implements State, Debuggable {
     private _persistenceKey: string = '';
 
     private _state: Map<StateProperty, boolean | number> = new Map();
@@ -228,5 +229,17 @@ export default class GameState implements State {
      */
     getPersistenceKey(): string {
         return this._persistenceKey;
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            on: this.on,
+            start: this.start,
+            running: this.running,
+            game_over: this.gameOver,
+            color_enabled: this.colorEnabled,
+            muted: this.muted,
+            high_score: this.highScore,
+        };
     }
 }

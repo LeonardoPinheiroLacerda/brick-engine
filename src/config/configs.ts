@@ -181,11 +181,11 @@ export default {
         tickInterval: 1000 / 30, // 30 ticks per second
 
         /** Performance Monitor settings. */
-        performanceMonitor: {
-            /** Number of ticks to count before updating the performance. */
-            tickInterval: 60,
+        debugger: {
+            /** Number of milliseconds to count before updating the performance. */
+            msInterval: 100,
             /** Enable performance overlay. */
-            enabled: false,
+            enabled: true,
         },
 
         sound: {
