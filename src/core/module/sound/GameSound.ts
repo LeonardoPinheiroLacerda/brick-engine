@@ -1,9 +1,9 @@
 import configs from '../../../config/configs';
 import { Sound, StateProperty } from '../../types/enums';
-import { StateSyncable } from '../../types/Interfaces';
+import { Debuggable, StateSyncable } from '../../types/Interfaces';
 import { Sound as SoundInterface, State } from '../../types/modules';
 
-export default class GameSound implements SoundInterface, StateSyncable {
+export default class GameSound implements SoundInterface, StateSyncable, Debuggable {
     muted: boolean;
     // O AudioContext é o "motor" de áudio do navegador.
     // Ele gerencia toda a criação e reprodução de sons.
@@ -150,5 +150,17 @@ export default class GameSound implements SoundInterface, StateSyncable {
         state.subscribe(StateProperty.MUTED, () => {
             this._updateGain();
         });
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        let activeSourcesCount = 0;
+        this._activeSources.forEach(sources => (activeSourcesCount += sources.length));
+
+        return {
+            muted: this._state ? this._state.muted : false,
+            volume: this._volume,
+            active_sources: activeSourcesCount,
+            loaded_buffers: this._buffers.size,
+        };
     }
 }

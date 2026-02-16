@@ -1,12 +1,17 @@
+import { Debuggable } from '../../types/Interfaces';
 import { Time } from '../../types/modules';
 
 /**
  * Manages game time and tick intervals.
  */
-export default class GameTime implements Time {
+export default class GameTime implements Time, Debuggable {
     // Time accumulator
     protected _accumulatedTime: number = 0;
     protected _tickInterval: number;
+    protected _fps: number = 0;
+    protected _tps: number = 0;
+    protected _tickCounter: number = 0;
+    protected _timeSinceLastTpsUpdate: number = 0;
 
     constructor(tickInterval: number) {
         this._tickInterval = tickInterval;
@@ -22,6 +27,14 @@ export default class GameTime implements Time {
      */
     update(deltaTime: number) {
         this._accumulatedTime += deltaTime;
+        this._fps = 1000 / deltaTime;
+
+        this._timeSinceLastTpsUpdate += deltaTime;
+        if (this._timeSinceLastTpsUpdate >= 1000) {
+            this._tps = this._tickCounter;
+            this._tickCounter = 0;
+            this._timeSinceLastTpsUpdate -= 1000;
+        }
     }
 
     /**
@@ -31,6 +44,7 @@ export default class GameTime implements Time {
     shouldTick(): boolean {
         if (this._accumulatedTime >= this._tickInterval) {
             this._accumulatedTime -= this._tickInterval;
+            this._tickCounter++;
             return true;
         }
         return false;
@@ -41,6 +55,10 @@ export default class GameTime implements Time {
      */
     reset() {
         this._accumulatedTime = 0;
+        this._fps = 0;
+        this._tps = 0;
+        this._tickCounter = 0;
+        this._timeSinceLastTpsUpdate = 0;
     }
 
     /**
@@ -74,5 +92,14 @@ export default class GameTime implements Time {
     decrementTickInterval(amount: number) {
         const newInterval = Math.max(10, this._tickInterval - amount);
         this.tickInterval = newInterval;
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            fps: Math.round(this._fps),
+            tps: this._tps,
+            tick_interval: this._tickInterval.toFixed(2),
+            accumulated_time: this._accumulatedTime.toFixed(2),
+        };
     }
 }

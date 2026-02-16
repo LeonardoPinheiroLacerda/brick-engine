@@ -2,6 +2,7 @@ import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
 import CellHelper from '../../helpers/CellHelper';
 import { Cell, Coordinate } from '../../types/Types';
+import { Debuggable } from '../../types/Interfaces';
 import { Grid } from '../../types/modules';
 
 /**
@@ -10,7 +11,7 @@ import { Grid } from '../../types/modules';
  * Provides a robust API for cell manipulation, row/column management,
  * collision detection, and mass grid modifications.
  */
-export default class GameGrid implements Grid {
+export default class GameGrid implements Grid, Debuggable {
     /**
      * The internal 2D array representing the game grid [y][x].
      */
@@ -407,5 +408,12 @@ export default class GameGrid implements Grid {
             this.setCellValue(coord, value);
             this.setCellColor(coord, color);
         });
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            width: this.width,
+            height: this.height,
+        };
     }
 }

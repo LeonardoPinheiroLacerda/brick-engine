@@ -5,10 +5,11 @@ import { GameModules } from './types/Types';
 export default class Debugger implements Initializable {
     private _modules: GameModules;
     private _lastUpdate: number;
+    private _domCache: Map<string, HTMLElement> = new Map();
 
     constructor(modules: GameModules) {
         this._modules = modules;
-        this._lastUpdate = new Date().getTime();
+        this._lastUpdate = performance.now();
     }
 
     setup() {
@@ -55,6 +56,9 @@ export default class Debugger implements Initializable {
                     dataValueElement.id = `debugger-${key}-${dataKey}-value`;
                     dataValueElement.textContent = `${dataValue}`;
 
+                    // Cache the value element for fast updates
+                    this._domCache.set(`${key}-${dataKey}`, dataValueElement);
+
                     dataElement.appendChild(dataKeyElement);
                     dataElement.appendChild(dataValueElement);
 
@@ -75,21 +79,18 @@ export default class Debugger implements Initializable {
             return;
         }
 
-        if (new Date().getTime() - this._lastUpdate >= configs.game.debugger.msInterval) {
-            console.log('Updating debugger');
-            this._lastUpdate = new Date().getTime();
+        const now = performance.now();
+        if (now - this._lastUpdate >= configs.game.debugger.msInterval) {
+            this._lastUpdate = now;
 
             Object.entries(this._modules).forEach(([key, module]) => {
                 if ('getDebugData' in module) {
                     const moduleDebugData = (module as Debuggable).getDebugData();
 
                     Object.entries(moduleDebugData).forEach(([dataKey, dataValue]) => {
-                        const dataElement = document.getElementById(`debugger-container-${key}-${dataKey}`);
-                        if (dataElement) {
-                            const dataValueElement = dataElement.querySelector('span');
-                            if (dataValueElement) {
-                                dataValueElement.textContent = `${dataValue}`;
-                            }
+                        const cachedElement = this._domCache.get(`${key}-${dataKey}`);
+                        if (cachedElement) {
+                            cachedElement.textContent = `${dataValue}`;
                         }
                     });
                 }

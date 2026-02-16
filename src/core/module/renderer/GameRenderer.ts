@@ -1,5 +1,6 @@
 import P5 from 'p5';
 import { Cell, GameModules, RendererMetrics } from '../../types/Types';
+import { Debuggable } from '../../types/Interfaces';
 import { Renderer } from '../../types/modules';
 import DisplayRenderer from './DisplayRenderer';
 import { RendererComposite } from '../../types/modules';
@@ -8,7 +9,7 @@ import configs from '../../../config/configs';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 
-export default class GameRenderer implements RendererComposite {
+export default class GameRenderer implements RendererComposite, Debuggable {
     private _p: P5;
 
     private _renderers: Renderer[];
@@ -89,5 +90,15 @@ export default class GameRenderer implements RendererComposite {
 
     get rendererMetrics(): RendererMetrics {
         return this._rendererMetrics;
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            display_width: this._rendererMetrics.display.width.toFixed(2),
+            display_height: this._rendererMetrics.display.height.toFixed(2),
+            hud_width: this._rendererMetrics.hud.width.toFixed(2),
+            hud_height: this._rendererMetrics.hud.height.toFixed(2),
+            cell_size: this._rendererMetrics.cell.size.toFixed(2),
+        };
     }
 }

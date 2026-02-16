@@ -1,9 +1,10 @@
 import { ControlKey } from '../../types/enums';
 import { Control } from '../../types/modules';
+import { Debuggable } from '../../types/Interfaces';
 import { ControlCallback, ControlEventType, GameEvent, GameModules } from '../../types/Types';
 import GameControlKeyBinding from './GameControlKeyBinding';
 
-export default class GameControl implements Control {
+export default class GameControl implements Control, Debuggable {
     private _modules: GameModules;
 
     private _keyBinding: GameControlKeyBinding;
@@ -66,5 +67,19 @@ export default class GameControl implements Control {
         if (callbacks) {
             callbacks.forEach(callback => callback(event));
         }
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        let totalSubscribers = 0;
+        this._subscribers.forEach(keyMap => {
+            keyMap.forEach(typeSet => {
+                totalSubscribers += typeSet.size;
+            });
+        });
+
+        return {
+            total_subscribers: totalSubscribers,
+            tracked_keys: this._subscribers.size,
+        };
     }
 }

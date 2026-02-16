@@ -2,6 +2,7 @@ import P5 from 'p5';
 import configs from '../../../config/configs';
 import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
 import { Coordinate, RendererMetrics } from '../../types/Types';
+import { Debuggable } from '../../types/Interfaces';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import { Text } from '../../types/modules';
@@ -12,7 +13,7 @@ import { Text } from '../../types/modules';
  * This class orchestrates font initialization, sizing, alignment, and
  * provides methods to render text on specific areas (HUD or Display).
  */
-export default class GameText implements Text {
+export default class GameText implements Text, Debuggable {
     /** The default font family used for game text. */
     protected defaultFontFamily: string = 'retro-gamming';
 
@@ -144,5 +145,12 @@ export default class GameText implements Text {
         const y = CoordinateHelper.getDisplayPosY(this._p, this._rendererMetrics.display.height, coordinate.y);
 
         this._p.text(text, x, y);
+    }
+
+    getDebugData(): Record<string, string | number | boolean> {
+        return {
+            current_font_family: this.defaultFontFamily,
+            font_sizes_count: this.fontSizes.length,
+        };
     }
 }
