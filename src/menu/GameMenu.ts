@@ -1,6 +1,6 @@
 import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
-import { games } from './artifactory';
+import { games } from './GameRepository';
 
 export default class GameMenu extends Game {
     private _gameSelectionPointer = 0;
