@@ -17,6 +17,7 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 * **Modular Architecture**: core functionality is split into distinct modules (Grid, Control, Renderer, State, Text, Time, Score) for clean separation of concerns.
 * **Input Handling**: Unified control system supporting keyboard and on-screen button inputs.
 * **Game Loop**: Separated logic ticks (game speed) from rendering frames (60fps smooth animations).
+* **Debugger**: Built-in real-time state inspector. See xref:docs/reference/Debugger.adoc[Debugger Reference].
 
 // == Engine Lifecycle
 

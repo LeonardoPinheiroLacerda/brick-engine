@@ -400,3 +400,12 @@ if (linesCleared > 0) {
     // Add score
 }
 ----
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns the debug data for the module.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `width` and `height`.
+----

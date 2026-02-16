@@ -188,3 +188,11 @@ Part of the `StateSyncable` interface. Updates the internal state reference. Cal
 ----
 this.modules.score.syncState(this.modules.state);
 ----
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns the debug data for the module.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `score`, `multiplier`, `level`, and `max_level`.

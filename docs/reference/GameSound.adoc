@@ -153,3 +153,11 @@ Part of the `StateSyncable` interface. Initializes the internal state reference 
 ----
 this.modules.sound.syncState(this.modules.state);
 ----
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns the debug data for the module.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `muted`, `volume`, `active_sources`, and `loaded_buffers`.

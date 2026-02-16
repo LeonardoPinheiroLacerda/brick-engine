@@ -1,0 +1,40 @@
+= Debugger Class Reference
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `Debugger` class provides a real-time overlay for monitoring the state of various game modules. It creates an HTML-based interface that displays properties exposed by modules implementing the `Debuggable` interface.
+
+== Usage
+
+The debugger is automatically initialized by the `Game` class if enabled in the configuration (`configs.game.debugger.enabled`).
+
+== API Reference
+
+=== `setup(): void`
+
+Initializes the debugger DOM elements.
+
+**Behavior**
+
+Creates a `<details id="debugger">` element in the document body. It iterates through all registered game modules, checking if they implement `Debuggable` (`getDebugData` method). For each debuggable module, it creates a section in the overlay tailored to display its data.
+
+=== `update(): Promise<void>`
+
+Updates the debugger overlay with fresh data.
+
+**Behavior**
+
+Checks if enough time has passed since the last update (defined by `configs.game.debugger.msInterval`). If so, it fetches the latest debug data from all modules and updates the corresponding DOM text nodes. It uses `performance.now()` for precise timing and caches DOM elements to minimize overhead.
+
+== Styling
+
+The debugger appearance is controlled by `public/style/debugger.css`.
+
+== Configuration
+
+*   `configs.game.debugger.enabled`: Toggles the debugger on/off.
+*   `configs.game.debugger.msInterval`: Sets the update frequency (in milliseconds).

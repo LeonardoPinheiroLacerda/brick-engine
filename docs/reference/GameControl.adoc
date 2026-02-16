@@ -120,4 +120,12 @@ Manually trigger an event.
 
 Executes all callbacks associated with the key/type pair. Mostly used internally by the input system but can simulate inputs.
 
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns the debug data for the module.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `total_subscribers` and `tracked_keys`.
+
 

@@ -92,3 +92,11 @@ const { cell } = renderer.rendererMetrics;
 // Draw a custom effect at grid position (5, 5)
 p5.circle(5 * cell.size, 5 * cell.size, 10);
 ----
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns the debug data for the module.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `display_width`, `display_height`, `hud_width`, `hud_height`, and `cell_size`.

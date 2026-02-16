@@ -6,7 +6,7 @@
 
 toc::[]
 
-The `Game` class is the heart of your application. It initializes all necessary modules and sets up the main game loop.
+The `Game` class is the heart of your application. It initializes all necessary modules (including the Debugger) and sets up the main game loop.
 
 == Inheritance
 
