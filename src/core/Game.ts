@@ -27,13 +27,9 @@ export default abstract class Game implements Initializable {
     private _modules: GameModules;
     private _view: GameView;
 
-    protected _frameInterval: number;
-
     constructor(p: P5, view: GameView) {
         this._p = p;
         this._view = view;
-
-        this._frameInterval = configs.game.frameInterval;
     }
 
     /**
@@ -96,19 +92,18 @@ export default abstract class Game implements Initializable {
      * Handles time updates, logic ticks, and rendering.
      */
     draw() {
-        const { renderer, grid, time } = this._modules;
-
-        // Update time accumulator
-        time.update(this._p.deltaTime);
-
-        // Process Logic Tick
-        if (time.shouldTick()) {
-            this.processTick(this._p.deltaTime);
-        }
+        const { renderer, grid, time, state } = this._modules;
 
         renderer.render(grid.getGrid(), this._modules);
+        if (state.on) {
+            time.update(this._p.deltaTime);
+            // Update time accumulator
 
-        if (this._frameInterval === 0 || this._p.frameCount % this._frameInterval === 0) {
+            // Process Logic Tick
+            if (time.shouldTick()) {
+                this.processTick(this._p.deltaTime);
+            }
+
             this.processFrame();
         }
 
@@ -119,7 +114,12 @@ export default abstract class Game implements Initializable {
     private _subscribeSystemControls(): void {
         const { control, state, grid } = this._modules;
 
-        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => state.toggleOn());
+        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
+            state.toggleOn();
+            if (!state.on) {
+                this.modules.sound.stopAll();
+            }
+        });
         control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
         control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
 
@@ -157,6 +157,10 @@ export default abstract class Game implements Initializable {
         if (this._view) {
             this._view.unbound();
         }
+    }
+
+    get p() {
+        return this._p;
     }
 
     /**

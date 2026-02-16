@@ -179,8 +179,6 @@ export default {
     game: {
         /** Interval between game ticks (in milliseconds). */
         tickInterval: 1000 / 30, // 30 ticks per second
-        /** Interval between frame updates (in milliseconds). 0 = every frame */
-        frameInterval: 1000 / 60, // 60 frames per second
 
         /** Performance Monitor settings. */
         performanceMonitor: {

@@ -1,5 +1,5 @@
 import configs from '../../../config/configs';
-import { Sound } from '../../types/enums';
+import { Sound, StateProperty } from '../../types/enums';
 import { StateSyncable } from '../../types/Interfaces';
 import { Sound as SoundInterface, State } from '../../types/modules';
 
@@ -147,6 +147,8 @@ export default class GameSound implements SoundInterface, StateSyncable {
 
     syncState(state: State): void {
         this._state = state;
-        this._updateGain();
+        state.subscribe(StateProperty.MUTED, () => {
+            this._updateGain();
+        });
     }
 }

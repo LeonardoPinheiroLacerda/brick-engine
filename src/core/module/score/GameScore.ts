@@ -5,7 +5,7 @@ export default class GameScore implements Score, StateSyncable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
-    private _maxLevel: number = 1;
+    private _maxLevel: number = 10;
 
     _state: State;
 

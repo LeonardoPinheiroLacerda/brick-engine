@@ -56,6 +56,10 @@ export default class HudRenderer implements Renderer {
         text.textOnHud('88888888', { x: 0.05, y: 0.3 });
         text.textOnHud('88 - 88', { x: 0.05, y: 0.8 });
 
+        if (state.on) {
+            text.setActiveText();
+        }
+
         text.textOnHud('Score', { x: 0.05, y: 0.06 });
         text.textOnHud(score.score.toString(), { x: 0.05, y: 0.13 });
 
