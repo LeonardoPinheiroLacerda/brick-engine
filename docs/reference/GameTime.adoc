@@ -32,7 +32,7 @@ Checks if accumulated time >= tick interval. If true, subtracts tick interval fr
 [source,typescript]
 ----
 while (this.modules.time.shouldTick()) {
-    this.processTick();
+    this.update();
 }
 ----
 

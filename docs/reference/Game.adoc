@@ -32,7 +32,7 @@ class MyGame extends Game { ... }
 
 == API Reference
 
-=== `processTick(deltaTime: number): void`
+=== `update(deltaTime: number): void`
 
 Abstract method called once per "Game Tick".
 
@@ -53,12 +53,12 @@ Executed at a fixed time step defined by `configs.game.tickInterval`. Should con
 
 [source,typescript]
 ----
-processTick(deltaTime: number): void {
+update(deltaTime: number): void {
     this.modules.grid.shiftRowsDown(deltaTime);
 }
 ----
 
-=== `processFrame(): void`
+=== `render(): void`
 
 Abstract method called every frame.
 
@@ -72,7 +72,7 @@ Executed every render frame (typically 60fps). Used for interpolation, particles
 
 [source,typescript]
 ----
-processFrame(): void {
+render(): void {
     this.particleSystem.update();
 }
 ----
@@ -111,6 +111,22 @@ Subclasses **must** implement this method to provide a unique identifier for the
 **Behavior**
 
 This key is used by the `GameState` module to prefix all `localStorage` entries, preventing checking collisions between different games built with the engine.
+
+=== `drawTitleScreen(): void` (Abstract)
+
+Abstract method called when the game is powered ON but has not yet started. Use this to render your splash screen or welcome message.
+
+**Behavior**
+
+Executed instead of `update` and `render` when `state.isStarted()` is false.
+
+=== `drawGameOverScreen(): void` (Abstract)
+
+Abstract method called when `state.isGameOver()` is true.
+
+**Behavior**
+
+Executed after `render()` to overlay the Game Over message or menu.
 
 === `destroy(): void`
 

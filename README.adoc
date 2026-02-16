@@ -27,7 +27,7 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 
 == Getting Started
 
-To create a game, you must extend the abstract `Game` class and implement its four core abstract methods: `getPersistenceKey`, `setupGame`, `processTick`, and `processFrame`.
+To create a game, you must extend the abstract `Game` class and implement its core abstract methods: `getPersistenceKey`, `setupGame`, `update`, `render`, `drawTitleScreen`, and `drawGameOverScreen`.
 
 === Example
 
@@ -46,7 +46,7 @@ export default class MyGame extends Game {
 
     // 2. Game Logic: Called every game tick (controlled by tickInterval)
     // Use this for movement, collision, state limits
-    processTick(deltaTime: number): void {
+    update(deltaTime: number): void {
         if (!this.modules.state.isPlaying()) return;
         
         // ... game logic ...
@@ -54,13 +54,23 @@ export default class MyGame extends Game {
 
     // 3. Rendering: Called every frame (60 times per second)
     // Use this for visual effects independent of game logic (particles, animations)
-    processFrame(): void {
+    render(): void {
         // ... visual effects ...
     }
 
-    // 4. Persistence: Provide a unique key for LocalStorage prefixing, this key must be unique between all implemented games
+    // 4. Persistence: Provide a unique key for LocalStorage prefixing
     getPersistenceKey(): string {
         return 'my-awesome-game-v1';
+    }
+
+    // 5. Title Screen: Rendered when game is ON but not STARTED
+    drawTitleScreen(): void {
+        this.modules.text.textOnDisplay('Press Start', { x: 0.5, y: 0.5 });
+    }
+
+    // 6. Game Over Screen: Rendered when game is over
+    drawGameOverScreen(): void {
+        this.modules.text.textOnDisplay('Game Over', { x: 0.5, y: 0.5 });
     }
 }
 ----

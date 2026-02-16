@@ -3,30 +3,21 @@ import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, S
 import { games } from './artifactory';
 
 export default class GameMenu extends Game {
-    private _playedStartTheme: boolean = false;
-    private _isGameSelectionOpen: boolean = false;
-
     private _gameSelectionPointer = 0;
 
     setupGame() {
         const { state, control, sound } = this.modules;
 
-        state.subscribe(StateProperty.ON, on => {
-            if (!on) {
-                this._playedStartTheme = false;
-            } else {
-                // should open game from artifactory, changing the Game instance
-            }
-        });
-
         control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
-            if (this._isGameSelectionOpen === false) {
-                this._isGameSelectionOpen = true;
+            if (!state.isStarted()) {
+                state.startGame();
+            } else {
+                // Game Selection Logic
             }
         });
 
         control.subscribe(ControlKey.LEFT, ControlEventType.PRESSED, () => {
-            if (this._isGameSelectionOpen) {
+            if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
                 if (this._gameSelectionPointer === 0) {
                     this._gameSelectionPointer = games.length - 1;
@@ -37,7 +28,7 @@ export default class GameMenu extends Game {
         });
 
         control.subscribe(ControlKey.RIGHT, ControlEventType.PRESSED, () => {
-            if (this._isGameSelectionOpen) {
+            if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
                 if (this._gameSelectionPointer === games.length - 1) {
                     this._gameSelectionPointer = 0;
@@ -46,45 +37,16 @@ export default class GameMenu extends Game {
                 }
             }
         });
+
+        state.subscribe(StateProperty.ON, on => {
+            if (on) {
+                sound.play(Sound.START_THEME);
+            }
+        });
     }
 
-    processTick() {}
-    processFrame() {
-        if (!this._isGameSelectionOpen) {
-            this._drawWelcome();
-        } else {
-            this._drawGameSelection();
-        }
-    }
-
-    private _drawWelcome() {
-        const { text, sound } = this.modules;
-
-        if (!this._playedStartTheme) {
-            this._playedStartTheme = true;
-            sound.play(Sound.START_THEME);
-        }
-
-        this.p.push();
-
-        text.setTextSize(FontSize.LARGE);
-        text.setActiveText();
-        text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.TOP);
-
-        text.textOnDisplay('Menu', { x: 0.5, y: 0.15 });
-
-        text.setTextSize(FontSize.SMALL);
-
-        text.textOnDisplay('Wellcome to your', { x: 0.5, y: 0.25 });
-        text.textOnDisplay('favorite brick game', { x: 0.5, y: 0.32 });
-        text.textOnDisplay('simulator!', { x: 0.5, y: 0.39 });
-        text.textOnDisplay('Press action', { x: 0.5, y: 0.66 });
-        text.textOnDisplay('to continue.', { x: 0.5, y: 0.72 });
-
-        this.p.pop();
-    }
-
-    private _drawGameSelection() {
+    update() {}
+    render() {
         const { text } = this.modules;
 
         const { p } = this;
@@ -119,6 +81,32 @@ export default class GameMenu extends Game {
         text.textOnDisplay('Action:  Select', { x: 0.05, y: 0.9 });
 
         p.pop();
+    }
+
+    drawTitleScreen() {
+        const { text } = this.modules;
+
+        this.p.push();
+
+        text.setTextSize(FontSize.LARGE);
+        text.setActiveText();
+        text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.TOP);
+
+        text.textOnDisplay('Menu', { x: 0.5, y: 0.15 });
+
+        text.setTextSize(FontSize.SMALL);
+
+        text.textOnDisplay('Wellcome to your', { x: 0.5, y: 0.25 });
+        text.textOnDisplay('favorite brick game', { x: 0.5, y: 0.32 });
+        text.textOnDisplay('simulator!', { x: 0.5, y: 0.39 });
+        text.textOnDisplay('Press action', { x: 0.5, y: 0.66 });
+        text.textOnDisplay('to continue.', { x: 0.5, y: 0.72 });
+
+        this.p.pop();
+    }
+
+    drawGameOverScreen() {
+        // Menu doesn't have a game over screen
     }
 
     getPersistenceKey(): string {

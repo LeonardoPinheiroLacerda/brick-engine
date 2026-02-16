@@ -99,15 +99,26 @@ export default abstract class Game implements Initializable {
 
         renderer.render(grid.getGrid(), this._modules);
         if (state.isOn()) {
-            time.update(this._p.deltaTime);
-            // Update time accumulator
+            if (!state.isStarted()) {
+                this.drawTitleScreen();
+            } else if (state.isPlaying()) {
+                time.update(this._p.deltaTime);
+                // Update time accumulator
 
-            // Process Logic Tick
-            if (time.shouldTick()) {
-                this.processTick(this._p.deltaTime);
+                // Process Logic Tick
+                if (time.shouldTick()) {
+                    this.update(this._p.deltaTime);
+                }
+
+                this.render();
+            } else if (state.isPaused()) {
+                this.render();
             }
 
-            this.processFrame();
+            if (state.isGameOver()) {
+                this.render();
+                this.drawGameOverScreen();
+            }
         }
 
         this._debugger.update();
@@ -129,9 +140,9 @@ export default abstract class Game implements Initializable {
 
         control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
             grid.resetGrid();
-            if (state.isGameOver()) {
-                state.resetGame();
-            }
+            this.modules.score.resetScore();
+            this.modules.score.resetLevel();
+            state.resetGame();
         });
 
         control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
@@ -172,16 +183,16 @@ export default abstract class Game implements Initializable {
 
     /**
      * Abstract method for processing game logic.
-     * Called every tick.
+     * Called every tick, but ONLY when the game is in the 'playing' state.
      * @param deltaTime Time elapsed since last tick.
      */
-    abstract processTick(deltaTime: number): void;
+    abstract update(deltaTime: number): void;
 
     /**
      * Abstract method for processing visual frames.
      * Called every frame (depending on frameInterval).
      */
-    abstract processFrame(): void;
+    abstract render(): void;
 
     /**
      * Abstract method for setting up the game.
@@ -194,4 +205,16 @@ export default abstract class Game implements Initializable {
      * Called after the game modules are initialized and sets itself in the state module.
      */
     abstract getPersistenceKey(): string;
+
+    /**
+     * Abstract method for drawing the Title Screen (Welcome).
+     * Called when the game is ON but not yet STARTED.
+     */
+    abstract drawTitleScreen(): void;
+
+    /**
+     * Abstract method for drawing the Game Over Screen.
+     * Called when the game is in GAME OVER state.
+     */
+    abstract drawGameOverScreen(): void;
 }
