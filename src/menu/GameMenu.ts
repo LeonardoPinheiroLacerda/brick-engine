@@ -9,9 +9,7 @@ export default class GameMenu extends Game {
         const { state, control, sound } = this.modules;
 
         control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
-            if (!state.isStarted()) {
-                state.startGame();
-            } else {
+            if (state.isStarted()) {
                 // Game Selection Logic
             }
         });
@@ -43,6 +41,12 @@ export default class GameMenu extends Game {
                 sound.play(Sound.START_THEME);
             }
         });
+
+        state.subscribe(StateProperty.PLAYING, on => {
+            if (on) {
+                sound.play(Sound.GAME_START);
+            }
+        });
     }
 
     update() {}
@@ -61,7 +65,7 @@ export default class GameMenu extends Game {
         text.setTextSize(FontSize.SMALL);
 
         text.textOnDisplay('Choose a game and', { x: 0.5, y: 0.25 });
-        text.textOnDisplay('Press action to play', { x: 0.5, y: 0.32 });
+        text.textOnDisplay('Press start to play', { x: 0.5, y: 0.32 });
 
         text.setTextAlign(FontAlign.RIGHT, FontVerticalAlign.BOTTOM);
         text.textOnDisplay('<', { x: 0.1, y: 0.54 });
