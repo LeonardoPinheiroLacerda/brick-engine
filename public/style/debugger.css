@@ -1,60 +1,117 @@
 #debugger {
-    font-family: retro-gamming;
-
-    background-color: black;
-    color: #9ccc9c;
+    font-family: 'retro-gamming', monospace;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #0f0; /* Green phosphor */
+    border: 2px solid #0f0;
+    box-shadow: 0 0 10px #0f0;
     padding: 10px;
     position: absolute;
-    top: 0px;
-    right: 0px;
-
-    width: 250px;
-    max-height: calc(100vh - 20px);
+    top: 10px;
+    right: 10px;
+    width: 300px;
+    max-height: calc(100vh - 40px);
     overflow-y: auto;
-
     user-select: none;
-    -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select: none;
+    z-index: 9999;
+    font-size: 12px;
+    text-shadow: 0 0 2px #0f0;
 }
 
+/* Custom Scrollbar */
+#debugger::-webkit-scrollbar {
+    width: 8px;
+}
+
+#debugger::-webkit-scrollbar-track {
+    background: #001100;
+}
+
+#debugger::-webkit-scrollbar-thumb {
+    background: #0f0;
+    border-radius: 4px;
+}
+
+#debugger::-webkit-scrollbar-thumb:hover {
+    background: #0a0;
+}
+
+/* Summary / Header */
+#debugger-summary {
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed #0f0;
+    padding-bottom: 5px;
+    list-style: none;
+}
+
+/* Module Sections */
 .debugger-module {
-    margin: 0.5rem;
+    margin-bottom: 10px;
+    border-left: 1px solid #004400;
+    padding-left: 8px;
 }
 
 .debugger-module-summary {
-    border-bottom: 1px solid #9ccc9c;
     cursor: pointer;
+    font-weight: bold;
+    color: #cfc;
+    margin-bottom: 4px;
 }
 
+.debugger-module-summary:hover {
+    color: #fff;
+    text-shadow: 0 0 4px #fff;
+}
+
+/* Data Rows */
 .debugger-container {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    padding: 0.3rem 0.5rem;
-    font-size: 0.8rem;
-    cursor: pointer;
-    margin: 0.1rem;
+    padding: 2px 0;
+    border-bottom: 1px dotted #003300;
 }
 
-.debugger-container:hover,
-.debugger-module-summary:hover {
-    filter: brightness(1.2);
+/* Closed State */
+#debugger:not([open]) {
+    width: auto;
+    height: auto;
+    max-height: none;
+    padding: 5px 10px;
+    border: 1px solid #0f0;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: none;
 }
 
-.debugger-container:active,
-.debugger-module-summary:active {
-    filter: brightness(0.8);
+#debugger:not([open]) #debugger-summary {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.debugger-container:hover {
+    background-color: rgba(0, 255, 0, 0.05);
 }
 
 .debugger-container.highlight {
-    background-color: #323e32;
+    background-color: transparent;
+    color: #fff;
+    text-shadow: 0 0 5px #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.debugger-container.highlight span {
+    color: #fff;
 }
 
 .debugger-container p {
-    font-weight: bolder;
+    margin: 0;
+    opacity: 0.8;
 }
 
 .debugger-container span {
-    color: white;
+    font-weight: bold;
 }

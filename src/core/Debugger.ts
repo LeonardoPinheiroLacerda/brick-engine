@@ -19,7 +19,6 @@ export default class Debugger implements Initializable {
 
         // Create debugger element
         const details = document.createElement('details');
-        details.open = true;
         details.id = 'debugger';
 
         const summary = document.createElement('summary');
