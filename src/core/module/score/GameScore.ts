@@ -68,8 +68,8 @@ export default class GameScore implements Score, StateSyncable, Debuggable {
     private _checkHighScore(): void {
         if (!this._state) return;
 
-        if (this._score > this._state.highScore) {
-            this._state.highScore = this._score;
+        if (this._score > this._state.getHighScore()) {
+            this._state.setHighScore(this._score);
         }
     }
 

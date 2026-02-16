@@ -14,8 +14,8 @@
     user-select: none;
     -webkit-user-select: none;
     z-index: 9999;
-    font-size: 12px;
-    text-shadow: 0 0 2px #0f0;
+    font-size: 14px;
+    /* text-shadow: 0 0 2px #0f0; */
 }
 
 /* Custom Scrollbar */
@@ -39,10 +39,10 @@
 /* Summary / Header */
 #debugger-summary {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     margin-bottom: 10px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     border-bottom: 1px dashed #0f0;
     padding-bottom: 5px;
     list-style: none;
@@ -64,7 +64,7 @@
 
 .debugger-module-summary:hover {
     color: #fff;
-    text-shadow: 0 0 4px #fff;
+    /* text-shadow: 0 0 4px #fff; */
 }
 
 /* Data Rows */
@@ -99,7 +99,7 @@
 .debugger-container.highlight {
     background-color: transparent;
     color: #fff;
-    text-shadow: 0 0 5px #fff;
+    /* text-shadow: 0 0 5px #fff; */
     border-bottom: 1px solid #fff;
 }
 

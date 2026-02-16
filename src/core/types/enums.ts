@@ -111,7 +111,7 @@ export enum ControlEventType {
 export enum StateProperty {
     ON = 'on',
     START = 'start',
-    RUNNING = 'running',
+    PLAYING = 'playing',
     GAME_OVER = 'gameOver',
     COLOR_ENABLED = 'colorEnabled',
     MUTED = 'muted',

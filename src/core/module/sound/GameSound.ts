@@ -113,7 +113,7 @@ export default class GameSound implements SoundInterface, StateSyncable, Debugga
     private _updateGain() {
         // setValueAtTime é a forma segura de mudar parâmetros de áudio no Web Audio API.
         // Se mudo, volume é 0. Se não, usa o volume configurado.
-        const isMuted = this._state ? this._state.muted : false;
+        const isMuted = this._state ? this._state.isMuted() : false;
 
         if (isMuted) {
             this._gainNode.gain.setValueAtTime(0, this._audioContext.currentTime);
@@ -141,7 +141,7 @@ export default class GameSound implements SoundInterface, StateSyncable, Debugga
     }
 
     toggleMute(): void {
-        this._state.muted = !this._state.muted;
+        this._state.toggleMuted();
         this._updateGain();
     }
 
@@ -157,7 +157,7 @@ export default class GameSound implements SoundInterface, StateSyncable, Debugga
         this._activeSources.forEach(sources => (activeSourcesCount += sources.length));
 
         return {
-            muted: this._state ? this._state.muted : false,
+            muted: this._state ? this._state.isMuted() : false,
             volume: this._volume,
             active_sources: activeSourcesCount,
             loaded_buffers: this._buffers.size,

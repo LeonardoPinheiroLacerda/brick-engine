@@ -98,7 +98,7 @@ export default abstract class Game implements Initializable {
         const { renderer, grid, time, state } = this._modules;
 
         renderer.render(grid.getGrid(), this._modules);
-        if (state.on) {
+        if (state.isOn()) {
             time.update(this._p.deltaTime);
             // Update time accumulator
 
@@ -117,9 +117,11 @@ export default abstract class Game implements Initializable {
         const { control, state, grid } = this._modules;
 
         control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-            state.toggleOn();
-            if (!state.on) {
+            if (state.isOn()) {
+                state.turnOff();
                 this.modules.sound.stopAll();
+            } else {
+                state.turnOn();
             }
         });
         control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
@@ -127,16 +129,19 @@ export default abstract class Game implements Initializable {
 
         control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
             grid.resetGrid();
-            if (state.gameOver) {
-                state.toggleGameOver();
+            if (state.isGameOver()) {
+                state.resetGame();
             }
         });
 
         control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
-            if (!state.start) {
-                state.toggleStart();
+            if (!state.isStarted()) {
+                state.startGame();
+            } else if (state.isPlaying()) {
+                state.pause();
+            } else {
+                state.resume();
             }
-            state.toggleRunning();
         });
 
         control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {

@@ -52,50 +52,45 @@ export default class HudRenderer implements Renderer {
         text.setInactiveText();
         text.setTextAlign(FontAlign.LEFT, FontVerticalAlign.BOTTOM);
 
+        //Placeholders text
         text.textOnHud('88888888', { x: 0.05, y: 0.13 });
         text.textOnHud('88888888', { x: 0.05, y: 0.3 });
         text.textOnHud('88 - 88', { x: 0.05, y: 0.8 });
 
-        if (state.on) {
+        if (state.isOn()) {
             text.setActiveText();
         }
 
+        //Score text
         text.textOnHud('Score', { x: 0.05, y: 0.06 });
         text.textOnHud(score.score.toString(), { x: 0.05, y: 0.13 });
 
+        //Hi-Score text
         text.textOnHud('Hi-Score', { x: 0.05, y: 0.23 });
-        text.textOnHud(state.highScore.toString(), { x: 0.05, y: 0.3 });
+        text.textOnHud(state.getHighScore().toString(), { x: 0.05, y: 0.3 });
 
+        //Level text
         text.textOnHud('Level', { x: 0.05, y: 0.72 });
         const levelValue = `${score.level < 10 ? '0' + score.level : score.level} - ${score.maxLevel}`;
         text.textOnHud(levelValue, { x: 0.05, y: 0.8 });
 
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.BOTTOM);
 
-        if (state.running) {
-            //Paused text
-
-            if (!state.start && state.on) {
-                text.setActiveText();
-            } else {
-                text.setInactiveText();
-            }
-
-            text.textOnHud('Paused', { x: 0.5, y: 0.9 });
-
-            //Muted text
-            if (state.muted && state.on) {
-                text.setActiveText();
-            } else {
-                text.setInactiveText();
-            }
-
-            text.textOnHud('Muted', { x: 0.5, y: 0.97 });
+        //Paused text
+        if (state.isPaused()) {
+            text.setActiveText();
         } else {
             text.setInactiveText();
-            text.textOnHud('Paused', { x: 0.5, y: 0.9 });
-            text.textOnHud('Muted', { x: 0.5, y: 0.97 });
         }
+        text.textOnHud('Paused', { x: 0.5, y: 0.9 });
+
+        //Muted text
+        if (state.isOn() && state.isMuted()) {
+            text.setActiveText();
+        } else {
+            text.setInactiveText();
+        }
+        text.textOnHud('Muted', { x: 0.5, y: 0.97 });
 
         this._p.pop();
 
@@ -110,13 +105,13 @@ export default class HudRenderer implements Renderer {
         hudGrid.forEach(cell => {
             const { x, y } = cell.coordinate;
 
-            if ((state.on === false || state.start === false) && state.running === false) {
+            if (state.isOff() && !state.isPlaying()) {
                 cell.value = 0;
             }
 
             let color = cell.value !== 0 ? Color.DEFAULT : Color.INACTIVE;
 
-            if (state.colorEnabled && cell.value !== 0) {
+            if (state.isColorEnabled() && cell.value !== 0) {
                 color = cell.color;
             }
 
@@ -130,7 +125,7 @@ export default class HudRenderer implements Renderer {
         });
 
         this._p.noFill();
-        this._p.stroke(state.on ? Color.DEFAULT : Color.INACTIVE);
+        this._p.stroke(state.isOn() ? Color.DEFAULT : Color.INACTIVE);
 
         this._p.rect(this._rectValues.x, this._rectValues.y, this._rectValues.w, this._rectValues.h);
 

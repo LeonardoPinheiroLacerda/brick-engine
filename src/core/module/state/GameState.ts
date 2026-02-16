@@ -12,7 +12,7 @@ type StateMetadata = {
 const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
     [StateProperty.ON]              : { defaultValue: false },
     [StateProperty.START]           : { defaultValue: false },
-    [StateProperty.RUNNING]         : { defaultValue: false },
+    [StateProperty.PLAYING]         : { defaultValue: false },
     [StateProperty.GAME_OVER]       : { defaultValue: false },
     [StateProperty.COLOR_ENABLED]   : { defaultValue: true  , storageKey: configs.storageKeys.colorEnabled },
     [StateProperty.MUTED]           : { defaultValue: false , storageKey: configs.storageKeys.muted },
@@ -102,84 +102,111 @@ export default class GameState implements State, Debuggable {
         }
     }
 
-    get on(): boolean {
+    isOn(): boolean {
         return this._state.get(StateProperty.ON) as boolean;
     }
 
-    set on(value: boolean) {
-        this._set(StateProperty.ON, value);
+    isOff(): boolean {
+        return !this.isOn();
     }
 
-    get start(): boolean {
+    isStarted(): boolean {
         return this._state.get(StateProperty.START) as boolean;
     }
 
-    set start(value: boolean) {
-        this._set(StateProperty.START, value);
+    isPlaying(): boolean {
+        return this._state.get(StateProperty.PLAYING) as boolean;
     }
 
-    get running(): boolean {
-        return this._state.get(StateProperty.RUNNING) as boolean;
+    isPaused(): boolean {
+        return this.isStarted() && !this.isPlaying() && !this.isGameOver();
     }
 
-    set running(value: boolean) {
-        this._set(StateProperty.RUNNING, value);
-    }
-
-    get gameOver(): boolean {
+    isGameOver(): boolean {
         return this._state.get(StateProperty.GAME_OVER) as boolean;
     }
 
-    set gameOver(value: boolean) {
-        this._set(StateProperty.GAME_OVER, value);
+    turnOn(): void {
+        this._set(StateProperty.ON, true);
+        this._set(StateProperty.START, false);
+        this._set(StateProperty.PLAYING, false);
+        this._set(StateProperty.GAME_OVER, false);
     }
 
-    get colorEnabled(): boolean {
+    turnOff(): void {
+        this._set(StateProperty.ON, false);
+        this._set(StateProperty.START, false);
+        this._set(StateProperty.PLAYING, false);
+        this._set(StateProperty.GAME_OVER, false);
+    }
+
+    startGame(): void {
+        if (!this.isOn()) return;
+        this._set(StateProperty.START, true);
+        this._set(StateProperty.PLAYING, true);
+        this._set(StateProperty.GAME_OVER, false);
+    }
+
+    exitGame(): void {
+        this._set(StateProperty.START, false);
+        this._set(StateProperty.PLAYING, false);
+        this._set(StateProperty.GAME_OVER, false);
+    }
+
+    pause(): void {
+        if (this.isStarted() && !this.isGameOver()) {
+            this._set(StateProperty.PLAYING, false);
+        }
+    }
+
+    resume(): void {
+        if (this.isStarted() && !this.isGameOver()) {
+            this._set(StateProperty.PLAYING, true);
+        }
+    }
+
+    triggerGameOver(): void {
+        this._set(StateProperty.PLAYING, false);
+        this._set(StateProperty.GAME_OVER, true);
+    }
+
+    resetGame(): void {
+        if (!this.isOn()) return;
+        this._set(StateProperty.GAME_OVER, false);
+        this._set(StateProperty.START, true);
+        this._set(StateProperty.PLAYING, true);
+    }
+
+    isColorEnabled(): boolean {
         return this._state.get(StateProperty.COLOR_ENABLED) as boolean;
     }
 
-    set colorEnabled(value: boolean) {
+    setColorEnabled(value: boolean): void {
         this._set(StateProperty.COLOR_ENABLED, value);
     }
 
-    get muted(): boolean {
+    isMuted(): boolean {
         return this._state.get(StateProperty.MUTED) as boolean;
     }
 
-    set muted(value: boolean) {
+    setMuted(value: boolean): void {
         this._set(StateProperty.MUTED, value);
     }
 
-    get highScore(): number {
+    getHighScore(): number {
         return this._state.get(StateProperty.HIGH_SCORE) as number;
     }
 
-    set highScore(value: number) {
+    setHighScore(value: number): void {
         this._set(StateProperty.HIGH_SCORE, value);
     }
 
-    toggleOn(): void {
-        this.on = !this.on;
-    }
-
-    toggleStart(): void {
-        this.start = !this.start;
-    }
-
-    toggleRunning(): void {
-        this.running = !this.running;
-    }
-
-    toggleGameOver(): void {
-        this.gameOver = !this.gameOver;
-    }
-
     toggleColorEnabled(): void {
-        this.colorEnabled = !this.colorEnabled;
+        this.setColorEnabled(!this.isColorEnabled());
     }
 
     toggleMuted(): void {
-        this.muted = !this.muted;
+        this.setMuted(!this.isMuted());
     }
 
     /**
@@ -233,13 +260,14 @@ export default class GameState implements State, Debuggable {
 
     getDebugData(): Record<string, string | number | boolean> {
         return {
-            on: this.on,
-            start: this.start,
-            running: this.running,
-            game_over: this.gameOver,
-            color_enabled: this.colorEnabled,
-            muted: this.muted,
-            high_score: this.highScore,
+            on: this.isOn(),
+            start: this.isStarted(),
+            playing: this.isPlaying(),
+            paused: this.isPaused(),
+            game_over: this.isGameOver(),
+            color_enabled: this.isColorEnabled(),
+            muted: this.isMuted(),
+            high_score: this.getHighScore(),
         };
     }
 }

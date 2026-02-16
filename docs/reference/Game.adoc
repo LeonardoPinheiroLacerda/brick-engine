@@ -95,7 +95,7 @@ Called once after all engine modules are set up and linked. Ideal place for subs
 [source,typescript]
 ----
 setupGame(): void {
-    this.modules.state.toggleStart();
+    this.modules.state.startGame();
 }
 ----
 

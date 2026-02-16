@@ -239,55 +239,67 @@ export interface Grid extends Initializable {
  */
 export interface State extends Initializable {
     /**
-     * Whether the game system is "on" or "powered up".
-     *
-     * @type {boolean}
+     * Checks if the game system is "on" (powered up).
      */
-    on: boolean;
+    isOn(): boolean;
 
     /**
-     * Whether a game session has started.
-     *
-     * @type {boolean}
+     * Checks if the game system is "off" (powered down).
      */
-    start: boolean;
+    isOff(): boolean;
 
     /**
-     * Whether a game is currently in progress (active tick).
-     *
-     * @type {boolean}
+     * Checks if a game session has started (passed menu).
      */
-    running: boolean;
+    isStarted(): boolean;
 
     /**
-     * Whether the game has reached a game over state.
-     *
-     * @type {boolean}
+     * Checks if the game is currently playing (active gameplay).
      */
-    gameOver: boolean;
+    isPlaying(): boolean;
 
     /**
-     * Whether color rendering is enabled in the game.
-     * Persistent across sessions.
-     *
-     * @type {boolean}
+     * Checks if the game is paused (started but not playing).
      */
-    colorEnabled: boolean;
+    isPaused(): boolean;
 
     /**
-     * Whether audio is muted.
-     *
-     * @type {boolean}
+     * Checks if the game is in a game over state.
      */
-    muted: boolean;
+    isGameOver(): boolean;
 
     /**
-     * The highest score achieved by the user.
-     * Persisted across sessions.
-     *
-     * @type {number}
+     * Checks if color rendering is enabled.
      */
-    highScore: number;
+    isColorEnabled(): boolean;
+
+    /**
+     * Sets whether color rendering is enabled.
+     * @param value - The new value.
+     */
+    setColorEnabled(value: boolean): void;
+
+    /**
+     * Checks if audio is muted.
+     */
+    isMuted(): boolean;
+
+    /**
+     * Sets whether audio is muted.
+     * @param value - The new value.
+     */
+    setMuted(value: boolean): void;
+
+    /**
+     * Gets the high score.
+     */
+    getHighScore(): number;
+
+    /**
+     * Sets the high score.
+     * @param value - The new high score.
+     */
+    setHighScore(value: number): void;
 
     /**
      * Subscribes to changes in specific state properties.
@@ -309,16 +321,33 @@ export interface State extends Initializable {
 
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
-    /** Toggles the 'on' state. */
-    toggleOn(): void;
-    /** Toggles the 'start' state. */
-    toggleStart(): void;
-    /** Toggles the 'running' state. */
-    toggleRunning(): void;
-    /** Toggles the 'gameOver' state. */
-    toggleGameOver(): void;
+    /** Turn the game system on. */
+    turnOn(): void;
+
+    /** Turn the game system off. */
+    turnOff(): void;
+
+    /** Start a new game session. */
+    startGame(): void;
+
+    /** Exit the current game session. */
+    exitGame(): void;
+
+    /** Pause the current game. */
+    pause(): void;
+
+    /** Resume the current game. */
+    resume(): void;
+
+    /** Trigger a game over state. */
+    triggerGameOver(): void;
+
+    /** Reset the game state for a new round. */
+    resetGame(): void;
+
     /** Toggles the 'colorEnabled' state. */
     toggleColorEnabled(): void;
+
     /** Toggles the 'muted' state. */
     toggleMuted(): void;
 
