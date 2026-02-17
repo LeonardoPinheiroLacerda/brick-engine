@@ -2,13 +2,6 @@ import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
 import { repository, GameEntry } from './GameRepository';
 
-// Define the global variable expected from game bundles
-declare global {
-    interface Window {
-        BrickEngineGame: new (p: any, view: any) => Game;
-    }
-}
-
 export default class GameMenu extends Game {
     private _gameSelectionPointer = 0;
     private _isLoading = false;
@@ -63,7 +56,7 @@ export default class GameMenu extends Game {
     private async handleGameSelection(entry: GameEntry) {
         if (entry.instance) {
             console.log('Switching to cached game:', entry.name);
-            (window as any).BrickEngine.switchGame(entry.instance);
+            window.BrickEngine.switchGame(entry.instance);
         } else if (entry.url) {
             this._isLoading = true;
             try {
@@ -72,7 +65,7 @@ export default class GameMenu extends Game {
                     const gameInstance = new window.BrickEngineGame(this.p, this.view);
                     repository.registerGame(entry.name, gameInstance);
                     console.log('Game loaded and registered:', entry.name);
-                    (window as any).BrickEngine.switchGame(gameInstance);
+                    window.BrickEngine.switchGame(gameInstance);
                     // Cleanup
                     delete window.BrickEngineGame;
                 } else {
@@ -97,7 +90,7 @@ export default class GameMenu extends Game {
     }
 
     update() {}
-    // ... render methods ...
+
     render() {
         const { text } = this.modules;
 

@@ -23,10 +23,12 @@ export const P5Instance = new P5((p: P5) => {
     };
 
     // Expose switching logic
-    (window as any).BrickEngine = (window as any).BrickEngine || {};
-    (window as any).BrickEngine.switchGame = (newGame: Game) => {
-        activeGame = newGame;
-        activeGame.setup();
+    // Expose switching logic
+    window.BrickEngine = {
+        switchGame: (newGame: Game) => {
+            activeGame = newGame;
+            activeGame.setup();
+        },
     };
 }, document.body);
 
