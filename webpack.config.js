@@ -7,16 +7,17 @@ module.exports = (env, argv) => {
 
     return {
         mode: isProduction ? 'production' : 'development',
-        entry: './src/index.ts',
+        entry: { 'brick-engine': './src/index.ts' },
         devtool: isProduction ? 'source-map' : 'eval-source-map',
         output: {
-            filename: isProduction ? 'js/[name].[contenthash].js' : 'js/[name].bundle.js',
+            filename: isProduction ? '[name].js' : '[name].js',
             path: path.resolve(__dirname, 'dist'),
             clean: true, // Clean the output directory before emit.
             publicPath: '/',
             library: {
                 name: 'BrickEngine',
-                type: 'var',
+                type: 'umd',
+                export: 'default',
             },
         },
         module: {
@@ -97,16 +98,7 @@ module.exports = (env, argv) => {
             }),
         ],
         optimization: {
-            runtimeChunk: 'single', // Separate runtime chunk for better caching
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all',
-                    },
-                },
-            },
+            minimize: isProduction,
         },
     };
 };

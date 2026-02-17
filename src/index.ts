@@ -1,11 +1,6 @@
 import P5 from 'p5';
 import Game from './core/Game';
 import GameView from './view/GameView';
-import configs from './config/configs';
-import * as Enums from './core/types/enums';
-import * as Interface from './core/types/Interfaces';
-import * as Modules from './core/types/modules';
-import * as Types from './core/types/Types';
 
 import './config/resources';
 import GameMenu from './menu/GameMenu';
@@ -30,4 +25,10 @@ export const P5Instance = new P5((p: P5) => {
     };
 }, document.body);
 
-export { Game, GameView, configs, Enums, Interface, Modules, Types };
+export * from './core/types/enums';
+export * from './core/types/Interfaces';
+export * from './core/types/modules';
+export * from './core/types/Types';
+export { default as Game } from './core/Game';
+export { default as GameView } from './view/GameView';
+export { default as configs } from './config/configs';

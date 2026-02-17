@@ -1,9 +1,9 @@
 import configs from '../../../config/configs';
 import { Sound, StateProperty } from '../../types/enums';
 import { Debuggable, StateSyncable } from '../../types/Interfaces';
-import { Sound as SoundInterface, State } from '../../types/modules';
+import { SoundModule, State } from '../../types/modules';
 
-export default class GameSound implements SoundInterface, StateSyncable, Debuggable {
+export default class GameSound implements SoundModule, StateSyncable, Debuggable {
     muted: boolean;
     // O AudioContext é o "motor" de áudio do navegador.
     // Ele gerencia toda a criação e reprodução de sons.
