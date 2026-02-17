@@ -2,7 +2,10 @@ import Game from '../core/Game';
 import { GameEntry } from '../types/interfaces';
 
 export default class GameRepository {
-    private _games: GameEntry[] = [{ name: 'Tetris', url: 'http://127.0.0.1:8080/my-game.bundle.js' }, { name: 'Snake' }];
+    private _games: GameEntry[] = [
+        { name: 'Tetris', url: 'https://unpkg.com/@leonardopinheirolacerda/brick-engine-test@1.0.1/dist/my-game.bundle.js' },
+        { name: 'Snake' },
+    ];
 
     get games(): GameEntry[] {
         return this._games;

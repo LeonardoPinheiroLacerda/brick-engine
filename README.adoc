@@ -25,6 +25,16 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 
 // image::docs/images/lifecycle.svg[Engine Lifecycle]
 
+== Installation
+ 
+Install the package via npm:
+ 
+[source,bash]
+----
+npm install brick-engine p5
+npm install --save-dev @types/p5
+----
+ 
 == Getting Started
 
 To create a game, you must extend the abstract `Game` class and implement its core abstract methods: `getPersistenceKey`, `setupGame`, `update`, `render`, `drawTitleScreen`, and `drawGameOverScreen`.
