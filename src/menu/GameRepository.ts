@@ -1,13 +1,8 @@
 import Game from '../core/Game';
+import { GameEntry } from '../types/interfaces';
 
-export interface GameEntry {
-    name: string;
-    url?: string;
-    instance?: Game;
-}
-
-class GameRepository {
-    private _games: GameEntry[] = [{ name: 'Tetris' }, { name: 'Snake' }];
+export default class GameRepository {
+    private _games: GameEntry[] = [{ name: 'Tetris', url: 'http://127.0.0.1:8080/my-game.bundle.js' }, { name: 'Snake' }];
 
     get games(): GameEntry[] {
         return this._games;
@@ -24,6 +19,3 @@ class GameRepository {
         console.log(`Game registered: ${name}`);
     }
 }
-
-export const repository = new GameRepository();
-export const games = repository.games; // Legacy compatibility, or access via repository

@@ -1,10 +1,14 @@
 import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
-import { repository, GameEntry } from './GameRepository';
+import GameRepository from './GameRepository';
+import GameManager from './manager/GameManager';
 
 export default class GameMenu extends Game {
     private _gameSelectionPointer = 0;
     private _isLoading = false;
+
+    private _gameRepository = new GameRepository();
+    private _gameManager = new GameManager(this._gameRepository);
 
     setupGame() {
         const { state, control, sound } = this.modules;
@@ -13,8 +17,8 @@ export default class GameMenu extends Game {
             if (this._isLoading) return;
 
             if (state.isStarted()) {
-                const selectedGame = repository.games[this._gameSelectionPointer];
-                this.handleGameSelection(selectedGame);
+                const selectedGame = this._gameRepository.games[this._gameSelectionPointer];
+                this._gameManager.handleGameSelection(selectedGame, this);
             }
         });
 
@@ -22,7 +26,7 @@ export default class GameMenu extends Game {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
                 if (this._gameSelectionPointer === 0) {
-                    this._gameSelectionPointer = repository.games.length - 1;
+                    this._gameSelectionPointer = this._gameRepository.games.length - 1;
                 } else {
                     this._gameSelectionPointer--;
                 }
@@ -32,7 +36,7 @@ export default class GameMenu extends Game {
         control.subscribe(ControlKey.RIGHT, ControlEventType.PRESSED, () => {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
-                if (this._gameSelectionPointer === repository.games.length - 1) {
+                if (this._gameSelectionPointer === this._gameRepository.games.length - 1) {
                     this._gameSelectionPointer = 0;
                 } else {
                     this._gameSelectionPointer++;
@@ -50,42 +54,6 @@ export default class GameMenu extends Game {
             if (on) {
                 sound.play(Sound.GAME_START);
             }
-        });
-    }
-
-    private async handleGameSelection(entry: GameEntry) {
-        if (entry.instance) {
-            console.log('Switching to cached game:', entry.name);
-            window.BrickEngine.switchGame(entry.instance);
-        } else if (entry.url) {
-            this._isLoading = true;
-            try {
-                await this.loadGameScript(entry.url);
-                if (window.BrickEngineGame) {
-                    const gameInstance = new window.BrickEngineGame(this.p, this.view);
-                    repository.registerGame(entry.name, gameInstance);
-                    console.log('Game loaded and registered:', entry.name);
-                    window.BrickEngine.switchGame(gameInstance);
-                    // Cleanup
-                    delete window.BrickEngineGame;
-                } else {
-                    console.error('Game bundle loaded but window.BrickEngineGame was not set.');
-                }
-            } catch (e) {
-                console.error('Failed to load game:', e);
-            } finally {
-                this._isLoading = false;
-            }
-        }
-    }
-
-    private loadGameScript(url: string): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = url;
-            script.onload = () => resolve();
-            script.onerror = () => reject(new Error(`Failed to load script ${url}`));
-            document.head.appendChild(script);
         });
     }
 
@@ -116,7 +84,7 @@ export default class GameMenu extends Game {
 
         text.setTextSize(FontSize.MEDIUM);
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.BOTTOM);
-        text.textOnDisplay(repository.games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
+        text.textOnDisplay(this._gameRepository.games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
 
         text.setTextSize(FontSize.EXTRA_SMALL);
         text.setTextAlign(FontAlign.LEFT, FontVerticalAlign.BOTTOM);

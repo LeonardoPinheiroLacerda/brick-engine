@@ -28,10 +28,34 @@ export default abstract class Game implements Initializable {
     private _view: GameView;
 
     private _debugger: Debugger;
+    private static _switchHandler: (newGame: Game) => void;
+
+    /**
+     * Registers the callback to be used when a game requests to switch to another game.
+     * This is typically called by the engine's main loop (index.ts).
+     * @param handler The callback function.
+     */
+    static setSwitchHandler(handler: (newGame: Game) => void) {
+        Game._switchHandler = handler;
+    }
 
     constructor(p: P5, view: GameView) {
         this._p = p;
         this._view = view;
+    }
+
+    /**
+     * Switches execution to a new game instance.
+     * Use this instead of global window methods.
+     * @param newGame The new game instance to load.
+     */
+    switchGame(newGame: Game): void {
+        this.destroy(); // Clean up current game
+        if (Game._switchHandler) {
+            Game._switchHandler(newGame);
+        } else {
+            console.error('Game switch handler not registered. Cannot switch game.');
+        }
     }
 
     /**
@@ -132,42 +156,6 @@ export default abstract class Game implements Initializable {
         this._debugger.update();
     }
 
-    private _subscribeSystemControls(): void {
-        const { control, state, grid } = this._modules;
-
-        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-            if (state.isOn()) {
-                state.turnOff();
-                this.modules.sound.stopAll();
-            } else {
-                state.turnOn();
-            }
-        });
-        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
-        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
-
-        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
-            grid.resetGrid();
-            this.modules.score.resetScore();
-            this.modules.score.resetLevel();
-            state.resetGame();
-        });
-
-        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
-            if (!state.isStarted()) {
-                state.startGame();
-            } else if (state.isPlaying()) {
-                state.pause();
-            } else {
-                state.resume();
-            }
-        });
-
-        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-            this._p.noLoop();
-        });
-    }
-
     /**
      * Destroys the game instance, cleaning up all event listeners and stopping the loop.
      * Call this before switching to another game or when the game is no longer needed.
@@ -225,4 +213,40 @@ export default abstract class Game implements Initializable {
      * Called when the game is in GAME OVER state.
      */
     abstract drawGameOverScreen(): void;
+
+    private _subscribeSystemControls(): void {
+        const { control, state, grid } = this._modules;
+
+        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
+            if (state.isOn()) {
+                state.turnOff();
+                this.modules.sound.stopAll();
+            } else {
+                state.turnOn();
+            }
+        });
+        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
+        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
+
+        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
+            grid.resetGrid();
+            this.modules.score.resetScore();
+            this.modules.score.resetLevel();
+            state.resetGame();
+        });
+
+        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
+            if (!state.isStarted()) {
+                state.startGame();
+            } else if (state.isPlaying()) {
+                state.pause();
+            } else {
+                state.resume();
+            }
+        });
+
+        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
+            this._p.noLoop();
+        });
+    }
 }

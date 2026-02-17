@@ -4,6 +4,8 @@
   "description": "A lightweight brick engine built with p5.js and TypeScript",
   "private": true,
   "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "ISC",
   "author": "LeonardoPinheiroLacerda",
   "scripts": {

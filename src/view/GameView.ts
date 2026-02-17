@@ -45,6 +45,8 @@ export default class GameView {
     private _p                : P5;
     private _inputHandler     : ControlInputHandler;
 
+    private _cachedCanvas     : { canvas: P5.Element; canvasWidth: number; canvasHeight: number };
+
     /**
      * Creates an instance of GameView.
      *
@@ -67,6 +69,11 @@ export default class GameView {
      * - canvasHeight: The calculated height of the canvas.
      */
     build() {
+
+        if(this._cachedCanvas) {
+            return this._cachedCanvas;
+        }
+
         applyColors();
 
         //Container
@@ -109,7 +116,8 @@ export default class GameView {
         //Hide splash screen
         this._hideSplash();
 
-        return { canvas, canvasWidth, canvasHeight };
+        this._cachedCanvas = { canvas, canvasWidth, canvasHeight };
+        return this._cachedCanvas;
     }
 
     /**

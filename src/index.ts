@@ -14,21 +14,19 @@ export const P5Instance = new P5((p: P5) => {
     const view = new GameView(p, document.body);
     let activeGame: Game = new GameMenu(p, view);
 
+    // Register the switch handler
+    Game.setSwitchHandler((newGame: Game) => {
+        activeGame = newGame;
+        activeGame.setup();
+        p.loop();
+    });
+
     p.setup = () => {
         activeGame.setup();
     };
 
     p.draw = () => {
         activeGame.draw();
-    };
-
-    // Expose switching logic
-    // Expose switching logic
-    window.BrickEngine = {
-        switchGame: (newGame: Game) => {
-            activeGame = newGame;
-            activeGame.setup();
-        },
     };
 }, document.body);
 
