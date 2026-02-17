@@ -43,6 +43,14 @@ export default abstract class Game implements Initializable {
     }
 
     /**
+     * Gets the game view.
+     * @returns {GameView} The game view.
+     */
+    get view(): GameView {
+        return this._view;
+    }
+
+    /**
      * Sets up the game, initializing all modules and viewing components.
      * Called automatically by the engine.
      */

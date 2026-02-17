@@ -1,16 +1,27 @@
 import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
-import { games } from './GameRepository';
+import { repository, GameEntry } from './GameRepository';
+
+// Define the global variable expected from game bundles
+declare global {
+    interface Window {
+        BrickEngineGame: new (p: any, view: any) => Game;
+    }
+}
 
 export default class GameMenu extends Game {
     private _gameSelectionPointer = 0;
+    private _isLoading = false;
 
     setupGame() {
         const { state, control, sound } = this.modules;
 
         control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
+            if (this._isLoading) return;
+
             if (state.isStarted()) {
-                // Game Selection Logic
+                const selectedGame = repository.games[this._gameSelectionPointer];
+                this.handleGameSelection(selectedGame);
             }
         });
 
@@ -18,7 +29,7 @@ export default class GameMenu extends Game {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
                 if (this._gameSelectionPointer === 0) {
-                    this._gameSelectionPointer = games.length - 1;
+                    this._gameSelectionPointer = repository.games.length - 1;
                 } else {
                     this._gameSelectionPointer--;
                 }
@@ -28,7 +39,7 @@ export default class GameMenu extends Game {
         control.subscribe(ControlKey.RIGHT, ControlEventType.PRESSED, () => {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
-                if (this._gameSelectionPointer === games.length - 1) {
+                if (this._gameSelectionPointer === repository.games.length - 1) {
                     this._gameSelectionPointer = 0;
                 } else {
                     this._gameSelectionPointer++;
@@ -49,7 +60,44 @@ export default class GameMenu extends Game {
         });
     }
 
+    private async handleGameSelection(entry: GameEntry) {
+        if (entry.instance) {
+            console.log('Switching to cached game:', entry.name);
+            (window as any).BrickEngine.switchGame(entry.instance);
+        } else if (entry.url) {
+            this._isLoading = true;
+            try {
+                await this.loadGameScript(entry.url);
+                if (window.BrickEngineGame) {
+                    const gameInstance = new window.BrickEngineGame(this.p, this.view);
+                    repository.registerGame(entry.name, gameInstance);
+                    console.log('Game loaded and registered:', entry.name);
+                    (window as any).BrickEngine.switchGame(gameInstance);
+                    // Cleanup
+                    delete window.BrickEngineGame;
+                } else {
+                    console.error('Game bundle loaded but window.BrickEngineGame was not set.');
+                }
+            } catch (e) {
+                console.error('Failed to load game:', e);
+            } finally {
+                this._isLoading = false;
+            }
+        }
+    }
+
+    private loadGameScript(url: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = url;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error(`Failed to load script ${url}`));
+            document.head.appendChild(script);
+        });
+    }
+
     update() {}
+    // ... render methods ...
     render() {
         const { text } = this.modules;
 
@@ -75,7 +123,7 @@ export default class GameMenu extends Game {
 
         text.setTextSize(FontSize.MEDIUM);
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.BOTTOM);
-        text.textOnDisplay(games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
+        text.textOnDisplay(repository.games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
 
         text.setTextSize(FontSize.EXTRA_SMALL);
         text.setTextAlign(FontAlign.LEFT, FontVerticalAlign.BOTTOM);

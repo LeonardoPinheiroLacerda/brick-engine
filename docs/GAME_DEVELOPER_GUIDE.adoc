@@ -1,0 +1,75 @@
+= Game Developer Guide
+
+This guide explains how to develop and package games for the Brick Engine.
+
+== Architecture
+
+The Brick Engine runs as a host application. Your game is loaded as a separate script bundle. To ensure compatibility and avoid code duplication:
+
+1.  **Do not bundle the engine**: Your game should treat `brick-engine` as an external dependency.
+2.  **Expose your class**: Your game must assign its main class to `window.BrickEngineGame`.
+
+== Project Setup
+
+=== 1. Dependencies
+
+You need `typescript` and `webpack` (or similar bundler). You also need the `brick-engine` types (if available) or assume the globals.
+
+=== 2. Entry Point (`src/index.ts`)
+
+Instead of `new Game()`, you simply export your class to the global scope:
+
+[source,typescript]
+----
+import { Game } from 'brick-engine'; // Resolves to global BrickEngine.Game
+
+export default class MyGame extends Game {
+    setupGame() {
+        // ... your setup logic
+    }
+
+    update() {
+        // ... your update logic
+    }
+    
+    render() {
+        // ... your render logic
+    }
+}
+
+// CRITICAL: Register your game
+(window as any).BrickEngineGame = MyGame;
+----
+
+=== 3. Webpack Configuration
+
+Configure Webpack to exclude `brick-engine` and `p5` from your bundle.
+
+[source,javascript]
+----
+// webpack.config.js
+module.exports = {
+    // ...
+    externals: {
+        'brick-engine': 'BrickEngine', // Maps import 'brick-engine' to window.BrickEngine
+        'p5': 'p5' // p5 is also provided by the engine
+    },
+    output: {
+        filename: 'my-game.bundle.js',
+        // ...
+    }
+};
+----
+
+== Publishing and Submission
+
+Once your game is ready and hosted (e.g., on GitHub Pages):
+
+1.  **Test**: Ensure it loads correctly when you manually simulate a load (or use the provided template).
+2.  **Submit**: To have your game listed in the official Brick Engine menu, please send an email to **[EMAIL_ADDRESS]** with the following details:
+    *   **Game Name**: The title of your game.
+    *   **Bundle URL**: The direct link to your `.js` bundle.
+    *   **Thumbnail/Icon**: (Optional) A small image for the menu.
+    *   **Source Code**: (Optional) Link to your repository.
+
+We will review your game and add it to the repository!

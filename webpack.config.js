@@ -14,6 +14,10 @@ module.exports = (env, argv) => {
             path: path.resolve(__dirname, 'dist'),
             clean: true, // Clean the output directory before emit.
             publicPath: '/',
+            library: {
+                name: 'BrickEngine',
+                type: 'var',
+            },
         },
         module: {
             rules: [
