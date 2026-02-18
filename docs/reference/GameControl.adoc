@@ -50,6 +50,9 @@ control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, (event) => {
 });
 ----
 
+
+'''
+
 === `unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
 
 Removes an existing subscription.
@@ -68,6 +71,9 @@ Removes an existing subscription.
 
 Removes the specified callback from the list. If the callback is not found, the operation does nothing.
 
+
+'''
+
 === `bindControls(): void`
 
 Attaches low-level event listeners to the environment.
@@ -76,6 +82,9 @@ Attaches low-level event listeners to the environment.
 
 Enables keyboard and button listeners. This is called automatically by the engine during setup.
 
+
+'''
+
 === `unbindControls(): void`
 
 Detaches all input listeners and clears subscriptions.
@@ -83,6 +92,9 @@ Detaches all input listeners and clears subscriptions.
 **Behavior**
 
 Removes all low-level event listeners and wipes the internal subscription map. Called automatically during engine destruction.
+
+
+'''
 
 === `notify(key: ControlKey, type: ControlEventType): void`
 
@@ -100,6 +112,9 @@ Manually triggers an input event.
 **Behavior**
 
 Executes all callbacks associated with the given key and event type. This is primarily used internally by the input handler but can be used for automated testing or input simulation.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

@@ -27,6 +27,9 @@ Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 
 
 `Coordinate` - The normalized `{x, y}` point.
 
+
+'''
+
 === `getDisplayPosX(p: p5, x: number, displayWidth: number): number`
 
 Calculates the absolute X pixel position on the main game display.
@@ -44,6 +47,9 @@ Calculates the absolute X pixel position on the main game display.
 **Returns**
 
 `number` - The absolute horizontal pixel position.
+
+
+'''
 
 === `getDisplayPosY(p: p5, y: number, displayHeight: number): number`
 
@@ -63,6 +69,9 @@ Calculates the absolute Y pixel position on the main game display.
 
 `number` - The absolute vertical pixel position.
 
+
+'''
+
 === `getHudPosX(p: p5, x: number, displayWidth: number): number`
 
 Calculates the absolute X pixel position within the HUD area.
@@ -80,6 +89,9 @@ Calculates the absolute X pixel position within the HUD area.
 **Returns**
 
 `number` - The absolute horizontal pixel position within the HUD.
+
+
+'''
 
 === `getHudPosY(p: p5, y: number, displayHeight: number): number`
 

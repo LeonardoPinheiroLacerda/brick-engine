@@ -18,6 +18,9 @@ Initializes the debugger's DOM structure.
 
 Creates the main debugger container (`<details id="debugger">`) and appends it to the document body. It scans all registered `GameModules` and prepares the UI sections for those that expose debug information via `getDebugData`.
 
+
+'''
+
 === `update(): Promise<void>`
 
 Refreshes the overlay with new data from the modules.

@@ -22,6 +22,9 @@ Checks if the game system is powered up.
 
 `boolean` - `true` if system is on.
 
+
+'''
+
 === `isOff(): boolean`
 
 Checks if the game system is powered down.
@@ -29,6 +32,9 @@ Checks if the game system is powered down.
 **Returns**
 
 `boolean` - `true` if system is off.
+
+
+'''
 
 === `isStarted(): boolean`
 
@@ -38,6 +44,9 @@ Checks if a game session is active (passed the title screen).
 
 `boolean` - `true` if the game has started.
 
+
+'''
+
 === `isPlaying(): boolean`
 
 Checks if the game loop is actively updating logic.
@@ -45,6 +54,9 @@ Checks if the game loop is actively updating logic.
 **Returns**
 
 `boolean` - `true` if gameplay is active and not paused.
+
+
+'''
 
 === `isPaused(): boolean`
 
@@ -54,6 +66,9 @@ Checks if the game is currently paused.
 
 `boolean` - `true` if the game is started but halted.
 
+
+'''
+
 === `isGameOver(): boolean`
 
 Checks if the current session has ended in a Game Over.
@@ -61,6 +76,9 @@ Checks if the current session has ended in a Game Over.
 **Returns**
 
 `boolean` - `true` if player has lost.
+
+
+'''
 
 === `turnOn(): void`
 
@@ -70,6 +88,9 @@ Powers on the game system.
 
 Sets the `on` property to true and ensures `start`, `playing`, and `gameOver` are initialized to false.
 
+
+'''
+
 === `turnOff(): void`
 
 Powers off the game system.
@@ -77,6 +98,9 @@ Powers off the game system.
 **Behavior**
 
 Sets the `on` property to false and wipes transient state.
+
+
+'''
 
 === `startGame(): void`
 
@@ -86,6 +110,9 @@ Initiates gameplay from the title screen.
 
 Sets `start` and `playing` to true. This method only has effect if the system is already `on`.
 
+
+'''
+
 === `exitGame(): void`
 
 Ends the session and returns to the title screen.
@@ -93,6 +120,9 @@ Ends the session and returns to the title screen.
 **Behavior**
 
 Resets `start`, `playing`, and `gameOver` to false.
+
+
+'''
 
 === `pause(): void`
 
@@ -102,6 +132,9 @@ Halts gameplay logic.
 
 Sets `playing` to false. Only works if the game is already started.
 
+
+'''
+
 === `resume(): void`
 
 Restarts gameplay logic from a paused state.
@@ -109,6 +142,9 @@ Restarts gameplay logic from a paused state.
 **Behavior**
 
 Sets `playing` to true.
+
+
+'''
 
 === `triggerGameOver(): void`
 
@@ -118,6 +154,9 @@ Forces the game into a Game Over state.
 
 Sets `playing` to false and `gameOver` to true.
 
+
+'''
+
 === `resetGame(): void`
 
 Prepares the state for a new round after a Game Over.
@@ -126,6 +165,9 @@ Prepares the state for a new round after a Game Over.
 
 Clears the `gameOver` flag and resumes `playing` status.
 
+
+'''
+
 === `isColorEnabled(): boolean`
 
 Checks if theme color mode is active.
@@ -133,6 +175,9 @@ Checks if theme color mode is active.
 **Returns**
 
 `boolean` - `true` if color mode is on.
+
+
+'''
 
 === `setColorEnabled(value: boolean): void`
 
@@ -150,9 +195,15 @@ Sets the color mode preference.
 
 Updates the property and automatically persists the value to `LocalStorage`.
 
+
+'''
+
 === `toggleColorEnabled(): void`
 
 Toggles the current color mode.
+
+
+'''
 
 === `isMuted(): boolean`
 
@@ -161,6 +212,9 @@ Checks if master audio is muted.
 **Returns**
 
 `boolean` - `true` if sound is disabled.
+
+
+'''
 
 === `setMuted(value: boolean): void`
 
@@ -178,9 +232,15 @@ Sets the master mute status.
 
 Updates the property and persists it to `LocalStorage`.
 
+
+'''
+
 === `toggleMuted(): void`
 
 Toggles the master mute status.
+
+
+'''
 
 === `getHighScore(): number`
 
@@ -189,6 +249,9 @@ Retrieves the highest score recorded.
 **Returns**
 
 `number` - The stored high score.
+
+
+'''
 
 === `setHighScore(value: number): void`
 
@@ -205,6 +268,9 @@ Updates the high score.
 **Behavior**
 
 Updates the value and persists it to `LocalStorage`. High scores are prefixed by the game's persistence key.
+
+
+'''
 
 === `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
@@ -230,6 +296,9 @@ state.subscribe(StateProperty.GAME_OVER, (isOver) => {
 });
 ----
 
+
+'''
+
 === `unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
 Removes a state change listener.
@@ -243,6 +312,9 @@ Removes a state change listener.
 |`callback` |`Function` |The reference to the callback to remove.
 |===
 
+
+'''
+
 === `setPersistenceKey(key: string): void`
 
 Configures the unique identifier for storage.
@@ -255,6 +327,9 @@ Configures the unique identifier for storage.
 |`key` |`string` |The prefix to use for `LocalStorage` entries.
 |===
 
+
+'''
+
 === `getPersistenceKey(): string`
 
 Retrieves the currently configured storage key.
@@ -262,6 +337,9 @@ Retrieves the currently configured storage key.
 **Returns**
 
 `string` - The persistence key.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

@@ -26,6 +26,9 @@ Pre-calculates static HUD geometry.
 
 Calculates and caches the absolute pixel positions for HUD borders and grid cells. This ensures that the HUD remains perfectly aligned regardless of the display resolution.
 
+
+'''
+
 === `render(grid: Cell[][], modules: GameModules): void`
 
 Main HUD drawing orchestration.

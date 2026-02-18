@@ -37,6 +37,9 @@ Automatically resumes the `AudioContext` if it was suspended by the browser. Mul
 this.modules.sound.play(Sound.ACTION_1);
 ----
 
+
+'''
+
 === `stop(sound: Sound): void`
 
 Stops all active instances of a specific sound.
@@ -53,9 +56,15 @@ Stops all active instances of a specific sound.
 
 Iterates through all currently playing sources of the specified type and stops them immediately.
 
+
+'''
+
 === `stopAll(): void`
 
 Stops every sound currently playing in the engine.
+
+
+'''
 
 === `toggleMute(): void`
 
@@ -64,6 +73,9 @@ Toggles the master mute status.
 **Behavior**
 
 Inverts the `muted` property in `GameState`. This change is automatically persisted to `LocalStorage` and reflected in the audio output.
+
+
+'''
 
 === `syncState(state: State): void`
 
@@ -80,6 +92,9 @@ Synchronizes audio settings with the global game state.
 **Behavior**
 
 Implements the `StateSyncable` interface. Subscribes to changes in the `MUTED` property of the provided state and updates the master gain node accordingly.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

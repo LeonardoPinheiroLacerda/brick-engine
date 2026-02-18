@@ -33,6 +33,9 @@ Applies the pre-calculated pixel size to the P5.js context based on the current 
 this.modules.text.setTextSize(FontSize.LARGE);
 ----
 
+
+'''
+
 === `setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void`
 
 Configures the alignment of rendered text.
@@ -46,13 +49,22 @@ Configures the alignment of rendered text.
 |`verticalAlign` |`FontVerticalAlign` |Vertical alignment (TOP, CENTER, BOTTOM).
 |===
 
+
+'''
+
 === `setActiveText(): void`
 
 Sets the text fill color to the active theme color.
 
+
+'''
+
 === `setInactiveText(): void`
 
 Sets the text fill color to the inactive theme color.
+
+
+'''
 
 === `textOnDisplay(text: string, coordinate: Coordinate): void`
 
@@ -74,6 +86,9 @@ Renders text on the main game display area.
 text.textOnDisplay('PAUSED', { x: 0.5, y: 0.5 });
 ----
 
+
+'''
+
 === `textOnHud(text: string, coordinate: Coordinate): void`
 
 Renders text on the side HUD area.
@@ -86,6 +101,9 @@ Renders text on the side HUD area.
 |`text` |`string` |The message to display.
 |`coordinate` |`Coordinate` |Normalized coordinates (0.0 to 1.0) within the HUD container.
 |===
+
+
+'''
 
 === `setRendererMetrics(metrics: RendererMetrics): void`
 
@@ -102,6 +120,9 @@ Updates the coordinate conversion reference.
 **Behavior**
 
 Called by the engine during initialization. These metrics are used by `textOnHud` and `textOnDisplay` to calculate absolute pixel positions.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

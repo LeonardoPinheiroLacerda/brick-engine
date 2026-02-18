@@ -24,6 +24,9 @@ Read-only property returning the number of columns in the grid.
 
 `number` - Grid width.
 
+
+'''
+
 === `height: number`
 
 Read-only property returning the number of rows in the grid.
@@ -31,6 +34,9 @@ Read-only property returning the number of rows in the grid.
 **Returns**
 
 `number` - Grid height.
+
+
+'''
 
 === `resetGrid(): void`
 
@@ -40,6 +46,9 @@ Resets the entire grid to its empty state.
 
 Clears all cells and populates them with default empty cell objects using dimensions from the engine configuration.
 
+
+'''
+
 === `getGrid(): Cell[][]`
 
 Returns the underlying 2D array of cells.
@@ -47,6 +56,9 @@ Returns the underlying 2D array of cells.
 **Returns**
 
 `Cell[][]` - The matrix representing the grid state.
+
+
+'''
 
 === `forEach(callback: (cell: Cell) => void): void`
 
@@ -59,6 +71,9 @@ Iterates over every cell and executes the provided callback.
 |Name |Type |Description
 |`callback` |`(cell: Cell) => void` |Function to execute for each cell.
 |===
+
+
+'''
 
 === `isValidCoordinate(coordinate: Coordinate): boolean`
 
@@ -76,6 +91,9 @@ Verifies if a coordinate is within the current grid boundaries.
 
 `boolean` - `true` if valid, `false` otherwise.
 
+
+'''
+
 === `getCell(coordinate: Coordinate): Cell | null`
 
 Retrieves a cell at a specific coordinate.
@@ -91,6 +109,9 @@ Retrieves a cell at a specific coordinate.
 **Returns**
 
 `Cell | null` - The cell object, or `null` if the coordinate is out of bounds.
+
+
+'''
 
 === `setCellValue(coordinate: Coordinate, value: number): void`
 
@@ -109,6 +130,12 @@ Updates the numeric value of a cell.
 
 Updates only the `value` property of the cell. If the coordinate is invalid, the operation is ignored.
 
+
+'''
+
+
+'''
+
 === `setCellColor(coordinate: Coordinate, color: Color): void`
 
 Updates the color of a cell.
@@ -121,6 +148,9 @@ Updates the color of a cell.
 |`coordinate` |`Coordinate` |Target position.
 |`color` |`Color` |Enum value representing the new color.
 |===
+
+
+'''
 
 === `isCellActive(coordinate: Coordinate): boolean`
 
@@ -138,6 +168,9 @@ Checks if a cell is currently occupied.
 
 `boolean` - `true` if the cell value is greater than 0.
 
+
+'''
+
 === `isCellInactive(coordinate: Coordinate): boolean`
 
 Checks if a cell is currently empty.
@@ -153,6 +186,9 @@ Checks if a cell is currently empty.
 **Returns**
 
 `boolean` - `true` if the cell value is exactly 0.
+
+
+'''
 
 === `isRowFull(y: number): boolean`
 
@@ -170,6 +206,9 @@ Checks if a specific row has no empty cells.
 
 `boolean` - `true` if all cells in the row are active.
 
+
+'''
+
 === `isRowEmpty(y: number): boolean`
 
 Checks if a specific row is completely empty.
@@ -186,6 +225,9 @@ Checks if a specific row is completely empty.
 
 `boolean` - `true` if all cells in the row are inactive.
 
+
+'''
+
 === `clearRow(y: number): void`
 
 Resets all cells in a row to the empty state.
@@ -197,6 +239,9 @@ Resets all cells in a row to the empty state.
 |Name |Type |Description
 |`y` |`number` |Row index to clear.
 |===
+
+
+'''
 
 === `shiftRowsDown(fromY: number): void`
 
@@ -214,6 +259,9 @@ Shifts all rows above an index down by one position.
 
 Moves row `y-1` to `y` for all rows up to `fromY`. The top-most row (index 0) is cleared after the shift.
 
+
+'''
+
 === `shiftRowsUp(fromY: number): void`
 
 Shifts all rows below an index up by one position.
@@ -230,6 +278,9 @@ Shifts all rows below an index up by one position.
 
 Moves row `y+1` to `y` for all rows starting from `fromY` downwards. The bottom-most row is cleared after the shift.
 
+
+'''
+
 === `clearFullRows(): number`
 
 Scans for, clears, and collapses full rows.
@@ -241,6 +292,9 @@ Scans for, clears, and collapses full rows.
 **Behavior**
 
 Iterates through all rows. If a row is full, it is cleared, and all rows above it are shifted down.
+
+
+'''
 
 === `isColumnFull(x: number): boolean`
 
@@ -258,6 +312,9 @@ Checks if a specific column has no empty cells.
 
 `boolean` - `true` if full.
 
+
+'''
+
 === `isColumnEmpty(x: number): boolean`
 
 Checks if a specific column is completely empty.
@@ -274,6 +331,9 @@ Checks if a specific column is completely empty.
 
 `boolean` - `true` if empty.
 
+
+'''
+
 === `clearColumn(x: number): void`
 
 Resets all cells in a column to the empty state.
@@ -285,6 +345,9 @@ Resets all cells in a column to the empty state.
 |Name |Type |Description
 |`x` |`number` |Column index to clear.
 |===
+
+
+'''
 
 === `shiftColumnsRight(fromX: number): void`
 
@@ -298,6 +361,9 @@ Shifts all columns to the right of an index.
 |`fromX` |`number` |The column index to start shifting from.
 |===
 
+
+'''
+
 === `shiftColumnsLeft(fromX: number): void`
 
 Shifts all columns to the left of an index.
@@ -309,6 +375,9 @@ Shifts all columns to the left of an index.
 |Name |Type |Description
 |`fromX` |`number` |The column index to start shifting from.
 |===
+
+
+'''
 
 === `isAreaOccupied(coordinates: Coordinate[]): boolean`
 
@@ -326,6 +395,9 @@ Checks for collisions between a list of coordinates and active cells in the grid
 
 `boolean` - `true` if any coordinate is either out of bounds or already occupied (active).
 
+
+'''
+
 === `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
 
 Fills a rectangular area with specified properties.
@@ -341,6 +413,9 @@ Fills a rectangular area with specified properties.
 |`color` |`Color` |Color to apply to all cells in the area.
 |===
 
+
+'''
+
 === `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
 
 Updates multiple specific coordinates simultaneously.
@@ -354,6 +429,9 @@ Updates multiple specific coordinates simultaneously.
 |`value` |`number` |New cell value.
 |`color` |`Color` |New cell color.
 |===
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

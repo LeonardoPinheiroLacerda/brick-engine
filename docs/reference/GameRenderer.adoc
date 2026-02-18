@@ -22,6 +22,9 @@ Read-only property containing the calculated dimensions and origins for all UI c
 
 Calculates metrics once during initialization based on the current canvas size and configuration. These values are used by all other modules (like `GameText`) to ensure pixel-perfect alignment.
 
+
+'''
+
 === `addRenderer(renderer: Renderer): void`
 
 Registers a new rendering layer.
@@ -37,6 +40,9 @@ Registers a new rendering layer.
 **Behavior**
 
 Adds the renderer to an internal stack. Layers are executed in the order they are added.
+
+
+'''
 
 === `render(grid: Cell[][], modules: GameModules): void`
 
@@ -54,6 +60,9 @@ The main drawing execution call.
 **Behavior**
 
 Called by the engine's main loop. It iterates through all registered renderers and executes their specific `render` logic.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

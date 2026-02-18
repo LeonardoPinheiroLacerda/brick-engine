@@ -14,13 +14,22 @@ The `GameScore` module tracks player performance during a session. It manages th
 
 Read-only property returning the current session's points.
 
+
+'''
+
 === `level: number`
 
 Read-only property returning the current difficulty level.
 
+
+'''
+
 === `multiplier: number`
 
 Read and Write property for the current points multiplier.
+
+
+'''
 
 === `increaseScore(amount: number): void`
 
@@ -38,9 +47,15 @@ Adds points to the current session.
 
 Increases the score by `amount * multiplier`. Automatically compares the new score against the persisted `highScore` in `GameState` and updates it if a new record is reached.
 
+
+'''
+
 === `resetScore(): void`
 
 Resets the session score to zero.
+
+
+'''
 
 === `increaseLevel(amount: number): void`
 
@@ -54,9 +69,15 @@ Increases the game difficulty level.
 |`amount` |`number` |Number of levels to add.
 |===
 
+
+'''
+
 === `resetLevel(): void`
 
 Resets the level counter to 1.
+
+
+'''
 
 === `getFormattedScore(digits: number): string`
 
@@ -74,6 +95,9 @@ Returns the score as a padded string suitable for HUD display.
 
 `string` - The zero-padded score string.
 
+
+'''
+
 === `syncState(state: State): void`
 
 Links the score module with the persistent game state.
@@ -89,6 +113,9 @@ Links the score module with the persistent game state.
 **Behavior**
 
 Implements the `StateSyncable` interface. This connection is used to fetch and update the global high score.
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

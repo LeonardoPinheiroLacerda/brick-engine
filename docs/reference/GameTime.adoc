@@ -22,6 +22,9 @@ Getter/Setter for the game logic speed in milliseconds.
 
 Lowering this value makes the game run faster (e.g., used for difficulty progression).
 
+
+'''
+
 === `shouldTick(): boolean`
 
 Determines if a logic update should be executed.
@@ -33,6 +36,9 @@ Determines if a logic update should be executed.
 **Behavior**
 
 Called by the main loop. If it returns true, it automatically subtracts the `tickInterval` from the accumulator to maintain a stable clock.
+
+
+'''
 
 === `update(deltaTime: number): void`
 
@@ -46,6 +52,9 @@ Advances the internal time accumulator.
 |`deltaTime` |`number` |Time elapsed since the last render frame (in milliseconds).
 |===
 
+
+'''
+
 === `reset(): void`
 
 Clears the time accumulator.
@@ -53,6 +62,9 @@ Clears the time accumulator.
 **Behavior**
 
 Prevents a "burst" of logic updates after resuming from a long pause or game restart.
+
+
+'''
 
 === `incrementTickInterval(amount: number): void`
 
@@ -66,6 +78,9 @@ Slows down the game by increasing the time between ticks.
 |`amount` |`number` |Milliseconds to add to the interval.
 |===
 
+
+'''
+
 === `decrementTickInterval(amount: number): void`
 
 Speeds up the game by decreasing the time between ticks.
@@ -77,6 +92,9 @@ Speeds up the game by decreasing the time between ticks.
 |Name |Type |Description
 |`amount` |`number` |Milliseconds to subtract from the interval.
 |===
+
+
+'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

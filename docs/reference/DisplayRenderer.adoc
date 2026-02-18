@@ -26,6 +26,9 @@ Initializes the renderer and pre-calculates the static scene.
 
 Stores the layout metrics for use during drawing. It also initializes an off-screen graphics buffer to pre-render the static background and borders, significantly improving performance by avoiding redundant draw calls every frame.
 
+
+'''
+
 === `render(grid: Cell[][]): void`
 
 Executes the main display drawing logic.

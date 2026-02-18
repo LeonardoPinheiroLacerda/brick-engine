@@ -18,6 +18,9 @@ The `Game` class is the heart of your application. It manages the game loop (tic
 
 == API Reference
 
+
+'''
+
 === `update(deltaTime: number): void`
 
 Abstract method for processing game logic.
@@ -44,6 +47,9 @@ update(deltaTime: number): void {
 }
 ----
 
+
+'''
+
 === `render(): void`
 
 Abstract method for processing visual frames.
@@ -60,6 +66,9 @@ render(): void {
     // Logic for smooth animations
 }
 ----
+
+
+'''
 
 === `setupGame(): void`
 
@@ -78,6 +87,9 @@ setupGame(): void {
 }
 ----
 
+
+'''
+
 === `getPersistenceKey(): string`
 
 Abstract method that returns a unique identifier for the game.
@@ -90,6 +102,9 @@ Abstract method that returns a unique identifier for the game.
 
 This key prevents data collisions in LocalStorage if multiple games built with the engine are hosted on the same domain. It's used as a prefix for all persistent state properties (e.g., `my-game.highScore`).
 
+
+'''
+
 === `drawTitleScreen(): void`
 
 Abstract method for rendering the game's welcome screen.
@@ -98,6 +113,9 @@ Abstract method for rendering the game's welcome screen.
 
 Called when the engine is powered ON but the game has not yet been started. Executed during the main draw loop instead of `update` and `render`.
 
+
+'''
+
 === `drawGameOverScreen(): void`
 
 Abstract method for rendering the screen after a game ends.
@@ -105,6 +123,9 @@ Abstract method for rendering the screen after a game ends.
 **Behavior**
 
 Called when the game state is `gameOver`. Executed after the final `render` call to overlay messages or recovery menus.
+
+
+'''
 
 === `switchGame(newGame: Game): void`
 
@@ -128,6 +149,9 @@ Destroys the current game instance (cleaning up listeners and stopping sound) an
 ----
 this.switchGame(new MyOtherGame(this.p, this.view));
 ----
+
+
+'''
 
 === `destroy(): void`
 
