@@ -6,7 +6,7 @@
 
 toc::[]
 
-The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `xref:../interfaces/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
+The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
 
 == API Reference
 

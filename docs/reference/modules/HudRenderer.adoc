@@ -6,7 +6,7 @@
 
 toc::[]
 
-The `HudRenderer` manages the visualization of the Head-Up Display, including scores, levels, system status, and the specialized HUD grid. It implements the standard `xref:../interfaces/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
+The `HudRenderer` manages the visualization of the Head-Up Display, including scores, levels, system status, and the specialized HUD grid. It implements the standard `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
 
 == API Reference
 

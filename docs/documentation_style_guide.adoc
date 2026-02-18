@@ -144,6 +144,11 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 *   **Issue**: Automated or careless application of the "expanded method" style often leads to placing a horizontal rule (`'''`) at the very beginning of the `== Methods` section.
 *   **Solution**: Always verify that the first method header appears immediately after the section header. This maintains a clean vertical rhythm and avoids unnecessary whitespace or lines at the top of the API list.
 
+=== Module Interface Organization
+*   **Issue**: Mixing generic engine contracts (e.g., `Initializable`) with specific module definitions (e.g., `Grid`, `State`) in a flat directory structure created clutter and obscured the architectural distinction between "core traits" and "major subsystems."
+*   **Solution**: Moved module-specific interfaces to a dedicated `modules/` subdirectory.
+*   **Impact**: When cross-referencing files in nested directories, developers must pay extra attention to relative paths (e.g., using `xref:../../types/` instead of `xref:../types/`).
+
 == Cross-Referencing Standards
 
 To ensure a navigable and cohesive documentation set, strict cross-referencing is mandatory for all internal entities.

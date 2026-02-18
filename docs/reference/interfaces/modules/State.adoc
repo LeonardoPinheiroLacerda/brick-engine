@@ -148,7 +148,7 @@ Updates the persistent high score.
 
 '''
 
-=== `subscribe(property: xref:../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
+=== `subscribe(property: xref:../../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
 
 Registers a listener for changes to a specific state property.
 
@@ -157,14 +157,14 @@ Registers a listener for changes to a specific state property.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The property to watch.
+|`property` |`xref:../../enums/StateProperty.adoc[StateProperty]` |The property to watch.
 |`callback` |`(value: boolean \| number) => void` |Function called when the property changes.
 |===
 
 
 '''
 
-=== `unsubscribe(property: xref:../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
+=== `unsubscribe(property: xref:../../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
 
 Removes a previously registered property listener.
 
@@ -173,7 +173,7 @@ Removes a previously registered property listener.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The property being watched.
+|`property` |`xref:../../enums/StateProperty.adoc[StateProperty]` |The property being watched.
 |`callback` |`(value: boolean \| number) => void` |The function to remove.
 |===
 
@@ -275,4 +275,4 @@ Returns the active namespace prefix.
 
 == General Usage
 
-Implemented by `xref:../modules/GameState.adoc[GameState]`. It serves as the single source of truth for the engine's behavior tree.
+Implemented by `xref:../../modules/GameState.adoc[GameState]`. It serves as the single source of truth for the engine's behavior tree.

@@ -86,7 +86,7 @@ Synchronizes audio settings with the global game state.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`state` |`xref:../interfaces/State.adoc[State]` |The `xref:GameState.adoc[GameState]` instance to link with.
+|`state` |`xref:../interfaces/modules/State.adoc[State]` |The `xref:GameState.adoc[GameState]` instance to link with.
 |===
 
 **Behavior**

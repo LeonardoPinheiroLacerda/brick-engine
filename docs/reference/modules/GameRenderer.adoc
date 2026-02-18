@@ -34,7 +34,7 @@ Registers a new rendering layer.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`renderer` |`xref:../interfaces/Renderer.adoc[Renderer]` |An implementation of the `xref:../interfaces/Renderer.adoc[Renderer]` interface (e.g., `xref:DisplayRenderer.adoc[DisplayRenderer]`).
+|`renderer` |`xref:../interfaces/modules/Renderer.adoc[Renderer]` |An implementation of the `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface (e.g., `xref:DisplayRenderer.adoc[DisplayRenderer]`).
 |===
 
 **Behavior**

@@ -107,7 +107,7 @@ Links the score module with the persistent game state.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`state` |`xref:../interfaces/State.adoc[State]` |The `xref:GameState.adoc[GameState]` module.
+|`state` |`xref:../interfaces/modules/State.adoc[State]` |The `xref:GameState.adoc[GameState]` module.
 |===
 
 **Behavior**

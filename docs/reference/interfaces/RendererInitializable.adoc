@@ -1,6 +1,6 @@
 = RendererInitializable Reference
 
-Extension of `Initializable` specifically for rendering components.
+Extension of `xref:Initializable.adoc[Initializable]` specifically for rendering components.
 
 == Methods
 

@@ -14,4 +14,4 @@ The context object delivered to input subscribers.
 
 == General Usage
 
-When a control callback is executed, it receives a `GameEvent`. This allows the game logic to react based on the key type and interact with the `xref:../interfaces/Grid.adoc[Grid]`, `xref:../interfaces/State.adoc[State]`, or `xref:../interfaces/Score.adoc[Score]` modules.
+When a control callback is executed, it receives a `GameEvent`. This allows the game logic to react based on the key type and interact with the `xref:../interfaces/modules/Grid.adoc[Grid]`, `xref:../interfaces/modules/State.adoc[State]`, or `xref:../interfaces/modules/Score.adoc[Score]` modules.
