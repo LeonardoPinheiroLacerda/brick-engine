@@ -14,7 +14,7 @@ module.exports = (env, argv) => {
         },
         devtool: isProduction ? 'source-map' : 'eval-source-map',
         output: {
-            filename: isProduction ? '[name].js' : '[name].js',
+            filename: '[name].js',
             path: path.resolve(__dirname, 'dist'),
             clean: true, // Clean the output directory before emit.
             publicPath: '',
@@ -46,42 +46,7 @@ module.exports = (env, argv) => {
                     ],
                 },
                 {
-                    test: /\.(png|gif|svg)$/i, // Images
-                    type: 'asset/resource',
-                    generator: {
-                        filename: isProduction ? 'images/[name].[contenthash][ext]' : 'images/[name][ext]',
-                    },
-                },
-                {
-                    test: /\.wav$/i, // Audio
-                    type: 'asset/resource',
-                    generator: {
-                        filename: isProduction ? 'sounds/[name].[contenthash][ext]' : 'sounds/[name][ext]',
-                    },
-                },
-                {
-                    test: /favicon\.ico$/i, // Favicon (root, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'favicon.ico',
-                    },
-                },
-                {
-                    test: /CNAME$/i, // CNAME (root, no ext, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'CNAME',
-                    },
-                },
-                {
-                    test: /modal\.js$/i, // modal.js (root, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'modal.js',
-                    },
-                },
-                {
-                    test: /\.(woff|woff2|eot|ttf|otf)$/i, // Fonts
+                    test: /\.(woff|woff2|eot|ttf|otf)$/i, // Fonts (Required for CSS url() resolution)
                     type: 'asset/resource',
                     generator: {
                         filename: 'fonts/[name][ext]',
@@ -96,10 +61,6 @@ module.exports = (env, argv) => {
             static: [
                 {
                     directory: path.resolve(__dirname, 'dist'),
-                },
-                {
-                    directory: path.resolve(__dirname, 'node_modules/p5/lib'),
-                    publicPath: '/vendor',
                 },
             ],
             port: 9000,
@@ -129,6 +90,8 @@ module.exports = (env, argv) => {
                     { from: 'node_modules/p5/lib/p5.min.js', to: 'vendor/p5.min.js' },
                     { from: 'public/images', to: 'images' },
                     { from: 'public/sounds', to: 'sounds' },
+                    { from: 'public/favicon.ico', to: './' },
+                    { from: 'public/CNAME', to: './' },
                 ],
             }),
         ],
