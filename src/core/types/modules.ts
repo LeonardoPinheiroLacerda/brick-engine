@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound } from './enums';
 import { Initializable, RendererInitializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
@@ -501,10 +501,10 @@ export interface TimePerformanceMonitor {
 
     /**
      * Renders the performance overlay.
-     * @param p The P5 instance.
+     * @param p The p5 instance.
      * @param tickInterval The current tick interval.
      */
-    render(p: P5, tickInterval: number): void;
+    render(p: p5, tickInterval: number): void;
 }
 
 /**

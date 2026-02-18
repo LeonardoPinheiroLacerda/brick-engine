@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import configs from '../../../config/configs';
 
 /**
@@ -6,11 +6,11 @@ import configs from '../../../config/configs';
  *
  * Adds a visual frame around the game area and includes the branding text "Brick Game".
  *
- * @param p - The P5 instance.
+ * @param p - The p5 instance.
  * @param container - The parent container element.
  * @returns The created frame element.
  */
-export default function FrameLayout(p: P5, container: P5.Element): P5.Element {
+export default function FrameLayout(p: p5, container: p5.Element): p5.Element {
     const frame = p.createDiv();
     frame.parent(container);
     frame.id(configs.selectors.viewElementIds.frame);

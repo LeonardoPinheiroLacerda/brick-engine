@@ -1,5 +1,5 @@
-import P5 from 'p5';
-import GameView from '../view/GameView';
+import p5 from 'p5';
+import type GameView from '../view/GameView';
 import GameControl from './module/control/GameControl';
 import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
@@ -18,14 +18,14 @@ import Debugger from './Debugger';
 /**
  * Base abstract class for the game.
  *
- * It manages the game loop, initialization of core modules, and integration with P5.js.
+ * It manages the game loop, initialization of core modules, and integration with p5.js.
  * All game logic should be implemented in subclasses by overriding `processTick` and `processFrame`.
  */
 export default abstract class Game implements Initializable {
-    private _p: P5;
+    private _p: p5;
+    private _view: GameView;
 
     private _modules: GameModules;
-    private _view: GameView;
 
     private _debugger: Debugger;
     private static _switchHandler: (newGame: Game) => void;
@@ -39,9 +39,17 @@ export default abstract class Game implements Initializable {
         Game._switchHandler = handler;
     }
 
-    constructor(p: P5, view: GameView) {
+    constructor(p: p5, view: GameView) {
         this._p = p;
         this._view = view;
+    }
+
+    /**
+     * Gets the game view.
+     * @returns {GameView} The game view.
+     */
+    get view(): GameView {
+        return this._view;
     }
 
     /**
@@ -67,20 +75,10 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Gets the game view.
-     * @returns {GameView} The game view.
-     */
-    get view(): GameView {
-        return this._view;
-    }
-
-    /**
      * Sets up the game, initializing all modules and viewing components.
      * Called automatically by the engine.
      */
     setup() {
-        this._view.build();
-
         this._modules = {
             renderer: new GameRenderer(this._p),
             grid: new GameGrid(),
@@ -123,10 +121,12 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Main draw loop, called by P5.js.
+     * Main draw loop, called by p5.js.
      * Handles time updates, logic ticks, and rendering.
      */
     draw() {
+        if (!this._modules) return;
+
         const { renderer, grid, time, state } = this._modules;
 
         renderer.render(grid.getGrid(), this._modules);
@@ -166,10 +166,6 @@ export default abstract class Game implements Initializable {
         if (this._modules) {
             this._modules.control.unbindControls();
             this._modules.sound.stopAll();
-        }
-
-        if (this._view) {
-            this._view.unbindControls();
         }
     }
 

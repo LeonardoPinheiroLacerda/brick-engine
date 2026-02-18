@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 
 import configs from '../config/configs';
 
@@ -27,35 +27,43 @@ import ControlInputHandler from '../core/helpers/ControlInputHandlerHelper';
  * @class
  */
 export default class GameView {
-    private _onOffBtn         : P5.Element;
-    private _startPauseBtn    : P5.Element;
-    private _soundBtn         : P5.Element;
-    private _resetBtn         : P5.Element;
-    private _exitBtn          : P5.Element;
-    private _enableColorBtn   : P5.Element;
+    private _onOffBtn         : p5.Element;
+    private _startPauseBtn    : p5.Element;
+    private _soundBtn         : p5.Element;
+    private _resetBtn         : p5.Element;
+    private _exitBtn          : p5.Element;
+    private _enableColorBtn   : p5.Element;
 
-    private _upBtn            : P5.Element;
-    private _downBtn          : P5.Element;
-    private _rightBtn         : P5.Element;
-    private _leftBtn          : P5.Element;
+    private _upBtn            : p5.Element;
+    private _downBtn          : p5.Element;
+    private _rightBtn         : p5.Element;
+    private _leftBtn          : p5.Element;
 
-    private _actionBtn        : P5.Element;
+    private _actionBtn        : p5.Element;
 
     private _parent           : HTMLElement;
-    private _p                : P5;
+    private _p                : p5;
     private _inputHandler     : ControlInputHandler;
 
-    private _cachedCanvas     : { canvas: P5.Element; canvasWidth: number; canvasHeight: number };
+    private _cachedCanvas     : { canvas: p5.Element; canvasWidth: number; canvasHeight: number };
 
     /**
      * Creates an instance of GameView.
      *
-     * @param p - The P5 instance used for rendering and event handling.
+     * @param p - The p5 instance used for rendering and event handling.
      * @param parent - The DOM element where the game view will be attached.
      */
-    constructor(p: P5, parent: HTMLElement) {
+    constructor(p: p5, parent: HTMLElement) {
         this._parent = parent;
         this._p = p;
+    }
+
+    /**
+     * Checks if the game body has been built.
+     * @returns True if the game body has been built, false otherwise.
+     */
+    isBodyBuilt() {
+        return this._cachedCanvas != null;
     }
 
     /**
@@ -64,7 +72,7 @@ export default class GameView {
      * It initializes themes, layouts (frames, containers, buttons), and calculates responsive dimensions.
      *
      * @returns An object containing the canvas element and its explicit dimensions.
-     * - canvas: The P5 element for the canvas.
+     * - canvas: The p5 element for the canvas.
      * - canvasWidth: The calculated width of the canvas.
      * - canvasHeight: The calculated height of the canvas.
      */
@@ -173,10 +181,10 @@ export default class GameView {
     /**
      * Helper method to bind press and release events using ControlInputHandler.
      *
-     * @param btn - The P5 button element to bind.
+     * @param btn - The p5 button element to bind.
      * @param key - The control key to notify.
      */
-    private _bindButtonEvents(btn: P5.Element, key: ControlKey) {
+    private _bindButtonEvents(btn: p5.Element, key: ControlKey) {
         btn.mousePressed(() => this._inputHandler.handlePress(key));
         btn.mouseReleased(() => this._inputHandler.handleRelease(key));
         // Also handle mouseOut as release to prevent stuck keys if cursor leaves button

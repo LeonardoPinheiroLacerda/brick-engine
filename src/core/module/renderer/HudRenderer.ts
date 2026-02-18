@@ -1,13 +1,13 @@
 import { Renderer } from '../../types/modules';
 import { Cell, Coordinate, GameModules, RendererMetrics } from '../../types/Types';
-import P5 from 'p5';
+import p5 from 'p5';
 import { Color, FontAlign, FontSize, FontVerticalAlign } from '../../types/enums';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import configs from '../../../config/configs';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 export default class HudRenderer implements Renderer {
-    private _p: P5;
+    private _p: p5;
 
     private _gridOrigin: Coordinate;
 
@@ -20,7 +20,7 @@ export default class HudRenderer implements Renderer {
         h: number;
     };
 
-    constructor(p: P5) {
+    constructor(p: p5) {
         this._p = p;
     }
 

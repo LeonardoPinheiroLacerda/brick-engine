@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import { Cell, GameModules, RendererMetrics } from '../../types/Types';
 import { Debuggable } from '../../types/Interfaces';
 import { Renderer } from '../../types/modules';
@@ -10,7 +10,7 @@ import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 
 export default class GameRenderer implements RendererComposite, Debuggable {
-    private _p: P5;
+    private _p: p5;
 
     private _renderers: Renderer[];
 
@@ -20,7 +20,7 @@ export default class GameRenderer implements RendererComposite, Debuggable {
     // Cache for renderer metrics
     private _rendererMetrics: RendererMetrics;
 
-    constructor(p: P5) {
+    constructor(p: p5) {
         this._p = p;
     }
 

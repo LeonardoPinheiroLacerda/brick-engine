@@ -1,12 +1,12 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import configs from '../../../config/configs';
 
 interface ButtonLayoutResponse {
-    smallButtonContainer: P5.Element;
-    mediumButtonContainer: P5.Element;
-    largeButtonContainer: P5.Element;
-    directionVerticalContainer: P5.Element;
-    directionHorizontalContainer: P5.Element;
+    smallButtonContainer: p5.Element;
+    mediumButtonContainer: p5.Element;
+    largeButtonContainer: p5.Element;
+    directionVerticalContainer: p5.Element;
+    directionHorizontalContainer: p5.Element;
 }
 
 /**
@@ -15,8 +15,8 @@ interface ButtonLayoutResponse {
  * It constructs a hierarchy of div elements to separate small system buttons,
  * inner group buttons, and directional pads.
  *
- * @param {P5} p - The P5 instance.
- * @param {P5.Element} container - The parent container element.
+ * @param {p5} p - The p5 instance.
+ * @param {p5.Element} container - The parent container element.
  * @returns {ButtonLayoutResponse} Object containing the button containers.
  *  - smallButtonContainer: For system buttons (Reset, Sound, etc.), uses `configs.selectors.viewElementIds.smallButtonContainer`.
  *  - mediumButtonContainer: For direction controls, uses `configs.selectors.viewElementIds.mediumButtonContainer`.
@@ -24,7 +24,7 @@ interface ButtonLayoutResponse {
  *  - directionVerticalContainer: For Up/Down buttons.
  *  - directionHorizontalContainer: For Left/Right buttons.
  */
-export default function ButtonLayout(p: P5, container: P5.Element): ButtonLayoutResponse {
+export default function ButtonLayout(p: p5, container: p5.Element): ButtonLayoutResponse {
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);
     buttonContainer.id(configs.selectors.viewElementIds.buttonContainer);

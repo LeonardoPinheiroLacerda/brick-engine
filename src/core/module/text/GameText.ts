@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import configs from '../../../config/configs';
 import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
 import { Coordinate, RendererMetrics } from '../../types/Types';
@@ -23,15 +23,15 @@ export default class GameText implements Text, Debuggable {
     /** Stores the current display metrics for relative positioning. */
     private _rendererMetrics: RendererMetrics;
 
-    /** The P5 instance used for rendering. */
-    private _p: P5;
+    /** The p5 instance used for rendering. */
+    private _p: p5;
 
     /**
      * Creates an instance of GameTexts.
      *
-     * @param {P5} p - The P5 instance.
+     * @param {p5} p - The p5 instance.
      */
-    constructor(p: P5) {
+    constructor(p: p5) {
         this._p = p;
     }
 
