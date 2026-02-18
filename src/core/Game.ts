@@ -21,10 +21,10 @@ import GameHudGrid from './module/grid/GameHudGrid';
  * All game logic should be implemented in subclasses by overriding `processTick` and `processFrame`.
  */
 export default abstract class Game implements Initializable {
-    private _p: p5;
-    private _view: GameView;
+    protected _p: p5;
+    protected _view: GameView;
 
-    private _modules: GameModules;
+    protected _modules: GameModules;
 
     private static _switchHandler: (newGame: Game) => void;
 

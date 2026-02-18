@@ -2,9 +2,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
-module.exports = (env, argv) => {
+module.exports = (env = {}, argv) => {
     const isProduction = argv.mode === 'production';
+    const appMode = env.mode || 'server'; // 'server' or 'client'
+    const clientGamePath = env.game ? path.resolve(process.cwd(), env.game) : path.resolve(__dirname, 'src/menu/GameMenu.ts');
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -17,7 +20,7 @@ module.exports = (env, argv) => {
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist'),
             clean: true, // Clean the output directory before emit.
-            publicPath: '',
+            publicPath: 'auto',
             library: {
                 name: 'BrickEngine',
                 type: 'umd',
@@ -56,6 +59,9 @@ module.exports = (env, argv) => {
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.css', '.wav', '.png', '.ico', '.gif', '.json', '.svg', '.webmanifest'],
+            alias: {
+                '@client-game': clientGamePath,
+            },
         },
         devServer: {
             static: [
@@ -69,9 +75,13 @@ module.exports = (env, argv) => {
             historyApiFallback: true,
         },
         plugins: [
+            new webpack.DefinePlugin({
+                'process.env.APP_MODE': JSON.stringify(appMode),
+            }),
             new HtmlWebpackPlugin({
                 template: './public/index.html',
                 filename: 'index.html', // Output file name
+                favicon: './public/favicon.ico',
                 inject: 'body',
                 chunks: ['app'], // Only inject the app bundle, not the library
                 minify: isProduction

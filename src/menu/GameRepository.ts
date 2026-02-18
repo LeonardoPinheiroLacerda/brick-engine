@@ -2,7 +2,7 @@ import Game from '../core/Game';
 import { GameEntry } from '../types/interfaces';
 
 export default class GameRepository {
-    private _games: GameEntry[] = [{ name: 'Tetris', url: 'http://localhost:8080/my-game.bundle.js' }, { name: 'Snake' }];
+    private _games: GameEntry[] = [{ name: 'Tetris', url: 'http://localhost:8080/game.bundle.js' }, { name: 'Snake' }];
 
     get games(): GameEntry[] {
         return this._games;

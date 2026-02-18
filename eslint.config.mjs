@@ -18,7 +18,7 @@ export default [
 
     // Node globals for config files
     {
-        files: ['webpack.config.js', 'eslint.config.mjs'],
+        files: ['**/webpack.config.js', 'eslint.config.mjs'],
         languageOptions: { globals: globals.node },
         rules: {
             '@typescript-eslint/no-require-imports': 'off',

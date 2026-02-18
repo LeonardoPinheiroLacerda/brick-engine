@@ -6,9 +6,21 @@ import GameMenu from './menu/GameMenu';
 import './config/styles';
 import Debugger from './core/Debugger';
 
+// @ts-expect-error - This alias is defined in webpack.config.js
+import ClientGame from '@client-game';
+
+const isClientMode = process.env.APP_MODE === 'client';
+
 export const p5Instance = new p5((p: p5) => {
     const view = new GameView(p, document.body);
-    let activeGame: Game = new GameMenu(p, view);
+    let activeGame: Game;
+
+    if (isClientMode) {
+        // In client mode, we instantiate the game provided via alias
+        activeGame = new ClientGame(p, view);
+    } else {
+        activeGame = new GameMenu(p, view);
+    }
 
     let debuggerInstance: Debugger;
 
@@ -16,7 +28,9 @@ export const p5Instance = new p5((p: p5) => {
     Game.setSwitchHandler((newGame: Game) => {
         try {
             // Destroy the previous debugger instance
-            debuggerInstance.destroy();
+            if (debuggerInstance) {
+                debuggerInstance.destroy();
+            }
 
             // Unbind the previous game controls
             view.unbindControls();
