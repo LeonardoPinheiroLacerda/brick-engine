@@ -43,44 +43,46 @@ To create a game, you must extend the abstract `Game` class and implement its co
 
 [source,typescript]
 ----
-import Game from './core/Game';
+import { Game, FontSize, ControlKey, ControlEventType } from '@leonardopinheirolacerda/brick-engine';
 
 export default class MyGame extends Game {
     
     // 1. Setup: Called once after engine initialization
     setupGame(): void {
         // Initialize your game state here
-        this.modules.state.startGame();
         this.modules.text.setTextSize(FontSize.MEDIUM);
+        
+        // Subscribe to controls
+        this.modules.control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
+             console.log('Action pressed!');
+        });
     }
 
     // 2. Game Logic: Called every game tick (controlled by tickInterval)
-    // Use this for movement, collision, state limits
     update(deltaTime: number): void {
         if (!this.modules.state.isPlaying()) return;
-        
         // ... game logic ...
     }
 
-    // 3. Rendering: Called every frame (60 times per second)
-    // Use this for visual effects independent of game logic (particles, animations)
+    // 3. Visual Effects: Called every frame (60fps)
     render(): void {
-        // ... visual effects ...
+        // ... visual effects independent of game logic ...
     }
 
-    // 4. Persistence: Provide a unique key for LocalStorage prefixing
+    // 4. Persistence: Unique key for LocalStorage (prevents collisions between games)
     getPersistenceKey(): string {
         return 'my-awesome-game-v1';
     }
 
     // 5. Title Screen: Rendered when game is ON but not STARTED
     drawTitleScreen(): void {
-        this.modules.text.textOnDisplay('Press Start', { x: 0.5, y: 0.5 });
+        this.modules.text.textOnDisplay('MY AWESOME GAME', { x: 0.5, y: 0.3 });
+        this.modules.text.textOnDisplay('PRESS START', { x: 0.5, y: 0.7 });
     }
 
-    // 6. Game Over Screen: Rendered when game is over
+    // 6. Game Over Screen: Rendered when health/lives reach zero
     drawGameOverScreen(): void {
-        this.modules.text.textOnDisplay('Game Over', { x: 0.5, y: 0.5 });
+        this.modules.text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
     }
 }
 ----

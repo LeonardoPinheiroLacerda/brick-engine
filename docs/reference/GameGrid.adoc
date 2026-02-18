@@ -1,4 +1,4 @@
-= GameGrid Module
+= GameGrid Module Reference
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -6,14 +6,13 @@
 
 toc::[]
 
-The `GameGrid` module manages the state of the 2D grid which is central to most retro games. It handles cell values, colors, and row/column manipulations.
+The `GameGrid` module manages the state of a 2D grid, providing a robust API for cell manipulation, row/column operations, and collision detection.
 
-== Core Concepts
+== Specialized Instances
 
-* **Coordinates**: `{ x: number, y: number }` objects. (0,0) is top-left.
-* **Cells**: Objects containing `{ value: number, color: string }`.
-** `value > 0`: Active (occupied).
-** `value === 0`: Inactive (empty).
+The engine provides two main grid instances:
+*   `modules.grid`: The main game display area (dimensions defined in `configs`).
+*   `modules.hudGrid`: A specialized 4x4 grid used for HUD elements (e.g., "Next Piece" in Tetris).
 
 == API Reference
 
@@ -35,30 +34,19 @@ Read-only property returning the number of rows in the grid.
 
 === `resetGrid(): void`
 
-Resets the entire grid to its empty state based on configuration.
+Resets the entire grid to its empty state.
 
 **Behavior**
 
-Clears all cells and populates them with default empty cell objects.
+Clears all cells and populates them with default empty cell objects using dimensions from the engine configuration.
 
 === `getGrid(): Cell[][]`
 
-Returns the full 2D array of cells.
+Returns the underlying 2D array of cells.
 
 **Returns**
 
-`Cell[][]` - The matrix representing the grid.
-
-**Behavior**
-
-Provides direct access to the internal grid state.
-
-**Example**
-
-[source,typescript]
-----
-const gridState = this.modules.grid.getGrid();
-----
+`Cell[][]` - The matrix representing the grid state.
 
 === `forEach(callback: (cell: Cell) => void): void`
 
@@ -69,48 +57,44 @@ Iterates over every cell and executes the provided callback.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`callback` |`(cell: Cell) => void` |Function to run for each cell.
+|`callback` |`(cell: Cell) => void` |Function to execute for each cell.
 |===
-
-=== `getCell(coordinate: Coordinate): Cell | null`
-
-Returns a `Cell` object or `null` if out of bounds.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`coordinate` |`Coordinate` |Point `{x, y}` to query.
-|===
-
-**Returns**
-
-`Cell | null` - The cell object or null.
-
-**Behavior**
-
-Safe accessor that checks bounds before access.
 
 === `isValidCoordinate(coordinate: Coordinate): boolean`
 
-Returns `true` if the coordinate is within grid bounds.
+Verifies if a coordinate is within the current grid boundaries.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |Point `{x, y}` to check.
+|`coordinate` |`Coordinate` |The `{x, y}` point to validate.
 |===
 
 **Returns**
 
-`boolean` - Validity of coordinate.
+`boolean` - `true` if valid, `false` otherwise.
+
+=== `getCell(coordinate: Coordinate): Cell | null`
+
+Retrieves a cell at a specific coordinate.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`Coordinate` |The `{x, y}` position to query.
+|===
+
+**Returns**
+
+`Cell | null` - The cell object, or `null` if the coordinate is out of bounds.
 
 === `setCellValue(coordinate: Coordinate, value: number): void`
 
-Sets the numeric value of a cell.
+Updates the numeric value of a cell.
 
 **Parameters**
 
@@ -118,16 +102,16 @@ Sets the numeric value of a cell.
 |===
 |Name |Type |Description
 |`coordinate` |`Coordinate` |Target position.
-|`value` |`number` |New numeric value (e.g., `1` for active).
+|`value` |`number` |New status value (0 for inactive, >0 for active).
 |===
 
 **Behavior**
 
-Updates the `value` property. Ignores out-of-bounds coordinates.
+Updates only the `value` property of the cell. If the coordinate is invalid, the operation is ignored.
 
 === `setCellColor(coordinate: Coordinate, color: Color): void`
 
-Sets the color of a cell.
+Updates the color of a cell.
 
 **Parameters**
 
@@ -135,16 +119,12 @@ Sets the color of a cell.
 |===
 |Name |Type |Description
 |`coordinate` |`Coordinate` |Target position.
-|`color` |`Color` |Enum value from `Color`.
+|`color` |`Color` |Enum value representing the new color.
 |===
-
-**Behavior**
-
-Updates the `color` property of the cell.
 
 === `isCellActive(coordinate: Coordinate): boolean`
 
-Checks if a specific cell contains an active value (> 0).
+Checks if a cell is currently occupied.
 
 **Parameters**
 
@@ -156,11 +136,11 @@ Checks if a specific cell contains an active value (> 0).
 
 **Returns**
 
-`boolean` - `true` if active.
+`boolean` - `true` if the cell value is greater than 0.
 
 === `isCellInactive(coordinate: Coordinate): boolean`
 
-Checks if a specific cell is empty (value === 0).
+Checks if a cell is currently empty.
 
 **Parameters**
 
@@ -172,11 +152,11 @@ Checks if a specific cell is empty (value === 0).
 
 **Returns**
 
-`boolean` - `true` if inactive.
+`boolean` - `true` if the cell value is exactly 0.
 
 === `isRowFull(y: number): boolean`
 
-Checks if a row has no empty cells.
+Checks if a specific row has no empty cells.
 
 **Parameters**
 
@@ -188,11 +168,11 @@ Checks if a row has no empty cells.
 
 **Returns**
 
-`boolean` - `true` if all cells in row > 0.
+`boolean` - `true` if all cells in the row are active.
 
 === `isRowEmpty(y: number): boolean`
 
-Checks if all cells in a row are empty.
+Checks if a specific row is completely empty.
 
 **Parameters**
 
@@ -204,11 +184,11 @@ Checks if all cells in a row are empty.
 
 **Returns**
 
-`boolean` - `true` if row is empty.
+`boolean` - `true` if all cells in the row are inactive.
 
 === `clearRow(y: number): void`
 
-Resets all cells in a specific row.
+Resets all cells in a row to the empty state.
 
 **Parameters**
 
@@ -220,54 +200,58 @@ Resets all cells in a specific row.
 
 === `shiftRowsDown(fromY: number): void`
 
-Shifts rows down starting from `fromY`.
+Shifts all rows above an index down by one position.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`fromY` |`number` |The starting row index.
+|`fromY` |`number` |The row index to start shifting from.
 |===
 
 **Behavior**
 
-Moves row `y-1` to `y` for all `y <= fromY`. Top row becomes empty.
+Moves row `y-1` to `y` for all rows up to `fromY`. The top-most row (index 0) is cleared after the shift.
 
 === `shiftRowsUp(fromY: number): void`
 
-Shifts rows up starting from `fromY`.
+Shifts all rows below an index up by one position.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`fromY` |`number` |The starting row index.
+|`fromY` |`number` |The row index to start shifting from.
 |===
 
 **Behavior**
 
-Moves row `y+1` to `y` for all `y >= fromY`. Bottom row becomes empty.
+Moves row `y+1` to `y` for all rows starting from `fromY` downwards. The bottom-most row is cleared after the shift.
 
 === `clearFullRows(): number`
 
-Scans grid, clears full rows, and shifts everything down.
+Scans for, clears, and collapses full rows.
 
 **Returns**
 
-`number` - Count of cleared rows.
+`number` - The total count of rows cleared.
+
+**Behavior**
+
+Iterates through all rows. If a row is full, it is cleared, and all rows above it are shifted down.
 
 === `isColumnFull(x: number): boolean`
 
-Checks if a column has no empty cells.
+Checks if a specific column has no empty cells.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`x` |`number` |Column index.
+|`x` |`number` |Column index to check.
 |===
 
 **Returns**
@@ -276,14 +260,14 @@ Checks if a column has no empty cells.
 
 === `isColumnEmpty(x: number): boolean`
 
-Checks if all cells in a column are empty.
+Checks if a specific column is completely empty.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`x` |`number` |Column index.
+|`x` |`number` |Column index to check.
 |===
 
 **Returns**
@@ -292,7 +276,7 @@ Checks if all cells in a column are empty.
 
 === `clearColumn(x: number): void`
 
-Resets all cells in a specific column.
+Resets all cells in a column to the empty state.
 
 **Parameters**
 
@@ -304,70 +288,62 @@ Resets all cells in a specific column.
 
 === `shiftColumnsRight(fromX: number): void`
 
-Shifts columns to the right starting from `fromX`.
+Shifts all columns to the right of an index.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`fromX` |`number` |The starting column index.
+|`fromX` |`number` |The column index to start shifting from.
 |===
 
 === `shiftColumnsLeft(fromX: number): void`
 
-Shifts columns to the left starting from `fromX`.
+Shifts all columns to the left of an index.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`fromX` |`number` |The starting column index.
+|`fromX` |`number` |The column index to start shifting from.
 |===
-
-=== `clearFullColumns(): number`
-
-Scans grid, clears full columns, and shifts everything right.
-
-**Returns**
-
-`number` - Count of cleared columns.
 
 === `isAreaOccupied(coordinates: Coordinate[]): boolean`
 
-Checks if a shape collides with anything in the grid.
+Checks for collisions between a list of coordinates and active cells in the grid.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinates` |`Coordinate[]` |Array of points representing the shape.
+|`coordinates` |`Coordinate[]` |Array of `{x, y}` points representing a shape or piece.
 |===
 
 **Returns**
 
-`boolean` - `true` if collision detected.
+`boolean` - `true` if any coordinate is either out of bounds or already occupied (active).
 
 === `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
 
-Fills a rectangular area defined by two corners.
+Fills a rectangular area with specified properties.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`start` |`Coordinate` |One corner.
-|`end` |`Coordinate` |Opposite corner.
-|`value` |`number` |Value to apply.
-|`color` |`Color` |Color to apply.
+|`start` |`Coordinate` |Top-left corner of the rectangle.
+|`end` |`Coordinate` |Bottom-right corner of the rectangle.
+|`value` |`number` |Value to apply to all cells in the area.
+|`color` |`Color` |Color to apply to all cells in the area.
 |===
 
 === `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
 
-Sets multiple specific coordinates at once.
+Updates multiple specific coordinates simultaneously.
 
 **Parameters**
 
@@ -375,37 +351,14 @@ Sets multiple specific coordinates at once.
 |===
 |Name |Type |Description
 |`coordinates` |`Coordinate[]` |Points to update.
-|`value` |`number` |Value to apply.
-|`color` |`Color` |Color to apply.
+|`value` |`number` |New cell value.
+|`color` |`Color` |New cell color.
 |===
-
-
-== Example Usage
-
-[source,typescript]
-----
-const { grid } = this.modules;
-
-// Check collision
-if (grid.isAreaOccupied(nextPieceCoordinates)) {
-    // Collision detected!
-}
-
-// Lock piece into grid
-grid.stampPiece(currentPieceCoordinates, 1, Color.RED);
-
-// Clear lines
-const linesCleared = grid.clearFullRows();
-if (linesCleared > 0) {
-    // Add score
-}
-----
 
 === `getDebugData(): Record<string, string | number | boolean>`
 
-Returns the debug data for the module.
+Returns metadata for the real-time debugger.
 
 **Returns**
 
 `Record<string, string | number | boolean>` - Object containing `width` and `height`.
-----

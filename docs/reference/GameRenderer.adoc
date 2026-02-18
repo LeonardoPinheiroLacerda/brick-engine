@@ -1,4 +1,4 @@
-= GameRenderer Module
+= GameRenderer Module Reference
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -6,96 +6,58 @@
 
 toc::[]
 
-The `GameRenderer` module handles the visualization of the game state on the HTML5 canvas using P5.js.
-
-It follows a **Strategy Composite** pattern, allowing multiple render layers, but the primary renderer is `DisplayRenderer`.
-
-== Features
-
-* **Automatic Scaling**: Adjusts the game grid to fit the container while maintaining aspect ratio.
-* **Retro Styling**: Renders cells with a grid gap and "LCD" style look.
-* **Metrics**: Exposes calculated dimensions for other modules (like Text) to align content correctly.
-
-== Implementation Details
-
-For developers interested in the specific rendering logic of the game grid and HUD, refer to:
-
-* xref:DisplayRenderer.adoc[DisplayRenderer]: Handles the main game grid and cell rendering.
-* xref:HudRenderer.adoc[HudRenderer]: Handles the HUD layout and static elements.
+The `GameRenderer` module is the visual engine of the application. It orchestrates multiple specialized renderers to draw the game grid, background, borders, and HUD elements on the HTML5 canvas.
 
 == API Reference
 
-=== `addRenderer(renderer: Renderer): void`
-
-Adds a new rendering layer to the stack.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`renderer` |`Renderer` |The renderer implementation to add.
-|===
-
-**Behavior**
-
-Appends the renderer to the internal list. Renderers are executed in the order they were added.
-
-=== `render(grid: Cell[][]): void`
-
-Called automatically by the main `Game` loop. Draws the current state of the grid.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`grid` |`Cell[][]` |The 2D array of cells to render.
-|===
-
-**Behavior**
-
-Iterates through all registered renderers and calls their `render()` method with the grid.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.renderer.render(currentGrid);
-----
-
 === `rendererMetrics: RendererMetrics`
 
-Read-only property containing calculated dimensions.
+Read-only property containing the calculated dimensions and origins for all UI components.
 
 **Returns**
 
-`RendererMetrics` - Object with display, hud, and cell dimensions.
+`RendererMetrics` - An object containing geometric data for `display`, `hud`, and individual `cells`.
 
 **Behavior**
 
-Values are calculated during `setup()` based on screen size and configuration. The `GameRenderer` calculates these once and passes them to all child renderers, ensuring a single source of truth for layout metrics.
+Calculates metrics once during initialization based on the current canvas size and configuration. These values are used by all other modules (like `GameText`) to ensure pixel-perfect alignment.
 
-**Example**
+=== `addRenderer(renderer: Renderer): void`
 
-[source,typescript]
-----
-const { cell } = this.modules.renderer.rendererMetrics;
-const pixelX = gridX * cell.size;
-----
+Registers a new rendering layer.
 
-[source,typescript]
-----
-const { renderer } = this.modules;
-const { cell } = renderer.rendererMetrics;
+**Parameters**
 
-// Draw a custom effect at grid position (5, 5)
-p5.circle(5 * cell.size, 5 * cell.size, 10);
-----
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`renderer` |`Renderer` |An implementation of the `Renderer` interface (e.g., `DisplayRenderer`).
+|===
+
+**Behavior**
+
+Adds the renderer to an internal stack. Layers are executed in the order they are added.
+
+=== `render(grid: Cell[][], modules: GameModules): void`
+
+The main drawing execution call.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`grid` |`Cell[][]` |The current 2D matrix of cells to visualize.
+|`modules` |`GameModules` |Reference to all available modules for context-aware rendering.
+|===
+
+**Behavior**
+
+Called by the engine's main loop. It iterates through all registered renderers and executes their specific `render` logic.
 
 === `getDebugData(): Record<string, string | number | boolean>`
 
-Returns the debug data for the module.
+Returns metadata for the real-time debugger.
 
 **Returns**
 

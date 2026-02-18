@@ -1,4 +1,4 @@
-= HudRenderer Module
+= HudRenderer Module Reference
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -6,47 +6,42 @@
 
 toc::[]
 
-The `HudRenderer` module renders the Heads-Up Display (HUD), which includes score, level, game status text, and the HUD grid. It implements the `Renderer` interface and is managed by `GameRenderer`.
-
-== Features
-
-* **Efficient Rendering**: Pre-calculates static elements and grid positions during setup to minimize per-frame computations.
-* **Text Integration**: Works closely with `GameText` module to display dynamic information.
-* **Relative Positioning**: Uses `RendererMetrics` to position itself relative to the main display.
+The `HudRenderer` manages the visualization of the Head-Up Display, including scores, levels, system status, and the specialized HUD grid. It implements the standard `Renderer` interface and is managed by the `GameRenderer`.
 
 == API Reference
 
 === `setup(rendererMetrics: RendererMetrics): void`
 
-Initializes the renderer by calculating and storing static values.
+Pre-calculates static HUD geometry.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`rendererMetrics` |`RendererMetrics` |The calculated layout metrics from `GameRenderer`.
+|`rendererMetrics` |`RendererMetrics` |The layout metrics calculated by `GameRenderer`.
 |===
 
 **Behavior**
 
-Extracts relevant metrics (like cell size and HUD dimensions) and pre-calculates the screen coordinates for the HUD grid and its surrounding border to avoid recalculating them every frame.
+Calculates and caches the absolute pixel positions for HUD borders and grid cells. This ensures that the HUD remains perfectly aligned regardless of the display resolution.
 
 === `render(grid: Cell[][], modules: GameModules): void`
 
-Orchestrates the rendering of the HUD components.
+Main HUD drawing orchestration.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`grid` |`Cell[][]` |The main game grid (unused by HUD, but required by interface).
-|`modules` |`GameModules` |Access to other modules like `Text`, `State`, and `Score`.
+|`grid` |`Cell[][]` |The main game grid (unused, but required by interface).
+|`modules` |`GameModules` |Access to all modules (Text, Score, State, etc.) for dynamic data extraction.
 |===
 
 **Behavior**
 
-Calling this method triggers two internal processes:
-1. `_renderHud`: Draws dynamic text elements (Score, Level, Paused state, etc.).
-2. `_drawHudGrid`: Draws the visual grid on the HUD using the pre-calculated static values.
+1.  Clears the HUD area.
+2.  Renders the pre-cached static borders.
+3.  Draws the dynamic content (current score, high score, level, and game state messages).
+4.  Renders the 4x4 HUD grid state.

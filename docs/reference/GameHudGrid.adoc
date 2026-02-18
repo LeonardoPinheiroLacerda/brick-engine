@@ -1,0 +1,32 @@
+= GameHudGrid Reference
+:toc: macro
+:toc-title: Table of Contents
+:icons: font
+:source-highlighter: highlight.js
+
+toc::[]
+
+The `GameHudGrid` is a specialized implementation of the `GameGrid` class. It is hard-coded to a **4x4** dimension and is intended for use in the HUD area to display meta-information, such as "Next Piece" in a Tetris-style game.
+
+== Inheritance
+
+`GameHudGrid` extends xref:GameGrid.adoc[GameGrid]. It inherits all methods for filling areas, stamping pieces, and checking occupancy.
+
+== Usage
+
+Accessible via `modules.hudGrid`.
+
+[source,typescript]
+----
+const { hudGrid } = this.modules;
+
+// Reset HUD grid for a new piece
+hudGrid.resetGrid();
+
+// Stamp the "Next Piece" into the 4x4 HUD grid
+hudGrid.stampPiece(nextPieceCoords, 1, Color.BLUE);
+----
+
+== Implementation Specifics
+
+The `GameHudGrid` overrides the dimensions provided in the global configuration, strictly enforcing a 4x4 matrix. This ensures consistency for HUD-specific rendering logic.

@@ -1,4 +1,4 @@
-= GameState Module
+= GameState Module Reference
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -6,127 +6,113 @@
 
 toc::[]
 
-The `GameState` module acts as the central hub for tracking the game's lifecycle and user preferences. It handles persistence to `localStorage` for settings like sound and color mode.
+The `GameState` module acts as the central, single source of truth for the game's lifecycle and user preferences. It handles persistence to `LocalStorage` for settings and high scores.
 
-== State Concepts
+== Centralized Persistence
 
-The module manages internal states that represent the game's current status. These are accessed via specific validation methods:
-
-* **On**: Is the device turned "on"?
-* **Started**: Has the "Start" button been pressed (gameplay session active)?
-* **Playing**: Is the game loop actively updating logic?
-* **Paused**: Is the game started but not playing?
-* **Game Over**: Has the player lost?
-
-It also manages user preferences:
-
-* **Muted**: Is sound disabled? (Persisted)
-* **Color Enabled**: Is color mode active? (Persisted)
-* **High Score**: The highest score achieved by the player. (Persisted)
-
-NOTE: Modifying these states automatically triggers the notification system, informing all subscribers.
+As defined in the Architectural Patterns, `GameState` is responsible for all `LocalStorage` logic. Other modules (like `GameSound`) must sync their internal state with this module via the `StateSyncable` interface.
 
 == API Reference
 
 === `isOn(): boolean`
 
-Checks if the game system is "on" (powered up).
+Checks if the game system is powered up.
 
 **Returns**
 
-`boolean` - True if system is on.
+`boolean` - `true` if system is on.
 
 === `isOff(): boolean`
 
-Checks if the game system is "off" (powered down).
+Checks if the game system is powered down.
 
 **Returns**
 
-`boolean` - True if system is off.
+`boolean` - `true` if system is off.
 
 === `isStarted(): boolean`
 
-Checks if a game session has started (passed menu/title screen).
+Checks if a game session is active (passed the title screen).
 
 **Returns**
 
-`boolean` - True if game is started.
+`boolean` - `true` if the game has started.
 
 === `isPlaying(): boolean`
 
-Checks if the game is currently playing (active gameplay logic).
+Checks if the game loop is actively updating logic.
 
 **Returns**
 
-`boolean` - True if gameplay is active.
+`boolean` - `true` if gameplay is active and not paused.
 
 === `isPaused(): boolean`
 
-Checks if the game is paused (started but not playing, and not game over).
+Checks if the game is currently paused.
 
 **Returns**
 
-`boolean` - True if game is paused.
+`boolean` - `true` if the game is started but halted.
 
 === `isGameOver(): boolean`
 
-Checks if the game has reached a game over state.
+Checks if the current session has ended in a Game Over.
 
 **Returns**
 
-`boolean` - True if game over.
+`boolean` - `true` if player has lost.
 
 === `turnOn(): void`
 
-Turns the game system on. Resets other states.
+Powers on the game system.
 
 **Behavior**
 
-Sets `on` to true. Resets `start`, `playing`, `gameOver` to false.
+Sets the `on` property to true and ensures `start`, `playing`, and `gameOver` are initialized to false.
 
 === `turnOff(): void`
 
-Turns the game system off.
+Powers off the game system.
 
 **Behavior**
 
-Sets `on` to false. Resets `start`, `playing`, `gameOver` to false.
+Sets the `on` property to false and wipes transient state.
 
 === `startGame(): void`
 
-Starts a new game session from the menu.
+Initiates gameplay from the title screen.
 
 **Behavior**
 
-Sets `start` to true and `playing` to true. Ensures `gameOver` is false. Only works if system is `on`.
+Sets `start` and `playing` to true. This method only has effect if the system is already `on`.
 
 === `exitGame(): void`
 
-Exits the current game session and returns to the menu.
+Ends the session and returns to the title screen.
 
 **Behavior**
 
-Sets `start`, `playing`, and `gameOver` to false.
+Resets `start`, `playing`, and `gameOver` to false.
 
 === `pause(): void`
 
-Pauses the current game.
+Halts gameplay logic.
 
 **Behavior**
 
-Sets `playing` to false. Only works if game is started and not game over.
+Sets `playing` to false. Only works if the game is already started.
 
 === `resume(): void`
 
-Resumes the current game.
+Restarts gameplay logic from a paused state.
 
 **Behavior**
 
-Sets `playing` to true. Only works if game is started and not game over.
+Sets `playing` to true.
 
 === `triggerGameOver(): void`
 
-Triggers the game over state.
+Forces the game into a Game Over state.
 
 **Behavior**
 
@@ -134,137 +120,149 @@ Sets `playing` to false and `gameOver` to true.
 
 === `resetGame(): void`
 
-Resets the game state for a new round (e.g. after Game Over).
+Prepares the state for a new round after a Game Over.
 
 **Behavior**
 
-Sets `gameOver` to false, `start` to true, and `playing` to true.
+Clears the `gameOver` flag and resumes `playing` status.
 
 === `isColorEnabled(): boolean`
 
-Checks if color rendering is enabled.
+Checks if theme color mode is active.
 
 **Returns**
 
-`boolean` - True if color is enabled.
+`boolean` - `true` if color mode is on.
 
 === `setColorEnabled(value: boolean): void`
 
-Sets whether color rendering is enabled.
+Sets the color mode preference.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`value` |`boolean` |The new value.
+|`value` |`boolean` |New color mode status.
 |===
 
 **Behavior**
 
-Updates the setting and persists it to `localStorage`.
+Updates the property and automatically persists the value to `LocalStorage`.
+
+=== `toggleColorEnabled(): void`
+
+Toggles the current color mode.
 
 === `isMuted(): boolean`
 
-Checks if audio is muted.
+Checks if master audio is muted.
 
 **Returns**
 
-`boolean` - True if audio is muted.
+`boolean` - `true` if sound is disabled.
 
 === `setMuted(value: boolean): void`
 
-Sets whether audio is muted.
+Sets the master mute status.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`value` |`boolean` |The new value.
+|`value` |`boolean` |New mute status.
 |===
 
 **Behavior**
 
-Updates the setting and persists it to `localStorage`.
+Updates the property and persists it to `LocalStorage`.
+
+=== `toggleMuted(): void`
+
+Toggles the master mute status.
 
 === `getHighScore(): number`
 
-Gets the highest score achieved.
+Retrieves the highest score recorded.
 
 **Returns**
 
-`number` - The high score.
+`number` - The stored high score.
 
 === `setHighScore(value: number): void`
 
-Sets the high score.
+Updates the high score.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`value` |`number` |The new high score.
+|`value` |`number` |The new record score.
 |===
 
 **Behavior**
 
-Updates the value and persists it to `localStorage`.
+Updates the value and persists it to `LocalStorage`. High scores are prefixed by the game's persistence key.
 
 === `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
-Subscribes to changes in a specific state property.
+Registers a listener for state changes.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`StateProperty` |The state property to monitor.
-|`callback` |`(value: boolean \| number) => void` |Function to execute when the property changes.
+|`property` |`StateProperty` |The specific property to monitor.
+|`callback` |`Function` |The function to execute on change.
 |===
 
 **Example**
 
 [source,typescript]
 ----
-state.subscribe(StateProperty.GAME_OVER, isOver => {
+state.subscribe(StateProperty.GAME_OVER, (isOver) => {
     if (isOver) {
-        console.log('Game Over!');
+        this.modules.sound.play(Sound.GAMEOVER);
     }
 });
 ----
 
 === `unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
-Unsubscribes a previously registered callback.
+Removes a state change listener.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`StateProperty` |The state property.
-|`callback` |`(value: boolean \| number) => void` |The function reference to remove.
+|`property` |`StateProperty` |The property being monitored.
+|`callback` |`Function` |The reference to the callback to remove.
 |===
 
 === `setPersistenceKey(key: string): void`
 
-Sets the unique persistence key for the game.
+Configures the unique identifier for storage.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`string` |The unique identifier for the game instance.
+|`key` |`string` |The prefix to use for `LocalStorage` entries.
 |===
 
 === `getPersistenceKey(): string`
 
-Returns the currently set persistence key.
+Retrieves the currently configured storage key.
 
 **Returns**
 
 `string` - The persistence key.
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns metadata for the real-time debugger.

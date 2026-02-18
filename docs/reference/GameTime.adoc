@@ -1,4 +1,4 @@
-= GameTime Module
+= GameTime Module Reference
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -6,169 +6,82 @@
 
 toc::[]
 
-The `GameTime` module manages the game loop timing. It separates game logic "ticks" from rendering frames, allowing for consistent game speed regardless of frame rate.
-
-== Concepts
-
-* **Tick**: A single step of game logic (e.g., moving a piece down one cell).
-* **Tick Interval**: The time in milliseconds between ticks. A lower interval means the game runs faster.
+The `GameTime` module manages the engine's logical clock. It decouples game logic "ticks" from the visual frame rate, ensuring consistent gameplay speed regardless of the device's performance.
 
 == API Reference
 
-=== `shouldTick(): boolean`
+=== `tickInterval: number`
 
-Returns `true` if enough time has passed since the last tick to run logic again.
+Getter/Setter for the game logic speed in milliseconds.
 
 **Returns**
 
-`boolean` - `true` if a tick should occur.
+`number` - The current time between logic ticks.
 
 **Behavior**
 
-Checks if accumulated time >= tick interval. If true, subtracts tick interval from accumulator and returns `true`.
+Lowering this value makes the game run faster (e.g., used for difficulty progression).
 
-**Example**
+=== `shouldTick(): boolean`
 
-[source,typescript]
-----
-while (this.modules.time.shouldTick()) {
-    this.update();
-}
-----
+Determines if a logic update should be executed.
+
+**Returns**
+
+`boolean` - `true` if the internal accumulator has exceeded the `tickInterval`.
+
+**Behavior**
+
+Called by the main loop. If it returns true, it automatically subtracts the `tickInterval` from the accumulator to maintain a stable clock.
 
 === `update(deltaTime: number): void`
 
-Accumulates time from the render loop.
+Advances the internal time accumulator.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`deltaTime` |`number` |Time elapsed since last frame (ms).
+|`deltaTime` |`number` |Time elapsed since the last render frame (in milliseconds).
 |===
-
-**Behavior**
-
-Adds `deltaTime` to the internal accumulator.
-
-**Example**
-
-[source,typescript]
-----
-// Internal usage
-this.modules.time.update(p.deltaTime);
-----
 
 === `reset(): void`
 
-Resets the time accumulator to zero.
+Clears the time accumulator.
 
 **Behavior**
 
-Useful when restarting a game or coming back from a pause to prevent a "burst" of ticks.
-
-=== `tickInterval: number`
-
-Getter/Setter for the logic tick interval in milliseconds.
-
-**Parameters (Setter)**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`value` |`number` |New interval in ms.
-|===
-
-**Returns (Getter)**
-
-`number` - Current interval in ms.
-
-**Behavior**
-
-Lower values make the game run faster (more ticks per second).
-
-**Example**
-
-[source,typescript]
-----
-// Double speed
-this.modules.time.tickInterval = 250;
-----
+Prevents a "burst" of logic updates after resuming from a long pause or game restart.
 
 === `incrementTickInterval(amount: number): void`
 
-Increases the interval (slower game).
+Slows down the game by increasing the time between ticks.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Milliseconds to add.
+|`amount` |`number` |Milliseconds to add to the interval.
 |===
-
-**Behavior**
-
-Adds `amount` to current `tickInterval`.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.time.incrementTickInterval(50);
-----
 
 === `decrementTickInterval(amount: number): void`
 
-Decreases the interval (faster game).
+Speeds up the game by decreasing the time between ticks.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Milliseconds to subtract.
+|`amount` |`number` |Milliseconds to subtract from the interval.
 |===
-
-**Behavior**
-
-Subtracts `amount` from `tickInterval`, clamped to a minimum value.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.time.decrementTickInterval(50);
-----
 
 === `getDebugData(): Record<string, string | number | boolean>`
 
-Returns the debug data for the module.
+Returns metadata for the real-time debugger.
 
 **Returns**
 
-`Record<string, string | number | boolean>` - Object containing `fps`, `tps`, `tick_interval`, and `accumulated_time`.
-
-=== `renderPerformanceMonitor(p: P5): void`
-
-Renders a performance overlay (TPS/FPS) if enabled.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`p` |`P5` |The P5 instance to render with.
-|===
-
-**Behavior**
-
-Draws logic and render performance metrics to the screen. Works in conjunction with `GameTimeWithPerformanceMonitor`.
-
-
-This is commonly used to increase difficulty as the player progresses.
-
-== Performance Monitor
-
-There is a `GameTimeWithPerformanceMonitor` variant that tracks logic execution time, mostly used for debugging and profiling.
+`Record<string, string | number | boolean>` - Object containing `fps` (Frames Per Second) and `tps` (Ticks Per Second).

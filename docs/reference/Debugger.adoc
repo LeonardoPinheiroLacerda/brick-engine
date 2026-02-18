@@ -6,35 +6,40 @@
 
 toc::[]
 
-The `Debugger` class provides a real-time overlay for monitoring the state of various game modules. It creates an HTML-based interface that displays properties exposed by modules implementing the `Debuggable` interface.
-
-== Usage
-
-The debugger is automatically initialized by the `Game` class if enabled in the configuration (`configs.game.debugger.enabled`).
+The `Debugger` class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the `Debuggable` interface.
 
 == API Reference
 
 === `setup(): void`
 
-Initializes the debugger DOM elements.
+Initializes the debugger's DOM structure.
 
 **Behavior**
 
-Creates a `<details id="debugger">` element in the document body. It iterates through all registered game modules, checking if they implement `Debuggable` (`getDebugData` method). For each debuggable module, it creates a section in the overlay tailored to display its data.
+Creates the main debugger container (`<details id="debugger">`) and appends it to the document body. It scans all registered `GameModules` and prepares the UI sections for those that expose debug information via `getDebugData`.
 
 === `update(): Promise<void>`
 
-Updates the debugger overlay with fresh data.
+Refreshes the overlay with new data from the modules.
 
 **Behavior**
 
-Checks if enough time has passed since the last update (defined by `configs.game.debugger.msInterval`). If so, it fetches the latest debug data from all modules and updates the corresponding DOM text nodes. It uses `performance.now()` for precise timing and caches DOM elements to minimize overhead.
-
-== Styling
-
-The debugger appearance is controlled by `public/style/debugger.css`.
+Executes at a frequency controlled by `configs.game.debugger.msInterval`. It fetches the latest metrics from all `Debuggable` modules and updates the corresponding UI nodes. To maintain performance, it uses a precise timing check and caches DOM references.
 
 == Configuration
 
-*   `configs.game.debugger.enabled`: Toggles the debugger on/off.
-*   `configs.game.debugger.msInterval`: Sets the update frequency (in milliseconds).
+The debugger behavior is controlled via the main `configs.ts` file:
+
+*   `configs.game.debugger.enabled`: Global toggle to enable/disable the overlay.
+*   `configs.game.debugger.msInterval`: The refresh rate (in milliseconds). Higher values reduce CPU usage.
+
+== Implementation
+
+Modules wishing to appear in the debugger must implement the `Debuggable` interface:
+
+[source,typescript]
+----
+interface Debuggable {
+  getDebugData(): Record<string, string | number | boolean>;
+}
+----

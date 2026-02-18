@@ -1,59 +1,34 @@
 = GameSound Module Reference
 :toc: macro
-:toc-title:
+:toc-title: Table of Contents
+:icons: font
 :source-highlighter: highlight.js
 
 toc::[]
 
-== Overview
-
-The `GameSound` module manages the audio playback for the engine. It utilizes the **Web Audio API** to provide low-latency, high-performance sound effects.
-
-It is designed to handle:
-
-*   **Preloading**: Decodes all audio assets into `AudioBuffer`s at startup for instant playback.
-*   **Concurrency**: Supports playing multiple overlapping sounds (e.g., rapid-fire effects) without cutting off previous ones.
-*   **Volume Control**: Uses a global `GainNode` to control the master volume.
-*   **State Synchronization**: Automatically syncs its mute state with the global `GameState`.
-
-== Usage
-
-The sound module is accessible via the `Game.modules.sound` property.
-
-[source,typescript]
-----
-// Playing a sound
-this.modules.sound.play(Sound.ACTION_1);
-
-// Muting usage (must be handled via GameState)
-this.modules.state.toggleMuted();
-----
-
-The `GameSound` module follows the engine's architectural pattern of **centralized state persistence**. It does not persist its own settings (like mute status). Instead, it implements the `StateSyncable` interface and relies on `GameState` as the single source of truth.
-
-The `Game` class synchronizes all modules with `GameState` during initialization by calling `syncState(state)` on every module that implements the interface. This ensures that the sound module's gain control is correctly initialized based on the persistent `muted` setting in `GameState`.
+The `GameSound` module manages audio playback for the engine using the **Web Audio API**. It provides low-latency sound effects and automatic synchronization with the game's mute state.
 
 == API Reference
 
 === `play(sound: Sound): Promise<void>`
 
-Plays a sound effect using the Web Audio API.
+Plays a preloaded sound effect.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`sound` |`Sound` |The `Sound` enum identifier to play.
+|`sound` |`Sound` |The enum identifier of the sound to play.
 |===
 
 **Returns**
 
-`Promise<void>` - Resolves when playback starts.
+`Promise<void>` - Resolves when the sound starts playing.
 
 **Behavior**
 
-Resumes `AudioContext` if suspended. Creates a source node, connects it to the master gain, and starts playback immediately.
+Automatically resumes the `AudioContext` if it was suspended by the browser. Multiple overlapping instances of the same sound are supported (e.g., rapid-fire effects).
 
 **Example**
 
@@ -64,100 +39,52 @@ this.modules.sound.play(Sound.ACTION_1);
 
 === `stop(sound: Sound): void`
 
-Stops all specific instances of a sound type.
+Stops all active instances of a specific sound.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`sound` |`Sound` |The `Sound` enum identifier to stop.
+|`sound` |`Sound` |The enum identifier of the sound to stop.
 |===
-
 
 **Behavior**
 
-Iterates through active sources and stops those matching the sound type.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.sound.stop(Sound.THEME_MUSIC);
-----
+Iterates through all currently playing sources of the specified type and stops them immediately.
 
 === `stopAll(): void`
 
-Stops all currently playing sounds.
-
-
-
-**Behavior**
-
-Immediately stops and disconnects all active sound sources.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.sound.stopAll();
-----
-
+Stops every sound currently playing in the engine.
 
 === `toggleMute(): void`
 
-Toggles the game's mute state.
+Toggles the master mute status.
 
 **Behavior**
 
-Inverts the `muted` property in the linked `GameState`. This change is automatically persisted.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.sound.toggleMute();
-----
-
-=== `muted`
-
-Getter and Setter for the current mute state.
-
-**Type**
-
-`boolean`
-
-**Behavior**
-
-When set, triggers an internal volume update. Note: Preferred usage is through `GameState` or `toggleMute()`.
+Inverts the `muted` property in `GameState`. This change is automatically persisted to `LocalStorage` and reflected in the audio output.
 
 === `syncState(state: State): void`
 
-Synchronizes the sound module with the game state.
+Synchronizes audio settings with the global game state.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`state` |`State` |The game state module.
+|`state` |`State` |The `GameState` instance to link with.
 |===
 
 **Behavior**
 
-Part of the `StateSyncable` interface. Initializes the internal state reference and applies the current `muted` setting to the audio system.
-
-**Example**
-
-[source,typescript]
-----
-this.modules.sound.syncState(this.modules.state);
-----
+Implements the `StateSyncable` interface. Subscribes to changes in the `MUTED` property of the provided state and updates the master gain node accordingly.
 
 === `getDebugData(): Record<string, string | number | boolean>`
 
-Returns the debug data for the module.
+Returns metadata for the real-time debugger.
 
 **Returns**
 
-`Record<string, string | number | boolean>` - Object containing `muted`, `volume`, `active_sources`, and `loaded_buffers`.
+`Record<string, string | number | boolean>` - Object containing `muted`, `active_sources`, and `loaded_buffers`.

@@ -6,161 +6,144 @@
 
 toc::[]
 
-The `Game` class is the heart of your application. It initializes all necessary modules (including the Debugger) and sets up the main game loop.
-
-== Inheritance
-
-Your game class must extend `Game`.
-
-[source,typescript]
-----
-import Game from '../core/Game';
-
-class MyGame extends Game { ... }
-----
+The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.
 
 == Properties
 
 [cols="1,1,2"]
 |===
 |Property |Type |Description
-
-|`modules`
-|`GameModules`
-|Access to all engine modules (grid, control, etc.).
+|`modules` |`GameModules` |Access to all engine modules (grid, control, state, etc.).
 |===
 
 == API Reference
 
 === `update(deltaTime: number): void`
 
-Abstract method called once per "Game Tick".
+Abstract method for processing game logic.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`deltaTime` |`number` |Time elapsed since the last tick (in ms).
+|`deltaTime` |`number` |Time elapsed since the last tick (in milliseconds).
 |===
-
 
 **Behavior**
 
-Executed at a fixed time step defined by `configs.game.tickInterval`. Should contain all state-changing game logic.
+Called by the engine on every game logic tick, but **only** when the game state is `playing`. The tick frequency is controlled by `configs.game.tickInterval`.
 
 **Example**
 
 [source,typescript]
 ----
 update(deltaTime: number): void {
-    this.modules.grid.shiftRowsDown(deltaTime);
+    const { grid } = this.modules;
+    grid.shiftRowsDown(1);
 }
 ----
 
 === `render(): void`
 
-Abstract method called every frame.
-
-
+Abstract method for processing visual frames.
 
 **Behavior**
 
-Executed every render frame (typically 60fps). Used for interpolation, particles, or visual effects not affecting game state.
+Called by the engine on every render frame (based on browser refresh rate, typically 60fps). Use this for animations, particles, or visual effects that do not affect the logical game state.
 
 **Example**
 
 [source,typescript]
 ----
 render(): void {
-    this.particleSystem.update();
+    // Logic for smooth animations
 }
 ----
 
 === `setupGame(): void`
 
-Abstract method called after initialization.
-
-
-**Returns**
-
-`void`
+Abstract method for setting up the specific game instance.
 
 **Behavior**
 
-Called once after all engine modules are set up and linked. Ideal place for subscribing to controls and setting initial state.
+Called once after all engine modules are initialized and linked. Use this to set initial player state, subscribe to custom controls, or prepare level data.
 
 **Example**
 
 [source,typescript]
 ----
 setupGame(): void {
-    this.modules.state.startGame();
+    this.modules.text.setTextSize(FontSize.MEDIUM);
 }
 ----
 
-=== `getPersistenceKey(): string` (Abstract)
+=== `getPersistenceKey(): string`
 
-Subclasses **must** implement this method to provide a unique identifier for the game's persistent storage.
-
-**Returns**
-
-`string` - A unique key (e.g., 'tetris-v1').
-
-
-**Behavior**
-
-This key is used by the `GameState` module to prefix all `localStorage` entries, preventing checking collisions between different games built with the engine.
-
-=== `drawTitleScreen(): void` (Abstract)
-
-Abstract method called when the game is powered ON but has not yet started. Use this to render your splash screen or welcome message.
-
-**Behavior**
-
-Executed instead of `update` and `render` when `state.isStarted()` is false.
-
-=== `drawGameOverScreen(): void` (Abstract)
-
-Abstract method called when `state.isGameOver()` is true.
-
-**Behavior**
-
-Executed after `render()` to overlay the Game Over message or menu.
-
-=== `destroy(): void`
-
-Clean up the game instance.
+Abstract method that returns a unique identifier for the game.
 
 **Returns**
 
-`void`
+`string` - A unique prefix for LocalStorage.
 
 **Behavior**
 
-Stops the game loop, unbinds all control event listeners, and stops all sounds. Call this method when switching games or when the game instance is no longer needed to prevent memory leaks and input conflicts.
+This key prevents data collisions in LocalStorage if multiple games built with the engine are hosted on the same domain. It's used as a prefix for all persistent state properties (e.g., `my-game.highScore`).
 
-== Automated System Controls
+=== `drawTitleScreen(): void`
 
-The `Game` base class automatically registers listeners for system-level buttons. You do **not** need to handle these in your `setupGame()` method:
+Abstract method for rendering the game's welcome screen.
 
-*   **POWER**: Toggles the engine on/off.
-*   **SOUND**: Toggles master volume.
-*   **COLOR**: Toggles color mode.
-*   **RESET**: Resets the grid and clears Game Over status.
-*   **START_PAUSE**: Handles game start and pausing.
-*   **EXIT**: Stops the P5.js draw loop.
+**Behavior**
 
-== Accessing Modules
+Called when the engine is powered ON but the game has not yet been started. Executed during the main draw loop instead of `update` and `render`.
 
-You can access any module via `this.modules`.
+=== `drawGameOverScreen(): void`
+
+Abstract method for rendering the screen after a game ends.
+
+**Behavior**
+
+Called when the game state is `gameOver`. Executed after the final `render` call to overlay messages or recovery menus.
+
+=== `switchGame(newGame: Game): void`
+
+Switches execution to a new game instance.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`newGame` |`Game` |The instance of the new game class to load.
+|===
+
+**Behavior**
+
+Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered switch handler. This is the recommended way to move between different games or menus.
+
+**Example**
 
 [source,typescript]
 ----
-const { grid, control, state, text, time, renderer } = this.modules;
-
-// Example: Move a piece
-control.subscribe(ControlKey.DOWN, ControlEventType.PRESSED, () => {
-    // ... move piece down ...
-});
+this.switchGame(new MyOtherGame(this.p, this.view));
 ----
+
+=== `destroy(): void`
+
+Cleans up the game instance.
+
+**Behavior**
+
+Stops the P5.js loop, unbinds all control event listeners, and stops all playing sounds. Use this before disposing of a game instance to prevent memory leaks.
+
+== Automated System Controls
+
+The `Game` base class automatically registers listeners for system-level buttons:
+
+*   **POWER**: Toggles engine state.
+*   **SOUND**: Toggles master mute.
+*   **COLOR**: Toggles theme color mode.
+*   **RESET**: Resets the grid and score.
+*   **START_PAUSE**: Starts the game or toggles pause.
+*   **EXIT**: Hard stop of the draw loop.
