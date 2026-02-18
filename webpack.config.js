@@ -100,6 +100,7 @@ module.exports = (env = {}, argv) => {
                     { from: 'node_modules/p5/lib/p5.min.js', to: 'vendor/p5.min.js' },
                     { from: 'public/images', to: 'images' },
                     { from: 'public/sounds', to: 'sounds' },
+                    { from: 'public/docs', to: 'docs' },
                     { from: 'public/favicon.ico', to: './' },
                     { from: 'public/CNAME', to: './' },
                 ],
