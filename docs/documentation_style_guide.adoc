@@ -40,26 +40,21 @@ The `README.adoc` is the **main entry point** of the application and contains th
 
 **Rule**: Whenever adding new abstract methods to the `Game` class or making breaking changes to the initialization flow, you **MUST** verify and update the code snippet in `README.adoc` to ensure it remains a valid boilerplate for developers.
 
-All `.adoc` files in `docs/reference/` must follow this strict structure for methods.
+=== Reference Directory Structure
 
-=== Method Structure
-
-All methods should be listed directly under the `== API Reference` section using `===` headers. **Do not group methods into sub-categories** (e.g., "Configuration", "Render") as this breaks the standard flat structure.
-
-[source,asciidoc]
-----
-'''
-
-=== `methodName(param1: Type, param2: Type): ReturnType`
-
-<Brief description of what the method does.>
-----
+To maintain scannability, documentation is organized into specialized subdirectories:
+- `modules/`: Core engine services (Grid, State, etc.).
+- `interfaces/`: System contracts and module shapes.
+- `enums/`: Fixed set of values (Color, Sound, etc.).
+- `types/`: Data interfaces and composite shapes (Cell, Coordinate, etc.).
+- `helpers/`: Static utility classes.
 
 === Style Rules
-.   **Hierarchy**:
-    *   Use `===` for all methods.
-    *   **Separators**: Place a horizontal rule (`'''`) before every `===` header except the first one in the section.
-    *   Maintain a **flat list** of methods under `== API Reference`.
+.   **Hierarchy & Granularity**:
+    *   **One File Per Item**: Every public Enum, Type, Interface, and Module **MUST** have its own dedicated `.adoc` file. Do not group them.
+    *   Use `===` for all methods within a module/interface file.
+    *   **Separators**: Place a horizontal rule (`'''`) before every `===` header except the first one in a section.
+    *   Maintain a **flat list** of methods under the `== API Reference` or `== Methods` sections.
 .   **Parameters**:
     *   Use a table for arguments.
     *   **OMIT this section completely** if there are no parameters.
@@ -134,3 +129,11 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 === Persistence Namespacing
 *   **Issue**: If multiple games built with the engine are hosted on the same domain, they share the same `localStorage`, leading to property collisions (e.g., both games trying to store `highScore`).
 *   **Solution**: Require an abstract `getPersistenceKey()` method in the `Game` class and use its return value as a prefix in `GameState` (e.g., `localStorage.setItem(`${prefix}.${key}`, value)`).
+
+=== Documentation Granularity
+*   **Issue**: Grouping multiple types or enums in a single file makes the documentation harder to navigate via sidebars or search, and leads to extremely long pages.
+*   **Solution**: "Explode" documentation into individual files (One File Per Item). This improves scannability and allows for precise cross-referencing.
+
+=== Cross-Linking Context
+*   **Recommendation**: When referencing an entity in a table (e.g., a return type or parameter type), always use an `xref:` link to its dedicated documentation page.
+*   **Pattern**: Use relative paths (e.g., `xref:../enums/Color.adoc[Color]`) to link between subdirectories.
