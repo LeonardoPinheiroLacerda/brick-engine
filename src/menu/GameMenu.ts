@@ -49,12 +49,6 @@ export default class GameMenu extends Game {
                 sound.play(Sound.START_THEME);
             }
         });
-
-        state.subscribe(StateProperty.PLAYING, on => {
-            if (on) {
-                sound.play(Sound.GAME_START);
-            }
-        });
     }
 
     update() {}
