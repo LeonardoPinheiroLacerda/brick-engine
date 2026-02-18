@@ -1,0 +1,39 @@
+= Control Reference
+
+Interface for input handling and event-driven control distribution.
+
+== Methods
+
+'''
+
+=== `notify(key: ControlKey, type: ControlEventType): void`
+Triggers an event manually. Usually called by hardware drivers (like Keyboard listeners).
+
+'''
+
+=== `setModules(modules: GameModules): void`
+Provides the context registry required for `GameEvent` construction.
+
+'''
+
+=== `subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+Registers a function to be executed when the specified input occurs.
+
+'''
+
+=== `unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+Detaches a previously registered input listener.
+
+'''
+
+=== `unbindControls(): void`
+Temporarily disables all input listeners.
+
+'''
+
+=== `bindControls(): void`
+Re-enables input listeners.
+
+== General Usage
+
+Implemented by `GameControl`. Games use this to react to player movements (`LEFT`, `RIGHT`) or actions (`ACTION`).

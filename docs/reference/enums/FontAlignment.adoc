@@ -1,0 +1,31 @@
+= Font Alignment Reference
+
+Enums defining the text anchor points on the canvas.
+
+== `FontAlign`
+
+Horizontal alignment of the text block.
+
+[cols="1,3"]
+|===
+|Value |Description
+|`LEFT` |Text starts at the provided X coordinate.
+|`CENTER` |Text is centered relative to X.
+|`RIGHT` |Text ends at the provided X coordinate.
+|===
+
+== `FontVerticalAlign`
+
+Vertical alignment of the text block.
+
+[cols="1,3"]
+|===
+|Value |Description
+|`TOP` |Text top edge aligns with Y.
+|`CENTER` |Text is centered relative to Y.
+|`BOTTOM` |Text bottom edge aligns with Y.
+|===
+
+== General Usage
+
+Used when calling `GameText.setTextAlign()`.

@@ -1,0 +1,17 @@
+= Coordinate Reference
+
+A foundational 2D point interface used for positioning.
+
+== Attributes
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`x` |`number` |Horizontal axis value.
+|`y` |`number` |Vertical axis value.
+|===
+
+== General Usage
+
+Coordinates describe grid positions (columns/rows) as integers, or normalized screen positions as floats (0.0 to 1.0).
+Use `CoordinateHelper` for translations between these systems.

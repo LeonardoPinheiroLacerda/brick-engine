@@ -1,0 +1,139 @@
+= State Reference
+
+Interface for managing global game lifecycle flags, persistence, and preferences.
+
+== Methods
+
+'''
+
+=== `isOn(): boolean`
+Returns `true` if the engine is "powered on".
+
+'''
+
+=== `isOff(): boolean`
+Returns `true` if the engine is "powered off".
+
+'''
+
+=== `isStarted(): boolean`
+Returns `true` if a game session has been initialized.
+
+'''
+
+=== `isPlaying(): boolean`
+Returns `true` if the game is active and logic ticks are flowing.
+
+'''
+
+=== `isPaused(): boolean`
+Returns `true` if the game is started but currently paused.
+
+'''
+
+=== `isGameOver(): boolean`
+Returns `true` if the current session has ended in defeat.
+
+'''
+
+=== `isColorEnabled(): boolean`
+Returns `true` if themed color rendering is active.
+
+'''
+
+=== `setColorEnabled(value: boolean): void`
+Manually sets the color rendering preference.
+
+'''
+
+=== `isMuted(): boolean`
+Returns `true` if the audio system is suppressed.
+
+'''
+
+=== `setMuted(value: boolean): void`
+Manually sets the audio suppression preference.
+
+'''
+
+=== `getHighScore(): number`
+Retrieves the persistent high score for the current game.
+
+'''
+
+=== `setHighScore(value: number): void`
+Updates the persistent high score.
+
+'''
+
+=== `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
+Registers a listener for changes to a specific state property.
+
+'''
+
+=== `unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
+Removes a previously registered property listener.
+
+'''
+
+=== `turnOn(): void`
+Powers up the engine.
+
+'''
+
+=== `turnOff(): void`
+Powers down the engine and saves state.
+
+'''
+
+=== `startGame(): void`
+Transitions from the menu to an active game session.
+
+'''
+
+=== `exitGame(): void`
+Ends the current game session and returns to the menu.
+
+'''
+
+=== `pause(): void`
+Toggles the gameplay state to paused.
+
+'''
+
+=== `resume(): void`
+Toggles the gameplay state back to playing.
+
+'''
+
+=== `triggerGameOver(): void`
+Transitions to the game over screen.
+
+'''
+
+=== `resetGame(): void`
+Resets session-specific state (score, grids) while maintaining high score and preferences.
+
+'''
+
+=== `toggleColorEnabled(): void`
+Flips the current `colorEnabled` flag.
+
+'''
+
+=== `toggleMuted(): void`
+Flips the current `muted` flag.
+
+'''
+
+=== `setPersistenceKey(key: string): void`
+Sets the unique namespace used for `localStorage`.
+
+'''
+
+=== `getPersistenceKey(): string`
+Returns the active namespace prefix.
+
+== General Usage
+
+Implemented by `GameState`. It serves as the single source of truth for the engine's behavior tree.

@@ -1,0 +1,16 @@
+= ControlEventType Reference
+
+Enumerates the different ways an input can be triggered.
+
+== Values
+
+[cols="1,2"]
+|===
+|Value |Description
+|`PRESSED` |Triggered exactly once when the key is first engaged.
+|`HELD` |Triggered repeatedly at a fixed interval while the key remains engaged.
+|===
+
+== General Usage
+
+Crucial for distinguishing between actions like "Rotate Once" (`PRESSED`) and "Move Continuously" (`HELD`). Used in subscription filters: `modules.control.subscribe(key, ControlEventType.HELD, callback)`.

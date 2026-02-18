@@ -1,0 +1,42 @@
+= Time Reference
+
+Interface for managing the game's logical clock and update frequency.
+
+== Properties
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`tickInterval` |`number` |The duration in milliseconds between logic updates.
+|===
+
+== Methods
+
+'''
+
+=== `update(deltaTime: number): void`
+Adds elapsed time to the internal accumulator. Called every frame.
+
+'''
+
+=== `shouldTick(): boolean`
+Returns `true` if the accumulator has exceeded the `tickInterval`, indicating a logic update is due.
+
+'''
+
+=== `reset(): void`
+Clears the time accumulator. Useful during game restarts.
+
+'''
+
+=== `incrementTickInterval(amount: number): void`
+Slows down the game by increasing the time between ticks.
+
+'''
+
+=== `decrementTickInterval(amount: number): void`
+Speeds up the game by decreasing the time between ticks.
+
+== General Usage
+
+Implemented by `GameTime`. This module ensures that game logic (like falling pieces) runs at a consistent speed regardless of the render frame rate.

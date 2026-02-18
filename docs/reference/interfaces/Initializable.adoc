@@ -1,0 +1,14 @@
+= Initializable Reference
+
+A fundamental contract for modules that require an assembly phase.
+
+== Methods
+
+'''
+
+=== `setup(): void`
+Invoked once by the engine after all modules are constructed.
+
+== General Usage
+
+Modules implementing `Initializable` use the `setup()` phase to establish internal buffers, bind event listeners, or perform calculations that depend on final configuration values.

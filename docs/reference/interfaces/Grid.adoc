@@ -1,0 +1,138 @@
+= Grid Reference
+
+Interface defining the behaviors of a 2D grid of cells.
+
+== Properties
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`width` |`number` |The number of columns in the grid.
+|`height` |`number` |The number of rows in the grid.
+|===
+
+== Methods
+
+'''
+
+=== `getGrid(): Cell[][]`
+Returns the raw 2D array of `Cell` objects representing the grid state.
+
+'''
+
+=== `resetGrid(): void`
+Clears all cell values and resets colors to `DEFAULT`.
+
+'''
+
+=== `forEach(callback: (cell: Cell) => void): void`
+Iterates over every cell in the grid, executing the provided callback.
+
+'''
+
+=== `isValidCoordinate(coordinate: Coordinate): boolean`
+Returns `true` if the given coordinate falls within the grid boundaries.
+
+'''
+
+=== `getCell(coordinate: Coordinate): Cell | null`
+Retrieves the `Cell` object at the specified coordinate. Returns `null` if the coordinate is invalid.
+
+'''
+
+=== `setCellValue(coordinate: Coordinate, value: number): void`
+Updates the numeric value of the cell at the given coordinate.
+
+'''
+
+=== `setCellColor(coordinate: Coordinate, color: Color): void`
+Updates the visual color of the cell at the given coordinate.
+
+'''
+
+=== `isCellActive(coordinate: Coordinate): boolean`
+Returns `true` if the cell's value is greater than `0`.
+
+'''
+
+=== `isCellInactive(coordinate: Coordinate): boolean`
+Returns `true` if the cell's value is `0`.
+
+'''
+
+=== `isRowFull(y: number): boolean`
+Returns `true` if every cell in the specified row `y` is active.
+
+'''
+
+=== `isRowEmpty(y: number): boolean`
+Returns `true` if every cell in the specified row `y` is inactive.
+
+'''
+
+=== `clearRow(y: number): void`
+Resets all cells in row `y` to their inactive state.
+
+'''
+
+=== `shiftRowsDown(fromY: number): void`
+Moves all rows above (and including) `fromY` down by one position.
+
+'''
+
+=== `shiftRowsUp(fromY: number): void`
+Moves all rows below (and including) `fromY` up by one position.
+
+'''
+
+=== `clearFullRows(): number`
+Detects, clears, and shifts rows for all full rows in the grid. Returns the count of cleared rows.
+
+'''
+
+=== `isColumnFull(x: number): boolean`
+Returns `true` if every cell in column `x` is active.
+
+'''
+
+=== `isColumnEmpty(x: number): boolean`
+Returns `true` if every cell in column `x` is inactive.
+
+'''
+
+=== `clearColumn(x: number): void`
+Resets all cells in column `x` to their inactive state.
+
+'''
+
+=== `shiftColumnsRight(fromX: number): void`
+Moves all columns to the left of `fromX` one position to the right.
+
+'''
+
+=== `shiftColumnsLeft(fromX: number): void`
+Moves all columns to the right of `fromX` one position to the left.
+
+'''
+
+=== `clearFullColumns(): number`
+Detects and clears all full columns. Returns the count of cleared columns.
+
+'''
+
+=== `isAreaOccupied(coordinates: Coordinate[]): boolean`
+Returns `true` if any of the provided coordinates are already active in the grid. Used for collision detection.
+
+'''
+
+=== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
+Batch updates a rectangular area defined by `start` and `end` with the given value and color.
+
+'''
+
+=== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
+Applies the specified value and color to multiple discrete coordinates simultaneously.
+
+== General Usage
+
+The `Grid` interface is implemented by both the main `GameGrid` and the `GameHudGrid`.

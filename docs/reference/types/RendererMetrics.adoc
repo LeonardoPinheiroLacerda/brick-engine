@@ -1,0 +1,17 @@
+= RendererMetrics Reference
+
+Defines the calculated dimensions and offsets for the physical layout.
+
+== Attributes
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`display` |`object` |Contains `width`, `height`, and `origin` (Coordinate) for the main screen.
+|`hud` |`object` |Contains `width`, `height`, and `origin` (Coordinate) for the HUD area.
+|`cell` |`object` |Contains the `size` (number) in pixels of a single grid cell.
+|===
+
+== General Usage
+
+This data is calculated by the `GameRenderer` and consumed by specialized sub-renderers like `DisplayRenderer`, `HudRenderer`, and `GameText` to ensure alignment.

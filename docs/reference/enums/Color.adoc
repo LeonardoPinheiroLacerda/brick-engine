@@ -1,0 +1,23 @@
+= Color Reference
+
+Defines the available visual theme colors for grid cells and text.
+
+== Values
+
+[cols="1,2"]
+|===
+|Value |Description
+|`DEFAULT` |The background color of an empty cell.
+|`BLUE` |Standard blue brick color.
+|`CYAN` |Bright cyan brick color.
+|`GRAY` |Neutral gray color.
+|`GREEN` |Standard green brick color.
+|`PURPLE` |Vibrant purple brick color.
+|`RED` |Warning or obstacle red color.
+|`YELLOW` |Gold/Yellow brick color.
+|`INACTIVE` |Faded color for background/ghost elements.
+|===
+
+== General Usage
+
+Colors are used throughout the engine to theme the `GameGrid` and the `HUD`. Use these constants when calling methods like `grid.setCellColor(coord, Color.RED)`.

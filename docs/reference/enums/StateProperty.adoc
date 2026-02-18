@@ -1,0 +1,21 @@
+= StateProperty Reference
+
+Enumerates all observable and persistent properties of the game system.
+
+== Values
+
+[cols="1,3"]
+|===
+|Value |Description
+|`ON` |Boolean flag for engine power state.
+|`START` |Boolean flag for game session start.
+|`PLAYING` |Boolean flag for active gameplay logic.
+|`GAME_OVER` |Boolean flag for end-of-game state.
+|`COLOR_ENABLED` |Boolean flag for themed rendering.
+|`MUTED` |Boolean flag for audio suppression.
+|`HIGH_SCORE` |Numeric property for the persistent record.
+|===
+
+== General Usage
+
+Used identifying which property changed in the `GameState.subscribe()` callback.

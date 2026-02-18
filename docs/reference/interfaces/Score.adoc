@@ -1,0 +1,50 @@
+= Score Reference
+
+Interface for tracking session performance, multipliers, and levels.
+
+== Properties
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`score` |`number` |The current total score for the session.
+|`multiplier` |`number` |The current points multiplier.
+|`level` |`number` |The current game difficulty level.
+|`maxLevel` |`number` |The maximum level achievable.
+|===
+
+== Methods
+
+'''
+
+=== `increaseScore(amount: number): void`
+Adds points to the total, automatically applying any active multipliers.
+
+'''
+
+=== `resetScore(): void`
+Resets the session score to `0`.
+
+'''
+
+=== `getFormattedScore(digits?: number): string`
+Returns a string representation of the score padded with leading zeros (defaulting to 6 digits).
+
+'''
+
+=== `increaseLevel(amount: number): void`
+Increments the current game level up to `maxLevel`.
+
+'''
+
+=== `resetLevel(): void`
+Resets the game difficulty level to its initial value.
+
+'''
+
+=== `setState(state: State): void`
+Internal setup method to link the score module with high-score persistence logic.
+
+== General Usage
+
+Implemented by `GameScore`. It handles the numeric progression of the game and formats the data for display on the HUD.

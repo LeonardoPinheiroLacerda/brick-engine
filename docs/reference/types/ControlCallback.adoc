@@ -1,0 +1,11 @@
+= ControlCallback Reference
+
+Type definition for functions that handle engine input.
+
+== Structure
+
+`type ControlCallback = (event: GameEvent) => void;`
+
+== General Usage
+
+This type ensures that functions passed to `modules.control.subscribe(key, type, callback)` correctly accept the `GameEvent` context.

@@ -69,6 +69,30 @@ All methods should be listed directly under the `== API Reference` section using
 .   **Behavior**: Use full sentences and paragraphs.
 .   **Examples**: Provide realistic usage scenarios.
 
+=== Single-Item Structure (Types, Enums, Interfaces)
+
+For entities that define data shapes or fixed values, use the following structure:
+
+[source,asciidoc]
+----
+= EntityName Reference
+
+<Brief description of the entity's purpose and usage.>
+
+== Attributes / Properties / Values
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`prop1` |`Type` |Description of property 1.
+|`prop2` |`Type` |Description of property 2.
+|===
+
+== General Usage
+
+<Detailed explanation of how this entity is used within the engine's ecosystem.>
+----
+
 == Formatting Guidelines
 
 === AsciiDoc Features

@@ -1,0 +1,14 @@
+= Debuggable Reference
+
+Contract for modules that provide transparency to the developer.
+
+== Methods
+
+'''
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+Returns a dictionary of internal metrics for real-time inspection.
+
+== General Usage
+
+When implemented, the xref:../modules/Debugger.adoc[Debugger] module will automatically create a UI section for the component and refresh its data every logic tick.

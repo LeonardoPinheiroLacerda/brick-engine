@@ -1,0 +1,44 @@
+= Text Reference
+
+Interface for drawing pixelated, responsive typography.
+
+== Methods
+
+'''
+
+=== `setTextSize(fontSize: FontSize): void`
+Sets the scale of the subsequent text operations.
+
+'''
+
+=== `setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void`
+Sets both horizontal and vertical anchor points.
+
+'''
+
+=== `textOnHud(text: string, coordinate: Coordinate): void`
+Renders a string within the HUD area at the specified normalized coordinate (0.0 to 1.0 relative to HUD bounds).
+
+'''
+
+=== `textOnDisplay(text: string, coordinate: Coordinate): void`
+Renders a string within the main game area at the specified normalized coordinate (0.0 to 1.0 relative to display bounds).
+
+'''
+
+=== `setRendererMetrics(rendererMetrics: RendererMetrics): void`
+Internal setup method to provide the pixel-to-grid mapping data.
+
+'''
+
+=== `setActiveText(): void`
+Sets the text rendering style to "active" (high contrast).
+
+'''
+
+=== `setInactiveText(): void`
+Sets the text rendering style to "inactive" (low contrast, background effect).
+
+== General Usage
+
+Implemented by `GameText`. Used to display scores, labels, and title screen messages across different engine layers.

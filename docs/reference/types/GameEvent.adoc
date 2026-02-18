@@ -1,0 +1,17 @@
+= GameEvent Reference
+
+The context object delivered to input subscribers.
+
+== Attributes
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |xref:../enums/ControlKey.adoc[ControlKey] |The identifier for the triggered key.
+|`type` |xref:../enums/ControlEventType.adoc[ControlEventType] |Whether the key was `PRESSED` or is being `HELD`.
+|`modules` |xref:../interfaces/GameModules.adoc[GameModules] |Accessor for all engine services.
+|===
+
+== General Usage
+
+When a control callback is executed, it receives a `GameEvent`. This allows the game logic to react based on the key type and interact with the `Grid`, `State`, or `Score` modules.

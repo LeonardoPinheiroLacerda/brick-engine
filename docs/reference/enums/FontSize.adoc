@@ -1,0 +1,19 @@
+= FontSize Reference
+
+Predefined logic scales for the retro pixelated typography.
+
+== Values
+
+[cols="1,3"]
+|===
+|Value |Level
+|`EXTRA_SMALL` |Metrics, fine print, or detailed debug data.
+|`SMALL` |Secondary labels.
+|`MEDIUM` |Standard size for interactive elements and messages.
+|`LARGE` |High-visibility status (e.g., "GET READY").
+|`EXTRA_LARGE` |Main titles and "GAME OVER" announcements.
+|===
+
+== General Usage
+
+Set the active font size via `GameText.setTextSize(FontSize.LARGE)`. The engine automatically handles the scaling based on the display resolution.

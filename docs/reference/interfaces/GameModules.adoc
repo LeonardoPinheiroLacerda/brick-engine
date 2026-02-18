@@ -1,0 +1,23 @@
+= GameModules Reference
+
+The central hub providing component-to-component visibility.
+
+== Properties
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`grid` |xref:Grid.adoc[Grid] |Main game field manager.
+|`hudGrid` |xref:Grid.adoc[Grid] |Secondary 4x4 grid for HUD elements.
+|`state` |xref:State.adoc[State] |Single source of truth for game flags.
+|`control` |xref:Control.adoc[Control] |Input handling service.
+|`text` |xref:Text.adoc[Text] |Canvas typography service.
+|`time` |xref:Time.adoc[Time] |Logical clock manager.
+|`sound` |xref:SoundModule.adoc[SoundModule] |Audio playback service.
+|`score` |xref:Score.adoc[Score] |Session performance tracker.
+|`renderer` |xref:RendererComposite.adoc[RendererComposite] |The visual orchestration layer.
+|===
+
+== General Usage
+
+This registry is passed to almost every lifecycle method (`update`, `render`, `ControlCallback`). It allows modules to interact without tight coupling. For example, the `Score` module uses it to play sounds via `modules.sound.play()`.
