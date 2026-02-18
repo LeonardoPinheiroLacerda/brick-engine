@@ -6,11 +6,11 @@
 
 toc::[]
 
-The `CoordinateHelper` is a static utility class that handles translations between different coordinate systems: the logical Game Grid, the normalized Display area, and absolute pixel positions.
+The `CoordinateHelper` is a static utility class that handles translations between different coordinate systems: the logical xref:../modules/GameGrid.adoc[Game Grid], the normalized Display area, and absolute pixel positions.
 
 == API Reference
 
-=== `getRelativeCoordinate(p: p5, coordinate: Coordinate): Coordinate`
+=== `getRelativeCoordinate(p: p5, coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Coordinate.adoc[Coordinate]`
 
 Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 1.0).
 
@@ -20,12 +20,12 @@ Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 
 |===
 |Name |Type |Description
 |`p` |`p5` |The P5.js instance.
-|`coordinate` |`Coordinate` |The absolute pixel coordinate.
+|`coordinate` |xref:../types/Coordinate.adoc[Coordinate] |The absolute pixel coordinate.
 |===
 
 **Returns**
 
-`Coordinate` - The normalized `{x, y}` point.
+`xref:../types/Coordinate.adoc[Coordinate]` - The normalized `{x, y}` point.
 
 
 '''

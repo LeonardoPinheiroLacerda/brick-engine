@@ -14,4 +14,4 @@ Defines the calculated dimensions and offsets for the physical layout.
 
 == General Usage
 
-This data is calculated by the `GameRenderer` and consumed by specialized sub-renderers like `DisplayRenderer`, `HudRenderer`, and `GameText` to ensure alignment.
+This data is calculated by the `xref:../modules/GameRenderer.adoc[GameRenderer]` and consumed by specialized sub-renderers like `xref:../modules/DisplayRenderer.adoc[DisplayRenderer]`, `xref:../modules/HudRenderer.adoc[HudRenderer]`, and `xref:../modules/GameText.adoc[GameText]` to ensure alignment.

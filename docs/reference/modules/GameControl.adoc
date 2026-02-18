@@ -12,14 +12,14 @@ The `GameControl` module handles user input from physical keyboards and virtual 
 
 The engine maps physical keys to virtual engine keys:
 
-*   `UP` / `DOWN` / `LEFT` / `RIGHT`: Directional controls.
-*   `ACTION`: Primary action button.
-*   `START_PAUSE`: Toggles game start/pause.
-*   `RESET`: Soft reset of the game session.
-*   `SOUND`: Toggles master audio mute.
-*   `COLOR`: Toggles theme color mode.
-*   `POWER`: Main engine power toggle.
-*   `EXIT`: Hard stop of the engine.
+*   `xref:../enums/ControlKey.adoc[UP]` / `xref:../enums/ControlKey.adoc[DOWN]` / `xref:../enums/ControlKey.adoc[LEFT]` / `xref:../enums/ControlKey.adoc[RIGHT]`: Directional controls.
+*   `xref:../enums/ControlKey.adoc[ACTION]`: Primary action button.
+*   `xref:../enums/ControlKey.adoc[START_PAUSE]`: Toggles game start/pause.
+*   `xref:../enums/ControlKey.adoc[RESET]`: Soft reset of the game session.
+*   `xref:../enums/ControlKey.adoc[SOUND]`: Toggles master audio mute.
+*   `xref:../enums/ControlKey.adoc[COLOR]`: Toggles theme color mode.
+*   `xref:../enums/ControlKey.adoc[POWER]`: Main engine power toggle.
+*   `xref:../enums/ControlKey.adoc[EXIT]`: Hard stop of the engine.
 
 == API Reference
 
@@ -32,9 +32,9 @@ Registers a callback for a specific input event.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`ControlKey` |The virtual key to monitor (e.g., `ControlKey.ACTION`).
-|`type` |`ControlEventType` |The type of trigger (`PRESSED` or `HELD`).
-|`callback` |`ControlCallback` |The function to execute when the event occurs.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key to monitor (e.g., `ControlKey.ACTION`).
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The type of trigger (`PRESSED` or `HELD`).
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The function to execute when the event occurs.
 |===
 
 **Behavior**
@@ -62,9 +62,9 @@ Removes an existing subscription.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`ControlKey` |The virtual key.
-|`type` |`ControlEventType` |The trigger type.
-|`callback` |`ControlCallback` |The reference to the function to remove.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The trigger type.
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The reference to the function to remove.
 |===
 
 **Behavior**
@@ -105,8 +105,8 @@ Manually triggers an input event.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`ControlKey` |The key to notify.
-|`type` |`ControlEventType` |The trigger type to simulate.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The key to notify.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The trigger type to simulate.
 |===
 
 **Behavior**

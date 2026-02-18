@@ -10,7 +10,7 @@ The `GameState` module acts as the central, single source of truth for the game'
 
 == Centralized Persistence
 
-As defined in the Architectural Patterns, `GameState` is responsible for all `LocalStorage` logic. Other modules (like `GameSound`) must sync their internal state with this module via the `StateSyncable` interface.
+As defined in the Architectural Patterns, `GameState` is responsible for all `LocalStorage` logic. Other modules (like `xref:GameSound.adoc[GameSound]`) must sync their internal state with this module via the `xref:../interfaces/StateSyncable.adoc[StateSyncable]` interface.
 
 == API Reference
 
@@ -281,7 +281,7 @@ Registers a listener for state changes.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`StateProperty` |The specific property to monitor.
+|`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The specific property to monitor.
 |`callback` |`Function` |The function to execute on change.
 |===
 
@@ -308,7 +308,7 @@ Removes a state change listener.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`property` |`StateProperty` |The property being monitored.
+|`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The property being monitored.
 |`callback` |`Function` |The reference to the callback to remove.
 |===
 

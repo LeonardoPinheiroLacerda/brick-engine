@@ -20,4 +20,4 @@ The central hub providing component-to-component visibility.
 
 == General Usage
 
-This registry is passed to almost every lifecycle method (`update`, `render`, `ControlCallback`). It allows modules to interact without tight coupling. For example, the `Score` module uses it to play sounds via `modules.sound.play()`.
+This registry is passed to almost every lifecycle method (`update`, `render`, `ControlCallback`). It allows modules to interact without tight coupling. For example, the `xref:Score.adoc[Score]` module uses it to play sounds via `modules.sound.play()`.

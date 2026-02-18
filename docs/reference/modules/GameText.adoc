@@ -19,7 +19,7 @@ Sets the current font size from predefined responsive values.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`size` |`FontSize` |Enum value (`EXTRA_SMALL` to `EXTRA_LARGE`).
+|`size` |`xref:../enums/FontSize.adoc[FontSize]` |Enum value (`EXTRA_SMALL` to `EXTRA_LARGE`).
 |===
 
 **Behavior**
@@ -45,8 +45,8 @@ Configures the alignment of rendered text.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`align` |`FontAlign` |Horizontal alignment (LEFT, CENTER, RIGHT).
-|`verticalAlign` |`FontVerticalAlign` |Vertical alignment (TOP, CENTER, BOTTOM).
+|`align` |`xref:../enums/FontAlignment.adoc[FontAlign]` |Horizontal alignment (LEFT, CENTER, RIGHT).
+|`verticalAlign` |`xref:../enums/FontAlignment.adoc[FontVerticalAlign]` |Vertical alignment (TOP, CENTER, BOTTOM).
 |===
 
 
@@ -76,7 +76,7 @@ Renders text on the main game display area.
 |===
 |Name |Type |Description
 |`text` |`string` |The message to display.
-|`coordinate` |`Coordinate` |Normalized coordinates (0.0 to 1.0) within the game grid area.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Normalized coordinates (0.0 to 1.0) within the game grid area.
 |===
 
 **Example**
@@ -99,7 +99,7 @@ Renders text on the side HUD area.
 |===
 |Name |Type |Description
 |`text` |`string` |The message to display.
-|`coordinate` |`Coordinate` |Normalized coordinates (0.0 to 1.0) within the HUD container.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Normalized coordinates (0.0 to 1.0) within the HUD container.
 |===
 
 
@@ -114,7 +114,7 @@ Updates the coordinate conversion reference.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`metrics` |`RendererMetrics` |The updated renderer dimensions and origins.
+|`metrics` |`xref:../types/RendererMetrics.adoc[RendererMetrics]` |The updated renderer dimensions and origins.
 |===
 
 **Behavior**

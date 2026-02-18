@@ -16,4 +16,4 @@ Predefined logic scales for the retro pixelated typography.
 
 == General Usage
 
-Set the active font size via `GameText.setTextSize(FontSize.LARGE)`. The engine automatically handles the scaling based on the display resolution.
+Set the active font size via `xref:../modules/GameText.adoc[GameText].setTextSize(FontSize.LARGE)`. The engine automatically handles the scaling based on the display resolution.

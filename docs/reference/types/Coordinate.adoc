@@ -14,4 +14,4 @@ A foundational 2D point interface used for positioning.
 == General Usage
 
 Coordinates describe grid positions (columns/rows) as integers, or normalized screen positions as floats (0.0 to 1.0).
-Use `CoordinateHelper` for translations between these systems.
+Use `xref:../helpers/CoordinateHelper.adoc[CoordinateHelper]` for translations between these systems.

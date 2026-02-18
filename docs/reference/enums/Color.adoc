@@ -20,4 +20,4 @@ Defines the available visual theme colors for grid cells and text.
 
 == General Usage
 
-Colors are used throughout the engine to theme the `GameGrid` and the `HUD`. Use these constants when calling methods like `grid.setCellColor(coord, Color.RED)`.
+Colors are used throughout the engine to theme the `xref:../modules/GameGrid.adoc[GameGrid]` and the `HUD`. Use these constants when calling methods like `grid.setCellColor(coord, Color.RED)`.

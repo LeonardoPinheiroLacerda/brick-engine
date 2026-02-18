@@ -28,4 +28,4 @@ Vertical alignment of the text block.
 
 == General Usage
 
-Used when calling `GameText.setTextAlign()`.
+Used when calling `xref:../modules/GameText.adoc[GameText].setTextAlign()`.

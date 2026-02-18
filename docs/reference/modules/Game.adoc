@@ -13,7 +13,7 @@ The `Game` class is the heart of your application. It manages the game loop (tic
 [cols="1,1,2"]
 |===
 |Property |Type |Description
-|`modules` |`GameModules` |Access to all engine modules (grid, control, state, etc.).
+|`modules` |`xref:../interfaces/GameModules.adoc[GameModules]` |Access to all engine modules (grid, control, state, etc.).
 |===
 
 == API Reference

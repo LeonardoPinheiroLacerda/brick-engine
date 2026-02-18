@@ -143,3 +143,33 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 === Redundant Separators
 *   **Issue**: Automated or careless application of the "expanded method" style often leads to placing a horizontal rule (`'''`) at the very beginning of the `== Methods` section.
 *   **Solution**: Always verify that the first method header appears immediately after the section header. This maintains a clean vertical rhythm and avoids unnecessary whitespace or lines at the top of the API list.
+
+== Cross-Referencing Standards
+
+To ensure a navigable and cohesive documentation set, strict cross-referencing is mandatory for all internal entities.
+
+=== Syntax
+Use the AsciiDoc `xref` macro with relative paths:
+`xref:path/to/File.adoc[LinkText]`
+
+=== Rules
+1.  **Mandatory Linking**: Every occurrence of a type, interface, enum, or module in a method signature, property type, or description MUST be linked.
+2.  **Relative Paths**: references must use relative paths from the current file's location.
+    *   Sibling file: `xref:Sibling.adoc[Sibling]`
+    *   Parent directory: `xref:../types/Cell.adoc[Cell]`
+3.  **Parameter Tables**: Types listed in input/output tables must be linked, not just the text in the method signature.
+4.  **Consistency**: exact file names should be used for the link target, and the link text should match the entity name.
+
+=== Examples
+
+**Good:**
+[source,asciidoc]
+----
+|`color` |`xref:../enums/Color.adoc[Color]` |The theme color.
+----
+
+**Bad:**
+[source,asciidoc]
+----
+|`color` |`Color` |The theme color.
+----

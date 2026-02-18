@@ -4,9 +4,9 @@ Extension of `Initializable` specifically for rendering components.
 
 == Methods
 
-=== `setup(metrics: RendererMetrics): void`
+=== `setup(metrics: xref:../types/RendererMetrics.adoc[RendererMetrics]): void`
 Invoked with live geometric metrics for the current session.
 
 == General Usage
 
-Implemented by components like `DisplayRenderer` to receive pre-calculated X/Y origins and cell sizes before the first frame is drawn.
+Implemented by components like `xref:../modules/DisplayRenderer.adoc[DisplayRenderer]` to receive pre-calculated X/Y origins and cell sizes before the first frame is drawn.

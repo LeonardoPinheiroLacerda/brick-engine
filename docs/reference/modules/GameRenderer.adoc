@@ -16,11 +16,11 @@ Read-only property containing the calculated dimensions and origins for all UI c
 
 **Returns**
 
-`RendererMetrics` - An object containing geometric data for `display`, `hud`, and individual `cells`.
+`xref:../types/RendererMetrics.adoc[RendererMetrics]` - An object containing geometric data for `display`, `hud`, and individual `cells`.
 
 **Behavior**
 
-Calculates metrics once during initialization based on the current canvas size and configuration. These values are used by all other modules (like `GameText`) to ensure pixel-perfect alignment.
+Calculates metrics once during initialization based on the current canvas size and configuration. These values are used by all other modules (like `xref:GameText.adoc[GameText]`) to ensure pixel-perfect alignment.
 
 
 '''
@@ -34,7 +34,7 @@ Registers a new rendering layer.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`renderer` |`Renderer` |An implementation of the `Renderer` interface (e.g., `DisplayRenderer`).
+|`renderer` |`xref:../interfaces/Renderer.adoc[Renderer]` |An implementation of the `xref:../interfaces/Renderer.adoc[Renderer]` interface (e.g., `xref:DisplayRenderer.adoc[DisplayRenderer]`).
 |===
 
 **Behavior**
@@ -53,8 +53,8 @@ The main drawing execution call.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`grid` |`Cell[][]` |The current 2D matrix of cells to visualize.
-|`modules` |`GameModules` |Reference to all available modules for context-aware rendering.
+|`grid` |`xref:../types/Cell.adoc[Cell][][]` |The current 2D matrix of cells to visualize.
+|`modules` |`xref:../interfaces/GameModules.adoc[GameModules]` |Reference to all available modules for context-aware rendering.
 |===
 
 **Behavior**

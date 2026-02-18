@@ -6,7 +6,7 @@
 
 toc::[]
 
-The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `Renderer` interface and is managed by the `GameRenderer`.
+The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `xref:../interfaces/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
 
 == API Reference
 
@@ -19,7 +19,7 @@ Initializes the renderer and pre-calculates the static scene.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`rendererMetrics` |`RendererMetrics` |The layout metrics calculated by `GameRenderer`.
+|`rendererMetrics` |`xref:../types/RendererMetrics.adoc[RendererMetrics]` |The layout metrics calculated by `xref:GameRenderer.adoc[GameRenderer]`.
 |===
 
 **Behavior**
@@ -38,7 +38,7 @@ Executes the main display drawing logic.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`grid` |`Cell[][]` |The current matrix of game cells.
+|`grid` |`xref:../types/Cell.adoc[Cell][][]` |The current matrix of game cells.
 |===
 
 **Behavior**

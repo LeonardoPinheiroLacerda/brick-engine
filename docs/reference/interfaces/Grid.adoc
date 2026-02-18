@@ -13,47 +13,47 @@ Interface defining the behaviors of a 2D grid of cells.
 
 == Methods
 
-=== `getGrid(): Cell[][]`
-Returns the raw 2D array of `Cell` objects representing the grid state.
+=== `getGrid(): xref:../types/Cell.adoc[Cell][][]`
+Returns the raw 2D array of `xref:../types/Cell.adoc[Cell]` objects representing the grid state.
 
 '''
 
 === `resetGrid(): void`
-Clears all cell values and resets colors to `DEFAULT`.
+Clears all cell values and resets colors to `xref:../enums/Color.adoc[DEFAULT]`.
 
 '''
 
-=== `forEach(callback: (cell: Cell) => void): void`
+=== `forEach(callback: (cell: xref:../types/Cell.adoc[Cell]) => void): void`
 Iterates over every cell in the grid, executing the provided callback.
 
 '''
 
-=== `isValidCoordinate(coordinate: Coordinate): boolean`
+=== `isValidCoordinate(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 Returns `true` if the given coordinate falls within the grid boundaries.
 
 '''
 
-=== `getCell(coordinate: Coordinate): Cell | null`
-Retrieves the `Cell` object at the specified coordinate. Returns `null` if the coordinate is invalid.
+=== `getCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell] | null`
+Retrieves the `xref:../types/Cell.adoc[Cell]` object at the specified coordinate. Returns `null` if the coordinate is invalid.
 
 '''
 
-=== `setCellValue(coordinate: Coordinate, value: number): void`
+=== `setCellValue(coordinate: xref:../types/Coordinate.adoc[Coordinate], value: number): void`
 Updates the numeric value of the cell at the given coordinate.
 
 '''
 
-=== `setCellColor(coordinate: Coordinate, color: Color): void`
+=== `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
 Updates the visual color of the cell at the given coordinate.
 
 '''
 
-=== `isCellActive(coordinate: Coordinate): boolean`
+=== `isCellActive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 Returns `true` if the cell's value is greater than `0`.
 
 '''
 
-=== `isCellInactive(coordinate: Coordinate): boolean`
+=== `isCellInactive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 Returns `true` if the cell's value is `0`.
 
 '''
@@ -118,19 +118,19 @@ Detects and clears all full columns. Returns the count of cleared columns.
 
 '''
 
-=== `isAreaOccupied(coordinates: Coordinate[]): boolean`
+=== `isAreaOccupied(coordinates: xref:../types/Coordinate.adoc[Coordinate][]): boolean`
 Returns `true` if any of the provided coordinates are already active in the grid. Used for collision detection.
 
 '''
 
-=== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
+=== `fillArea(start: xref:../types/Coordinate.adoc[Coordinate], end: xref:../types/Coordinate.adoc[Coordinate], value: number, color: xref:../enums/Color.adoc[Color]): void`
 Batch updates a rectangular area defined by `start` and `end` with the given value and color.
 
 '''
 
-=== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
+=== `stampPiece(coordinates: xref:../types/Coordinate.adoc[Coordinate][], value: number, color: xref:../enums/Color.adoc[Color]): void`
 Applies the specified value and color to multiple discrete coordinates simultaneously.
 
 == General Usage
 
-The `Grid` interface is implemented by both the main `GameGrid` and the `GameHudGrid`.
+The `Grid` interface is implemented by both the main `xref:../modules/GameGrid.adoc[GameGrid]` and the `xref:../modules/GameHudGrid.adoc[GameHudGrid]`.

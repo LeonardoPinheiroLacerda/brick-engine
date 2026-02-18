@@ -12,12 +12,12 @@ An advanced renderer that manages a collection of individual layers.
 
 == Methods
 
-=== `addRenderer(renderer: Renderer): void`
+=== `addRenderer(renderer: xref:Renderer.adoc[Renderer]): void`
 Attaches a new visual layer.
 
 '''
 
-=== `render(grid: Cell[][], modules: GameModules): void`
+=== `render(grid: xref:../types/Cell.adoc[Cell][][], modules: xref:GameModules.adoc[GameModules]): void`
 Orchestrates the rendering call for all layers.
 
 == General Usage

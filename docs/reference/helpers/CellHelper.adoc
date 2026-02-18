@@ -10,7 +10,7 @@ The `CellHelper` provides static factory methods for creating and initializing `
 
 == Methods
 
-=== `emptyCell(coordinate: Coordinate): Cell`
+=== `emptyCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell]`
 
 Creates a new cell with default "OFF" state values.
 
@@ -24,8 +24,8 @@ Creates a new cell with default "OFF" state values.
 
 **Returns**
 
-`Cell` - A cell object with `value: 0` and `Color.DEFAULT`.
+`Cell` - A cell object with `value: 0` and `xref:../enums/Color.adoc[Color].DEFAULT`.
 
 **Behavior**
 
-This is used primarily by `GameGrid` to populate the initial matrix during allocation or when resetting a row/column.
+This is used primarily by `xref:../modules/GameGrid.adoc[GameGrid]` to populate the initial matrix during allocation or when resetting a row/column.

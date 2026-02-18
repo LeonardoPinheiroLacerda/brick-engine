@@ -26,5 +26,5 @@ Maps sound identifiers to their relative asset paths.
 
 == General Usage
 
-Use these constants to trigger audio effects via the `GameSound` module.
+Use these constants to trigger audio effects via the `xref:../modules/GameSound.adoc[GameSound]` module.
 Example: `modules.sound.play(Sound.EXPLOSION)`.

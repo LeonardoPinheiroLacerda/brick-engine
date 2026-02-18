@@ -14,4 +14,4 @@ Represents the state of an individual unit within the 2D game grid.
 
 == General Usage
 
-Cells are managed by the `GameGrid` module. They are rarely created manually; instead, they are accessed and modified via methods like `grid.getCell(coord)` and `grid.setCellValue(coord, val)`.
+Cells are managed by the `xref:../modules/GameGrid.adoc[GameGrid]` module. They are rarely created manually; instead, they are accessed and modified via methods like `grid.getCell(coord)` and `grid.setCellValue(coord, val)`.

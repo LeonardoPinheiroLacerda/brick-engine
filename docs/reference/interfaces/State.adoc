@@ -64,12 +64,12 @@ Updates the persistent high score.
 
 '''
 
-=== `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
+=== `subscribe(property: xref:../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
 Registers a listener for changes to a specific state property.
 
 '''
 
-=== `unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
+=== `unsubscribe(property: xref:../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
 Removes a previously registered property listener.
 
 '''
@@ -134,4 +134,4 @@ Returns the active namespace prefix.
 
 == General Usage
 
-Implemented by `GameState`. It serves as the single source of truth for the engine's behavior tree.
+Implemented by `xref:../modules/GameState.adoc[GameState]`. It serves as the single source of truth for the engine's behavior tree.

@@ -4,9 +4,9 @@ Defines the core drawing contract for engine visual layers.
 
 == Methods
 
-=== `render(grid: Cell[][], modules: GameModules): void`
+=== `render(grid: xref:../types/Cell.adoc[Cell][][], modules: xref:GameModules.adoc[GameModules]): void`
 Executes the drawing logic for a single frame.
 
 == General Usage
 
-Implemented by `DisplayRenderer` and `HudRenderer`. The engine's composite renderer iterates through all registered `Renderer` implementations and calls their `render` method 60 times per second.
+Implemented by `xref:../modules/DisplayRenderer.adoc[DisplayRenderer]` and `xref:../modules/HudRenderer.adoc[HudRenderer]`. The engine's composite renderer iterates through all registered `Renderer` implementations and calls their `render` method 60 times per second.

@@ -13,4 +13,4 @@ Represents a generic 2D vector for directional or magnitude calculations.
 
 == General Usage
 
-Unlike `Coordinate`, which usually implies a position, `Vector` is used for transformations, velocities, and offsets applied to coordinates.
+Unlike `xref:Coordinate.adoc[Coordinate]`, which usually implies a position, `Vector` is used for transformations, velocities, and offsets applied to coordinates.

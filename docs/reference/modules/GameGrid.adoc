@@ -49,18 +49,18 @@ Clears all cells and populates them with default empty cell objects using dimens
 
 '''
 
-=== `getGrid(): Cell[][]`
+=== `getGrid(): xref:../types/Cell.adoc[Cell][][]`
 
 Returns the underlying 2D array of cells.
 
 **Returns**
 
-`Cell[][]` - The matrix representing the grid state.
+`xref:../types/Cell.adoc[Cell][][]` - The matrix representing the grid state.
 
 
 '''
 
-=== `forEach(callback: (cell: Cell) => void): void`
+=== `forEach(callback: (cell: xref:../types/Cell.adoc[Cell]) => void): void`
 
 Iterates over every cell and executes the provided callback.
 
@@ -69,13 +69,13 @@ Iterates over every cell and executes the provided callback.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`callback` |`(cell: Cell) => void` |Function to execute for each cell.
+|`callback` |`(cell: xref:../types/Cell.adoc[Cell]) => void` |Function to execute for each cell.
 |===
 
 
 '''
 
-=== `isValidCoordinate(coordinate: Coordinate): boolean`
+=== `isValidCoordinate(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Verifies if a coordinate is within the current grid boundaries.
 
@@ -84,7 +84,7 @@ Verifies if a coordinate is within the current grid boundaries.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |The `{x, y}` point to validate.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |The `{x, y}` point to validate.
 |===
 
 **Returns**
@@ -94,7 +94,7 @@ Verifies if a coordinate is within the current grid boundaries.
 
 '''
 
-=== `getCell(coordinate: Coordinate): Cell | null`
+=== `getCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell] | null`
 
 Retrieves a cell at a specific coordinate.
 
@@ -103,17 +103,17 @@ Retrieves a cell at a specific coordinate.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |The `{x, y}` position to query.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |The `{x, y}` position to query.
 |===
 
 **Returns**
 
-`Cell | null` - The cell object, or `null` if the coordinate is out of bounds.
+`xref:../types/Cell.adoc[Cell] | null` - The cell object, or `null` if the coordinate is out of bounds.
 
 
 '''
 
-=== `setCellValue(coordinate: Coordinate, value: number): void`
+=== `setCellValue(coordinate: xref:../types/Coordinate.adoc[Coordinate], value: number): void`
 
 Updates the numeric value of a cell.
 
@@ -122,13 +122,13 @@ Updates the numeric value of a cell.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |Target position.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Target position.
 |`value` |`number` |New status value (0 for inactive, >0 for active).
 |===
 
 **Behavior**
 
-Updates only the `value` property of the cell. If the coordinate is invalid, the operation is ignored.
+Updates the `value` property of the cell. If the coordinate is invalid, the operation is ignored.
 
 
 '''
@@ -136,7 +136,7 @@ Updates only the `value` property of the cell. If the coordinate is invalid, the
 
 '''
 
-=== `setCellColor(coordinate: Coordinate, color: Color): void`
+=== `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
 
 Updates the color of a cell.
 
@@ -145,14 +145,14 @@ Updates the color of a cell.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |Target position.
-|`color` |`Color` |Enum value representing the new color.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Target position.
+|`color` |`xref:../enums/Color.adoc[Color]` |Enum value representing the new color.
 |===
 
 
 '''
 
-=== `isCellActive(coordinate: Coordinate): boolean`
+=== `isCellActive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Checks if a cell is currently occupied.
 
@@ -161,7 +161,7 @@ Checks if a cell is currently occupied.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |Point to check.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Point to check.
 |===
 
 **Returns**
@@ -171,7 +171,7 @@ Checks if a cell is currently occupied.
 
 '''
 
-=== `isCellInactive(coordinate: Coordinate): boolean`
+=== `isCellInactive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Checks if a cell is currently empty.
 
@@ -180,7 +180,7 @@ Checks if a cell is currently empty.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinate` |`Coordinate` |Point to check.
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Point to check.
 |===
 
 **Returns**
@@ -379,7 +379,18 @@ Shifts all columns to the left of an index.
 
 '''
 
-=== `isAreaOccupied(coordinates: Coordinate[]): boolean`
+=== `clearFullColumns(): number`
+
+Detects and clears all full columns.
+
+**Returns**
+
+`number` - The total count of cleared columns.
+
+
+'''
+
+=== `isAreaOccupied(coordinates: xref:../types/Coordinate.adoc[Coordinate][]): boolean`
 
 Checks for collisions between a list of coordinates and active cells in the grid.
 
@@ -388,7 +399,7 @@ Checks for collisions between a list of coordinates and active cells in the grid
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinates` |`Coordinate[]` |Array of `{x, y}` points representing a shape or piece.
+|`coordinates` |`xref:../types/Coordinate.adoc[Coordinate][]` |Array of `{x, y}` points representing a shape or piece.
 |===
 
 **Returns**
@@ -398,7 +409,7 @@ Checks for collisions between a list of coordinates and active cells in the grid
 
 '''
 
-=== `fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void`
+=== `fillArea(start: xref:../types/Coordinate.adoc[Coordinate], end: xref:../types/Coordinate.adoc[Coordinate], value: number, color: xref:../enums/Color.adoc[Color]): void`
 
 Fills a rectangular area with specified properties.
 
@@ -407,16 +418,16 @@ Fills a rectangular area with specified properties.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`start` |`Coordinate` |Top-left corner of the rectangle.
-|`end` |`Coordinate` |Bottom-right corner of the rectangle.
+|`start` |`xref:../types/Coordinate.adoc[Coordinate]` |Top-left corner of the rectangle.
+|`end` |`xref:../types/Coordinate.adoc[Coordinate]` |Bottom-right corner of the rectangle.
 |`value` |`number` |Value to apply to all cells in the area.
-|`color` |`Color` |Color to apply to all cells in the area.
+|`color` |`xref:../enums/Color.adoc[Color]` |Color to apply to all cells in the area.
 |===
 
 
 '''
 
-=== `stampPiece(coordinates: Coordinate[], value: number, color: Color): void`
+=== `stampPiece(coordinates: xref:../types/Coordinate.adoc[Coordinate][], value: number, color: xref:../enums/Color.adoc[Color]): void`
 
 Updates multiple specific coordinates simultaneously.
 
@@ -425,9 +436,9 @@ Updates multiple specific coordinates simultaneously.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinates` |`Coordinate[]` |Points to update.
+|`coordinates` |`xref:../types/Coordinate.adoc[Coordinate][]` |Points to update.
 |`value` |`number` |New cell value.
-|`color` |`Color` |New cell color.
+|`color` |`xref:../enums/Color.adoc[Color]` |New cell color.
 |===
 
 

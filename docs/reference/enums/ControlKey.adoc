@@ -19,4 +19,4 @@ Abstraction layer mapping hardware inputs to logical engine actions.
 
 == General Usage
 
-`ControlKey` is used when subscribing to input events via `GameControl.subscribe()` and when checking the `key` property of a `GameEvent`.
+`ControlKey` is used when subscribing to input events via `xref:../modules/GameControl.adoc[GameControl].subscribe()` and when checking the `key` property of a `xref:../types/GameEvent.adoc[GameEvent]`.

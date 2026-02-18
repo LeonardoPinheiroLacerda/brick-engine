@@ -40,9 +40,9 @@ Resets the game difficulty level to its initial value.
 
 '''
 
-=== `setState(state: State): void`
+=== `setState(state: xref:State.adoc[State]): void`
 Internal setup method to link the score module with high-score persistence logic.
 
 == General Usage
 
-Implemented by `GameScore`. It handles the numeric progression of the game and formats the data for display on the HUD.
+Implemented by `xref:../modules/GameScore.adoc[GameScore]`. It handles the numeric progression of the game and formats the data for display on the HUD.

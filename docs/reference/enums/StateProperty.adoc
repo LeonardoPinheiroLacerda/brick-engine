@@ -18,4 +18,4 @@ Enumerates all observable and persistent properties of the game system.
 
 == General Usage
 
-Used identifying which property changed in the `GameState.subscribe()` callback.
+Used identifying which property changed in the `xref:../modules/GameState.adoc[GameState].subscribe()` callback.

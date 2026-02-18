@@ -12,12 +12,12 @@ Interface for triggering audio effects and managing volume.
 
 == Methods
 
-=== `play(sound: Sound): Promise<void>`
+=== `play(sound: xref:../enums/Sound.adoc[Sound]): Promise<void>`
 Triggers an asynchronous playback of the specified audio asset.
 
 '''
 
-=== `stop(sound: Sound): Promise<void>`
+=== `stop(sound: xref:../enums/Sound.adoc[Sound]): Promise<void>`
 Abruptly terminates the playback of a specific sound identifier.
 
 '''
@@ -32,4 +32,4 @@ Flips the current `muted` property.
 
 == General Usage
 
-Implemented by `GameSound`. It abstracts the Web Audio API complexities, allowing games to simply call `modules.sound.play(Sound.DROP)`.
+Implemented by `xref:../modules/GameSound.adoc[GameSound]`. It abstracts the Web Audio API complexities, allowing games to simply call `modules.sound.play(Sound.DROP)`.

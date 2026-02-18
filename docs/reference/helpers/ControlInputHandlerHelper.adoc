@@ -10,11 +10,11 @@ The `ControlInputHandlerHelper` manages the complexity of input timing, such as 
 
 == Usage
 
-This helper is used by the `GameControl` module to normalize raw hardware events (like `keydown` and `keyup`) into engine-specific events.
+This helper is used by the `xref:../modules/GameControl.adoc[GameControl]` module to normalize raw hardware events (like `keydown` and `keyup`) into engine-specific events.
 
 == Methods
 
-=== `handlePress(key: ControlKey): void`
+=== `handlePress(key: xref:../enums/ControlKey.adoc[ControlKey]): void`
 
 Processes a new interaction with a specific key.
 
@@ -28,13 +28,13 @@ Processes a new interaction with a specific key.
 
 **Behavior**
 
-1.  Triggers the `PRESSED` event immediately.
+1.  Triggers the `xref:../enums/ControlEventType.adoc[PRESSED]` event immediately.
 2.  Starts a timer based on `configs.buttonHold.holdDelayMs`.
-3.  If the key is still active after the delay, it starts an interval that repeatedly triggers the `HELD` event.
+3.  If the key is still active after the delay, it starts an interval that repeatedly triggers the `xref:../enums/ControlEventType.adoc[HELD]` event.
 
 '''
 
-=== `handleRelease(key: ControlKey): void`
+=== `handleRelease(key: xref:../enums/ControlKey.adoc[ControlKey]): void`
 
 Stops tracking an active interaction.
 
@@ -43,9 +43,9 @@ Stops tracking an active interaction.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`ControlKey` |The key that was released.
+|`key` |xref:../enums/ControlKey.adoc[ControlKey] |The key that was released.
 |===
 
 **Behavior**
 
-Clears all active timers (delay and interval) for the specified key to stop `HELD` events from firing.
+Clears all active timers (delay and interval) for the specified key to stop `xref:../enums/ControlEventType.adoc[HELD]` events from firing.

@@ -12,9 +12,9 @@ Contract for modules that must react to global state changes.
 
 == Methods
 
-=== `syncState(state: State): void`
+=== `syncState(state: xref:State.adoc[State]): void`
 Links the module instance and allows it to subscribe to properties.
 
 == General Usage
 
-Implemented by `GameSound` and `GameScore`. During the start-up sequence, the engine calls `syncState()` on these modules to ensure they have the latest references to `muted` flags and `highScore` data.
+Implemented by `xref:../modules/GameSound.adoc[GameSound]` and `xref:../modules/GameScore.adoc[GameScore]`. During the start-up sequence, the engine calls `syncState()` on these modules to ensure they have the latest references to `muted` flags and `highScore` data.

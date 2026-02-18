@@ -37,4 +37,4 @@ Speeds up the game by decreasing the time between ticks.
 
 == General Usage
 
-Implemented by `GameTime`. This module ensures that game logic (like falling pieces) runs at a consistent speed regardless of the render frame rate.
+Implemented by `xref:../modules/GameTime.adoc[GameTime]`. This module ensures that game logic (like falling pieces) runs at a consistent speed regardless of the render frame rate.

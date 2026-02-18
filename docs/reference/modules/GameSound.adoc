@@ -19,7 +19,7 @@ Plays a preloaded sound effect.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`sound` |`Sound` |The enum identifier of the sound to play.
+|`sound` |`xref:../enums/Sound.adoc[Sound]` |The enum identifier of the sound to play.
 |===
 
 **Returns**
@@ -49,7 +49,7 @@ Stops all active instances of a specific sound.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`sound` |`Sound` |The enum identifier of the sound to stop.
+|`sound` |`xref:../enums/Sound.adoc[Sound]` |The enum identifier of the sound to stop.
 |===
 
 **Behavior**
@@ -72,7 +72,7 @@ Toggles the master mute status.
 
 **Behavior**
 
-Inverts the `muted` property in `GameState`. This change is automatically persisted to `LocalStorage` and reflected in the audio output.
+Inverts the `muted` property in `xref:GameState.adoc[GameState]`. This change is automatically persisted to `LocalStorage` and reflected in the audio output.
 
 
 '''
@@ -86,12 +86,12 @@ Synchronizes audio settings with the global game state.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`state` |`State` |The `GameState` instance to link with.
+|`state` |`xref:../interfaces/State.adoc[State]` |The `xref:GameState.adoc[GameState]` instance to link with.
 |===
 
 **Behavior**
 
-Implements the `StateSyncable` interface. Subscribes to changes in the `MUTED` property of the provided state and updates the master gain node accordingly.
+Implements the `xref:../interfaces/StateSyncable.adoc[StateSyncable]` interface. Subscribes to changes in the `MUTED` property of the provided state and updates the master gain node accordingly.
 
 
 '''

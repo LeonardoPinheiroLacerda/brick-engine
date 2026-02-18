@@ -13,4 +13,4 @@ Enumerates the different ways an input can be triggered.
 
 == General Usage
 
-Crucial for distinguishing between actions like "Rotate Once" (`PRESSED`) and "Move Continuously" (`HELD`). Used in subscription filters: `modules.control.subscribe(key, ControlEventType.HELD, callback)`.
+Crucial for distinguishing between actions like "Rotate Once" (`xref:../enums/ControlEventType.adoc[PRESSED]`) and "Move Continuously" (`xref:../enums/ControlEventType.adoc[HELD]`). Used in subscription filters: `xref:../modules/GameControl.adoc[modules.control].subscribe(key, ControlEventType.HELD, callback)`.

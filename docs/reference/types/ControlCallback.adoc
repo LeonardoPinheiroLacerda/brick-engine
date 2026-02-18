@@ -4,8 +4,8 @@ Type definition for functions that handle engine input.
 
 == Structure
 
-`type ControlCallback = (event: GameEvent) => void;`
+`type ControlCallback = (event: xref:GameEvent.adoc[GameEvent]) => void;`
 
 == General Usage
 
-This type ensures that functions passed to `modules.control.subscribe(key, type, callback)` correctly accept the `GameEvent` context.
+This type ensures that functions passed to `modules.control.subscribe(key, type, callback)` (see `xref:../modules/GameControl.adoc[GameControl]`) correctly accept the `xref:GameEvent.adoc[GameEvent]` context.

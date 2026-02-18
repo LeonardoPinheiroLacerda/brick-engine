@@ -6,7 +6,7 @@
 
 toc::[]
 
-The `Debugger` class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the `Debuggable` interface.
+The `Debugger` class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the `xref:../interfaces/Debuggable.adoc[Debuggable]` interface.
 
 == API Reference
 
@@ -16,7 +16,7 @@ Initializes the debugger's DOM structure.
 
 **Behavior**
 
-Creates the main debugger container (`<details id="debugger">`) and appends it to the document body. It scans all registered `GameModules` and prepares the UI sections for those that expose debug information via `getDebugData`.
+Creates the main debugger container (`<details id="debugger">`) and appends it to the document body. It scans all registered `xref:../interfaces/GameModules.adoc[GameModules]` and prepares the UI sections for those that expose debug information via `getDebugData`.
 
 
 '''
