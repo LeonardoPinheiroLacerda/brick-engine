@@ -134,7 +134,6 @@ Updates the `value` property of the cell. If the coordinate is invalid, the oper
 '''
 
 
-'''
 
 === `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
 

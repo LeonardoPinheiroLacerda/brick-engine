@@ -14,122 +14,385 @@ Interface defining the behaviors of a 2D grid of cells.
 == Methods
 
 === `getGrid(): xref:../types/Cell.adoc[Cell][][]`
+
 Returns the raw 2D array of `xref:../types/Cell.adoc[Cell]` objects representing the grid state.
+
+**Returns**
+
+`xref:../types/Cell.adoc[Cell][][]` - The matrix representing the grid state.
+
 
 '''
 
 === `resetGrid(): void`
+
 Clears all cell values and resets colors to `xref:../enums/Color.adoc[DEFAULT]`.
+
 
 '''
 
 === `forEach(callback: (cell: xref:../types/Cell.adoc[Cell]) => void): void`
+
 Iterates over every cell in the grid, executing the provided callback.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`callback` |`(cell: xref:../types/Cell.adoc[Cell]) => void` |Function to execute for each cell.
+|===
+
 
 '''
 
 === `isValidCoordinate(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+
 Returns `true` if the given coordinate falls within the grid boundaries.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |The `{x, y}` point to validate.
+|===
+
+**Returns**
+
+`boolean` - `true` if valid, `false` otherwise.
+
 
 '''
 
 === `getCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell] | null`
-Retrieves the `xref:../types/Cell.adoc[Cell]` object at the specified coordinate. Returns `null` if the coordinate is invalid.
+
+Retrieves the `xref:../types/Cell.adoc[Cell]` object at the specified coordinate.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |The `{x, y}` position to query.
+|===
+
+**Returns**
+
+`xref:../types/Cell.adoc[Cell] | null` - The cell object, or `null` if the coordinate is out of bounds.
+
 
 '''
 
 === `setCellValue(coordinate: xref:../types/Coordinate.adoc[Coordinate], value: number): void`
+
 Updates the numeric value of the cell at the given coordinate.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Target position.
+|`value` |`number` |New status value (0 for inactive, >0 for active).
+|===
+
 
 '''
 
 === `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
+
 Updates the visual color of the cell at the given coordinate.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Target position.
+|`color` |`xref:../enums/Color.adoc[Color]` |Enum value representing the new color.
+|===
+
 
 '''
 
 === `isCellActive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+
 Returns `true` if the cell's value is greater than `0`.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Point to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if the cell value is greater than 0.
+
 
 '''
 
 === `isCellInactive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+
 Returns `true` if the cell's value is `0`.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Point to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if the cell value is exactly 0.
+
 
 '''
 
 === `isRowFull(y: number): boolean`
+
 Returns `true` if every cell in the specified row `y` is active.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`y` |`number` |Row index to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if full.
+
 
 '''
 
 === `isRowEmpty(y: number): boolean`
+
 Returns `true` if every cell in the specified row `y` is inactive.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`y` |`number` |Row index to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if empty.
+
 
 '''
 
 === `clearRow(y: number): void`
+
 Resets all cells in row `y` to their inactive state.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`y` |`number` |Row index to clear.
+|===
+
 
 '''
 
 === `shiftRowsDown(fromY: number): void`
+
 Moves all rows above (and including) `fromY` down by one position.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`fromY` |`number` |The row index to start shifting from.
+|===
+
 
 '''
 
 === `shiftRowsUp(fromY: number): void`
+
 Moves all rows below (and including) `fromY` up by one position.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`fromY` |`number` |The row index to start shifting from.
+|===
+
 
 '''
 
 === `clearFullRows(): number`
-Detects, clears, and shifts rows for all full rows in the grid. Returns the count of cleared rows.
+
+Detects, clears, and shifts rows for all full rows in the grid.
+
+**Returns**
+
+`number` - The total count of cleared rows.
+
 
 '''
 
 === `isColumnFull(x: number): boolean`
+
 Returns `true` if every cell in column `x` is active.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`x` |`number` |Column index to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if full.
+
 
 '''
 
 === `isColumnEmpty(x: number): boolean`
+
 Returns `true` if every cell in column `x` is inactive.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`x` |`number` |Column index to check.
+|===
+
+**Returns**
+
+`boolean` - `true` if empty.
+
 
 '''
 
 === `clearColumn(x: number): void`
+
 Resets all cells in column `x` to their inactive state.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`x` |`number` |Column index to clear.
+|===
+
 
 '''
 
 === `shiftColumnsRight(fromX: number): void`
+
 Moves all columns to the left of `fromX` one position to the right.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`fromX` |`number` |The column index to start shifting from.
+|===
+
 
 '''
 
 === `shiftColumnsLeft(fromX: number): void`
+
 Moves all columns to the right of `fromX` one position to the left.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`fromX` |`number` |The column index to start shifting from.
+|===
+
 
 '''
 
 === `clearFullColumns(): number`
-Detects and clears all full columns. Returns the count of cleared columns.
+
+Detects and clears all full columns.
+
+**Returns**
+
+`number` - The total count of cleared columns.
+
 
 '''
 
 === `isAreaOccupied(coordinates: xref:../types/Coordinate.adoc[Coordinate][]): boolean`
+
 Returns `true` if any of the provided coordinates are already active in the grid. Used for collision detection.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinates` |`xref:../types/Coordinate.adoc[Coordinate][]` |Array of `{x, y}` points representing a shape or piece.
+|===
+
+**Returns**
+
+`boolean` - `true` if occupied.
+
 
 '''
 
 === `fillArea(start: xref:../types/Coordinate.adoc[Coordinate], end: xref:../types/Coordinate.adoc[Coordinate], value: number, color: xref:../enums/Color.adoc[Color]): void`
+
 Batch updates a rectangular area defined by `start` and `end` with the given value and color.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`start` |`xref:../types/Coordinate.adoc[Coordinate]` |Top-left corner of the rectangle.
+|`end` |`xref:../types/Coordinate.adoc[Coordinate]` |Bottom-right corner of the rectangle.
+|`value` |`number` |Value to apply to all cells in the area.
+|`color` |`xref:../enums/Color.adoc[Color]` |Color to apply to all cells in the area.
+|===
+
 
 '''
 
 === `stampPiece(coordinates: xref:../types/Coordinate.adoc[Coordinate][], value: number, color: xref:../enums/Color.adoc[Color]): void`
+
 Applies the specified value and color to multiple discrete coordinates simultaneously.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coordinates` |`xref:../types/Coordinate.adoc[Coordinate][]` |Points to update.
+|`value` |`number` |New cell value.
+|`color` |`xref:../enums/Color.adoc[Color]` |New cell color.
+|===
+
 
 == General Usage
 

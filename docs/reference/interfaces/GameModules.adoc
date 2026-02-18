@@ -13,7 +13,7 @@ The central hub providing component-to-component visibility.
 |`control` |xref:Control.adoc[Control] |Input handling service.
 |`text` |xref:Text.adoc[Text] |Canvas typography service.
 |`time` |xref:Time.adoc[Time] |Logical clock manager.
-|`sound` |xref:SoundModule.adoc[SoundModule] |Audio playback service.
+|`sound` |xref:Sound.adoc[Sound] |Audio playback service.
 |`score` |xref:Score.adoc[Score] |Session performance tracker.
 |`renderer` |xref:RendererComposite.adoc[RendererComposite] |The visual orchestration layer.
 |===

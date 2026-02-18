@@ -5,7 +5,16 @@ Extension of `Initializable` specifically for rendering components.
 == Methods
 
 === `setup(metrics: xref:../types/RendererMetrics.adoc[RendererMetrics]): void`
+
 Invoked with live geometric metrics for the current session.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`metrics` |`xref:../types/RendererMetrics.adoc[RendererMetrics]` |The calculated display dimensions and offsets.
+|===
 
 == General Usage
 

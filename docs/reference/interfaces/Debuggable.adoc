@@ -5,7 +5,12 @@ Contract for modules that provide transparency to the developer.
 == Methods
 
 === `getDebugData(): Record<string, string | number | boolean>`
+
 Returns a dictionary of internal metrics for real-time inspection.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Key-value pairs of debug information.
 
 == General Usage
 
