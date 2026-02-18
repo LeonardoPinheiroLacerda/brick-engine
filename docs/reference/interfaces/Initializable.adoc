@@ -4,8 +4,6 @@ A fundamental contract for modules that require an assembly phase.
 
 == Methods
 
-'''
-
 === `setup(): void`
 Invoked once by the engine after all modules are constructed.
 

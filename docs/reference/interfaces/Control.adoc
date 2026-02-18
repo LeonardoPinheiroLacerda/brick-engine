@@ -4,8 +4,6 @@ Interface for input handling and event-driven control distribution.
 
 == Methods
 
-'''
-
 === `notify(key: ControlKey, type: ControlEventType): void`
 Triggers an event manually. Usually called by hardware drivers (like Keyboard listeners).
 

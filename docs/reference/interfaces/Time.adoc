@@ -12,8 +12,6 @@ Interface for managing the game's logical clock and update frequency.
 
 == Methods
 
-'''
-
 === `update(deltaTime: number): void`
 Adds elapsed time to the internal accumulator. Called every frame.
 

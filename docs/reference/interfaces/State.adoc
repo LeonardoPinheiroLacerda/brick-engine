@@ -4,8 +4,6 @@ Interface for managing global game lifecycle flags, persistence, and preferences
 
 == Methods
 
-'''
-
 === `isOn(): boolean`
 Returns `true` if the engine is "powered on".
 

@@ -10,8 +10,6 @@ The `CellHelper` provides static factory methods for creating and initializing `
 
 == Methods
 
-'''
-
 === `emptyCell(coordinate: Coordinate): Cell`
 
 Creates a new cell with default "OFF" state values.

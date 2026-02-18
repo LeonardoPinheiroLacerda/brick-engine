@@ -12,8 +12,6 @@ Interface for triggering audio effects and managing volume.
 
 == Methods
 
-'''
-
 === `play(sound: Sound): Promise<void>`
 Triggers an asynchronous playback of the specified audio asset.
 

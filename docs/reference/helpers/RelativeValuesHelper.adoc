@@ -10,8 +10,6 @@ The `RelativeValuesHelper` provides conversion utilities for scaling absolute si
 
 == Methods
 
-'''
-
 === `getRelativeWidth(p: p5, size: number): number`
 
 Calculates a pixel width based on a normalized percentage.

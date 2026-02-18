@@ -49,11 +49,13 @@ To maintain scannability, documentation is organized into specialized subdirecto
 - `types/`: Data interfaces and composite shapes (Cell, Coordinate, etc.).
 - `helpers/`: Static utility classes.
 
-=== Style Rules
-.   **Hierarchy & Granularity**:
-    *   **One File Per Item**: Every public Enum, Type, Interface, and Module **MUST** have its own dedicated `.adoc` file. Do not group them.
     *   Use `===` for all methods within a module/interface file.
-    *   **Separators**: Place a horizontal rule (`'''`) before every `===` header except the first one in a section.
+    *   **Separators**: Place a horizontal rule (`'''`) before every `===` header.
+    +
+    [IMPORTANT]
+    ====
+    **NEVER** place a horizontal rule (`'''`) before the **first** method in a section. The first method should follow the section header (e.g., `== Methods`) after a single blank line.
+    ====
     *   Maintain a **flat list** of methods under the `== API Reference` or `== Methods` sections.
 .   **Parameters**:
     *   Use a table for arguments.
@@ -137,3 +139,7 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 === Cross-Linking Context
 *   **Recommendation**: When referencing an entity in a table (e.g., a return type or parameter type), always use an `xref:` link to its dedicated documentation page.
 *   **Pattern**: Use relative paths (e.g., `xref:../enums/Color.adoc[Color]`) to link between subdirectories.
+
+=== Redundant Separators
+*   **Issue**: Automated or careless application of the "expanded method" style often leads to placing a horizontal rule (`'''`) at the very beginning of the `== Methods` section.
+*   **Solution**: Always verify that the first method header appears immediately after the section header. This maintains a clean vertical rhythm and avoids unnecessary whitespace or lines at the top of the API list.

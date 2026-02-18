@@ -14,8 +14,6 @@ This helper is used by the `GameControl` module to normalize raw hardware events
 
 == Methods
 
-'''
-
 === `handlePress(key: ControlKey): void`
 
 Processes a new interaction with a specific key.

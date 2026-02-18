@@ -4,8 +4,6 @@ Interface for drawing pixelated, responsive typography.
 
 == Methods
 
-'''
-
 === `setTextSize(fontSize: FontSize): void`
 Sets the scale of the subsequent text operations.
 

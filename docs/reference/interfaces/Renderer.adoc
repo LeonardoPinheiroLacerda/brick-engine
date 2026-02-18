@@ -4,8 +4,6 @@ Defines the core drawing contract for engine visual layers.
 
 == Methods
 
-'''
-
 === `render(grid: Cell[][], modules: GameModules): void`
 Executes the drawing logic for a single frame.
 

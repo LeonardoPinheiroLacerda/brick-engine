@@ -12,8 +12,6 @@ An advanced renderer that manages a collection of individual layers.
 
 == Methods
 
-'''
-
 === `addRenderer(renderer: Renderer): void`
 Attaches a new visual layer.
 

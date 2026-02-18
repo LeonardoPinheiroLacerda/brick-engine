@@ -12,8 +12,6 @@ Contract for modules that must react to global state changes.
 
 == Methods
 
-'''
-
 === `syncState(state: State): void`
 Links the module instance and allows it to subscribe to properties.
 

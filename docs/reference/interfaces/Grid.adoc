@@ -13,8 +13,6 @@ Interface defining the behaviors of a 2D grid of cells.
 
 == Methods
 
-'''
-
 === `getGrid(): Cell[][]`
 Returns the raw 2D array of `Cell` objects representing the grid state.
 

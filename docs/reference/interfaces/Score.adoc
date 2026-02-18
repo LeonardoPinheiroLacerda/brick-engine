@@ -15,8 +15,6 @@ Interface for tracking session performance, multipliers, and levels.
 
 == Methods
 
-'''
-
 === `increaseScore(amount: number): void`
 Adds points to the total, automatically applying any active multipliers.
 
