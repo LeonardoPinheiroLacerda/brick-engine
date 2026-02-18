@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 
 import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
@@ -7,7 +7,7 @@ import { Renderer } from '../../types/modules';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 export default class DisplayRenderer implements Renderer {
-    private _p: P5;
+    private _p: p5;
 
     private _rendererMetrics: RendererMetrics;
 
@@ -21,9 +21,9 @@ export default class DisplayRenderer implements Renderer {
     };
 
     // Static graphics buffer for optimized rendering
-    private _staticGraphics: P5.Graphics;
+    private _staticGraphics: p5.Graphics;
 
-    constructor(p: P5) {
+    constructor(p: p5) {
         this._p = p;
     }
 

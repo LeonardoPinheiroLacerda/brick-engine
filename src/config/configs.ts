@@ -122,7 +122,7 @@ export default {
     },
     /** Selectors for DOM elements. */
     selectors: {
-        /** Root container where the P5 instance is attached. */
+        /** Root container where the p5 instance is attached. */
         parent: '#brick-game',
 
         /** Splash screen shown during initial load. */

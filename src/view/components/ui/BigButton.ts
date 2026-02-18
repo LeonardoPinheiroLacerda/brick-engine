@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 
 /**
  * Creates the large action button.
@@ -6,12 +6,12 @@ import P5 from 'p5';
  * This button is typically used for the primary game action (e.g., rotate, fire).
  * It creates a specific container and applies large button styles.
  *
- * @param p - The P5 instance.
+ * @param p - The p5 instance.
  * @param container - The container element to attach the button to.
  * @param label - The text label for the button (currently used for aria-label or internal logic as visual label is commented out).
  * @returns The created button element.
  */
-export default function BigButton(p: P5, container: P5.Element, label: string) {
+export default function BigButton(p: p5, container: p5.Element, label: string) {
     //Container
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);

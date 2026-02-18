@@ -1,5 +1,5 @@
-import P5 from 'p5';
-import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound as SoundEnum } from './enums';
+import p5 from 'p5';
+import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound } from './enums';
 import { Initializable, RendererInitializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
 
@@ -450,18 +450,18 @@ export interface Time extends Initializable {
 /**
  * Interface for the sound module.
  */
-export interface Sound extends Initializable {
+export interface SoundModule extends Initializable {
     /**
      * Plays a sound effect.
      * @param sound The sound to play.
      */
-    play(sound: SoundEnum): Promise<void>;
+    play(sound: Sound): Promise<void>;
 
     /**
      * Stops a specific sound effect.
      * @param sound The sound to stop.
      */
-    stop(sound: SoundEnum): Promise<void>;
+    stop(sound: Sound): Promise<void>;
 
     /**
      * Stops all playing sounds.
@@ -501,10 +501,10 @@ export interface TimePerformanceMonitor {
 
     /**
      * Renders the performance overlay.
-     * @param p The P5 instance.
+     * @param p The p5 instance.
      * @param tickInterval The current tick interval.
      */
-    render(p: P5, tickInterval: number): void;
+    render(p: p5, tickInterval: number): void;
 }
 
 /**

@@ -1,5 +1,5 @@
-import P5 from 'p5';
-import GameView from '../view/GameView';
+import p5 from 'p5';
+import type GameView from '../view/GameView';
 import GameControl from './module/control/GameControl';
 import GameGrid from './module/grid/GameGrid';
 import GameRenderer from './module/renderer/GameRenderer';
@@ -18,20 +18,52 @@ import Debugger from './Debugger';
 /**
  * Base abstract class for the game.
  *
- * It manages the game loop, initialization of core modules, and integration with P5.js.
+ * It manages the game loop, initialization of core modules, and integration with p5.js.
  * All game logic should be implemented in subclasses by overriding `processTick` and `processFrame`.
  */
 export default abstract class Game implements Initializable {
-    private _p: P5;
-
-    private _modules: GameModules;
+    private _p: p5;
     private _view: GameView;
 
-    private _debugger: Debugger;
+    private _modules: GameModules;
 
-    constructor(p: P5, view: GameView) {
+    private _debugger: Debugger;
+    private static _switchHandler: (newGame: Game) => void;
+
+    /**
+     * Registers the callback to be used when a game requests to switch to another game.
+     * This is typically called by the engine's main loop (index.ts).
+     * @param handler The callback function.
+     */
+    static setSwitchHandler(handler: (newGame: Game) => void) {
+        Game._switchHandler = handler;
+    }
+
+    constructor(p: p5, view: GameView) {
         this._p = p;
         this._view = view;
+    }
+
+    /**
+     * Gets the game view.
+     * @returns {GameView} The game view.
+     */
+    get view(): GameView {
+        return this._view;
+    }
+
+    /**
+     * Switches execution to a new game instance.
+     * Use this instead of global window methods.
+     * @param newGame The new game instance to load.
+     */
+    switchGame(newGame: Game): void {
+        this.destroy(); // Clean up current game
+        if (Game._switchHandler) {
+            Game._switchHandler(newGame);
+        } else {
+            console.error('Game switch handler not registered. Cannot switch game.');
+        }
     }
 
     /**
@@ -91,10 +123,12 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Main draw loop, called by P5.js.
+     * Main draw loop, called by p5.js.
      * Handles time updates, logic ticks, and rendering.
      */
     draw() {
+        if (!this._modules) return;
+
         const { renderer, grid, time, state } = this._modules;
 
         renderer.render(grid.getGrid(), this._modules);
@@ -124,42 +158,6 @@ export default abstract class Game implements Initializable {
         this._debugger.update();
     }
 
-    private _subscribeSystemControls(): void {
-        const { control, state, grid } = this._modules;
-
-        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-            if (state.isOn()) {
-                state.turnOff();
-                this.modules.sound.stopAll();
-            } else {
-                state.turnOn();
-            }
-        });
-        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
-        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
-
-        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
-            grid.resetGrid();
-            this.modules.score.resetScore();
-            this.modules.score.resetLevel();
-            state.resetGame();
-        });
-
-        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
-            if (!state.isStarted()) {
-                state.startGame();
-            } else if (state.isPlaying()) {
-                state.pause();
-            } else {
-                state.resume();
-            }
-        });
-
-        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-            this._p.noLoop();
-        });
-    }
-
     /**
      * Destroys the game instance, cleaning up all event listeners and stopping the loop.
      * Call this before switching to another game or when the game is no longer needed.
@@ -170,10 +168,6 @@ export default abstract class Game implements Initializable {
         if (this._modules) {
             this._modules.control.unbindControls();
             this._modules.sound.stopAll();
-        }
-
-        if (this._view) {
-            this._view.unbindControls();
         }
     }
 
@@ -217,4 +211,40 @@ export default abstract class Game implements Initializable {
      * Called when the game is in GAME OVER state.
      */
     abstract drawGameOverScreen(): void;
+
+    private _subscribeSystemControls(): void {
+        const { control, state, grid } = this._modules;
+
+        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
+            if (state.isOn()) {
+                state.turnOff();
+                this.modules.sound.stopAll();
+            } else {
+                state.turnOn();
+            }
+        });
+        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
+        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
+
+        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
+            grid.resetGrid();
+            this.modules.score.resetScore();
+            this.modules.score.resetLevel();
+            state.resetGame();
+        });
+
+        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
+            if (!state.isStarted()) {
+                state.startGame();
+            } else if (state.isPlaying()) {
+                state.pause();
+            } else {
+                state.resume();
+            }
+        });
+
+        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
+            this._p.noLoop();
+        });
+    }
 }

@@ -1,16 +1,24 @@
 import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
-import { games } from './GameRepository';
+import GameRepository from './GameRepository';
+import GameManager from './manager/GameManager';
 
 export default class GameMenu extends Game {
     private _gameSelectionPointer = 0;
+    private _isLoading = false;
+
+    private _gameRepository = new GameRepository();
+    private _gameManager = new GameManager(this._gameRepository);
 
     setupGame() {
         const { state, control, sound } = this.modules;
 
         control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
+            if (this._isLoading) return;
+
             if (state.isStarted()) {
-                // Game Selection Logic
+                const selectedGame = this._gameRepository.games[this._gameSelectionPointer];
+                this._gameManager.handleGameSelection(selectedGame, this);
             }
         });
 
@@ -18,7 +26,7 @@ export default class GameMenu extends Game {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
                 if (this._gameSelectionPointer === 0) {
-                    this._gameSelectionPointer = games.length - 1;
+                    this._gameSelectionPointer = this._gameRepository.games.length - 1;
                 } else {
                     this._gameSelectionPointer--;
                 }
@@ -28,7 +36,7 @@ export default class GameMenu extends Game {
         control.subscribe(ControlKey.RIGHT, ControlEventType.PRESSED, () => {
             if (state.isPlaying()) {
                 sound.play(Sound.ACTION_1);
-                if (this._gameSelectionPointer === games.length - 1) {
+                if (this._gameSelectionPointer === this._gameRepository.games.length - 1) {
                     this._gameSelectionPointer = 0;
                 } else {
                     this._gameSelectionPointer++;
@@ -50,6 +58,7 @@ export default class GameMenu extends Game {
     }
 
     update() {}
+
     render() {
         const { text } = this.modules;
 
@@ -75,7 +84,7 @@ export default class GameMenu extends Game {
 
         text.setTextSize(FontSize.MEDIUM);
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.BOTTOM);
-        text.textOnDisplay(games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
+        text.textOnDisplay(this._gameRepository.games[this._gameSelectionPointer].name, { x: 0.5, y: 0.55 });
 
         text.setTextSize(FontSize.EXTRA_SMALL);
         text.setTextAlign(FontAlign.LEFT, FontVerticalAlign.BOTTOM);

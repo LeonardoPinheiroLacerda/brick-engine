@@ -1,4 +1,4 @@
-import P5 from 'p5';
+import p5 from 'p5';
 import configs from '../../../config/configs';
 
 /**
@@ -7,7 +7,7 @@ import configs from '../../../config/configs';
 interface ContainerResponse {
     width: number;
     height: number;
-    container: P5.Element;
+    container: p5.Element;
 }
 
 /**
@@ -18,11 +18,11 @@ interface ContainerResponse {
  * On smaller screens (<= configs.viewLayout.mobileBreakpoint width), it attempts to fill the parent width.
  * On larger screens, it calculates the maximum dimensions that fit without overflowing vertically.
  *
- * @param {P5} p - The P5 instance.
+ * @param {p5} p - The p5 instance.
  * @param {HTMLElement} parent - The DOM element where the container will be appended.
  * @returns {ContainerResponse} Object containing the container element and its calculated width/height.
  */
-export default function ContainerLayout(p: P5, parent: HTMLElement): ContainerResponse {
+export default function ContainerLayout(p: p5, parent: HTMLElement): ContainerResponse {
     const container = p.createDiv();
     container.parent(configs.selectors.parent);
     container.id(configs.selectors.viewElementIds.container);

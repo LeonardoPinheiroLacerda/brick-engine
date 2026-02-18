@@ -1,0 +1,167 @@
+= Game Developer Guide
+
+This guide explains how to develop and package games for the Brick Engine.
+
+== Architecture
+
+The Brick Engine runs as a host application. Your game is loaded as a separate script bundle. To ensure compatibility and avoid code duplication:
+
+1.  **Do not bundle the engine**: Your game should treat `brick-engine` as an external dependency.
+2.  **Expose your class**: Your game must assign its main class to `window.BrickEngineGame`.
+
+== Project Setup
+
+=== 1. Dependencies
+
+You need `typescript` and `webpack` (or similar bundler). You also need the `brick-engine` types.
+
+=== Starting from Scratch
+
+If you are creating a new game project, follow these steps:
+
+1.  **Initialize Project**:
+    `npm init -y`
+
+2.  **Install Dependencies**:
+    `npm install --save-dev typescript webpack webpack-cli ts-loader unused-webpack-plugin` (adjust as needed)
+
+3.  **Configure TypeScript (`tsconfig.json`)**:
++
+[source,json]
+----
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "types": ["node"]
+    },
+    "include": ["src/**/*"]
+}
+----
+
+4.  **Configure Webpack (`webpack.config.js`)**:
+    (See section 3 below)
+
+5.  **Add Scripts to `package.json`**:
++
+[source,json]
+----
+"scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development"
+}
+----
+
+=== Local Development Setup (Linking)
+
+Since the engine is not yet published to npm, you can link it locally:
+
+1.  **In `brick-engine` folder**:
+    *   Run `npm install`
+    *   Run `npm run build:types` (to generate `.d.ts` files)
+    *   Run `npm link`
+2.  **In your game folder**:
+    *   Run `npm link brick-engine`
+
+This makes `import { Game } from 'brick-engine'` work in your editor!
+
+=== 2. Entry Point (`src/index.ts`)
+
+Instead of `new Game()`, you simply export your class to the global scope:
+
+[source,typescript]
+----
+import { Game } from 'brick-engine'; // Resolves to global BrickEngine.Game
+
+export default class MyGame extends Game {
+    setupGame() {
+        // ... your setup logic
+    }
+
+    update() {
+        // ... your update logic
+    }
+    
+    render() {
+        // ... your render logic
+    }
+}
+
+// CRITICAL: Register your game
+(window as any).BrickEngineGame = MyGame;
+----
+
+=== 3. Webpack Configuration
+
+Configure Webpack to exclude `brick-engine` and `p5` from your bundle.
+
+[source,javascript]
+----
+// webpack.config.js
+const path = require('path');
+
+module.exports = {
+    entry: './src/index.ts',
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
+    },
+    externals: {
+        'brick-engine': 'BrickEngine', // Maps import 'brick-engine' to window.BrickEngine
+        'p5': 'p5' // p5 is also provided by the engine
+    },
+    output: {
+        filename: 'my-game.bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+        library: {
+            type: 'var',
+            name: 'MyGameBundle' // Optional, but good practice
+        }
+    }
+};
+----
+
+== Local Testing
+
+You can test your game locally without uploading it:
+
+1.  **Build** your game (`npm run build`).
+2.  **Serve** the `dist` folder:
+    *   Command: `npx http-server ./dist --cors` (or similar).
+    *   Note the URL (e.g., `http://127.0.0.1:8081/my-game.bundle.js`).
+3.  **Register** in Engine:
+    *   In `src/menu/GameRepository.ts`, add a temporary entry:
++
+[source,typescript]
+----
+{
+    name: 'My Local Game',
+    url: 'http://127.0.0.1:8081/my-game.bundle.js'
+}
+----
+
+== Publishing and Submission
+
+Once your game is ready and hosted (e.g., on GitHub Pages):
+
+1.  **Test**: Ensure it loads correctly when you manually simulate a load (or use the provided template).
+2.  **Submit**: To have your game listed in the official Brick Engine menu, please send an email to **[EMAIL_ADDRESS]** with the following details:
+    *   **Game Name**: The title of your game.
+    *   **Bundle URL**: The direct link to your `.js` bundle.
+    *   **Thumbnail/Icon**: (Optional) A small image for the menu.
+    *   **Source Code**: (Optional) Link to your repository.
+
+We will review your game and add it to the repository!

@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = (env, argv) => {
@@ -7,13 +8,23 @@ module.exports = (env, argv) => {
 
     return {
         mode: isProduction ? 'production' : 'development',
-        entry: './src/index.ts',
+        entry: {
+            'brick-engine': './src/index.ts',
+            app: './src/main.ts',
+        },
         devtool: isProduction ? 'source-map' : 'eval-source-map',
         output: {
-            filename: isProduction ? 'js/[name].[contenthash].js' : 'js/[name].bundle.js',
+            filename: '[name].js',
             path: path.resolve(__dirname, 'dist'),
             clean: true, // Clean the output directory before emit.
-            publicPath: '/',
+            publicPath: '',
+            library: {
+                name: 'BrickEngine',
+                type: 'umd',
+            },
+        },
+        externals: {
+            p5: 'p5',
         },
         module: {
             rules: [
@@ -24,41 +35,21 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.css$/i,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                    use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                            options: {
+                                publicPath: '../', // CSS is in css/ folder, needs to go up to find images/fonts
+                            },
+                        },
+                        'css-loader',
+                    ],
                 },
                 {
-                    test: /\.(png|gif|svg)$/i, // Images
+                    test: /\.(woff|woff2|eot|ttf|otf)$/i, // Fonts (Required for CSS url() resolution)
                     type: 'asset/resource',
                     generator: {
-                        filename: isProduction ? 'images/[name].[contenthash][ext]' : 'images/[name][ext]',
-                    },
-                },
-                {
-                    test: /\.wav$/i, // Audio
-                    type: 'asset/resource',
-                    generator: {
-                        filename: isProduction ? 'sounds/[name].[contenthash][ext]' : 'sounds/[name][ext]',
-                    },
-                },
-                {
-                    test: /favicon\.ico$/i, // Favicon (root, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'favicon.ico',
-                    },
-                },
-                {
-                    test: /CNAME$/i, // CNAME (root, no ext, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'CNAME',
-                    },
-                },
-                {
-                    test: /modal\.js$/i, // modal.js (root, no hash)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'modal.js',
+                        filename: 'fonts/[name][ext]',
                     },
                 },
             ],
@@ -67,9 +58,11 @@ module.exports = (env, argv) => {
             extensions: ['.tsx', '.ts', '.js', '.css', '.wav', '.png', '.ico', '.gif', '.json', '.svg', '.webmanifest'],
         },
         devServer: {
-            static: {
-                directory: path.resolve(__dirname, 'dist'),
-            },
+            static: [
+                {
+                    directory: path.resolve(__dirname, 'dist'),
+                },
+            ],
             port: 9000,
             open: true,
             hot: true,
@@ -80,6 +73,7 @@ module.exports = (env, argv) => {
                 template: './public/index.html',
                 filename: 'index.html', // Output file name
                 inject: 'body',
+                chunks: ['app'], // Only inject the app bundle, not the library
                 minify: isProduction
                     ? {
                           removeComments: true,
@@ -91,18 +85,18 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: isProduction ? 'css/[name].[contenthash].css' : 'css/[name].bundle.css',
             }),
+            new CopyWebpackPlugin({
+                patterns: [
+                    { from: 'node_modules/p5/lib/p5.min.js', to: 'vendor/p5.min.js' },
+                    { from: 'public/images', to: 'images' },
+                    { from: 'public/sounds', to: 'sounds' },
+                    { from: 'public/favicon.ico', to: './' },
+                    { from: 'public/CNAME', to: './' },
+                ],
+            }),
         ],
         optimization: {
-            runtimeChunk: 'single', // Separate runtime chunk for better caching
-            splitChunks: {
-                cacheGroups: {
-                    vendor: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all',
-                    },
-                },
-            },
+            minimize: isProduction,
         },
     };
 };
