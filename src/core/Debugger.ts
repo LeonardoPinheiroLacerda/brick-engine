@@ -2,16 +2,29 @@ import configs from '../config/configs';
 import { Debuggable, Initializable } from './types/Interfaces';
 import { GameModules } from './types/Types';
 
+/**
+ * Handles the on-screen debug overlay.
+ * Creates a DOM-based interface to display real-time debug data from game modules.
+ */
 export default class Debugger implements Initializable {
     private _modules: GameModules;
     private _lastUpdate: number;
     private _domCache: Map<string, HTMLElement> = new Map();
 
+    /**
+     * Creates an instance of Debugger.
+     *
+     * @param {GameModules} modules - The collection of game modules to monitor.
+     */
     constructor(modules: GameModules) {
         this._modules = modules;
         this._lastUpdate = performance.now();
     }
 
+    /**
+     * Initializes the debugger.
+     * Creates the DOM elements for the debug overlay if enabled in config.
+     */
     setup() {
         if (!configs.game.debugger.enabled) {
             return;
@@ -73,6 +86,10 @@ export default class Debugger implements Initializable {
         });
     }
 
+    /**
+     * Updates the debug information in the DOM.
+     * Throttle updates based on configuration interval.
+     */
     async update() {
         if (!configs.game.debugger.enabled || !this._modules) {
             return;
@@ -97,6 +114,9 @@ export default class Debugger implements Initializable {
         }
     }
 
+    /**
+     * Removes the debugger overlay from the DOM and clears the cache.
+     */
     destroy() {
         const debuggerElement = document.getElementById('debugger');
         if (debuggerElement) {

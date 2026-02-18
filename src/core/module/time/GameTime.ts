@@ -2,7 +2,8 @@ import { Debuggable } from '../../types/Interfaces';
 import { Time } from '../../types/modules';
 
 /**
- * Manages game time and tick intervals.
+ * Manages game time, frame rates, and tick intervals.
+ * Handles the game loop timing and debug statistics (FPS, TPS).
  */
 export default class GameTime implements Time, Debuggable {
     // Time accumulator
@@ -13,17 +14,28 @@ export default class GameTime implements Time, Debuggable {
     protected _tickCounter: number = 0;
     protected _timeSinceLastTpsUpdate: number = 0;
 
+    /**
+     * Creates an instance of GameTime.
+     *
+     * @param {number} tickInterval - The target interval between game ticks in milliseconds.
+     */
     constructor(tickInterval: number) {
         this._tickInterval = tickInterval;
     }
 
+    /**
+     * Initializes the time module.
+     * Resets all timers and counters.
+     */
     setup(): void {
         this.reset();
     }
 
     /**
-     * Updates the time accumulator.
-     * @param deltaTime Time elapsed since last frame in milliseconds.
+     * Updates the time accumulator and calculates FPS/TPS.
+     * Should be called once per frame.
+     *
+     * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
      */
     update(deltaTime: number) {
         this._accumulatedTime += deltaTime;
@@ -39,7 +51,9 @@ export default class GameTime implements Time, Debuggable {
 
     /**
      * Checks if enough time has passed for a game tick.
-     * @returns True if a tick should occur.
+     * Consumes accumulated time if a tick occurs.
+     *
+     * @returns {boolean} True if a tick should occur.
      */
     shouldTick(): boolean {
         if (this._accumulatedTime >= this._tickInterval) {
@@ -51,7 +65,7 @@ export default class GameTime implements Time, Debuggable {
     }
 
     /**
-     * Resets the time accumulator.
+     * Resets the time accumulator and debug counters.
      */
     reset() {
         this._accumulatedTime = 0;
@@ -62,38 +76,49 @@ export default class GameTime implements Time, Debuggable {
     }
 
     /**
-     * Gets the tick interval.
+     * Gets the current tick interval.
+     *
+     * @returns {number} The tick interval in milliseconds.
      */
     get tickInterval(): number {
         return this._tickInterval;
     }
 
     /**
-     * Sets the tick interval.
-     * @param interval The new tick interval in milliseconds.
+     * Sets the tick interval and resets timing.
+     *
+     * @param {number} interval - The new tick interval in milliseconds.
      */
     set tickInterval(interval: number) {
         this._tickInterval = interval;
-        this.reset();
+        // this.reset(); // Removed reset to prevent stuttering on speed change
     }
 
     /**
-     * Increments the tick interval.
-     * @param amount The amount to increment the tick interval by.
+     * Increments the tick interval (slowing down the game).
+     *
+     * @param {number} amount - The amount to add to the interval.
      */
     incrementTickInterval(amount: number) {
         this.tickInterval = this._tickInterval + amount;
     }
 
     /**
-     * Decrements the tick interval.
-     * @param amount The amount to decrement the tick interval by.
+     * Decrements the tick interval (speeding up the game).
+     * Enforces a minimum interval of 10ms.
+     *
+     * @param {number} amount - The amount to subtract from the interval.
      */
     decrementTickInterval(amount: number) {
         const newInterval = Math.max(10, this._tickInterval - amount);
         this.tickInterval = newInterval;
     }
 
+    /**
+     * Retrieves debug information about the time system.
+     *
+     * @returns {Record<string, string | number | boolean>} The debug data.
+     */
     getDebugData(): Record<string, string | number | boolean> {
         return {
             fps: Math.round(this._fps),

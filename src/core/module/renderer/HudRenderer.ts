@@ -6,6 +6,10 @@ import CoordinateHelper from '../../helpers/CoordinateHelper';
 import configs from '../../../config/configs';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
+/**
+ * Responsible for rendering the Heads-Up Display (HUD).
+ * Displays game information like Score, High Score, Level, and the Next Piece Preview.
+ */
 export default class HudRenderer implements Renderer {
     private _p: p5;
 
@@ -20,10 +24,21 @@ export default class HudRenderer implements Renderer {
         h: number;
     };
 
+    /**
+     * Creates an instance of HudRenderer.
+     *
+     * @param {p5} p - The p5 instance.
+     */
     constructor(p: p5) {
         this._p = p;
     }
 
+    /**
+     * Initializes the HUD with calculated metrics.
+     * Sets up the grid origin and border rectangle for the "next piece" preview area.
+     *
+     * @param {RendererMetrics} rendererMetrics - The shared renderer metrics.
+     */
     setup(rendererMetrics: RendererMetrics): void {
         this._cellSize = rendererMetrics.cell.size;
         this._gridOrigin = {
@@ -39,11 +54,22 @@ export default class HudRenderer implements Renderer {
         };
     }
 
+    /**
+     * Renders all HUD elements.
+     *
+     * @param {Cell[][]} grid - The main game grid (unused in HUD, but required by interface).
+     * @param {GameModules} modules - The game modules for retrieving state and score.
+     */
     render(grid: Cell[][], modules: GameModules): void {
         this._renderHud(modules);
         this._drawHudGrid(modules);
     }
 
+    /**
+     * Renders the text-based HUD elements (Score, Level, Status).
+     *
+     * @param {GameModules} modules - The game modules.
+     */
     private _renderHud(modules: GameModules): void {
         const { text, state, score } = modules;
 
@@ -98,6 +124,11 @@ export default class HudRenderer implements Renderer {
         this._drawHudGrid(modules);
     }
 
+    /**
+     * Renders the preview grid for the next piece.
+     *
+     * @param {GameModules} modules - The game modules.
+     */
     private _drawHudGrid(modules: GameModules): void {
         const { hudGrid, state } = modules;
 
@@ -133,6 +164,16 @@ export default class HudRenderer implements Renderer {
         this._p.pop();
     }
 
+    /**
+     * Helper method to draw a single cell on the HUD.
+     * Identical in logic to DisplayRenderer's cell drawing but localized for HUD.
+     *
+     * @param {object} params - The drawing parameters.
+     * @param {number} params.w - Width of the cell.
+     * @param {number} params.posX - Absolute X position.
+     * @param {number} params.posY - Absolute Y position.
+     * @param {Color} params.color - Color of the cell.
+     */
     private drawCellElement({ w, posX, posY, color }: { w: number; h: number; posX: number; posY: number; color: Color }): void {
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
 

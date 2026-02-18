@@ -27,7 +27,7 @@ export default class GameText implements Text, Debuggable {
     private _p: p5;
 
     /**
-     * Creates an instance of GameTexts.
+     * Creates an instance of GameText.
      *
      * @param {p5} p - The p5 instance.
      */
@@ -41,15 +41,13 @@ export default class GameText implements Text, Debuggable {
      *
      * Uses configuration values to define a set of pixel-perfect font sizes
      * based on current container width.
-     *
-     * @returns {void}
      */
     setup(): void {
         const { extraSmall, small, medium, large, extraLarge } = configs.screenLayout.fontSize;
 
         this._p.textFont(this.defaultFontFamily);
 
-        //Define o tamanho das fontes
+        // Define font sizes
         this.fontSizes = [];
 
         this.fontSizes[FontSize.EXTRA_SMALL] = RelativeValuesHelper.getRelativeWidth(this._p, extraSmall);
@@ -63,7 +61,6 @@ export default class GameText implements Text, Debuggable {
      * Sets the display metrics used for relative text positioning.
      *
      * @param {RendererMetrics} rendererMetrics - The current renderer dimensions and origin.
-     * @returns {void}
      */
     setRendererMetrics(rendererMetrics: RendererMetrics): void {
         this._rendererMetrics = rendererMetrics;
@@ -73,7 +70,6 @@ export default class GameText implements Text, Debuggable {
      * Sets the fill color of the text based on its state.
      *
      * @param {boolean} state - Whether the text should use the active or inactive color.
-     * @returns {void}
      */
     protected setTextState(state: boolean): void {
         const { active, inactive } = configs.colors;
@@ -82,8 +78,6 @@ export default class GameText implements Text, Debuggable {
 
     /**
      * Sets the text color to the active theme color.
-     *
-     * @returns {void}
      */
     setActiveText(): void {
         this.setTextState(true);
@@ -91,8 +85,6 @@ export default class GameText implements Text, Debuggable {
 
     /**
      * Sets the text color to the inactive theme color.
-     *
-     * @returns {void}
      */
     setInactiveText(): void {
         this.setTextState(false);
@@ -102,7 +94,6 @@ export default class GameText implements Text, Debuggable {
      * Sets the current font size from predefined values.
      *
      * @param {FontSize} fontSize - The enum value representing the desired size.
-     * @returns {void}
      */
     setTextSize(fontSize: FontSize): void {
         this._p.textSize(this.fontSizes[fontSize]);
@@ -113,7 +104,6 @@ export default class GameText implements Text, Debuggable {
      *
      * @param {FontAlign} fontAlign - Horizontal alignment value.
      * @param {FontVerticalAlign} fontVerticalAlign - Vertical alignment value.
-     * @returns {void}
      */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void {
         this._p.textAlign(fontAlign, fontVerticalAlign);
@@ -124,7 +114,6 @@ export default class GameText implements Text, Debuggable {
      *
      * @param {string} text - The string to be rendered.
      * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the HUD area.
-     * @returns {void}
      */
     textOnHud(text: string, coordinate: Coordinate): void {
         const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._rendererMetrics.display.width);
@@ -138,15 +127,20 @@ export default class GameText implements Text, Debuggable {
      *
      * @param {string} text - The string to be rendered.
      * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the display area.
-     * @returns {void}
      */
     textOnDisplay(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getDisplayPosX(this._p, this._rendererMetrics.display.width, coordinate.x);
-        const y = CoordinateHelper.getDisplayPosY(this._p, this._rendererMetrics.display.height, coordinate.y);
+        // Fixed argument order: (p, x, displayWidth)
+        const x = CoordinateHelper.getDisplayPosX(this._p, coordinate.x, this._rendererMetrics.display.width);
+        const y = CoordinateHelper.getDisplayPosY(this._p, coordinate.y, this._rendererMetrics.display.height);
 
         this._p.text(text, x, y);
     }
 
+    /**
+     * Retrieves debug information about the text system.
+     *
+     * @returns {Record<string, string | number | boolean>} The debug data.
+     */
     getDebugData(): Record<string, string | number | boolean> {
         return {
             current_font_family: this.defaultFontFamily,
