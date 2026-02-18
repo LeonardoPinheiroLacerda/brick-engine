@@ -88,11 +88,13 @@ export default class MyGame extends Game {
 == Structure
 
 The engine is organized into the following core modules:
-== Documentation
 
-*   xref:docs/documentation_style_guide.adoc[Documentation Style Guide]
-*   xref:docs/GAME_DEVELOPER_GUIDE.adoc[**Game Developer Guide**] (How to make games for Brick Engine)
-*   xref:docs/reference/Game.adoc[Game API]
-*   xref:docs/reference/GameView.adoc[GameView API]: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.
+* xref:docs/reference/Game.adoc[Game (Core)]: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
+* xref:docs/reference/GameGrid.adoc[GameGrid]: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection. The engine also includes `GameHudGrid`, a specialized 4x4 grid instance. It is a separate module that developers can manipulate freely (e.g., clearing it, setting specific cells) to display custom content like the "Next Piece" in Tetris.
+* xref:docs/reference/GameControl.adoc[GameControl]: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
+* xref:docs/reference/GameRenderer.adoc[GameRenderer]: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.
+* xref:docs/reference/GameState.adoc[GameState]: Tracks global game properties like `playing`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).
+* xref:docs/reference/GameText.adoc[GameText]: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.
+* xref:docs/reference/GameTime.adoc[GameTime]: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.
 * xref:docs/reference/GameSound.adoc[GameSound]: Manages audio playback using the **Web Audio API**. Supports multiple simultaneous sounds, volume control, and automatically syncs mute state with `GameState`.
 * xref:docs/reference/GameScore.adoc[GameScore]: Tracks the current session score, calculates level/multiplier logic, and syncs the high score with `GameState` for persistence.
