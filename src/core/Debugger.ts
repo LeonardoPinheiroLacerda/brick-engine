@@ -74,7 +74,7 @@ export default class Debugger implements Initializable {
     }
 
     async update() {
-        if (!configs.game.debugger.enabled) {
+        if (!configs.game.debugger.enabled || !this._modules) {
             return;
         }
 
@@ -95,5 +95,13 @@ export default class Debugger implements Initializable {
                 }
             });
         }
+    }
+
+    destroy() {
+        const debuggerElement = document.getElementById('debugger');
+        if (debuggerElement) {
+            debuggerElement.remove();
+        }
+        this._domCache.clear();
     }
 }

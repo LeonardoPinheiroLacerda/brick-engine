@@ -13,7 +13,6 @@ import { Initializable, StateSyncable } from './types/Interfaces';
 import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
 import GameHudGrid from './module/grid/GameHudGrid';
-import Debugger from './Debugger';
 
 /**
  * Base abstract class for the game.
@@ -27,7 +26,6 @@ export default abstract class Game implements Initializable {
 
     private _modules: GameModules;
 
-    private _debugger: Debugger;
     private static _switchHandler: (newGame: Game) => void;
 
     /**
@@ -117,9 +115,6 @@ export default abstract class Game implements Initializable {
 
         this._subscribeSystemControls();
         this._view.bindControls(control);
-
-        this._debugger = new Debugger(this._modules);
-        this._debugger.setup();
     }
 
     /**
@@ -154,8 +149,6 @@ export default abstract class Game implements Initializable {
                 this.drawGameOverScreen();
             }
         }
-
-        this._debugger.update();
     }
 
     /**
