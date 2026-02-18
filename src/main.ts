@@ -9,17 +9,18 @@ import Debugger from './core/Debugger';
 // @ts-expect-error - This alias is defined in webpack.config.js
 import ClientGame from '@client-game';
 
-const isClientMode = process.env.APP_MODE === 'client';
-
 export const p5Instance = new p5((p: p5) => {
     const view = new GameView(p, document.body);
     let activeGame: Game;
 
-    if (isClientMode) {
+    if (process.env.APP_MODE === 'client') {
         // In client mode, we instantiate the game provided via alias
         activeGame = new ClientGame(p, view);
-    } else {
+    } else if (process.env.APP_MODE === 'server') {
+        // In server mode, we instantiate the game menu
         activeGame = new GameMenu(p, view);
+    } else {
+        throw new Error('Invalid APP_MODE');
     }
 
     let debuggerInstance: Debugger;

@@ -1,4 +1,4 @@
-= Brick Engine Documentation
+= Brick Engine JS Documentation
 :toc: macro
 :toc-title: Table of Contents
 :icons: font
@@ -43,7 +43,7 @@ To create a game, you must extend the abstract `Game` class and implement its co
 
 [source,typescript]
 ----
-import { Game, FontSize, ControlKey, ControlEventType } from '@leonardopinheirolacerda/brick-engine';
+import { Game, FontSize, ControlKey, ControlEventType } from 'brick-engine-js';
 
 export default class MyGame extends Game {
     

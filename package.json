@@ -1,6 +1,6 @@
 {
-  "name": "@leonardopinheirolacerda/brick-engine",
-  "version": "0.0.8",
+  "name": "brick-engine-js",
+  "version": "0.0.1",
   "description": "A lightweight brick engine built with p5.js and TypeScript",
   "type": "commonjs",
   "main": "dist/brick-engine.js",
