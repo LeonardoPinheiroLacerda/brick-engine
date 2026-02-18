@@ -24,7 +24,6 @@ export const p5Instance = new p5((p: p5) => {
     });
 
     p.setup = () => {
-        view.build();
         activeGame.setup();
     };
 

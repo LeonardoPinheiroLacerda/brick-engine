@@ -79,6 +79,8 @@ export default abstract class Game implements Initializable {
      * Called automatically by the engine.
      */
     setup() {
+        this._view.build();
+
         this._modules = {
             renderer: new GameRenderer(this._p),
             grid: new GameGrid(),
