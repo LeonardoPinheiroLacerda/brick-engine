@@ -58,6 +58,11 @@ export const p5Instance = new p5((p: p5) => {
                 newGame.modules.control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
                     newGame.switchGame(GameMenuSingleton.getInstance());
                 });
+
+                newGame.modules.control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
+                    newGame.switchGame(GameMenuSingleton.getInstance());
+                    activeGame.modules.state.turnOff();
+                });
             }
         } catch (error) {
             console.error('Error switching game:', error);
