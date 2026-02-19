@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Modular TypeScript game engine for retro grid-based games.">
+<meta name="keywords" content="typescript, game-engine, retro, grid-based, p5js, modular">
 <title>Brick Engine JS Documentation</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,31 +437,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Brick Engine JS Documentation</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_objective">Objective</a></li>
-<li><a href="#_key_features">Key Features</a></li>
-<li><a href="#_installation">Installation</a></li>
-<li><a href="#_getting_started">Getting Started</a>
+<li><a href="#objective">1. Objective</a></li>
+<li><a href="#key-features">2. Key Features</a></li>
+<li><a href="#installation">3. Installation</a></li>
+<li><a href="#getting-started">4. Getting Started</a>
 <ul class="sectlevel2">
-<li><a href="#_example">Example</a></li>
+<li><a href="#example">4.1. Example</a></li>
 </ul>
 </li>
-<li><a href="#_structure">Structure</a></li>
+<li><a href="#structure">5. Structure</a></li>
 </ul>
 </div>
 </div>
-</div>
+<div id="content">
 <div class="sect1">
-<h2 id="_objective">Objective</h2>
+<h2 id="objective"><a class="link" href="#objective">1. Objective</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <strong>Brick Engine</strong> is a modular, TypeScript-based game engine designed for creating retro grid-based games (like Tetris, Snake, Breakout) that run in a browser. It leverages <strong>P5.js</strong> for rendering and simulates the experience of a classic handheld gaming device, complete with a dot-matrix style display, a HUD (Head-Up Display), and physical button controls.</p>
@@ -467,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_key_features">Key Features</h2>
+<h2 id="key-features"><a class="link" href="#key-features">2. Key Features</a></h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -494,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installation">Installation</h2>
+<h2 id="installation"><a class="link" href="#installation">3. Installation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Install the package via npm:</p>
@@ -508,13 +506,13 @@ npm install --save-dev @types/p5</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_getting_started">Getting Started</h2>
+<h2 id="getting-started"><a class="link" href="#getting-started">4. Getting Started</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To create a game, you must extend the abstract <code>Game</code> class and implement its core abstract methods: <code>getPersistenceKey</code>, <code>setupGame</code>, <code>update</code>, <code>render</code>, <code>drawTitleScreen</code>, and <code>drawGameOverScreen</code>.</p>
 </div>
 <div class="sect2">
-<h3 id="_example">Example</h3>
+<h3 id="example"><a class="link" href="#example">4.1. Example</a></h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">import { Game, FontSize, ControlKey, ControlEventType } from 'brick-engine-js';
@@ -565,48 +563,66 @@ export default class MyGame extends Game {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_structure">Structure</h2>
+<h2 id="structure"><a class="link" href="#structure">5. Structure</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine is organized into the following core modules:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="reference/modules/Game.html">Game (Core)</a>: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameGrid.html">GameGrid</a>: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection. The engine also includes <code>GameHudGrid</code>, a specialized 4x4 grid instance. It is a separate module that developers can manipulate freely (e.g., clearing it, setting specific cells) to display custom content like the "Next Piece" in Tetris.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameControl.html">GameControl</a>: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameRenderer.html">GameRenderer</a>: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameState.html">GameState</a>: Tracks global game properties like <code>playing</code>, <code>paused</code>, <code>muted</code>, and <code>score</code>. Supports state persistence (e.g., saving preferences).</p>
-</li>
-<li>
-<p><a href="reference/modules/GameText.html">GameText</a>: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameTime.html">GameTime</a>: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameSound.html">GameSound</a>: Manages audio playback using the <strong>Web Audio API</strong>. Supports multiple simultaneous sounds, volume control, and automatically syncs mute state with <code>GameState</code>.</p>
-</li>
-<li>
-<p><a href="reference/modules/GameScore.html">GameScore</a>: Tracks the current session score, calculates level/multiplier logic, and syncs the high score with <code>GameState</code> for persistence.</p>
-</li>
-</ul>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Module</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/Game.html">Game (Core)</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameGrid.html">GameGrid</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages the 2D grid data structure. Handles cell values, colors, row/column operations, and collision detection. Includes <code>GameHudGrid</code> for custom HUD content.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameControl.html">GameControl</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The input system. Abstracts physical keys into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameRenderer.html">GameRenderer</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handles visual representation. Draws the grid, cells, and UI elements to the canvas using P5.js.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameState.html">GameState</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tracks global game properties (playing, paused, score) and supports state persistence.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameText.html">GameText</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specialized renderer for drawing retro-style pixelated text on the HUD and main display.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameTime.html">GameTime</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Controls game loop timing, separating logic updates (Ticks) from visual rendering (Frames).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameSound.html">GameSound</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages audio playback using the Web Audio API, supporting simultaneous sounds and volume control.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="reference/modules/GameScore.html">GameScore</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tracks session score, level logic, and syncs high scores with <code>GameState</code>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 14:19:30 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -1,10 +1,16 @@
 = Documentation Style Guide & Lessons Learned
-:toc: macro
-:toc-title: Table of Contents
+:description: Project standards for creating and maintaining high-quality documentation.
+:keywords: documentation, style-guide, standards, asciidoc
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 This document serves as the **authoritative reference** for creating and maintaining documentation in the Brick Engine project. It consolidates lessons learned during development and defines the standards for future contributions.
 
@@ -48,6 +54,26 @@ To maintain scannability, documentation is organized into specialized subdirecto
 - `enums/`: Fixed set of values (Color, Sound, etc.).
 - `types/`: Data interfaces and composite shapes (Cell, Coordinate, etc.).
 - `helpers/`: Static utility classes.
+
+=== HTML-Friendly Formatting Standards
+
+Documentation should be optimized for both internal reading and HTML conversion.
+
+1.  **Mandatory Metadata**: All top-level documentation files must include `:description:` and `:keywords:` attributes.
+2.  **Structural Tables**: High-level summaries (such as the list of modules in README) must use tables instead of bullet points.
+    *   Use `[cols="1,3", options="header"]` for a professional layout.
+3.  **Cross-Linking**: Every occurrence of a system entity MUST be cross-linked using the `xref:` macro.
+4.  **Header Attributes**: Use the standard header set to ensure a consistent side-bar TOC and numbered sections:
++
+[source,asciidoc]
+----
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:idprefix:
+:idseparator: -
+----
 
     *   Use `===` for all methods within a module/interface file.
     *   **Separators**: Place a horizontal rule (`'''`) before every `===` header.
