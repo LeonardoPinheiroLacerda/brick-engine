@@ -5,9 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Single source of truth for the game lifecycle and persistent user preferences.">
-<meta name="keywords" content="state, lifecycle, persistence, localstorage">
-<title>GameState Module Reference</title>
+<title>Documentation Standard (JSDoc)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,546 +435,206 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>GameState Module Reference</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#centralized-persistence">1. Centralized Persistence</a></li>
-<li><a href="#api-reference">2. API Reference</a>
-<ul class="sectlevel2">
-<li><a href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></li>
-<li><a href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></li>
-<li><a href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></li>
-<li><a href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></li>
-<li><a href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></li>
-<li><a href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></li>
-<li><a href="#turnon-void">2.7. <code>turnOn(): void</code></a></li>
-<li><a href="#turnoff-void">2.8. <code>turnOff(): void</code></a></li>
-<li><a href="#startgame-void">2.9. <code>startGame(): void</code></a></li>
-<li><a href="#exitgame-void">2.10. <code>exitGame(): void</code></a></li>
-<li><a href="#pause-void">2.11. <code>pause(): void</code></a></li>
-<li><a href="#resume-void">2.12. <code>resume(): void</code></a></li>
-<li><a href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></li>
-<li><a href="#resetgame-void">2.14. <code>resetGame(): void</code></a></li>
-<li><a href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></li>
-<li><a href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></li>
-<li><a href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></li>
-<li><a href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></li>
-<li><a href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></li>
-<li><a href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></li>
-<li><a href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></li>
-<li><a href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></li>
-<li><a href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></li>
-<li><a href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></li>
-<li><a href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
-</ul>
-</li>
-</ul>
-</div>
+<h1>Documentation Standard (JSDoc)</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_general_principles">General Principles</a></li>
+<li><a href="#_typing_requirement">Typing Requirement</a></li>
+<li><a href="#_classes">Classes</a>
+<ul class="sectlevel2">
+<li><a href="#_example">Example</a></li>
+</ul>
+</li>
+<li><a href="#_functions_and_methods">Functions and Methods</a>
+<ul class="sectlevel2">
+<li><a href="#_structure">Structure</a></li>
+<li><a href="#_example_2">Example</a></li>
+</ul>
+</li>
+<li><a href="#_interfaces_and_types">Interfaces and Types</a>
+<ul class="sectlevel2">
+<li><a href="#_example_3">Example</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>The <code>GameState</code> module acts as the central, single source of truth for the game&#8217;s lifecycle and user preferences. It handles persistence to <code>LocalStorage</code> for settings and high scores.</p>
+<p>This document establishes the standards for documenting code in this project using JSDoc.
+The goal is to provide a clear, technical, and detailed reference for all developers.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="centralized-persistence"><a class="link" href="#centralized-persistence">1. Centralized Persistence</a></h2>
+<h2 id="_general_principles">General Principles</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>As defined in the Architectural Patterns, <code>GameState</code> is responsible for all <code>LocalStorage</code> logic. Other modules (like <code><a href="GameSound.html">GameSound</a></code>) must sync their internal state with this module via the <code><a href="../interfaces/StateSyncable.html">StateSyncable</a></code> interface.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Language</strong>: All documentation must be written in <strong>English</strong>.</p>
+</li>
+<li>
+<p><strong>Tone</strong>: Technical, concise, and descriptive. Avoid first-person ("I", "we").</p>
+</li>
+<li>
+<p><strong>Completeness</strong>: All exported functions, classes, methods, and interfaces must be documented.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="_typing_requirement">Typing Requirement</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="ison-boolean"><a class="link" href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game system is powered up.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is on.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isoff-boolean"><a class="link" href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game system is powered down.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is off.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isstarted-boolean"><a class="link" href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if a game session is active (passed the title screen).</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game has started.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isplaying-boolean"><a class="link" href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game loop is actively updating logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if gameplay is active and not paused.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="ispaused-boolean"><a class="link" href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game is currently paused.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game is started but halted.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isgameover-boolean"><a class="link" href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the current session has ended in a Game Over.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if player has lost.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="turnon-void"><a class="link" href="#turnon-void">2.7. <code>turnOn(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers on the game system.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to true and ensures <code>start</code>, <code>playing</code>, and <code>gameOver</code> are initialized to false.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="turnoff-void"><a class="link" href="#turnoff-void">2.8. <code>turnOff(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers off the game system.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to false and wipes transient state.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="startgame-void"><a class="link" href="#startgame-void">2.9. <code>startGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Initiates gameplay from the title screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>start</code> and <code>playing</code> to true. This method only has effect if the system is already <code>on</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="exitgame-void"><a class="link" href="#exitgame-void">2.10. <code>exitGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Ends the session and returns to the title screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Resets <code>start</code>, <code>playing</code>, and <code>gameOver</code> to false.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="pause-void"><a class="link" href="#pause-void">2.11. <code>pause(): void</code></a></h3>
-<div class="paragraph">
-<p>Halts gameplay logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false. Only works if the game is already started.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resume-void"><a class="link" href="#resume-void">2.12. <code>resume(): void</code></a></h3>
-<div class="paragraph">
-<p>Restarts gameplay logic from a paused state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="triggergameover-void"><a class="link" href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Forces the game into a Game Over state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false and <code>gameOver</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgame-void"><a class="link" href="#resetgame-void">2.14. <code>resetGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Prepares the state for a new round (hard restart).</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Clears the <code>gameOver</code> flag and resumes <code>playing</code> status. Unlike <code>resetGameOver</code>, this is intended for a complete session reset from any state.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgameover-void"><a class="link" href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Resets the state specifically after a Game Over to allow immediate restart.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>gameOver</code> to false and <code>playing</code> to true. This is the recommended way to handle "Try Again" scenarios.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="iscolorenabled-boolean"><a class="link" href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if theme color mode is active.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if color mode is on.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setcolorenabledvalue-boolean-void"><a class="link" href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the color mode preference.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
+<div class="admonitionblock important">
+<table>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Strict typing is <strong>mandatory</strong> for all methods and functions documented.
+</td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New color mode status.</p></td>
-</tr>
-</tbody>
 </table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Inputs</strong>: All parameters must have their types explicitly declared in JSDoc (<code>@param {Type} name</code>).</p>
+</li>
+<li>
+<p><strong>Outputs</strong>: All methods/functions must explicitly declare their return type (<code>@returns {Type}</code> or <code>@returns {void}</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_classes">Classes</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><strong>Behavior</strong></p>
+<p>Classes must have a description explaining their responsibility.</p>
 </div>
-<div class="paragraph">
-<p>Updates the property and automatically persists the value to <code>LocalStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="togglecolorenabled-void"><a class="link" href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the current color mode.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="ismuted-boolean"><a class="link" href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if master audio is muted.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if sound is disabled.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setmutedvalue-boolean-void"><a class="link" href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the master mute status.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
+<div class="admonitionblock warning">
+<table>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+All class public properties must be documented, explaining what they store.
+</td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New mute status.</p></td>
-</tr>
-</tbody>
 </table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the property and persists it to <code>LocalStorage</code>.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="togglemuted-void"><a class="link" href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the master mute status.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="gethighscore-number"><a class="link" href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the highest score recorded.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The stored high score.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="sethighscorevalue-number-void"><a class="link" href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></h3>
-<div class="paragraph">
-<p>Updates the high score.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The new record score.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the value and persists it to <code>LocalStorage</code>. High scores are prefixed by the game&#8217;s persistence key.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a listener for state changes.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The specific property to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute on change.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
+<h3 id="_example">Example</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">state.subscribe(StateProperty.GAME_OVER, (isOver) =&gt; {
-    if (isOver) {
-        this.modules.sound.play(Sound.GAMEOVER);
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">/**
+ * Manages the game view layer and user interactions.
+ *
+ * Orchestrates the rendering of components and binds DOM events to game logic.
+ */
+export default class GameView {
+    private p: P5;
+
+    /**
+     * The parent HTML element where the game is mounted.
+     */
+    public parent: HTMLElement;
+
+    /**
+     * Creates an instance of GameView.
+     *
+     * @param {P5} p - The P5 instance.
+     * @param {HTMLElement} parent - The container element.
+     */
+    constructor(p: P5, parent: HTMLElement) {
+        this.p = p;
+        this.parent = parent;
     }
-});</code></pre>
+}</code></pre>
 </div>
 </div>
-<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_functions_and_methods">Functions and Methods</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Every function must explain <strong>what</strong> it does, <strong>how</strong> it behaves (if complex), and describing all parameters and return values.</p>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Removes a state change listener.</p>
+<h3 id="_structure">Structure</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Short Description</strong>: One-line summary.</p>
+</li>
+<li>
+<p><strong>Detailed Description</strong>: (Optional) More context, side-effects, or algorithm details.</p>
+</li>
+<li>
+<p><strong>@param</strong>: One for each argument, with type and description.</p>
+</li>
+<li>
+<p><strong>@returns</strong>: The return type and description of what is returned.</p>
+</li>
+</ol>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The property being monitored.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reference to the callback to remove.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="setpersistencekeykey-string-void"><a class="link" href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></h3>
-<div class="paragraph">
-<p>Configures the unique identifier for storage.</p>
+<h3 id="_example_2">Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">/**
+ * Calculates the optimal dimensions for the game container.
+ *
+ * It ensures the container maintains the aspect ratio defined by constants
+ * while fitting within the parent element's bounds.
+ *
+ * @param {number} availableWidth - The maximum available width in pixels.
+ * @param {number} availableHeight - The maximum available height in pixels.
+ * @returns {Dimensions} An object containing the calculated width and height.
+ */
+function calculateDimensions(availableWidth: number, availableHeight: number): Dimensions {
+    // ...
+}</code></pre>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The prefix to use for <code>LocalStorage</code> entries.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interfaces_and_types">Interfaces and Types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Interfaces must describe what object shape they represent and document each property.</p>
 </div>
 <div class="sect2">
-<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the currently configured storage key.</p>
+<h3 id="_example_3">Example</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">/**
+ * Represents the layout response containing container references.
+ */
+interface ButtonLayoutResponse {
+    /** The container for small system buttons (e.g., Reset, Power). */
+    smallButtonContainer: P5.Element;
+
+    /** The container for directional buttons. */
+    mediumButtonContainer: P5.Element;
+}</code></pre>
 </div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>string</code> - The persistence key.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
-<div class="paragraph">
-<p>Returns metadata for the real-time debugger.</p>
 </div>
 </div>
 </div>
@@ -984,6 +642,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2026-02-13 12:20:51 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -165,11 +165,22 @@ Sets `playing` to false and `gameOver` to true.
 
 === `resetGame(): void`
 
-Prepares the state for a new round after a Game Over.
+Prepares the state for a new round (hard restart).
 
 **Behavior**
 
-Clears the `gameOver` flag and resumes `playing` status.
+Clears the `gameOver` flag and resumes `playing` status. Unlike `resetGameOver`, this is intended for a complete session reset from any state.
+
+
+'''
+
+=== `resetGameOver(): void`
+
+Resets the state specifically after a Game Over to allow immediate restart.
+
+**Behavior**
+
+Sets `gameOver` to false and `playing` to true. This is the recommended way to handle "Try Again" scenarios.
 
 
 '''

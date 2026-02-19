@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 
 const DOCS_DIR = path.join(__dirname, '../docs');
-const REFERENCE_DIR = path.join(DOCS_DIR, 'reference');
 const PUBLIC_DOCS_DIR = path.join(__dirname, '../public/docs');
 const README_FILE = path.join(__dirname, '../README.adoc');
 
@@ -76,10 +75,10 @@ if (fs.existsSync(README_FILE)) {
     console.warn('README.adoc not found at root.');
 }
 
-// 2. Convert files in docs/reference
-if (fs.existsSync(REFERENCE_DIR)) {
-    const files = getAllFiles(REFERENCE_DIR);
-    console.log(`Found ${files.length} .adoc files in reference to process.`);
+// 2. Convert files in docs/
+if (fs.existsSync(DOCS_DIR)) {
+    const files = getAllFiles(DOCS_DIR).filter(f => !f.startsWith(path.join(DOCS_DIR, 'images')) && !f.startsWith(path.join(DOCS_DIR, 'diagrams')));
+    console.log(`Found ${files.length} .adoc files in docs/ to process.`);
 
     files.forEach(file => {
         const relativePath = path.relative(DOCS_DIR, file);

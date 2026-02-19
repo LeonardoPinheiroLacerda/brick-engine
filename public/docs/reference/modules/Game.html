@@ -629,7 +629,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Called when the game state is <code>gameOver</code>. Executed after the final <code>render</code> call to overlay messages or recovery menus.</p>
+<p>Called when the game state is <code>gameOver</code>. Executed as the primary rendering logic during Game Over, replacing the standard <code>render()</code> call to allow for clean menus or high-score displays.</p>
 </div>
 <hr>
 </div>
@@ -711,7 +711,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>RESET</strong>: Resets the grid and score.</p>
 </li>
 <li>
-<p><strong>START_PAUSE</strong>: Starts the game or toggles pause.</p>
+<p><strong>START_PAUSE</strong>: Manages the game lifecycle:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Starts the game from the Title Screen.</p>
+</li>
+<li>
+<p>Toggles pause during gameplay.</p>
+</li>
+<li>
+<p>Restarts the game immediately if in a Game Over state (via <code>resetGameOver</code>).</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
 <p><strong>EXIT</strong>: Hard stop of the draw loop.</p>

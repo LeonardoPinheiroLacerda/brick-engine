@@ -426,6 +426,11 @@ export interface State extends Initializable {
     toggleMuted(): void;
 
     /**
+     * Resets the game over state and starts the game again.
+     */
+    resetGameOver(): void;
+
+    /**
      * Configures the key used for local storage persistence.
      *
      * @param {string} key - The unique prefix for storage keys.

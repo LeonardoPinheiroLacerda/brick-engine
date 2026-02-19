@@ -445,13 +445,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#objective">1. Objective</a></li>
 <li><a href="#key-features">2. Key Features</a></li>
-<li><a href="#installation">3. Installation</a></li>
-<li><a href="#getting-started">4. Getting Started</a>
-<ul class="sectlevel2">
-<li><a href="#example">4.1. Example</a></li>
-</ul>
-</li>
-<li><a href="#structure">5. Structure</a></li>
+<li><a href="#getting-started">3. Getting Started</a></li>
+<li><a href="#structure">4. Structure</a></li>
 </ul>
 </div>
 </div>
@@ -492,78 +487,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="installation"><a class="link" href="#installation">3. Installation</a></h2>
+<h2 id="getting-started"><a class="link" href="#getting-started">3. Getting Started</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Install the package via npm:</p>
+<p>The fastest way to start is using the <strong>Brick Engine CLI</strong>, which scaffolds a complete project with build tools, standard scripts, and a boilerplate <code>src/index.ts</code> ready for development.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npm install brick-engine p5
-npm install --save-dev @types/p5</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npx brick-engine-cli init my-brick-game</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>For a detailed walkthrough on installation, project structure, and how to implement your game logic, see our <strong><a href="getting-started.html">Getting Started Guide</a></strong>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting-started"><a class="link" href="#getting-started">4. Getting Started</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To create a game, you must extend the abstract <code>Game</code> class and implement its core abstract methods: <code>getPersistenceKey</code>, <code>setupGame</code>, <code>update</code>, <code>render</code>, <code>drawTitleScreen</code>, and <code>drawGameOverScreen</code>.</p>
-</div>
-<div class="sect2">
-<h3 id="example"><a class="link" href="#example">4.1. Example</a></h3>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">import { Game, FontSize, ControlKey, ControlEventType } from 'brick-engine-js';
-
-export default class MyGame extends Game {
-
-    // 1. Setup: Called once after engine initialization
-    setupGame(): void {
-        // Initialize your game state here
-        this.modules.text.setTextSize(FontSize.MEDIUM);
-
-        // Subscribe to controls
-        this.modules.control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () =&gt; {
-             console.log('Action pressed!');
-        });
-    }
-
-    // 2. Game Logic: Called every game tick (controlled by tickInterval)
-    update(deltaTime: number): void {
-        if (!this.modules.state.isPlaying()) return;
-        // ... game logic ...
-    }
-
-    // 3. Visual Effects: Called every frame (60fps)
-    render(): void {
-        // ... visual effects independent of game logic ...
-    }
-
-    // 4. Persistence: Unique key for LocalStorage (prevents collisions between games)
-    getPersistenceKey(): string {
-        return 'my-awesome-game-v1';
-    }
-
-    // 5. Title Screen: Rendered when game is ON but not STARTED
-    drawTitleScreen(): void {
-        this.modules.text.textOnDisplay('MY AWESOME GAME', { x: 0.5, y: 0.3 });
-        this.modules.text.textOnDisplay('PRESS START', { x: 0.5, y: 0.7 });
-    }
-
-    // 6. Game Over Screen: Rendered when health/lives reach zero
-    drawGameOverScreen(): void {
-        this.modules.text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
-    }
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="structure"><a class="link" href="#structure">5. Structure</a></h2>
+<h2 id="structure"><a class="link" href="#structure">4. Structure</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine is organized into the following core modules:</p>

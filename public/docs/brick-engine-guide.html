@@ -5,9 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Single source of truth for the game lifecycle and persistent user preferences.">
-<meta name="keywords" content="state, lifecycle, persistence, localstorage">
-<title>GameState Module Reference</title>
+<title>Brick Engine CLI</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -434,46 +432,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>GameState Module Reference</h1>
+<h1>Brick Engine CLI</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#centralized-persistence">1. Centralized Persistence</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#_introduction">1. Introduction</a></li>
+<li><a href="#_installation_and_usage">2. Installation and Usage</a>
 <ul class="sectlevel2">
-<li><a href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></li>
-<li><a href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></li>
-<li><a href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></li>
-<li><a href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></li>
-<li><a href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></li>
-<li><a href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></li>
-<li><a href="#turnon-void">2.7. <code>turnOn(): void</code></a></li>
-<li><a href="#turnoff-void">2.8. <code>turnOff(): void</code></a></li>
-<li><a href="#startgame-void">2.9. <code>startGame(): void</code></a></li>
-<li><a href="#exitgame-void">2.10. <code>exitGame(): void</code></a></li>
-<li><a href="#pause-void">2.11. <code>pause(): void</code></a></li>
-<li><a href="#resume-void">2.12. <code>resume(): void</code></a></li>
-<li><a href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></li>
-<li><a href="#resetgame-void">2.14. <code>resetGame(): void</code></a></li>
-<li><a href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></li>
-<li><a href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></li>
-<li><a href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></li>
-<li><a href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></li>
-<li><a href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></li>
-<li><a href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></li>
-<li><a href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></li>
-<li><a href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></li>
-<li><a href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></li>
-<li><a href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></li>
-<li><a href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#_1_use_without_installation_recommended">2.1. 1. Use Without Installation (Recommended)</a></li>
+<li><a href="#_2_global_installation">2.2. 2. Global Installation</a></li>
+</ul>
+</li>
+<li><a href="#_commands">3. Commands</a>
+<ul class="sectlevel2">
+<li><a href="#_init_name">3.1. <code>init &lt;name&gt;</code></a></li>
+</ul>
+</li>
+<li><a href="#_template_scripts">4. Template Scripts</a>
+<ul class="sectlevel2">
+<li><a href="#_development_and_build">4.1. Development and Build</a></li>
+<li><a href="#_code_quality_optional">4.2. Code Quality (Optional)</a></li>
 </ul>
 </li>
 </ul>
@@ -483,515 +464,147 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameState</code> module acts as the central, single source of truth for the game&#8217;s lifecycle and user preferences. It handles persistence to <code>LocalStorage</code> for settings and high scores.</p>
+<p>CLI to scaffold Brick Engine projects.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="centralized-persistence"><a class="link" href="#centralized-persistence">1. Centralized Persistence</a></h2>
+<h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As defined in the Architectural Patterns, <code>GameState</code> is responsible for all <code>LocalStorage</code> logic. Other modules (like <code><a href="GameSound.html">GameSound</a></code>) must sync their internal state with this module via the <code><a href="../interfaces/StateSyncable.html">StateSyncable</a></code> interface.</p>
+<p><code>brick-engine-cli</code> is a command-line tool designed to accelerate game development using the <strong>Brick Engine</strong>. It automates the creation of the project&#8217;s initial structure, configures build tools and code quality settings, allowing you to start programming your game immediately.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="_installation_and_usage">2. Installation and Usage</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="ison-boolean"><a class="link" href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></h3>
 <div class="paragraph">
-<p>Checks if the game system is powered up.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is on.</p>
-</div>
-<hr>
+<p>You can use this tool in two main ways:</p>
 </div>
 <div class="sect2">
-<h3 id="isoff-boolean"><a class="link" href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></h3>
+<h3 id="_1_use_without_installation_recommended">2.1. 1. Use Without Installation (Recommended)</h3>
 <div class="paragraph">
-<p>Checks if the game system is powered down.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is off.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isstarted-boolean"><a class="link" href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if a game session is active (passed the title screen).</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game has started.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isplaying-boolean"><a class="link" href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game loop is actively updating logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if gameplay is active and not paused.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="ispaused-boolean"><a class="link" href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game is currently paused.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game is started but halted.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isgameover-boolean"><a class="link" href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the current session has ended in a Game Over.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if player has lost.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="turnon-void"><a class="link" href="#turnon-void">2.7. <code>turnOn(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers on the game system.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to true and ensures <code>start</code>, <code>playing</code>, and <code>gameOver</code> are initialized to false.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="turnoff-void"><a class="link" href="#turnoff-void">2.8. <code>turnOff(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers off the game system.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to false and wipes transient state.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="startgame-void"><a class="link" href="#startgame-void">2.9. <code>startGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Initiates gameplay from the title screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>start</code> and <code>playing</code> to true. This method only has effect if the system is already <code>on</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="exitgame-void"><a class="link" href="#exitgame-void">2.10. <code>exitGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Ends the session and returns to the title screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Resets <code>start</code>, <code>playing</code>, and <code>gameOver</code> to false.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="pause-void"><a class="link" href="#pause-void">2.11. <code>pause(): void</code></a></h3>
-<div class="paragraph">
-<p>Halts gameplay logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false. Only works if the game is already started.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resume-void"><a class="link" href="#resume-void">2.12. <code>resume(): void</code></a></h3>
-<div class="paragraph">
-<p>Restarts gameplay logic from a paused state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="triggergameover-void"><a class="link" href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Forces the game into a Game Over state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false and <code>gameOver</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgame-void"><a class="link" href="#resetgame-void">2.14. <code>resetGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Prepares the state for a new round (hard restart).</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Clears the <code>gameOver</code> flag and resumes <code>playing</code> status. Unlike <code>resetGameOver</code>, this is intended for a complete session reset from any state.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgameover-void"><a class="link" href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Resets the state specifically after a Game Over to allow immediate restart.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>gameOver</code> to false and <code>playing</code> to true. This is the recommended way to handle "Try Again" scenarios.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="iscolorenabled-boolean"><a class="link" href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if theme color mode is active.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if color mode is on.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setcolorenabledvalue-boolean-void"><a class="link" href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the color mode preference.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New color mode status.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the property and automatically persists the value to <code>LocalStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="togglecolorenabled-void"><a class="link" href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the current color mode.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="ismuted-boolean"><a class="link" href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if master audio is muted.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if sound is disabled.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setmutedvalue-boolean-void"><a class="link" href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the master mute status.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New mute status.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the property and persists it to <code>LocalStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="togglemuted-void"><a class="link" href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the master mute status.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="gethighscore-number"><a class="link" href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the highest score recorded.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The stored high score.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="sethighscorevalue-number-void"><a class="link" href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></h3>
-<div class="paragraph">
-<p>Updates the high score.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The new record score.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the value and persists it to <code>LocalStorage</code>. High scores are prefixed by the game&#8217;s persistence key.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a listener for state changes.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The specific property to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute on change.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Example</strong></p>
+<p>The fastest way to get started is using <code>npx</code>, which runs the latest version of the tool without requiring a global installation on your system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">state.subscribe(StateProperty.GAME_OVER, (isOver) =&gt; {
-    if (isOver) {
-        this.modules.sound.play(Sound.GAMEOVER);
-    }
-});</code></pre>
+<pre class="highlight"><code class="language-bash" data-lang="bash">npx brick-engine-cli init &lt;project-name&gt;</code></pre>
 </div>
 </div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
+<h3 id="_2_global_installation">2.2. 2. Global Installation</h3>
 <div class="paragraph">
-<p>Removes a state change listener.</p>
+<p>If you prefer to have the command permanently available in your terminal, you can install it globally via <code>npm</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">npm install -g brick-engine-cli</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><strong>Parameters</strong></p>
+<p>After installation, you can use the command directly:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">brick-engine-cli init &lt;project-name&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_commands">3. Commands</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_init_name">3.1. <code>init &lt;name&gt;</code></h3>
+<div class="paragraph">
+<p>Initializes a new Brick Engine project in a directory with the provided name.</p>
+</div>
+<div class="paragraph">
+<p>During the process, you will be asked about:
+* Project description.
+* Whether you want to use <strong>ESLint</strong> to ensure code quality.
+* Whether you want to use <strong>Prettier</strong> for automatic formatting.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_template_scripts">4. Template Scripts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Generated projects come with the following scripts in <code>package.json</code>:</p>
+</div>
+<div class="sect2">
+<h3 id="_development_and_build">4.1. Development and Build</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm start</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Starts the development server with hot reload and opens the browser in <code>standalone</code> mode.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The property being monitored.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run build:standalone</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generates the production version of the game in the <code>/dist</code> folder for independent web hosting.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reference to the callback to remove.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run build:bundle</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generates an optimized bundle to be loaded at <a href="https://brickengine.com.br">brickengine.com.br</a>, where you can play all previously published games directly in the browser.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run serve</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Starts a local HTTP server to test the production version generated in <code>/dist</code>.</p></td>
 </tr>
 </tbody>
 </table>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="setpersistencekeykey-string-void"><a class="link" href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></h3>
+<h3 id="_code_quality_optional">4.2. Code Quality (Optional)</h3>
 <div class="paragraph">
-<p>Configures the unique identifier for storage.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
+<p>If you selected these options during <code>init</code>:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run format</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automatically formats the code using <strong>Prettier</strong>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The prefix to use for <code>LocalStorage</code> entries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run lint</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs <strong>ESLint</strong> to find issues in the code.</p></td>
 </tr>
 </tbody>
 </table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the currently configured storage key.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>string</code> - The persistence key.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
-<div class="paragraph">
-<p>Returns metadata for the real-time debugger.</p>
-</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2026-02-19 09:03:38 -0300
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
-<script>
-if (!hljs.initHighlighting.called) {
-  hljs.initHighlighting.called = true
-  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
-}
-</script>
 </body>
 </html>

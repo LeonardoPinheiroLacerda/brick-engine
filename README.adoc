@@ -25,67 +25,16 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 * **Game Loop**: Separated logic ticks (game speed) from rendering frames (60fps smooth animations).
 * **Debugger**: Built-in real-time state inspector. See xref:docs/reference/modules/Debugger.adoc[Debugger Reference].
 
-== Installation
- 
-Install the package via npm:
- 
-[source,bash]
-----
-npm install brick-engine p5
-npm install --save-dev @types/p5
-----
- 
 == Getting Started
 
-To create a game, you must extend the abstract `Game` class and implement its core abstract methods: `getPersistenceKey`, `setupGame`, `update`, `render`, `drawTitleScreen`, and `drawGameOverScreen`.
+The fastest way to start is using the **Brick Engine CLI**, which scaffolds a complete project with build tools, standard scripts, and a boilerplate `src/index.ts` ready for development.
 
-=== Example
-
-[source,typescript]
+[source,bash]
 ----
-import { Game, FontSize, ControlKey, ControlEventType } from 'brick-engine-js';
-
-export default class MyGame extends Game {
-    
-    // 1. Setup: Called once after engine initialization
-    setupGame(): void {
-        // Initialize your game state here
-        this.modules.text.setTextSize(FontSize.MEDIUM);
-        
-        // Subscribe to controls
-        this.modules.control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
-             console.log('Action pressed!');
-        });
-    }
-
-    // 2. Game Logic: Called every game tick (controlled by tickInterval)
-    update(deltaTime: number): void {
-        if (!this.modules.state.isPlaying()) return;
-        // ... game logic ...
-    }
-
-    // 3. Visual Effects: Called every frame (60fps)
-    render(): void {
-        // ... visual effects independent of game logic ...
-    }
-
-    // 4. Persistence: Unique key for LocalStorage (prevents collisions between games)
-    getPersistenceKey(): string {
-        return 'my-awesome-game-v1';
-    }
-
-    // 5. Title Screen: Rendered when game is ON but not STARTED
-    drawTitleScreen(): void {
-        this.modules.text.textOnDisplay('MY AWESOME GAME', { x: 0.5, y: 0.3 });
-        this.modules.text.textOnDisplay('PRESS START', { x: 0.5, y: 0.7 });
-    }
-
-    // 6. Game Over Screen: Rendered when health/lives reach zero
-    drawGameOverScreen(): void {
-        this.modules.text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
-    }
-}
+npx brick-engine-cli init my-brick-game
 ----
+
+For a detailed walkthrough on installation, project structure, and how to implement your game logic, see our **xref:docs/getting-started.adoc[Getting Started Guide]**.
 
 == Structure
 

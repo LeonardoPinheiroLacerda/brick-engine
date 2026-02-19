@@ -189,6 +189,15 @@ export default class GameState implements State, Debuggable {
     }
 
     /**
+     * Resets the game over state and starts the game again.
+     */
+    resetGameOver(): void {
+        this._set(StateProperty.GAME_OVER, false);
+        this._set(StateProperty.START, true);
+        this._set(StateProperty.PLAYING, true);
+    }
+
+    /**
      * Exits the current game session, returning to the "On" state.
      */
     exitGame(): void {

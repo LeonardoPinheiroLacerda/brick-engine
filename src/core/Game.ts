@@ -154,7 +154,6 @@ export default abstract class Game implements Initializable {
             }
 
             if (state.isGameOver()) {
-                this.render();
                 this.drawGameOverScreen();
             }
         }
@@ -243,8 +242,10 @@ export default abstract class Game implements Initializable {
                 state.startGame();
             } else if (state.isPlaying()) {
                 state.pause();
-            } else {
+            } else if (state.isPaused()) {
                 state.resume();
+            } else if (state.isGameOver()) {
+                state.resetGameOver();
             }
         });
 

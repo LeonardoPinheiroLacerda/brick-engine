@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Single source of truth for the game lifecycle and persistent user preferences.">
-<meta name="keywords" content="state, lifecycle, persistence, localstorage">
-<title>GameState Module Reference</title>
+<meta name="description" content="Project standards for creating and maintaining high-quality documentation.">
+<meta name="keywords" content="documentation, style-guide, standards, asciidoc">
+<title>Documentation Style Guide &amp; Lessons Learned</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,41 +439,45 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>GameState Module Reference</h1>
+<h1>Documentation Style Guide &amp; Lessons Learned</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#centralized-persistence">1. Centralized Persistence</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#architectural-patterns">1. Architectural Patterns</a>
 <ul class="sectlevel2">
-<li><a href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></li>
-<li><a href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></li>
-<li><a href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></li>
-<li><a href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></li>
-<li><a href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></li>
-<li><a href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></li>
-<li><a href="#turnon-void">2.7. <code>turnOn(): void</code></a></li>
-<li><a href="#turnoff-void">2.8. <code>turnOff(): void</code></a></li>
-<li><a href="#startgame-void">2.9. <code>startGame(): void</code></a></li>
-<li><a href="#exitgame-void">2.10. <code>exitGame(): void</code></a></li>
-<li><a href="#pause-void">2.11. <code>pause(): void</code></a></li>
-<li><a href="#resume-void">2.12. <code>resume(): void</code></a></li>
-<li><a href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></li>
-<li><a href="#resetgame-void">2.14. <code>resetGame(): void</code></a></li>
-<li><a href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></li>
-<li><a href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></li>
-<li><a href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></li>
-<li><a href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></li>
-<li><a href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></li>
-<li><a href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></li>
-<li><a href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></li>
-<li><a href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></li>
-<li><a href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></li>
-<li><a href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></li>
-<li><a href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#1-centralized-persistence">1.1. 1. Centralized Persistence</a></li>
+<li><a href="#2-event-driven-state">1.2. 2. Event-Driven State</a></li>
+<li><a href="#3-strict-module-interfaces">1.3. 3. Strict Module Interfaces</a></li>
+<li><a href="#entry-point-responsibility">1.4. Entry Point Responsibility</a></li>
+<li><a href="#reference-directory-structure">1.5. Reference Directory Structure</a></li>
+<li><a href="#html-friendly-formatting-standards">1.6. HTML-Friendly Formatting Standards</a></li>
+<li><a href="#single-item-structure-types-enums-interfaces">1.7. Single-Item Structure (Types, Enums, Interfaces)</a></li>
+</ul>
+</li>
+<li><a href="#formatting-guidelines">2. Formatting Guidelines</a>
+<ul class="sectlevel2">
+<li><a href="#asciidoc-features">2.1. AsciiDoc Features</a></li>
+<li><a href="#jsdoc-source-code">2.2. JSDoc (Source Code)</a></li>
+</ul>
+</li>
+<li><a href="#lessons-learned">3. Lessons Learned</a>
+<ul class="sectlevel2">
+<li><a href="#audio-latency">3.1. Audio Latency</a></li>
+<li><a href="#enumerations">3.2. Enumerations</a></li>
+<li><a href="#coordinate-systems">3.3. Coordinate Systems</a></li>
+<li><a href="#decoupled-state-sync">3.4. Decoupled State Sync</a></li>
+<li><a href="#persistence-namespacing">3.5. Persistence Namespacing</a></li>
+<li><a href="#documentation-granularity">3.6. Documentation Granularity</a></li>
+<li><a href="#cross-linking-context">3.7. Cross-Linking Context</a></li>
+<li><a href="#redundant-separators">3.8. Redundant Separators</a></li>
+<li><a href="#module-interface-organization">3.9. Module Interface Organization</a></li>
+</ul>
+</li>
+<li><a href="#cross-referencing-standards">4. Cross-Referencing Standards</a>
+<ul class="sectlevel2">
+<li><a href="#syntax">4.1. Syntax</a></li>
+<li><a href="#rules">4.2. Rules</a></li>
+<li><a href="#examples">4.3. Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -483,500 +487,465 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameState</code> module acts as the central, single source of truth for the game&#8217;s lifecycle and user preferences. It handles persistence to <code>LocalStorage</code> for settings and high scores.</p>
+<p>This document serves as the <strong>authoritative reference</strong> for creating and maintaining documentation in the Brick Engine project. It consolidates lessons learned during development and defines the standards for future contributions.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="centralized-persistence"><a class="link" href="#centralized-persistence">1. Centralized Persistence</a></h2>
+<h2 id="architectural-patterns"><a class="link" href="#architectural-patterns">1. Architectural Patterns</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As defined in the Architectural Patterns, <code>GameState</code> is responsible for all <code>LocalStorage</code> logic. Other modules (like <code><a href="GameSound.html">GameSound</a></code>) must sync their internal state with this module via the <code><a href="../interfaces/StateSyncable.html">StateSyncable</a></code> interface.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="ison-boolean"><a class="link" href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game system is powered up.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is on.</p>
-</div>
-<hr>
+<p>These patterns must be reflected in both the code and the documentation.</p>
 </div>
 <div class="sect2">
-<h3 id="isoff-boolean"><a class="link" href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game system is powered down.</p>
+<h3 id="1-centralized-persistence"><a class="link" href="#1-centralized-persistence">1.1. 1. Centralized Persistence</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Principle</strong>: <code>GameState</code> is the <strong>single source of truth</strong> for all persistent data (e.g., <code>muted</code>, <code>highScore</code>, <code>colorEnabled</code>).</p>
+</li>
+<li>
+<p><strong>Rule</strong>: Other modules (e.g., <code>GameSound</code>, <code>GameRenderer</code>) must <strong>NOT</strong> implement their own <code>localStorage</code> logic.</p>
+</li>
+<li>
+<p><strong>Pattern</strong>:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Interface</strong>: Modules requiring state must implement <code>StateSyncable</code>.</p>
+</li>
+<li>
+<p><strong>Initialization</strong>: <code>Game.ts</code> iterates over modules and calls <code>syncState(state)</code> on those that implement the interface.</p>
+</li>
+<li>
+<p><strong>Decoupling</strong>: <code>GameState</code> must <strong>NOT</strong> have dependencies on other game modules.</p>
+</li>
+<li>
+<p><strong>Persistence Key</strong>: The <code>Game</code> class must provide a unique key to <code>GameState</code> to prefix all <code>localStorage</code> entries.</p>
+</li>
+<li>
+<p><strong>Updates</strong>: Modules subscribe to <code>GameState</code> changes via <code>state.subscribe()</code>.</p>
+</li>
+</ol>
 </div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if system is off.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isstarted-boolean"><a class="link" href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if a game session is active (passed the title screen).</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game has started.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isplaying-boolean"><a class="link" href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game loop is actively updating logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if gameplay is active and not paused.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="ispaused-boolean"><a class="link" href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the game is currently paused.</p>
+<h3 id="2-event-driven-state"><a class="link" href="#2-event-driven-state">1.2. 2. Event-Driven State</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Principle</strong>: Reactivity over polling.</p>
+</li>
+<li>
+<p><strong>Mechanism</strong>:</p>
+</li>
+<li>
+<p>State properties are encapsulated with <strong>getters/setters</strong>.</p>
+</li>
+<li>
+<p>Setters automatically trigger <code>_notify(property, value)</code>.</p>
+</li>
+<li>
+<p>Subscribers receive the new value immediately.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the game is started but halted.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="isgameover-boolean"><a class="link" href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if the current session has ended in a Game Over.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if player has lost.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="turnon-void"><a class="link" href="#turnon-void">2.7. <code>turnOn(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers on the game system.</p>
+<h3 id="3-strict-module-interfaces"><a class="link" href="#3-strict-module-interfaces">1.3. 3. Strict Module Interfaces</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Principle</strong>: Coupling through interfaces, not implementation.</p>
+</li>
+<li>
+<p><strong>Guideline</strong>: Define module shapes in <code>src/core/types/modules.ts</code> (e.g., <code>Sound</code>, <code>Grid</code>, <code>Time</code>).</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to true and ensures <code>start</code>, <code>playing</code>, and <code>gameOver</code> are initialized to false.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="turnoff-void"><a class="link" href="#turnoff-void">2.8. <code>turnOff(): void</code></a></h3>
-<div class="paragraph">
-<p>Powers off the game system.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets the <code>on</code> property to false and wipes transient state.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="startgame-void"><a class="link" href="#startgame-void">2.9. <code>startGame(): void</code></a></h3>
+<h3 id="entry-point-responsibility"><a class="link" href="#entry-point-responsibility">1.4. Entry Point Responsibility</a></h3>
 <div class="paragraph">
-<p>Initiates gameplay from the title screen.</p>
+<p>The <code>README.adoc</code> is the <strong>main entry point</strong> of the application and contains the "Getting Started" guide.</p>
 </div>
 <div class="paragraph">
-<p><strong>Behavior</strong></p>
+<p><strong>Rule</strong>: Whenever adding new abstract methods to the <code>Game</code> class or making breaking changes to the initialization flow, you <strong>MUST</strong> verify and update the code snippet in <code>README.adoc</code> to ensure it remains a valid boilerplate for developers.</p>
 </div>
-<div class="paragraph">
-<p>Sets <code>start</code> and <code>playing</code> to true. This method only has effect if the system is already <code>on</code>.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="exitgame-void"><a class="link" href="#exitgame-void">2.10. <code>exitGame(): void</code></a></h3>
+<h3 id="reference-directory-structure"><a class="link" href="#reference-directory-structure">1.5. Reference Directory Structure</a></h3>
 <div class="paragraph">
-<p>Ends the session and returns to the title screen.</p>
+<p>To maintain scannability, documentation is organized into specialized subdirectories:
+- <code>modules/</code>: Core engine services (Grid, State, etc.).
+- <code>interfaces/</code>: System contracts and module shapes.
+- <code>enums/</code>: Fixed set of values (Color, Sound, etc.).
+- <code>types/</code>: Data interfaces and composite shapes (Cell, Coordinate, etc.).
+- <code>helpers/</code>: Static utility classes.</p>
 </div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Resets <code>start</code>, <code>playing</code>, and <code>gameOver</code> to false.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="pause-void"><a class="link" href="#pause-void">2.11. <code>pause(): void</code></a></h3>
+<h3 id="html-friendly-formatting-standards"><a class="link" href="#html-friendly-formatting-standards">1.6. HTML-Friendly Formatting Standards</a></h3>
 <div class="paragraph">
-<p>Halts gameplay logic.</p>
+<p>Documentation should be optimized for both internal reading and HTML conversion.</p>
 </div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Mandatory Metadata</strong>: All top-level documentation files must include <code>:description:</code> and <code>:keywords:</code> attributes.</p>
+</li>
+<li>
+<p><strong>Structural Tables</strong>: High-level summaries (such as the list of modules in README) must use tables instead of bullet points.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>[cols="1,3", options="header"]</code> for a professional layout.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false. Only works if the game is already started.</p>
+</li>
+<li>
+<p><strong>Cross-Linking</strong>: Every occurrence of a system entity MUST be cross-linked using the <code>xref:</code> macro.</p>
+</li>
+<li>
+<p><strong>Header Attributes</strong>: Use the standard header set to ensure a consistent side-bar TOC and numbered sections:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:idprefix:
+:idseparator: -</code></pre>
 </div>
-<hr>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>===</code> for all methods within a module/interface file.</p>
+</li>
+<li>
+<p><strong>Separators</strong>: Place a horizontal rule (<code>''&#8216;) before every `===</code> header.
++
+[IMPORTANT]
+====
+<strong>NEVER</strong> place a horizontal rule (&#8217;''`) before the <strong>first</strong> method in a section. The first method should follow the section header (e.g., <code>== Methods</code>) after a single blank line.
+====</p>
+</li>
+<li>
+<p>Maintain a <strong>flat list</strong> of methods under the <code>== API Reference</code> or <code>== Methods</code> sections.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Parameters</strong>:</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Use a table for arguments.</p>
+</li>
+<li>
+<p><strong>OMIT this section completely</strong> if there are no parameters.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Returns</strong>:</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Describe the return value.</p>
+</li>
+<li>
+<p><strong>OMIT this section completely</strong> if the return type is <code>void</code>.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Behavior</strong>: Use full sentences and paragraphs.</p>
+</li>
+<li>
+<p><strong>Examples</strong>: Provide realistic usage scenarios.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
 </div>
 <div class="sect2">
-<h3 id="resume-void"><a class="link" href="#resume-void">2.12. <code>resume(): void</code></a></h3>
+<h3 id="single-item-structure-types-enums-interfaces"><a class="link" href="#single-item-structure-types-enums-interfaces">1.7. Single-Item Structure (Types, Enums, Interfaces)</a></h3>
 <div class="paragraph">
-<p>Restarts gameplay logic from a paused state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="triggergameover-void"><a class="link" href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Forces the game into a Game Over state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>playing</code> to false and <code>gameOver</code> to true.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgame-void"><a class="link" href="#resetgame-void">2.14. <code>resetGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Prepares the state for a new round (hard restart).</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Clears the <code>gameOver</code> flag and resumes <code>playing</code> status. Unlike <code>resetGameOver</code>, this is intended for a complete session reset from any state.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="resetgameover-void"><a class="link" href="#resetgameover-void">2.15. <code>resetGameOver(): void</code></a></h3>
-<div class="paragraph">
-<p>Resets the state specifically after a Game Over to allow immediate restart.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Sets <code>gameOver</code> to false and <code>playing</code> to true. This is the recommended way to handle "Try Again" scenarios.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="iscolorenabled-boolean"><a class="link" href="#iscolorenabled-boolean">2.16. <code>isColorEnabled(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if theme color mode is active.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if color mode is on.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setcolorenabledvalue-boolean-void"><a class="link" href="#setcolorenabledvalue-boolean-void">2.17. <code>setColorEnabled(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the color mode preference.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New color mode status.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the property and automatically persists the value to <code>LocalStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="togglecolorenabled-void"><a class="link" href="#togglecolorenabled-void">2.18. <code>toggleColorEnabled(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the current color mode.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="ismuted-boolean"><a class="link" href="#ismuted-boolean">2.19. <code>isMuted(): boolean</code></a></h3>
-<div class="paragraph">
-<p>Checks if master audio is muted.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if sound is disabled.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setmutedvalue-boolean-void"><a class="link" href="#setmutedvalue-boolean-void">2.20. <code>setMuted(value: boolean): void</code></a></h3>
-<div class="paragraph">
-<p>Sets the master mute status.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New mute status.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the property and persists it to <code>LocalStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="togglemuted-void"><a class="link" href="#togglemuted-void">2.21. <code>toggleMuted(): void</code></a></h3>
-<div class="paragraph">
-<p>Toggles the master mute status.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="gethighscore-number"><a class="link" href="#gethighscore-number">2.22. <code>getHighScore(): number</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the highest score recorded.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The stored high score.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="sethighscorevalue-number-void"><a class="link" href="#sethighscorevalue-number-void">2.23. <code>setHighScore(value: number): void</code></a></h3>
-<div class="paragraph">
-<p>Updates the high score.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The new record score.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Updates the value and persists it to <code>LocalStorage</code>. High scores are prefixed by the game&#8217;s persistence key.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a listener for state changes.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The specific property to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute on change.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Example</strong></p>
+<p>For entities that define data shapes or fixed values, use the following structure:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">state.subscribe(StateProperty.GAME_OVER, (isOver) =&gt; {
-    if (isOver) {
-        this.modules.sound.play(Sound.GAMEOVER);
-    }
-});</code></pre>
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">= EntityName Reference
+
+&lt;Brief description of the entity's purpose and usage.&gt;
+
+== Attributes / Properties / Values
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`prop1` |`Type` |Description of property 1.
+|`prop2` |`Type` |Description of property 2.
+|===
+
+== General Usage
+
+&lt;Detailed explanation of how this entity is used within the engine's ecosystem.&gt;</code></pre>
 </div>
 </div>
-<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="formatting-guidelines"><a class="link" href="#formatting-guidelines">2. Formatting Guidelines</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="asciidoc-features"><a class="link" href="#asciidoc-features">2.1. AsciiDoc Features</a></h3>
+<div class="paragraph">
+<p>We use <strong>AsciiDoc</strong> (<code>.adoc</code>) for all documentation to leverage advanced features.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Headers</strong>: Use <code>=</code> for document titles, <code>==</code> for sections.</p>
+</li>
+<li>
+<p><strong>Code Blocks</strong>: Use <code>[source,typescript]</code> for syntax highlighting.</p>
+</li>
+<li>
+<p><strong>Admonitions</strong>: Use <code>NOTE:</code>, <code>TIP:</code>, <code>WARNING:</code> for emphasis.</p>
+</li>
+<li>
+<p><strong>Diagrams</strong>: Use Mermaid via <code>mermaid-cli</code> for generation (embedded as generic images).</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.25. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
+<h3 id="jsdoc-source-code"><a class="link" href="#jsdoc-source-code">2.2. JSDoc (Source Code)</a></h3>
 <div class="paragraph">
-<p>Removes a state change listener.</p>
+<p>Refer to <code>docs/jsdoc_standard.adoc</code> for inline code documentation rules.
+*   <strong>Enforce</strong>: <code>@param</code> and <code>@returns</code> for every method.
+*   <strong>Strict Typing</strong>: No <code>any</code>.</p>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>property</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/StateProperty.html">StateProperty</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The property being monitored.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reference to the callback to remove.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lessons-learned"><a class="link" href="#lessons-learned">3. Lessons Learned</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="audio-latency"><a class="link" href="#audio-latency">3.1. Audio Latency</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: <code>AudioContext</code> autoplay policy and startup latency.</p>
+</li>
+<li>
+<p><strong>Solution</strong>:</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Use <code>latencyHint: 'interactive'</code>.</p>
+</li>
+<li>
+<p>Preload all sounds into <code>AudioBuffer`s during `setup()</code>.</p>
+</li>
+<li>
+<p>Resume context on first user interaction if suspended.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="setpersistencekeykey-string-void"><a class="link" href="#setpersistencekeykey-string-void">2.26. <code>setPersistenceKey(key: string): void</code></a></h3>
-<div class="paragraph">
-<p>Configures the unique identifier for storage.</p>
+<h3 id="enumerations"><a class="link" href="#enumerations">3.2. Enumerations</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: String literals ('pressed', 'held') caused typos and refactoring pain.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Use TypeScript <code>enum</code> (e.g., <code>ControlEventType</code>) for all fixed sets of values.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The prefix to use for <code>LocalStorage</code> entries.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.27. <code>getPersistenceKey(): string</code></a></h3>
-<div class="paragraph">
-<p>Retrieves the currently configured storage key.</p>
+<h3 id="coordinate-systems"><a class="link" href="#coordinate-systems">3.3. Coordinate Systems</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Standard</strong>:</p>
+</li>
+<li>
+<p><strong>Grid</strong>: Integers <code>{x, y}</code> representing column/row index.</p>
+</li>
+<li>
+<p><strong>Display</strong>: Normalized floats <code>0.0</code> to <code>1.0</code> (percentage of screen).</p>
+</li>
+<li>
+<p>Use <code>CoordinateHelper</code> methods to convert between Grid, Display, and Pixel values.</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>string</code> - The persistence key.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.28. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="decoupled-state-sync"><a class="link" href="#decoupled-state-sync">3.4. Decoupled State Sync</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: <code>GameState.syncModules</code> creates a circular dependency or high coupling by making the state module know about every other module.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Use the <code>StateSyncable</code> interface. The <code>Game</code> class (owner) handles the linking, allowing <code>GameState</code> to remain an independent "data store" module.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="persistence-namespacing"><a class="link" href="#persistence-namespacing">3.5. Persistence Namespacing</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: If multiple games built with the engine are hosted on the same domain, they share the same <code>localStorage</code>, leading to property collisions (e.g., both games trying to store <code>highScore</code>).</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Require an abstract <code>getPersistenceKey()</code> method in the <code>Game</code> class and use its return value as a prefix in <code>GameState</code> (e.g., <code>localStorage.setItem(</code>${prefix}.${key}`, value)`).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="documentation-granularity"><a class="link" href="#documentation-granularity">3.6. Documentation Granularity</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: Grouping multiple types or enums in a single file makes the documentation harder to navigate via sidebars or search, and leads to extremely long pages.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: "Explode" documentation into individual files (One File Per Item). This improves scannability and allows for precise cross-referencing.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="cross-linking-context"><a class="link" href="#cross-linking-context">3.7. Cross-Linking Context</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Recommendation</strong>: When referencing an entity in a table (e.g., a return type or parameter type), always use an <code>xref:</code> link to its dedicated documentation page.</p>
+</li>
+<li>
+<p><strong>Pattern</strong>: Use relative paths (e.g., <code><a href="../enums/Color.html">Color</a></code>) to link between subdirectories.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="redundant-separators"><a class="link" href="#redundant-separators">3.8. Redundant Separators</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: Automated or careless application of the "expanded method" style often leads to placing a horizontal rule (<code>'''</code>) at the very beginning of the <code>== Methods</code> section.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Always verify that the first method header appears immediately after the section header. This maintains a clean vertical rhythm and avoids unnecessary whitespace or lines at the top of the API list.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="module-interface-organization"><a class="link" href="#module-interface-organization">3.9. Module Interface Organization</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: Mixing generic engine contracts (e.g., <code>Initializable</code>) with specific module definitions (e.g., <code>Grid</code>, <code>State</code>) in a flat directory structure created clutter and obscured the architectural distinction between "core traits" and "major subsystems."</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Moved module-specific interfaces to a dedicated <code>modules/</code> subdirectory.</p>
+</li>
+<li>
+<p><strong>Impact</strong>: When cross-referencing files in nested directories, developers must pay extra attention to relative paths (e.g., using <code>xref:../../types/</code> instead of <code>xref:../types/</code>).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cross-referencing-standards"><a class="link" href="#cross-referencing-standards">4. Cross-Referencing Standards</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Returns metadata for the real-time debugger.</p>
+<p>To ensure a navigable and cohesive documentation set, strict cross-referencing is mandatory for all internal entities.</p>
+</div>
+<div class="sect2">
+<h3 id="syntax"><a class="link" href="#syntax">4.1. Syntax</a></h3>
+<div class="paragraph">
+<p>Use the AsciiDoc <code>xref</code> macro with relative paths:
+<code><a href="path/to/File.html">LinkText</a></code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rules"><a class="link" href="#rules">4.2. Rules</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Mandatory Linking</strong>: Every occurrence of a type, interface, enum, or module in a method signature, property type, or description MUST be linked.</p>
+</li>
+<li>
+<p><strong>Relative Paths</strong>: references must use relative paths from the current file&#8217;s location.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Sibling file: <code><a href="Sibling.html">Sibling</a></code></p>
+</li>
+<li>
+<p>Parent directory: <code><a href="../types/Cell.html">Cell</a></code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Parameter Tables</strong>: Types listed in input/output tables must be linked, not just the text in the method signature.</p>
+</li>
+<li>
+<p><strong>Consistency</strong>: exact file names should be used for the link target, and the link text should match the entity name.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="examples"><a class="link" href="#examples">4.3. Examples</a></h3>
+<div class="paragraph">
+<p><strong>Good:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">|`color` |`xref:../enums/Color.adoc[Color]` |The theme color.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Bad:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">|`color` |`Color` |The theme color.</code></pre>
+</div>
 </div>
 </div>
 </div>

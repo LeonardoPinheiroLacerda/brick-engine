@@ -128,7 +128,7 @@ Abstract method for rendering the screen after a game ends.
 
 **Behavior**
 
-Called when the game state is `gameOver`. Executed after the final `render` call to overlay messages or recovery menus.
+Called when the game state is `gameOver`. Executed as the primary rendering logic during Game Over, replacing the standard `render()` call to allow for clean menus or high-score displays.
 
 
 '''
@@ -175,5 +175,8 @@ The `Game` base class automatically registers listeners for system-level buttons
 *   **SOUND**: Toggles master mute.
 *   **COLOR**: Toggles theme color mode.
 *   **RESET**: Resets the grid and score.
-*   **START_PAUSE**: Starts the game or toggles pause.
+*   **START_PAUSE**: Manages the game lifecycle:
+** Starts the game from the Title Screen.
+** Toggles pause during gameplay.
+** Restarts the game immediately if in a Game Over state (via `resetGameOver`).
 *   **EXIT**: Hard stop of the draw loop.
