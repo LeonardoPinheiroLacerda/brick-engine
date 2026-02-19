@@ -1,10 +1,16 @@
 = RelativeValuesHelper Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Generic utilities for calculating relative sizes and positions within containers.
+:keywords: relative, sizing, positioning, layout, helper
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `RelativeValuesHelper` provides conversion utilities for scaling absolute sizes to the current canvas dimensions, enabling responsive layouts.
 

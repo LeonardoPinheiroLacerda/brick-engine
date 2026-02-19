@@ -1,4 +1,16 @@
 = Time Reference
+:description: Interface for managing the game's logical clock and update frequency.
+:keywords: time, clock, tick, interval, game-loop
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Interface for managing the game's logical clock and update frequency.
 

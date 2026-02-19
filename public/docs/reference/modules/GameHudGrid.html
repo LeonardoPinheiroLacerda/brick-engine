@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Specialized 4x4 grid implementation for HUD elements and meta-information.">
+<meta name="keywords" content="hud, grid, ui, display">
 <title>GameHudGrid Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,28 +437,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameHudGrid Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#inheritance">1. Inheritance</a></li>
+<li><a href="#usage">2. Usage</a></li>
+<li><a href="#implementation-specifics">3. Implementation Specifics</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_inheritance">Inheritance</a></li>
-<li><a href="#_usage">Usage</a></li>
-<li><a href="#_implementation_specifics">Implementation Specifics</a></li>
-</ul>
-</div>
 <div class="paragraph">
 <p>The <code>GameHudGrid</code> is a specialized implementation of the <code>GameGrid</code> class. It is hard-coded to a <strong>4x4</strong> dimension and is intended for use in the HUD area to display meta-information, such as "Next Piece" in a Tetris-style game.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_inheritance">Inheritance</h2>
+<h2 id="inheritance"><a class="link" href="#inheritance">1. Inheritance</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>GameHudGrid</code> extends <a href="GameGrid.html">GameGrid</a>. It inherits all methods for filling areas, stamping pieces, and checking occupancy.</p>
@@ -464,7 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_usage">Usage</h2>
+<h2 id="usage"><a class="link" href="#usage">2. Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Accessible via <code>modules.hudGrid</code>.</p>
@@ -483,7 +485,7 @@ hudGrid.stampPiece(nextPieceCoords, 1, Color.BLUE);</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implementation_specifics">Implementation Specifics</h2>
+<h2 id="implementation-specifics"><a class="link" href="#implementation-specifics">3. Implementation Specifics</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameHudGrid</code> overrides the dimensions provided in the global configuration, strictly enforcing a 4x4 matrix. This ensures consistency for HUD-specific rendering logic.</p>
@@ -493,7 +495,6 @@ hudGrid.stampPiece(nextPieceCoords, 1, Color.BLUE);</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

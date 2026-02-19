@@ -1,10 +1,16 @@
 = CoordinateHelper Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Specialized math utilities for converting between Grid, Display, and Pixel coordinate systems.
+:keywords: coordinates, math, grid, display, conversion, helper
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `CoordinateHelper` is a static utility class that handles translations between different coordinate systems: the logical xref:../modules/GameGrid.adoc[Game Grid], the normalized Display area, and absolute pixel positions.
 

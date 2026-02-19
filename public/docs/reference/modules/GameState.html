@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Single source of truth for the game lifecycle and persistent user preferences.">
+<meta name="keywords" content="state, lifecycle, persistence, localstorage">
 <title>GameState Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,57 +437,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameState Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_centralized_persistence">Centralized Persistence</a></li>
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#centralized-persistence">1. Centralized Persistence</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_ison_boolean"><code>isOn(): boolean</code></a></li>
-<li><a href="#_isoff_boolean"><code>isOff(): boolean</code></a></li>
-<li><a href="#_isstarted_boolean"><code>isStarted(): boolean</code></a></li>
-<li><a href="#_isplaying_boolean"><code>isPlaying(): boolean</code></a></li>
-<li><a href="#_ispaused_boolean"><code>isPaused(): boolean</code></a></li>
-<li><a href="#_isgameover_boolean"><code>isGameOver(): boolean</code></a></li>
-<li><a href="#_turnon_void"><code>turnOn(): void</code></a></li>
-<li><a href="#_turnoff_void"><code>turnOff(): void</code></a></li>
-<li><a href="#_startgame_void"><code>startGame(): void</code></a></li>
-<li><a href="#_exitgame_void"><code>exitGame(): void</code></a></li>
-<li><a href="#_pause_void"><code>pause(): void</code></a></li>
-<li><a href="#_resume_void"><code>resume(): void</code></a></li>
-<li><a href="#_triggergameover_void"><code>triggerGameOver(): void</code></a></li>
-<li><a href="#_resetgame_void"><code>resetGame(): void</code></a></li>
-<li><a href="#_iscolorenabled_boolean"><code>isColorEnabled(): boolean</code></a></li>
-<li><a href="#_setcolorenabledvalue_boolean_void"><code>setColorEnabled(value: boolean): void</code></a></li>
-<li><a href="#_togglecolorenabled_void"><code>toggleColorEnabled(): void</code></a></li>
-<li><a href="#_ismuted_boolean"><code>isMuted(): boolean</code></a></li>
-<li><a href="#_setmutedvalue_boolean_void"><code>setMuted(value: boolean): void</code></a></li>
-<li><a href="#_togglemuted_void"><code>toggleMuted(): void</code></a></li>
-<li><a href="#_gethighscore_number"><code>getHighScore(): number</code></a></li>
-<li><a href="#_sethighscorevalue_number_void"><code>setHighScore(value: number): void</code></a></li>
-<li><a href="#_subscribeproperty_stateproperty_callback_value_boolean_number_void_void"><code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#_unsubscribeproperty_stateproperty_callback_value_boolean_number_void_void"><code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
-<li><a href="#_setpersistencekeykey_string_void"><code>setPersistenceKey(key: string): void</code></a></li>
-<li><a href="#_getpersistencekey_string"><code>getPersistenceKey(): string</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></li>
+<li><a href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></li>
+<li><a href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></li>
+<li><a href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></li>
+<li><a href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></li>
+<li><a href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></li>
+<li><a href="#turnon-void">2.7. <code>turnOn(): void</code></a></li>
+<li><a href="#turnoff-void">2.8. <code>turnOff(): void</code></a></li>
+<li><a href="#startgame-void">2.9. <code>startGame(): void</code></a></li>
+<li><a href="#exitgame-void">2.10. <code>exitGame(): void</code></a></li>
+<li><a href="#pause-void">2.11. <code>pause(): void</code></a></li>
+<li><a href="#resume-void">2.12. <code>resume(): void</code></a></li>
+<li><a href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></li>
+<li><a href="#resetgame-void">2.14. <code>resetGame(): void</code></a></li>
+<li><a href="#iscolorenabled-boolean">2.15. <code>isColorEnabled(): boolean</code></a></li>
+<li><a href="#setcolorenabledvalue-boolean-void">2.16. <code>setColorEnabled(value: boolean): void</code></a></li>
+<li><a href="#togglecolorenabled-void">2.17. <code>toggleColorEnabled(): void</code></a></li>
+<li><a href="#ismuted-boolean">2.18. <code>isMuted(): boolean</code></a></li>
+<li><a href="#setmutedvalue-boolean-void">2.19. <code>setMuted(value: boolean): void</code></a></li>
+<li><a href="#togglemuted-void">2.20. <code>toggleMuted(): void</code></a></li>
+<li><a href="#gethighscore-number">2.21. <code>getHighScore(): number</code></a></li>
+<li><a href="#sethighscorevalue-number-void">2.22. <code>setHighScore(value: number): void</code></a></li>
+<li><a href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.23. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
+<li><a href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></li>
+<li><a href="#setpersistencekeykey-string-void">2.25. <code>setPersistenceKey(key: string): void</code></a></li>
+<li><a href="#getpersistencekey-string">2.26. <code>getPersistenceKey(): string</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameState</code> module acts as the central, single source of truth for the game&#8217;s lifecycle and user preferences. It handles persistence to <code>LocalStorage</code> for settings and high scores.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_centralized_persistence">Centralized Persistence</h2>
+<h2 id="centralized-persistence"><a class="link" href="#centralized-persistence">1. Centralized Persistence</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>As defined in the Architectural Patterns, <code>GameState</code> is responsible for all <code>LocalStorage</code> logic. Other modules (like <code><a href="GameSound.html">GameSound</a></code>) must sync their internal state with this module via the <code><a href="../interfaces/StateSyncable.html">StateSyncable</a></code> interface.</p>
@@ -493,10 +495,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_ison_boolean"><code>isOn(): boolean</code></h3>
+<h3 id="ison-boolean"><a class="link" href="#ison-boolean">2.1. <code>isOn(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if the game system is powered up.</p>
 </div>
@@ -509,7 +511,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isoff_boolean"><code>isOff(): boolean</code></h3>
+<h3 id="isoff-boolean"><a class="link" href="#isoff-boolean">2.2. <code>isOff(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if the game system is powered down.</p>
 </div>
@@ -522,7 +524,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isstarted_boolean"><code>isStarted(): boolean</code></h3>
+<h3 id="isstarted-boolean"><a class="link" href="#isstarted-boolean">2.3. <code>isStarted(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a game session is active (passed the title screen).</p>
 </div>
@@ -535,7 +537,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isplaying_boolean"><code>isPlaying(): boolean</code></h3>
+<h3 id="isplaying-boolean"><a class="link" href="#isplaying-boolean">2.4. <code>isPlaying(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if the game loop is actively updating logic.</p>
 </div>
@@ -548,7 +550,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_ispaused_boolean"><code>isPaused(): boolean</code></h3>
+<h3 id="ispaused-boolean"><a class="link" href="#ispaused-boolean">2.5. <code>isPaused(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if the game is currently paused.</p>
 </div>
@@ -561,7 +563,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isgameover_boolean"><code>isGameOver(): boolean</code></h3>
+<h3 id="isgameover-boolean"><a class="link" href="#isgameover-boolean">2.6. <code>isGameOver(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if the current session has ended in a Game Over.</p>
 </div>
@@ -574,7 +576,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_turnon_void"><code>turnOn(): void</code></h3>
+<h3 id="turnon-void"><a class="link" href="#turnon-void">2.7. <code>turnOn(): void</code></a></h3>
 <div class="paragraph">
 <p>Powers on the game system.</p>
 </div>
@@ -587,7 +589,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_turnoff_void"><code>turnOff(): void</code></h3>
+<h3 id="turnoff-void"><a class="link" href="#turnoff-void">2.8. <code>turnOff(): void</code></a></h3>
 <div class="paragraph">
 <p>Powers off the game system.</p>
 </div>
@@ -600,7 +602,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_startgame_void"><code>startGame(): void</code></h3>
+<h3 id="startgame-void"><a class="link" href="#startgame-void">2.9. <code>startGame(): void</code></a></h3>
 <div class="paragraph">
 <p>Initiates gameplay from the title screen.</p>
 </div>
@@ -613,7 +615,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_exitgame_void"><code>exitGame(): void</code></h3>
+<h3 id="exitgame-void"><a class="link" href="#exitgame-void">2.10. <code>exitGame(): void</code></a></h3>
 <div class="paragraph">
 <p>Ends the session and returns to the title screen.</p>
 </div>
@@ -626,7 +628,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_pause_void"><code>pause(): void</code></h3>
+<h3 id="pause-void"><a class="link" href="#pause-void">2.11. <code>pause(): void</code></a></h3>
 <div class="paragraph">
 <p>Halts gameplay logic.</p>
 </div>
@@ -639,7 +641,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_resume_void"><code>resume(): void</code></h3>
+<h3 id="resume-void"><a class="link" href="#resume-void">2.12. <code>resume(): void</code></a></h3>
 <div class="paragraph">
 <p>Restarts gameplay logic from a paused state.</p>
 </div>
@@ -652,7 +654,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_triggergameover_void"><code>triggerGameOver(): void</code></h3>
+<h3 id="triggergameover-void"><a class="link" href="#triggergameover-void">2.13. <code>triggerGameOver(): void</code></a></h3>
 <div class="paragraph">
 <p>Forces the game into a Game Over state.</p>
 </div>
@@ -665,7 +667,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_resetgame_void"><code>resetGame(): void</code></h3>
+<h3 id="resetgame-void"><a class="link" href="#resetgame-void">2.14. <code>resetGame(): void</code></a></h3>
 <div class="paragraph">
 <p>Prepares the state for a new round after a Game Over.</p>
 </div>
@@ -678,7 +680,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_iscolorenabled_boolean"><code>isColorEnabled(): boolean</code></h3>
+<h3 id="iscolorenabled-boolean"><a class="link" href="#iscolorenabled-boolean">2.15. <code>isColorEnabled(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if theme color mode is active.</p>
 </div>
@@ -691,7 +693,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setcolorenabledvalue_boolean_void"><code>setColorEnabled(value: boolean): void</code></h3>
+<h3 id="setcolorenabledvalue-boolean-void"><a class="link" href="#setcolorenabledvalue-boolean-void">2.16. <code>setColorEnabled(value: boolean): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the color mode preference.</p>
 </div>
@@ -726,14 +728,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_togglecolorenabled_void"><code>toggleColorEnabled(): void</code></h3>
+<h3 id="togglecolorenabled-void"><a class="link" href="#togglecolorenabled-void">2.17. <code>toggleColorEnabled(): void</code></a></h3>
 <div class="paragraph">
 <p>Toggles the current color mode.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_ismuted_boolean"><code>isMuted(): boolean</code></h3>
+<h3 id="ismuted-boolean"><a class="link" href="#ismuted-boolean">2.18. <code>isMuted(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if master audio is muted.</p>
 </div>
@@ -746,7 +748,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setmutedvalue_boolean_void"><code>setMuted(value: boolean): void</code></h3>
+<h3 id="setmutedvalue-boolean-void"><a class="link" href="#setmutedvalue-boolean-void">2.19. <code>setMuted(value: boolean): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the master mute status.</p>
 </div>
@@ -781,14 +783,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_togglemuted_void"><code>toggleMuted(): void</code></h3>
+<h3 id="togglemuted-void"><a class="link" href="#togglemuted-void">2.20. <code>toggleMuted(): void</code></a></h3>
 <div class="paragraph">
 <p>Toggles the master mute status.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_gethighscore_number"><code>getHighScore(): number</code></h3>
+<h3 id="gethighscore-number"><a class="link" href="#gethighscore-number">2.21. <code>getHighScore(): number</code></a></h3>
 <div class="paragraph">
 <p>Retrieves the highest score recorded.</p>
 </div>
@@ -801,7 +803,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_sethighscorevalue_number_void"><code>setHighScore(value: number): void</code></h3>
+<h3 id="sethighscorevalue-number-void"><a class="link" href="#sethighscorevalue-number-void">2.22. <code>setHighScore(value: number): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the high score.</p>
 </div>
@@ -836,7 +838,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_subscribeproperty_stateproperty_callback_value_boolean_number_void_void"><code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></h3>
+<h3 id="subscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#subscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.23. <code>subscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a listener for state changes.</p>
 </div>
@@ -882,7 +884,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unsubscribeproperty_stateproperty_callback_value_boolean_number_void_void"><code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></h3>
+<h3 id="unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void"><a class="link" href="#unsubscribeproperty-stateproperty-callback-value-boolean-number-void-void">2.24. <code>unsubscribe(property: StateProperty, callback: (value: boolean | number) &#8658; void): void</code></a></h3>
 <div class="paragraph">
 <p>Removes a state change listener.</p>
 </div>
@@ -916,7 +918,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setpersistencekeykey_string_void"><code>setPersistenceKey(key: string): void</code></h3>
+<h3 id="setpersistencekeykey-string-void"><a class="link" href="#setpersistencekeykey-string-void">2.25. <code>setPersistenceKey(key: string): void</code></a></h3>
 <div class="paragraph">
 <p>Configures the unique identifier for storage.</p>
 </div>
@@ -945,7 +947,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getpersistencekey_string"><code>getPersistenceKey(): string</code></h3>
+<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.26. <code>getPersistenceKey(): string</code></a></h3>
 <div class="paragraph">
 <p>Retrieves the currently configured storage key.</p>
 </div>
@@ -958,7 +960,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -968,7 +970,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Contract for modules that must react to global state changes.">
+<meta name="keywords" content="state, reactivity, synchronization, events">
 <title>StateSyncable Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -432,10 +434,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>StateSyncable Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#properties">1. Properties</a></li>
+<li><a href="#methods">2. Methods</a>
+<ul class="sectlevel2">
+<li><a href="#syncstatestate-state-void">2.1. <code>syncState(state: State): void</code></a></li>
+</ul>
+</li>
+<li><a href="#general-usage">3. General Usage</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,7 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_properties">Properties</h2>
+<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -470,10 +486,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_methods">Methods</h2>
+<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_syncstatestate_state_void"><code>syncState(state: <a href="modules/State.html">State</a>): void</code></h3>
+<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">2.1. <code>syncState(state: <a href="modules/State.html">State</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Links the module instance and allows it to subscribe to properties.</p>
 </div>
@@ -503,7 +519,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage">General Usage</h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../modules/GameSound.html">GameSound</a></code> and <code><a href="../modules/GameScore.html">GameScore</a></code>. During the start-up sequence, the engine calls <code>syncState()</code> on these modules to ensure they have the latest references to <code>muted</code> flags and <code>highScore</code> data.</p>
@@ -513,8 +529,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:54:19 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

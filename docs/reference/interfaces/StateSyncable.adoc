@@ -1,4 +1,16 @@
 = StateSyncable Reference
+:description: Contract for modules that must react to global state changes.
+:keywords: state, reactivity, synchronization, events
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Contract for modules that must react to global state changes.
 

@@ -1,4 +1,16 @@
 = Vector Reference
+:description: Represents a generic 2D vector for directional or magnitude calculations.
+:keywords: vector, direction, magnitude, 2d, transformation
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Represents a generic 2D vector for directional or magnitude calculations.
 

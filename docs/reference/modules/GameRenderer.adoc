@@ -1,10 +1,16 @@
 = GameRenderer Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Orchestrates multiple specialized renderers to draw the game grid, background, and HUD.
+:keywords: rendering, orchestration, graphics, canvas, layers
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameRenderer` module is the visual engine of the application. It orchestrates multiple specialized renderers to draw the game grid, background, borders, and HUD elements on the HTML5 canvas.
 

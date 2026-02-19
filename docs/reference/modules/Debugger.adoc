@@ -1,10 +1,16 @@
 = Debugger Class Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Real-time, HTML-based overlay for monitoring the state of all engine modules.
+:keywords: debug, monitoring, overlay, diagnostics
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `Debugger` class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the `xref:../interfaces/Debuggable.adoc[Debuggable]` interface.
 

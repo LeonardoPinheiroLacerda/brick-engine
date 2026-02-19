@@ -1,10 +1,16 @@
 = HudRenderer Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Manages the visualization of the Head-Up Display, including scores, levels, and system status.
+:keywords: hud, rendering, ui, display, graphics
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `HudRenderer` manages the visualization of the Head-Up Display, including scores, levels, system status, and the specialized HUD grid. It implements the standard `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
 

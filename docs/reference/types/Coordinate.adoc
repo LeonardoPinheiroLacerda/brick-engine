@@ -1,4 +1,16 @@
 = Coordinate Reference
+:description: A foundational 2D point interface used for positioning on grid or display.
+:keywords: coordinate, point, position, 2d
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 A foundational 2D point interface used for positioning.
 

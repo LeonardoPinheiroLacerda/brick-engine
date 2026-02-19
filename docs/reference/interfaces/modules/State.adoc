@@ -1,4 +1,16 @@
 = State Reference
+:description: Interface for managing global game lifecycle flags, persistence, and preferences.
+:keywords: state, lifecycle, persistence, preferences
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Interface for managing global game lifecycle flags, persistence, and preferences.
 

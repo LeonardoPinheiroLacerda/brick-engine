@@ -1,10 +1,16 @@
 = Game Class Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: The heart of the application, managing the game loop and orchestration of modules.
+:keywords: core, game-loop, architecture, orchestration
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.
 

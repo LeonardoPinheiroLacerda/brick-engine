@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Real-time, HTML-based overlay for monitoring the state of all engine modules.">
+<meta name="keywords" content="debug, monitoring, overlay, diagnostics">
 <title>Debugger Class Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,36 +437,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Debugger Class Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#api-reference">1. API Reference</a>
+<ul class="sectlevel2">
+<li><a href="#setup-void">1.1. <code>setup(): void</code></a></li>
+<li><a href="#update-promisevoid">1.2. <code>update(): Promise&lt;void&gt;</code></a></li>
+</ul>
+</li>
+<li><a href="#configuration">2. Configuration</a></li>
+<li><a href="#implementation">3. Implementation</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_api_reference">API Reference</a>
-<ul class="sectlevel2">
-<li><a href="#_setup_void"><code>setup(): void</code></a></li>
-<li><a href="#_update_promisevoid"><code>update(): Promise&lt;void&gt;</code></a></li>
-</ul>
-</li>
-<li><a href="#_configuration">Configuration</a></li>
-<li><a href="#_implementation">Implementation</a></li>
-</ul>
-</div>
 <div class="paragraph">
 <p>The <code>Debugger</code> class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the <code><a href="../interfaces/Debuggable.html">Debuggable</a></code> interface.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_setup_void"><code>setup(): void</code></h3>
+<h3 id="setup-void"><a class="link" href="#setup-void">1.1. <code>setup(): void</code></a></h3>
 <div class="paragraph">
 <p>Initializes the debugger&#8217;s DOM structure.</p>
 </div>
@@ -477,7 +479,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_update_promisevoid"><code>update(): Promise&lt;void&gt;</code></h3>
+<h3 id="update-promisevoid"><a class="link" href="#update-promisevoid">1.2. <code>update(): Promise&lt;void&gt;</code></a></h3>
 <div class="paragraph">
 <p>Refreshes the overlay with new data from the modules.</p>
 </div>
@@ -491,7 +493,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration">Configuration</h2>
+<h2 id="configuration"><a class="link" href="#configuration">2. Configuration</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The debugger behavior is controlled via the main <code>configs.ts</code> file:</p>
@@ -509,7 +511,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implementation">Implementation</h2>
+<h2 id="implementation"><a class="link" href="#implementation">3. Implementation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Modules wishing to appear in the debugger must implement the <code>Debuggable</code> interface:</p>
@@ -526,7 +528,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

@@ -1,4 +1,16 @@
 = RendererComposite Reference
+:description: An advanced renderer that manages a collection of individual layers.
+:keywords: renderer, composite, layers, graphics, canvas
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 An advanced renderer that manages a collection of individual layers.
 

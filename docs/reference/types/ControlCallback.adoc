@@ -1,4 +1,16 @@
 = ControlCallback Reference
+:description: Type definition for functions that handle engine input.
+:keywords: callback, control, input, subscriber
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Type definition for functions that handle engine input.
 

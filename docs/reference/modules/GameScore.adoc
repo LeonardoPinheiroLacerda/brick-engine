@@ -1,10 +1,16 @@
 = GameScore Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Tracks session player performance, including score, levels, and point multipliers.
+:keywords: score, tracking, levels, multipliers, metrics
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameScore` module tracks player performance during a session. It manages the current score, game levels, and multipliers, while ensuring high scores are correctly validated and persisted via `GameState`.
 

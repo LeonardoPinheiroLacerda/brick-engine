@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Interface for input handling and event-driven control distribution.">
+<meta name="keywords" content="control, input, subscription, events">
 <title>Control Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -432,10 +434,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Control Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#methods">1. Methods</a>
+<ul class="sectlevel2">
+<li><a href="#notifykey-controlkey-type-controleventtype-void">1.1. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
+<li><a href="#setmodulesmodules-gamemodules-void">1.2. <code>setModules(modules: GameModules): void</code></a></li>
+<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.3. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.4. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unbindcontrols-void">1.5. <code>unbindControls(): void</code></a></li>
+<li><a href="#bindcontrols-void">1.6. <code>bindControls(): void</code></a></li>
+</ul>
+</li>
+<li><a href="#general-usage">2. General Usage</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,10 +466,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_methods">Methods</h2>
+<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_notifykey_controlkey_type_controleventtype_void"><code>notify(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>): void</code></h3>
+<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">1.1. <code>notify(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Triggers an event manually. Usually called by hardware drivers (like Keyboard listeners).</p>
 </div>
@@ -483,7 +503,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setmodulesmodules_gamemodules_void"><code>setModules(modules: <a href="../GameModules.html">GameModules</a>): void</code></h3>
+<h3 id="setmodulesmodules-gamemodules-void"><a class="link" href="#setmodulesmodules-gamemodules-void">1.2. <code>setModules(modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Provides the context registry required for <code><a href="../../types/GameEvent.html">GameEvent</a></code> construction.</p>
 </div>
@@ -512,7 +532,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_subscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>subscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></h3>
+<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.3. <code>subscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a function to be executed when the specified input occurs.</p>
 </div>
@@ -551,7 +571,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unsubscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>unsubscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></h3>
+<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.4. <code>unsubscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Detaches a previously registered input listener.</p>
 </div>
@@ -590,14 +610,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unbindcontrols_void"><code>unbindControls(): void</code></h3>
+<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">1.5. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Temporarily disables all input listeners.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_bindcontrols_void"><code>bindControls(): void</code></h3>
+<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">1.6. <code>bindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Re-enables input listeners.</p>
 </div>
@@ -605,7 +625,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage">General Usage</h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/GameControl.html">GameControl</a></code>. Games use this to react to player movements (<code><a href="../../enums/ControlKey.html">LEFT</a></code>, <code><a href="../../enums/ControlKey.html">RIGHT</a></code>) or actions (<code><a href="../../enums/ControlKey.html">ACTION</a></code>).</p>
@@ -615,8 +635,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:54:49 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

@@ -1,10 +1,16 @@
 = GameControl Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Handles user input from physical keyboards and virtual buttons.
+:keywords: input, control, keyboard, interaction
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameControl` module handles user input from physical keyboards and virtual buttons. It provides an event-based system for reacting to player actions.
 

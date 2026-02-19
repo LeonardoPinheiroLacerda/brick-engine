@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Manages the state of a 2D grid for cell manipulation and collision detection.">
+<meta name="keywords" content="grid, cells, logic, collision">
 <title>GameGrid Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,57 +437,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameGrid Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_specialized_instances">Specialized Instances</a></li>
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#specialized-instances">1. Specialized Instances</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_width_number"><code>width: number</code></a></li>
-<li><a href="#_height_number"><code>height: number</code></a></li>
-<li><a href="#_resetgrid_void"><code>resetGrid(): void</code></a></li>
-<li><a href="#_getgrid_cell"><code>getGrid(): Cell[][]</code></a></li>
-<li><a href="#_foreachcallback_cell_cell_void_void"><code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
-<li><a href="#_isvalidcoordinatecoordinate_coordinate_boolean"><code>isValidCoordinate(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#_getcellcoordinate_coordinate_cell_null"><code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
-<li><a href="#_setcellvaluecoordinate_coordinate_value_number_void"><code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
-<li><a href="#_setcellcolorcoordinate_coordinate_color_color_void"><code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
-<li><a href="#_iscellactivecoordinate_coordinate_boolean"><code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#_iscellinactivecoordinate_coordinate_boolean"><code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#_isrowfully_number_boolean"><code>isRowFull(y: number): boolean</code></a></li>
-<li><a href="#_isrowemptyy_number_boolean"><code>isRowEmpty(y: number): boolean</code></a></li>
-<li><a href="#_clearrowy_number_void"><code>clearRow(y: number): void</code></a></li>
-<li><a href="#_shiftrowsdownfromy_number_void"><code>shiftRowsDown(fromY: number): void</code></a></li>
-<li><a href="#_shiftrowsupfromy_number_void"><code>shiftRowsUp(fromY: number): void</code></a></li>
-<li><a href="#_clearfullrows_number"><code>clearFullRows(): number</code></a></li>
-<li><a href="#_iscolumnfullx_number_boolean"><code>isColumnFull(x: number): boolean</code></a></li>
-<li><a href="#_iscolumnemptyx_number_boolean"><code>isColumnEmpty(x: number): boolean</code></a></li>
-<li><a href="#_clearcolumnx_number_void"><code>clearColumn(x: number): void</code></a></li>
-<li><a href="#_shiftcolumnsrightfromx_number_void"><code>shiftColumnsRight(fromX: number): void</code></a></li>
-<li><a href="#_shiftcolumnsleftfromx_number_void"><code>shiftColumnsLeft(fromX: number): void</code></a></li>
-<li><a href="#_clearfullcolumns_number"><code>clearFullColumns(): number</code></a></li>
-<li><a href="#_isareaoccupiedcoordinates_coordinate_boolean"><code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
-<li><a href="#_fillareastart_coordinate_end_coordinate_value_number_color_color_void"><code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
-<li><a href="#_stamppiececoordinates_coordinate_value_number_color_color_void"><code>stampPiece(coordinates: Coordinate[], value: number, color: Color): void</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#width-number">2.1. <code>width: number</code></a></li>
+<li><a href="#height-number">2.2. <code>height: number</code></a></li>
+<li><a href="#resetgrid-void">2.3. <code>resetGrid(): void</code></a></li>
+<li><a href="#getgrid-cell">2.4. <code>getGrid(): Cell[][]</code></a></li>
+<li><a href="#foreachcallback-cell-cell-void-void">2.5. <code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
+<li><a href="#isvalidcoordinatecoordinate-coordinate-boolean">2.6. <code>isValidCoordinate(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#getcellcoordinate-coordinate-cell-null">2.7. <code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
+<li><a href="#setcellvaluecoordinate-coordinate-value-number-void">2.8. <code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
+<li><a href="#setcellcolorcoordinate-coordinate-color-color-void">2.9. <code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
+<li><a href="#iscellactivecoordinate-coordinate-boolean">2.10. <code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#iscellinactivecoordinate-coordinate-boolean">2.11. <code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#isrowfully-number-boolean">2.12. <code>isRowFull(y: number): boolean</code></a></li>
+<li><a href="#isrowemptyy-number-boolean">2.13. <code>isRowEmpty(y: number): boolean</code></a></li>
+<li><a href="#clearrowy-number-void">2.14. <code>clearRow(y: number): void</code></a></li>
+<li><a href="#shiftrowsdownfromy-number-void">2.15. <code>shiftRowsDown(fromY: number): void</code></a></li>
+<li><a href="#shiftrowsupfromy-number-void">2.16. <code>shiftRowsUp(fromY: number): void</code></a></li>
+<li><a href="#clearfullrows-number">2.17. <code>clearFullRows(): number</code></a></li>
+<li><a href="#iscolumnfullx-number-boolean">2.18. <code>isColumnFull(x: number): boolean</code></a></li>
+<li><a href="#iscolumnemptyx-number-boolean">2.19. <code>isColumnEmpty(x: number): boolean</code></a></li>
+<li><a href="#clearcolumnx-number-void">2.20. <code>clearColumn(x: number): void</code></a></li>
+<li><a href="#shiftcolumnsrightfromx-number-void">2.21. <code>shiftColumnsRight(fromX: number): void</code></a></li>
+<li><a href="#shiftcolumnsleftfromx-number-void">2.22. <code>shiftColumnsLeft(fromX: number): void</code></a></li>
+<li><a href="#clearfullcolumns-number">2.23. <code>clearFullColumns(): number</code></a></li>
+<li><a href="#isareaoccupiedcoordinates-coordinate-boolean">2.24. <code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
+<li><a href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.25. <code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
+<li><a href="#stamppiececoordinates-coordinate-value-number-color-color-void">2.26. <code>stampPiece(coordinates: Coordinate[], value: number, color: Color): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameGrid</code> module manages the state of a 2D grid, providing a robust API for cell manipulation, row/column operations, and collision detection.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_specialized_instances">Specialized Instances</h2>
+<h2 id="specialized-instances"><a class="link" href="#specialized-instances">1. Specialized Instances</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine provides two main grid instances:
@@ -495,10 +497,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_width_number"><code>width: number</code></h3>
+<h3 id="width-number"><a class="link" href="#width-number">2.1. <code>width: number</code></a></h3>
 <div class="paragraph">
 <p>Read-only property returning the number of columns in the grid.</p>
 </div>
@@ -511,7 +513,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_height_number"><code>height: number</code></h3>
+<h3 id="height-number"><a class="link" href="#height-number">2.2. <code>height: number</code></a></h3>
 <div class="paragraph">
 <p>Read-only property returning the number of rows in the grid.</p>
 </div>
@@ -524,7 +526,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_resetgrid_void"><code>resetGrid(): void</code></h3>
+<h3 id="resetgrid-void"><a class="link" href="#resetgrid-void">2.3. <code>resetGrid(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the entire grid to its empty state.</p>
 </div>
@@ -537,7 +539,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getgrid_cell"><code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></h3>
+<h3 id="getgrid-cell"><a class="link" href="#getgrid-cell">2.4. <code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></a></h3>
 <div class="paragraph">
 <p>Returns the underlying 2D array of cells.</p>
 </div>
@@ -550,7 +552,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_foreachcallback_cell_cell_void_void"><code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></h3>
+<h3 id="foreachcallback-cell-cell-void-void"><a class="link" href="#foreachcallback-cell-cell-void-void">2.5. <code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></a></h3>
 <div class="paragraph">
 <p>Iterates over every cell and executes the provided callback.</p>
 </div>
@@ -579,7 +581,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isvalidcoordinatecoordinate_coordinate_boolean"><code>isValidCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></h3>
+<h3 id="isvalidcoordinatecoordinate-coordinate-boolean"><a class="link" href="#isvalidcoordinatecoordinate-coordinate-boolean">2.6. <code>isValidCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
 <div class="paragraph">
 <p>Verifies if a coordinate is within the current grid boundaries.</p>
 </div>
@@ -614,7 +616,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getcellcoordinate_coordinate_cell_null"><code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></h3>
+<h3 id="getcellcoordinate-coordinate-cell-null"><a class="link" href="#getcellcoordinate-coordinate-cell-null">2.7. <code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h3>
 <div class="paragraph">
 <p>Retrieves a cell at a specific coordinate.</p>
 </div>
@@ -649,7 +651,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setcellvaluecoordinate_coordinate_value_number_void"><code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></h3>
+<h3 id="setcellvaluecoordinate-coordinate-value-number-void"><a class="link" href="#setcellvaluecoordinate-coordinate-value-number-void">2.8. <code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the numeric value of a cell.</p>
 </div>
@@ -689,7 +691,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setcellcolorcoordinate_coordinate_color_color_void"><code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></h3>
+<h3 id="setcellcolorcoordinate-coordinate-color-color-void"><a class="link" href="#setcellcolorcoordinate-coordinate-color-color-void">2.9. <code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the color of a cell.</p>
 </div>
@@ -723,7 +725,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_iscellactivecoordinate_coordinate_boolean"><code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></h3>
+<h3 id="iscellactivecoordinate-coordinate-boolean"><a class="link" href="#iscellactivecoordinate-coordinate-boolean">2.10. <code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a cell is currently occupied.</p>
 </div>
@@ -758,7 +760,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_iscellinactivecoordinate_coordinate_boolean"><code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></h3>
+<h3 id="iscellinactivecoordinate-coordinate-boolean"><a class="link" href="#iscellinactivecoordinate-coordinate-boolean">2.11. <code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a cell is currently empty.</p>
 </div>
@@ -793,7 +795,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isrowfully_number_boolean"><code>isRowFull(y: number): boolean</code></h3>
+<h3 id="isrowfully-number-boolean"><a class="link" href="#isrowfully-number-boolean">2.12. <code>isRowFull(y: number): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a specific row has no empty cells.</p>
 </div>
@@ -828,7 +830,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isrowemptyy_number_boolean"><code>isRowEmpty(y: number): boolean</code></h3>
+<h3 id="isrowemptyy-number-boolean"><a class="link" href="#isrowemptyy-number-boolean">2.13. <code>isRowEmpty(y: number): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a specific row is completely empty.</p>
 </div>
@@ -863,7 +865,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_clearrowy_number_void"><code>clearRow(y: number): void</code></h3>
+<h3 id="clearrowy-number-void"><a class="link" href="#clearrowy-number-void">2.14. <code>clearRow(y: number): void</code></a></h3>
 <div class="paragraph">
 <p>Resets all cells in a row to the empty state.</p>
 </div>
@@ -892,7 +894,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_shiftrowsdownfromy_number_void"><code>shiftRowsDown(fromY: number): void</code></h3>
+<h3 id="shiftrowsdownfromy-number-void"><a class="link" href="#shiftrowsdownfromy-number-void">2.15. <code>shiftRowsDown(fromY: number): void</code></a></h3>
 <div class="paragraph">
 <p>Shifts all rows above an index down by one position.</p>
 </div>
@@ -927,7 +929,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_shiftrowsupfromy_number_void"><code>shiftRowsUp(fromY: number): void</code></h3>
+<h3 id="shiftrowsupfromy-number-void"><a class="link" href="#shiftrowsupfromy-number-void">2.16. <code>shiftRowsUp(fromY: number): void</code></a></h3>
 <div class="paragraph">
 <p>Shifts all rows below an index up by one position.</p>
 </div>
@@ -962,7 +964,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_clearfullrows_number"><code>clearFullRows(): number</code></h3>
+<h3 id="clearfullrows-number"><a class="link" href="#clearfullrows-number">2.17. <code>clearFullRows(): number</code></a></h3>
 <div class="paragraph">
 <p>Scans for, clears, and collapses full rows.</p>
 </div>
@@ -981,7 +983,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_iscolumnfullx_number_boolean"><code>isColumnFull(x: number): boolean</code></h3>
+<h3 id="iscolumnfullx-number-boolean"><a class="link" href="#iscolumnfullx-number-boolean">2.18. <code>isColumnFull(x: number): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a specific column has no empty cells.</p>
 </div>
@@ -1016,7 +1018,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_iscolumnemptyx_number_boolean"><code>isColumnEmpty(x: number): boolean</code></h3>
+<h3 id="iscolumnemptyx-number-boolean"><a class="link" href="#iscolumnemptyx-number-boolean">2.19. <code>isColumnEmpty(x: number): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks if a specific column is completely empty.</p>
 </div>
@@ -1051,7 +1053,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_clearcolumnx_number_void"><code>clearColumn(x: number): void</code></h3>
+<h3 id="clearcolumnx-number-void"><a class="link" href="#clearcolumnx-number-void">2.20. <code>clearColumn(x: number): void</code></a></h3>
 <div class="paragraph">
 <p>Resets all cells in a column to the empty state.</p>
 </div>
@@ -1080,7 +1082,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_shiftcolumnsrightfromx_number_void"><code>shiftColumnsRight(fromX: number): void</code></h3>
+<h3 id="shiftcolumnsrightfromx-number-void"><a class="link" href="#shiftcolumnsrightfromx-number-void">2.21. <code>shiftColumnsRight(fromX: number): void</code></a></h3>
 <div class="paragraph">
 <p>Shifts all columns to the right of an index.</p>
 </div>
@@ -1109,7 +1111,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_shiftcolumnsleftfromx_number_void"><code>shiftColumnsLeft(fromX: number): void</code></h3>
+<h3 id="shiftcolumnsleftfromx-number-void"><a class="link" href="#shiftcolumnsleftfromx-number-void">2.22. <code>shiftColumnsLeft(fromX: number): void</code></a></h3>
 <div class="paragraph">
 <p>Shifts all columns to the left of an index.</p>
 </div>
@@ -1138,7 +1140,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_clearfullcolumns_number"><code>clearFullColumns(): number</code></h3>
+<h3 id="clearfullcolumns-number"><a class="link" href="#clearfullcolumns-number">2.23. <code>clearFullColumns(): number</code></a></h3>
 <div class="paragraph">
 <p>Detects and clears all full columns.</p>
 </div>
@@ -1151,7 +1153,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_isareaoccupiedcoordinates_coordinate_boolean"><code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></h3>
+<h3 id="isareaoccupiedcoordinates-coordinate-boolean"><a class="link" href="#isareaoccupiedcoordinates-coordinate-boolean">2.24. <code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></a></h3>
 <div class="paragraph">
 <p>Checks for collisions between a list of coordinates and active cells in the grid.</p>
 </div>
@@ -1186,7 +1188,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_fillareastart_coordinate_end_coordinate_value_number_color_color_void"><code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></h3>
+<h3 id="fillareastart-coordinate-end-coordinate-value-number-color-color-void"><a class="link" href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.25. <code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Fills a rectangular area with specified properties.</p>
 </div>
@@ -1230,7 +1232,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_stamppiececoordinates_coordinate_value_number_color_color_void"><code>stampPiece(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[], value: number, color: <a href="../enums/Color.html">Color</a>): void</code></h3>
+<h3 id="stamppiececoordinates-coordinate-value-number-color-color-void"><a class="link" href="#stamppiececoordinates-coordinate-value-number-color-color-void">2.26. <code>stampPiece(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[], value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Updates multiple specific coordinates simultaneously.</p>
 </div>
@@ -1269,7 +1271,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -1285,7 +1287,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

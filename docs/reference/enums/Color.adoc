@@ -1,4 +1,16 @@
 = Color Reference
+:description: Defines the available visual theme colors for grid cells and text.
+:keywords: color, theme, grid, retro, display
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Defines the available visual theme colors for grid cells and text.
 

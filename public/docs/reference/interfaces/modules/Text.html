@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Interface for drawing pixelated, responsive typography.">
+<meta name="keywords" content="text, typography, rendering, display, retro">
 <title>Text Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -432,10 +434,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Text Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#methods">1. Methods</a>
+<ul class="sectlevel2">
+<li><a href="#settextsizefontsize-fontsize-void">1.1. <code>setTextSize(fontSize: FontSize): void</code></a></li>
+<li><a href="#settextalignfontalign-fontalignment-fontverticalalign-fontalignment-void">1.2. <code>setTextAlign(fontAlign: FontAlignment, fontVerticalAlign: FontAlignment): void</code></a></li>
+<li><a href="#textonhudtext-string-coordinate-coordinate-void">1.3. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#textondisplaytext-string-coordinate-coordinate-void">1.4. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#setrenderermetricsrenderermetrics-renderermetrics-void">1.5. <code>setRendererMetrics(rendererMetrics: RendererMetrics): void</code></a></li>
+<li><a href="#setactivetext-void">1.6. <code>setActiveText(): void</code></a></li>
+<li><a href="#setinactivetext-void">1.7. <code>setInactiveText(): void</code></a></li>
+</ul>
+</li>
+<li><a href="#general-usage">2. General Usage</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,10 +467,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_methods">Methods</h2>
+<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_settextsizefontsize_fontsize_void"><code>setTextSize(fontSize: <a href="../../enums/FontSize.html">FontSize</a>): void</code></h3>
+<h3 id="settextsizefontsize-fontsize-void"><a class="link" href="#settextsizefontsize-fontsize-void">1.1. <code>setTextSize(fontSize: <a href="../../enums/FontSize.html">FontSize</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the scale of the subsequent text operations.</p>
 </div>
@@ -478,7 +499,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_settextalignfontalign_fontalignment_fontverticalalign_fontalignment_void"><code>setTextAlign(fontAlign: <a href="../../enums/FontAlignment.html">FontAlignment</a>, fontVerticalAlign: <a href="../../enums/FontAlignment.html">FontAlignment</a>): void</code></h3>
+<h3 id="settextalignfontalign-fontalignment-fontverticalalign-fontalignment-void"><a class="link" href="#settextalignfontalign-fontalignment-fontverticalalign-fontalignment-void">1.2. <code>setTextAlign(fontAlign: <a href="../../enums/FontAlignment.html">FontAlignment</a>, fontVerticalAlign: <a href="../../enums/FontAlignment.html">FontAlignment</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Sets both horizontal and vertical anchor points.</p>
 </div>
@@ -512,7 +533,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_textonhudtext_string_coordinate_coordinate_void"><code>textOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></h3>
+<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">1.3. <code>textOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a string within the HUD area at the specified normalized coordinate (0.0 to 1.0 relative to HUD bounds).</p>
 </div>
@@ -546,7 +567,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_textondisplaytext_string_coordinate_coordinate_void"><code>textOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></h3>
+<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">1.4. <code>textOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a string within the main game area at the specified normalized coordinate (0.0 to 1.0 relative to display bounds).</p>
 </div>
@@ -580,7 +601,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setrenderermetricsrenderermetrics_renderermetrics_void"><code>setRendererMetrics(rendererMetrics: <a href="../../types/RendererMetrics.html">RendererMetrics</a>): void</code></h3>
+<h3 id="setrenderermetricsrenderermetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsrenderermetrics-renderermetrics-void">1.5. <code>setRendererMetrics(rendererMetrics: <a href="../../types/RendererMetrics.html">RendererMetrics</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Internal setup method to provide the pixel-to-grid mapping data.</p>
 </div>
@@ -609,14 +630,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setactivetext_void"><code>setActiveText(): void</code></h3>
+<h3 id="setactivetext-void"><a class="link" href="#setactivetext-void">1.6. <code>setActiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text rendering style to "active" (high contrast).</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setinactivetext_void"><code>setInactiveText(): void</code></h3>
+<h3 id="setinactivetext-void"><a class="link" href="#setinactivetext-void">1.7. <code>setInactiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text rendering style to "inactive" (low contrast, background effect).</p>
 </div>
@@ -624,7 +645,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage">General Usage</h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/GameText.html">GameText</a></code>. Used to display scores, labels, and title screen messages across different engine layers.</p>
@@ -634,8 +655,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:54:49 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

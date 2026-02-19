@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Handles rendering of pixelated text on the game display and HUD.">
+<meta name="keywords" content="text, typography, rendering, display, retro">
 <title>GameText Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,40 +437,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameText Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#api-reference">1. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_settextsizesize_fontsize_void"><code>setTextSize(size: FontSize): void</code></a></li>
-<li><a href="#_settextalignalign_fontalign_verticalalign_fontverticalalign_void"><code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></li>
-<li><a href="#_setactivetext_void"><code>setActiveText(): void</code></a></li>
-<li><a href="#_setinactivetext_void"><code>setInactiveText(): void</code></a></li>
-<li><a href="#_textondisplaytext_string_coordinate_coordinate_void"><code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#_textonhudtext_string_coordinate_coordinate_void"><code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#_setrenderermetricsmetrics_renderermetrics_void"><code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#settextsizesize-fontsize-void">1.1. <code>setTextSize(size: FontSize): void</code></a></li>
+<li><a href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">1.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></li>
+<li><a href="#setactivetext-void">1.3. <code>setActiveText(): void</code></a></li>
+<li><a href="#setinactivetext-void">1.4. <code>setInactiveText(): void</code></a></li>
+<li><a href="#textondisplaytext-string-coordinate-coordinate-void">1.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#textonhudtext-string-coordinate-coordinate-void">1.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#setrenderermetricsmetrics-renderermetrics-void">1.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameText</code> module handles rendering pixelated text on the game display. It manages font initialization, sizing, and ensures text is scaled correctly relative to the canvas size.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_settextsizesize_fontsize_void"><code>setTextSize(size: FontSize): void</code></h3>
+<h3 id="settextsizesize-fontsize-void"><a class="link" href="#settextsizesize-fontsize-void">1.1. <code>setTextSize(size: FontSize): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the current font size from predefined responsive values.</p>
 </div>
@@ -511,7 +513,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_settextalignalign_fontalign_verticalalign_fontverticalalign_void"><code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></h3>
+<h3 id="settextalignalign-fontalign-verticalalign-fontverticalalign-void"><a class="link" href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">1.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></h3>
 <div class="paragraph">
 <p>Configures the alignment of rendered text.</p>
 </div>
@@ -545,21 +547,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setactivetext_void"><code>setActiveText(): void</code></h3>
+<h3 id="setactivetext-void"><a class="link" href="#setactivetext-void">1.3. <code>setActiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text fill color to the active theme color.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setinactivetext_void"><code>setInactiveText(): void</code></h3>
+<h3 id="setinactivetext-void"><a class="link" href="#setinactivetext-void">1.4. <code>setInactiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text fill color to the inactive theme color.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_textondisplaytext_string_coordinate_coordinate_void"><code>textOnDisplay(text: string, coordinate: Coordinate): void</code></h3>
+<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">1.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the main game display area.</p>
 </div>
@@ -601,7 +603,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_textonhudtext_string_coordinate_coordinate_void"><code>textOnHud(text: string, coordinate: Coordinate): void</code></h3>
+<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">1.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the side HUD area.</p>
 </div>
@@ -635,7 +637,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setrenderermetricsmetrics_renderermetrics_void"><code>setRendererMetrics(metrics: RendererMetrics): void</code></h3>
+<h3 id="setrenderermetricsmetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsmetrics-renderermetrics-void">1.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the coordinate conversion reference.</p>
 </div>
@@ -670,7 +672,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -686,7 +688,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

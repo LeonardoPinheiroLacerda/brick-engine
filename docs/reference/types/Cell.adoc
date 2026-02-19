@@ -1,4 +1,16 @@
 = Cell Reference
+:description: Represents the state of an individual unit within the 2D game grid.
+:keywords: cell, grid, unit, state
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Represents the state of an individual unit within the 2D game grid.
 

@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Handles user input from physical keyboards and virtual buttons.">
+<meta name="keywords" content="input, control, keyboard, interaction">
 <title>GameControl Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,36 +437,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameControl Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_supported_keys_controlkey">Supported Keys (<code>ControlKey</code>)</a></li>
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_subscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#_unsubscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#_bindcontrols_void"><code>bindControls(): void</code></a></li>
-<li><a href="#_unbindcontrols_void"><code>unbindControls(): void</code></a></li>
-<li><a href="#_notifykey_controlkey_type_controleventtype_void"><code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#bindcontrols-void">2.3. <code>bindControls(): void</code></a></li>
+<li><a href="#unbindcontrols-void">2.4. <code>unbindControls(): void</code></a></li>
+<li><a href="#notifykey-controlkey-type-controleventtype-void">2.5. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameControl</code> module handles user input from physical keyboards and virtual buttons. It provides an event-based system for reacting to player actions.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_supported_keys_controlkey">Supported Keys (<code>ControlKey</code>)</h2>
+<h2 id="supported-keys-controlkey"><a class="link" href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine maps physical keys to virtual engine keys:</p>
@@ -500,10 +502,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_subscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></h3>
+<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event.</p>
 </div>
@@ -558,7 +560,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unsubscribekey_controlkey_type_controleventtype_callback_controlcallback_void"><code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></h3>
+<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing subscription.</p>
 </div>
@@ -603,7 +605,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_bindcontrols_void"><code>bindControls(): void</code></h3>
+<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">2.3. <code>bindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Attaches low-level event listeners to the environment.</p>
 </div>
@@ -616,7 +618,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unbindcontrols_void"><code>unbindControls(): void</code></h3>
+<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">2.4. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Detaches all input listeners and clears subscriptions.</p>
 </div>
@@ -629,7 +631,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_notifykey_controlkey_type_controleventtype_void"><code>notify(key: ControlKey, type: ControlEventType): void</code></h3>
+<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">2.5. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></h3>
 <div class="paragraph">
 <p>Manually triggers an input event.</p>
 </div>
@@ -669,7 +671,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -685,7 +687,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

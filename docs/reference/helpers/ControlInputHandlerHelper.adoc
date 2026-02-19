@@ -1,10 +1,16 @@
 = ControlInputHandlerHelper Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Utilities for normalizing raw hardware keyboard events into abstract ControlKey actions.
+:keywords: input, handler, keyboard, normalization, helper
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `ControlInputHandlerHelper` manages the complexity of input timing, such as identifying the difference between a quick "press" and a sustained "hold".
 

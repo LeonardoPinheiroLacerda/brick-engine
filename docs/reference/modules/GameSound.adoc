@@ -1,10 +1,16 @@
 = GameSound Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Manages audio playback using the Web Audio API for low-latency sound effects.
+:keywords: sound, audio, web-audio, effects, mute
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameSound` module manages audio playback for the engine using the **Web Audio API**. It provides low-latency sound effects and automatic synchronization with the game's mute state.
 

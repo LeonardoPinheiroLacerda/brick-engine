@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Manages the engine's logical clock, decoupling game logic ticks from the visual frame rate.">
+<meta name="keywords" content="time, clock, tick, interval, game-loop">
 <title>GameTime Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,39 +437,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameTime Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#api-reference">1. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_tickinterval_number"><code>tickInterval: number</code></a></li>
-<li><a href="#_shouldtick_boolean"><code>shouldTick(): boolean</code></a></li>
-<li><a href="#_updatedeltatime_number_void"><code>update(deltaTime: number): void</code></a></li>
-<li><a href="#_reset_void"><code>reset(): void</code></a></li>
-<li><a href="#_incrementtickintervalamount_number_void"><code>incrementTickInterval(amount: number): void</code></a></li>
-<li><a href="#_decrementtickintervalamount_number_void"><code>decrementTickInterval(amount: number): void</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#tickinterval-number">1.1. <code>tickInterval: number</code></a></li>
+<li><a href="#shouldtick-boolean">1.2. <code>shouldTick(): boolean</code></a></li>
+<li><a href="#updatedeltatime-number-void">1.3. <code>update(deltaTime: number): void</code></a></li>
+<li><a href="#reset-void">1.4. <code>reset(): void</code></a></li>
+<li><a href="#incrementtickintervalamount-number-void">1.5. <code>incrementTickInterval(amount: number): void</code></a></li>
+<li><a href="#decrementtickintervalamount-number-void">1.6. <code>decrementTickInterval(amount: number): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.7. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameTime</code> module manages the engine&#8217;s logical clock. It decouples game logic "ticks" from the visual frame rate, ensuring consistent gameplay speed regardless of the device&#8217;s performance.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_tickinterval_number"><code>tickInterval: number</code></h3>
+<h3 id="tickinterval-number"><a class="link" href="#tickinterval-number">1.1. <code>tickInterval: number</code></a></h3>
 <div class="paragraph">
 <p>Getter/Setter for the game logic speed in milliseconds.</p>
 </div>
@@ -486,7 +488,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_shouldtick_boolean"><code>shouldTick(): boolean</code></h3>
+<h3 id="shouldtick-boolean"><a class="link" href="#shouldtick-boolean">1.2. <code>shouldTick(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Determines if a logic update should be executed.</p>
 </div>
@@ -505,7 +507,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_updatedeltatime_number_void"><code>update(deltaTime: number): void</code></h3>
+<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">1.3. <code>update(deltaTime: number): void</code></a></h3>
 <div class="paragraph">
 <p>Advances the internal time accumulator.</p>
 </div>
@@ -534,7 +536,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_reset_void"><code>reset(): void</code></h3>
+<h3 id="reset-void"><a class="link" href="#reset-void">1.4. <code>reset(): void</code></a></h3>
 <div class="paragraph">
 <p>Clears the time accumulator.</p>
 </div>
@@ -547,7 +549,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_incrementtickintervalamount_number_void"><code>incrementTickInterval(amount: number): void</code></h3>
+<h3 id="incrementtickintervalamount-number-void"><a class="link" href="#incrementtickintervalamount-number-void">1.5. <code>incrementTickInterval(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Slows down the game by increasing the time between ticks.</p>
 </div>
@@ -576,7 +578,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_decrementtickintervalamount_number_void"><code>decrementTickInterval(amount: number): void</code></h3>
+<h3 id="decrementtickintervalamount-number-void"><a class="link" href="#decrementtickintervalamount-number-void">1.6. <code>decrementTickInterval(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Speeds up the game by decreasing the time between ticks.</p>
 </div>
@@ -605,7 +607,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.7. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -621,7 +623,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

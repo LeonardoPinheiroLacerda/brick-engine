@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Specialized math utilities for converting between Grid, Display, and Pixel coordinate systems.">
+<meta name="keywords" content="coordinates, math, grid, display, conversion, helper">
 <title>CoordinateHelper Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,37 +437,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>CoordinateHelper Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#api-reference">1. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_getrelativecoordinatep_p5_coordinate_coordinate_coordinate"><code>getRelativeCoordinate(p: p5, coordinate: Coordinate): Coordinate</code></a></li>
-<li><a href="#_getdisplayposxp_p5_x_number_displaywidth_number_number"><code>getDisplayPosX(p: p5, x: number, displayWidth: number): number</code></a></li>
-<li><a href="#_getdisplayposyp_p5_y_number_displayheight_number_number"><code>getDisplayPosY(p: p5, y: number, displayHeight: number): number</code></a></li>
-<li><a href="#_gethudposxp_p5_x_number_displaywidth_number_number"><code>getHudPosX(p: p5, x: number, displayWidth: number): number</code></a></li>
-<li><a href="#_gethudposyp_p5_y_number_displayheight_number_number"><code>getHudPosY(p: p5, y: number, displayHeight: number): number</code></a></li>
+<li><a href="#getrelativecoordinatep-p5-coordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(p: p5, coordinate: Coordinate): Coordinate</code></a></li>
+<li><a href="#getdisplayposxp-p5-x-number-displaywidth-number-number">1.2. <code>getDisplayPosX(p: p5, x: number, displayWidth: number): number</code></a></li>
+<li><a href="#getdisplayposyp-p5-y-number-displayheight-number-number">1.3. <code>getDisplayPosY(p: p5, y: number, displayHeight: number): number</code></a></li>
+<li><a href="#gethudposxp-p5-x-number-displaywidth-number-number">1.4. <code>getHudPosX(p: p5, x: number, displayWidth: number): number</code></a></li>
+<li><a href="#gethudposyp-p5-y-number-displayheight-number-number">1.5. <code>getHudPosY(p: p5, y: number, displayHeight: number): number</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>CoordinateHelper</code> is a static utility class that handles translations between different coordinate systems: the logical <a href="../modules/GameGrid.html">Game Grid</a>, the normalized Display area, and absolute pixel positions.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_getrelativecoordinatep_p5_coordinate_coordinate_coordinate"><code>getRelativeCoordinate(p: p5, coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Coordinate.html">Coordinate</a></code></h3>
+<h3 id="getrelativecoordinatep-p5-coordinate-coordinate-coordinate"><a class="link" href="#getrelativecoordinatep-p5-coordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(p: p5, coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Coordinate.html">Coordinate</a></code></a></h3>
 <div class="paragraph">
 <p>Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 1.0).</p>
 </div>
@@ -505,7 +507,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdisplayposxp_p5_x_number_displaywidth_number_number"><code>getDisplayPosX(p: p5, x: number, displayWidth: number): number</code></h3>
+<h3 id="getdisplayposxp-p5-x-number-displaywidth-number-number"><a class="link" href="#getdisplayposxp-p5-x-number-displaywidth-number-number">1.2. <code>getDisplayPosX(p: p5, x: number, displayWidth: number): number</code></a></h3>
 <div class="paragraph">
 <p>Calculates the absolute X pixel position on the main game display.</p>
 </div>
@@ -550,7 +552,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdisplayposyp_p5_y_number_displayheight_number_number"><code>getDisplayPosY(p: p5, y: number, displayHeight: number): number</code></h3>
+<h3 id="getdisplayposyp-p5-y-number-displayheight-number-number"><a class="link" href="#getdisplayposyp-p5-y-number-displayheight-number-number">1.3. <code>getDisplayPosY(p: p5, y: number, displayHeight: number): number</code></a></h3>
 <div class="paragraph">
 <p>Calculates the absolute Y pixel position on the main game display.</p>
 </div>
@@ -595,7 +597,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_gethudposxp_p5_x_number_displaywidth_number_number"><code>getHudPosX(p: p5, x: number, displayWidth: number): number</code></h3>
+<h3 id="gethudposxp-p5-x-number-displaywidth-number-number"><a class="link" href="#gethudposxp-p5-x-number-displaywidth-number-number">1.4. <code>getHudPosX(p: p5, x: number, displayWidth: number): number</code></a></h3>
 <div class="paragraph">
 <p>Calculates the absolute X pixel position within the HUD area.</p>
 </div>
@@ -640,7 +642,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_gethudposyp_p5_y_number_displayheight_number_number"><code>getHudPosY(p: p5, y: number, displayHeight: number): number</code></h3>
+<h3 id="gethudposyp-p5-y-number-displayheight-number-number"><a class="link" href="#gethudposyp-p5-y-number-displayheight-number-number">1.5. <code>getHudPosY(p: p5, y: number, displayHeight: number): number</code></a></h3>
 <div class="paragraph">
 <p>Calculates the absolute Y pixel position within the HUD area.</p>
 </div>
@@ -688,7 +690,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

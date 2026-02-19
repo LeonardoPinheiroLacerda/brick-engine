@@ -1,10 +1,16 @@
 = GameGrid Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Manages the state of a 2D grid for cell manipulation and collision detection.
+:keywords: grid, cells, logic, collision
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameGrid` module manages the state of a 2D grid, providing a robust API for cell manipulation, row/column operations, and collision detection.
 

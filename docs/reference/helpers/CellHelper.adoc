@@ -1,10 +1,16 @@
 = CellHelper Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Static factory methods for creating and initializing Cell objects consistently.
+:keywords: cell, factory, grid, helper
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `CellHelper` provides static factory methods for creating and initializing `Cell` objects consistently.
 

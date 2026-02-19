@@ -1,10 +1,16 @@
 = DisplayRenderer Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Responsible for drawing the main game grid and active bricks.
+:keywords: rendering, display, grid, graphics
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
 

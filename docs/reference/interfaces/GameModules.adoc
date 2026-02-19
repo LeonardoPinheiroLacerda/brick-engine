@@ -1,4 +1,16 @@
 = GameModules Reference
+:description: The central hub providing component-to-component visibility.
+:keywords: architecture, dependency-injection, registry, modules
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The central hub providing component-to-component visibility.
 

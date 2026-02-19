@@ -1,4 +1,16 @@
 = FontSize Reference
+:description: Predefined logic scales for the retro pixelated typography.
+:keywords: font, size, typography, display
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Predefined logic scales for the retro pixelated typography.
 

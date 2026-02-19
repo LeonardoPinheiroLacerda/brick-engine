@@ -1,10 +1,16 @@
 = GameState Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Single source of truth for the game lifecycle and persistent user preferences.
+:keywords: state, lifecycle, persistence, localstorage
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameState` module acts as the central, single source of truth for the game's lifecycle and user preferences. It handles persistence to `LocalStorage` for settings and high scores.
 

@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Tracks session player performance, including score, levels, and point multipliers.">
+<meta name="keywords" content="score, tracking, levels, multipliers, metrics">
 <title>GameScore Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -435,63 +437,63 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>GameScore Module Reference</h1>
-</div>
-<div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div id="toc" class="toc">
-<div id="toctitle" class="title">Table of Contents</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_api_reference">API Reference</a>
+<li><a href="#api-reference">1. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#_score_number"><code>score: number</code></a></li>
-<li><a href="#_level_number"><code>level: number</code></a></li>
-<li><a href="#_multiplier_number"><code>multiplier: number</code></a></li>
-<li><a href="#_increasescoreamount_number_void"><code>increaseScore(amount: number): void</code></a></li>
-<li><a href="#_resetscore_void"><code>resetScore(): void</code></a></li>
-<li><a href="#_increaselevelamount_number_void"><code>increaseLevel(amount: number): void</code></a></li>
-<li><a href="#_resetlevel_void"><code>resetLevel(): void</code></a></li>
-<li><a href="#_getformattedscoredigits_number_string"><code>getFormattedScore(digits: number): string</code></a></li>
-<li><a href="#_syncstatestate_state_void"><code>syncState(state: State): void</code></a></li>
-<li><a href="#_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#score-number">1.1. <code>score: number</code></a></li>
+<li><a href="#level-number">1.2. <code>level: number</code></a></li>
+<li><a href="#multiplier-number">1.3. <code>multiplier: number</code></a></li>
+<li><a href="#increasescoreamount-number-void">1.4. <code>increaseScore(amount: number): void</code></a></li>
+<li><a href="#resetscore-void">1.5. <code>resetScore(): void</code></a></li>
+<li><a href="#increaselevelamount-number-void">1.6. <code>increaseLevel(amount: number): void</code></a></li>
+<li><a href="#resetlevel-void">1.7. <code>resetLevel(): void</code></a></li>
+<li><a href="#getformattedscoredigits-number-string">1.8. <code>getFormattedScore(digits: number): string</code></a></li>
+<li><a href="#syncstatestate-state-void">1.9. <code>syncState(state: State): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.10. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameScore</code> module tracks player performance during a session. It manages the current score, game levels, and multipliers, while ensuring high scores are correctly validated and persisted via <code>GameState</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_api_reference">API Reference</h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_score_number"><code>score: number</code></h3>
+<h3 id="score-number"><a class="link" href="#score-number">1.1. <code>score: number</code></a></h3>
 <div class="paragraph">
 <p>Read-only property returning the current session&#8217;s points.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_level_number"><code>level: number</code></h3>
+<h3 id="level-number"><a class="link" href="#level-number">1.2. <code>level: number</code></a></h3>
 <div class="paragraph">
 <p>Read-only property returning the current difficulty level.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_multiplier_number"><code>multiplier: number</code></h3>
+<h3 id="multiplier-number"><a class="link" href="#multiplier-number">1.3. <code>multiplier: number</code></a></h3>
 <div class="paragraph">
 <p>Read and Write property for the current points multiplier.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_increasescoreamount_number_void"><code>increaseScore(amount: number): void</code></h3>
+<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">1.4. <code>increaseScore(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Adds points to the current session.</p>
 </div>
@@ -526,14 +528,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_resetscore_void"><code>resetScore(): void</code></h3>
+<h3 id="resetscore-void"><a class="link" href="#resetscore-void">1.5. <code>resetScore(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the session score to zero.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_increaselevelamount_number_void"><code>increaseLevel(amount: number): void</code></h3>
+<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">1.6. <code>increaseLevel(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Increases the game difficulty level.</p>
 </div>
@@ -562,14 +564,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_resetlevel_void"><code>resetLevel(): void</code></h3>
+<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">1.7. <code>resetLevel(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the level counter to 1.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getformattedscoredigits_number_string"><code>getFormattedScore(digits: number): string</code></h3>
+<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">1.8. <code>getFormattedScore(digits: number): string</code></a></h3>
 <div class="paragraph">
 <p>Returns the score as a padded string suitable for HUD display.</p>
 </div>
@@ -604,7 +606,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_syncstatestate_state_void"><code>syncState(state: State): void</code></h3>
+<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">1.9. <code>syncState(state: State): void</code></a></h3>
 <div class="paragraph">
 <p>Links the score module with the persistent game state.</p>
 </div>
@@ -639,7 +641,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_getdebugdata_recordstring_string_number_boolean"><code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.10. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -649,7 +651,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

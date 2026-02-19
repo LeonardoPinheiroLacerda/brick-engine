@@ -1,10 +1,16 @@
 = GameText Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Handles rendering of pixelated text on the game display and HUD.
+:keywords: text, typography, rendering, display, retro
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameText` module handles rendering pixelated text on the game display. It manages font initialization, sizing, and ensures text is scaled correctly relative to the canvas size.
 

@@ -1,4 +1,16 @@
 = ControlEventType Reference
+:description: Enumerates the different ways an input can be triggered.
+:keywords: control, events, input, interaction
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Enumerates the different ways an input can be triggered.
 

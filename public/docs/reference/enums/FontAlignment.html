@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Enums defining the text anchor points on the canvas.">
+<meta name="keywords" content="font, alignment, text, display, layout">
 <title>Font Alignment Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -432,10 +434,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Font Alignment Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#fontalign">1. <code>FontAlign</code></a></li>
+<li><a href="#fontverticalalign">2. <code>FontVerticalAlign</code></a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,7 +458,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fontalign"><code>FontAlign</code></h2>
+<h2 id="fontalign"><a class="link" href="#fontalign">1. <code>FontAlign</code></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Horizontal alignment of the text block.</p>
@@ -478,7 +490,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_fontverticalalign"><code>FontVerticalAlign</code></h2>
+<h2 id="fontverticalalign"><a class="link" href="#fontverticalalign">2. <code>FontVerticalAlign</code></a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Vertical alignment of the text block.</p>
@@ -510,7 +522,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage">General Usage</h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Used when calling <code><a href="../modules/GameText.html">GameText</a>.setTextAlign()</code>.</p>
@@ -520,8 +532,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:55:15 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

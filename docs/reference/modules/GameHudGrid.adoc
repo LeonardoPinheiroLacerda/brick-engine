@@ -1,10 +1,16 @@
 = GameHudGrid Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Specialized 4x4 grid implementation for HUD elements and meta-information.
+:keywords: hud, grid, ui, display
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameHudGrid` is a specialized implementation of the `GameGrid` class. It is hard-coded to a **4x4** dimension and is intended for use in the HUD area to display meta-information, such as "Next Piece" in a Tetris-style game.
 

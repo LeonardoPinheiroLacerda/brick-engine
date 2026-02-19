@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="description" content="Defines the core drawing contract for engine visual layers.">
+<meta name="keywords" content="rendering, drawing, graphics, canvas">
 <title>Renderer Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -432,10 +434,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
 <h1>Renderer Reference</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#methods">1. Methods</a>
+<ul class="sectlevel2">
+<li><a href="#rendergrid-cell-modules-gamemodules-void">1.1. <code>render(grid: Cell[][], modules: GameModules): void</code></a></li>
+</ul>
+</li>
+<li><a href="#general-usage">2. General Usage</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
 <div id="preamble">
@@ -446,10 +461,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_methods">Methods</h2>
+<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_rendergrid_cell_modules_gamemodules_void"><code>render(grid: <a href="../../types/Cell.html">Cell</a>[][], modules: <a href="../GameModules.html">GameModules</a>): void</code></h3>
+<h3 id="rendergrid-cell-modules-gamemodules-void"><a class="link" href="#rendergrid-cell-modules-gamemodules-void">1.1. <code>render(grid: <a href="../../types/Cell.html">Cell</a>[][], modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Executes the drawing logic for a single frame.</p>
 </div>
@@ -484,7 +499,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage">General Usage</h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/DisplayRenderer.html">DisplayRenderer</a></code> and <code><a href="../../modules/HudRenderer.html">HudRenderer</a></code>. The engine&#8217;s composite renderer iterates through all registered <code>Renderer</code> implementations and calls their <code>render</code> method 60 times per second.</p>
@@ -494,8 +509,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-18 12:54:49 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

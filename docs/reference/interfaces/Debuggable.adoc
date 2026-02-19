@@ -1,4 +1,16 @@
 = Debuggable Reference
+:description: Contract for modules that provide transparency to the developer.
+:keywords: debug, interface, transparency, metrics
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 Contract for modules that provide transparency to the developer.
 

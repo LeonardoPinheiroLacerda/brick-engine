@@ -1,10 +1,16 @@
 = GameTime Module Reference
-:toc: macro
-:toc-title: Table of Contents
+:description: Manages the engine's logical clock, decoupling game logic ticks from the visual frame rate.
+:keywords: time, clock, tick, interval, game-loop
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 The `GameTime` module manages the engine's logical clock. It decouples game logic "ticks" from the visual frame rate, ensuring consistent gameplay speed regardless of the device's performance.
 
