@@ -1,0 +1,32 @@
+= Piece Reference
+:description: Represents a collection of cells that form a game piece or "stamp".
+:keywords: piece, stamp, cells, grid, collection
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Represents a collection of `xref:Cell.adoc[Cell]` objects that form a cohesive game piece or a pattern to be "stamped" onto the grid.
+
+== Definition
+
+[source,typescript]
+----
+export type Piece = Cell[];
+----
+
+== General Usage
+
+The `Piece` type is the main unit of interaction for complex grid operations. By working with an array of `xref:Cell.adoc[Cell]` instead of raw `xref:Coordinate.adoc[Coordinate]`, the engine can preserve properties like color and value during movement and transformation.
+
+Common operations involving pieces include:
+
+* **Stamping**: Permanently applying the piece's cells to the grid.
+* **Movement**: Shifting all cells within a piece simultaneously while checking for collisions.
+* **Transformation**: Rotating, mirroring, or projecting the piece onto different grid locations.

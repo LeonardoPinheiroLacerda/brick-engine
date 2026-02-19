@@ -22,7 +22,11 @@ The engine provides two main grid instances:
 
 == API Reference
 
-=== `width: number`
+=== Core & Utilities
+
+Fundamental methods for grid initialization, basic cell access, and iteration. These methods form the backbone of grid state management.
+
+==== `width: number`
 
 Read-only property returning the number of columns in the grid.
 
@@ -33,7 +37,7 @@ Read-only property returning the number of columns in the grid.
 
 '''
 
-=== `height: number`
+==== `height: number`
 
 Read-only property returning the number of rows in the grid.
 
@@ -44,7 +48,7 @@ Read-only property returning the number of rows in the grid.
 
 '''
 
-=== `resetGrid(): void`
+==== `resetGrid(): void`
 
 Resets the entire grid to its empty state.
 
@@ -55,7 +59,7 @@ Clears all cells and populates them with default empty cell objects using dimens
 
 '''
 
-=== `getGrid(): xref:../types/Cell.adoc[Cell][][]`
+==== `getGrid(): xref:../types/Cell.adoc[Cell][][]`
 
 Returns the underlying 2D array of cells.
 
@@ -66,7 +70,7 @@ Returns the underlying 2D array of cells.
 
 '''
 
-=== `forEach(callback: (cell: xref:../types/Cell.adoc[Cell]) => void): void`
+==== `forEach(callback: (cell: xref:../types/Cell.adoc[Cell]) => void): void`
 
 Iterates over every cell and executes the provided callback.
 
@@ -81,7 +85,7 @@ Iterates over every cell and executes the provided callback.
 
 '''
 
-=== `isValidCoordinate(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+==== `isValidCoordinate(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Verifies if a coordinate is within the current grid boundaries.
 
@@ -100,7 +104,7 @@ Verifies if a coordinate is within the current grid boundaries.
 
 '''
 
-=== `getCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell] | null`
+==== `getCell(coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Cell.adoc[Cell] | null`
 
 Retrieves a cell at a specific coordinate.
 
@@ -119,7 +123,7 @@ Retrieves a cell at a specific coordinate.
 
 '''
 
-=== `setCellValue(coordinate: xref:../types/Coordinate.adoc[Coordinate], value: number): void`
+==== `setCellValue(coordinate: xref:../types/Coordinate.adoc[Coordinate], value: number): void`
 
 Updates the numeric value of a cell.
 
@@ -139,9 +143,7 @@ Updates the `value` property of the cell. If the coordinate is invalid, the oper
 
 '''
 
-
-
-=== `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
+==== `setCellColor(coordinate: xref:../types/Coordinate.adoc[Coordinate], color: xref:../enums/Color.adoc[Color]): void`
 
 Updates the color of a cell.
 
@@ -157,7 +159,7 @@ Updates the color of a cell.
 
 '''
 
-=== `isCellActive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+==== `isCellActive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Checks if a cell is currently occupied.
 
@@ -176,7 +178,7 @@ Checks if a cell is currently occupied.
 
 '''
 
-=== `isCellInactive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
+==== `isCellInactive(coordinate: xref:../types/Coordinate.adoc[Coordinate]): boolean`
 
 Checks if a cell is currently empty.
 
@@ -195,7 +197,22 @@ Checks if a cell is currently empty.
 
 '''
 
-=== `isRowFull(y: number): boolean`
+==== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns metadata for the real-time debugger.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `width`, `height`, and `activeCells` count.
+
+
+'''
+
+=== Line & Column Management
+
+Methods for managing entire lines (rows) or columns. These are essential for mechanics like clearing full lines in Tetris-style games or shifting grid content as a single block.
+
+==== `isRowFull(y: number): boolean`
 
 Checks if a specific row has no empty cells.
 
@@ -214,7 +231,7 @@ Checks if a specific row has no empty cells.
 
 '''
 
-=== `isRowEmpty(y: number): boolean`
+==== `isRowEmpty(y: number): boolean`
 
 Checks if a specific row is completely empty.
 
@@ -233,7 +250,7 @@ Checks if a specific row is completely empty.
 
 '''
 
-=== `clearRow(y: number): void`
+==== `clearRow(y: number): void`
 
 Resets all cells in a row to the empty state.
 
@@ -248,7 +265,7 @@ Resets all cells in a row to the empty state.
 
 '''
 
-=== `shiftRowsDown(fromY: number): void`
+==== `shiftRowsDown(fromY: number): void`
 
 Shifts all rows above an index down by one position.
 
@@ -267,7 +284,7 @@ Moves row `y-1` to `y` for all rows up to `fromY`. The top-most row (index 0) is
 
 '''
 
-=== `shiftRowsUp(fromY: number): void`
+==== `shiftRowsUp(fromY: number): void`
 
 Shifts all rows below an index up by one position.
 
@@ -286,7 +303,7 @@ Moves row `y+1` to `y` for all rows starting from `fromY` downwards. The bottom-
 
 '''
 
-=== `clearFullRows(): number`
+==== `clearFullRows(): number`
 
 Scans for, clears, and collapses full rows.
 
@@ -301,7 +318,7 @@ Iterates through all rows. If a row is full, it is cleared, and all rows above i
 
 '''
 
-=== `isColumnFull(x: number): boolean`
+==== `isColumnFull(x: number): boolean`
 
 Checks if a specific column has no empty cells.
 
@@ -320,7 +337,7 @@ Checks if a specific column has no empty cells.
 
 '''
 
-=== `isColumnEmpty(x: number): boolean`
+==== `isColumnEmpty(x: number): boolean`
 
 Checks if a specific column is completely empty.
 
@@ -339,7 +356,7 @@ Checks if a specific column is completely empty.
 
 '''
 
-=== `clearColumn(x: number): void`
+==== `clearColumn(x: number): void`
 
 Resets all cells in a column to the empty state.
 
@@ -354,7 +371,7 @@ Resets all cells in a column to the empty state.
 
 '''
 
-=== `shiftColumnsRight(fromX: number): void`
+==== `shiftColumnsRight(fromX: number): void`
 
 Shifts all columns to the right of an index.
 
@@ -369,7 +386,7 @@ Shifts all columns to the right of an index.
 
 '''
 
-=== `shiftColumnsLeft(fromX: number): void`
+==== `shiftColumnsLeft(fromX: number): void`
 
 Shifts all columns to the left of an index.
 
@@ -384,7 +401,7 @@ Shifts all columns to the left of an index.
 
 '''
 
-=== `clearFullColumns(): number`
+==== `clearFullColumns(): number`
 
 Detects and clears all full columns.
 
@@ -395,7 +412,11 @@ Detects and clears all full columns.
 
 '''
 
-=== `isAreaOccupied(coordinates: xref:../types/Coordinate.adoc[Coordinate][]): boolean`
+=== Region & Area Management
+
+Operations for handling multi-cell areas, rectangular regions, and piece shapes. These methods facilitate the logical placement and validation of game objects within the grid.
+
+==== `isAreaOccupied(coordinates: xref:../types/Coordinate.adoc[Coordinate][]): boolean`
 
 Checks for collisions between a list of coordinates and active cells in the grid.
 
@@ -414,7 +435,7 @@ Checks for collisions between a list of coordinates and active cells in the grid
 
 '''
 
-=== `fillArea(start: xref:../types/Coordinate.adoc[Coordinate], end: xref:../types/Coordinate.adoc[Coordinate], value: number, color: xref:../enums/Color.adoc[Color]): void`
+==== `fillArea(start: xref:../types/Coordinate.adoc[Coordinate], end: xref:../types/Coordinate.adoc[Coordinate], value: number, color: xref:../enums/Color.adoc[Color]): void`
 
 Fills a rectangular area with specified properties.
 
@@ -432,27 +453,342 @@ Fills a rectangular area with specified properties.
 
 '''
 
-=== `stampPiece(coordinates: xref:../types/Coordinate.adoc[Coordinate][], value: number, color: xref:../enums/Color.adoc[Color]): void`
+==== `stampPiece(piece: xref:../types/Piece.adoc[Piece]): void`
 
-Updates multiple specific coordinates simultaneously.
+Updates multiple specific coordinates simultaneously with their specific values and colors.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`coordinates` |`xref:../types/Coordinate.adoc[Coordinate][]` |Points to update.
-|`value` |`number` |New cell value.
-|`color` |`xref:../enums/Color.adoc[Color]` |New cell color.
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The collection of cells to stamp.
 |===
 
 
 '''
 
-=== `getDebugData(): Record<string, string | number | boolean>`
+==== `stampCell(cell: xref:../types/Cell.adoc[Cell]): void`
 
-Returns metadata for the real-time debugger.
+Updates a single coordinate with a specific value and color from a Cell.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`cell` |`xref:../types/Cell.adoc[Cell]` |The cell object containing the target coordinate, value, and color.
+|===
+
+
+'''
+
+=== Movement & Projections
+
+Advanced methods for handling piece and cell movement with built-in collision detection and trajectory prediction.
+
+==== `movePiece(piece: xref:../types/Piece.adoc[Piece], direction: xref:../types/Vector.adoc[Vector]): xref:../types/Piece.adoc[Piece] | null`
+
+Attempts to shift a collection of cells (a piece) in a specified direction.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The current collection of cells.
+|`direction` |`xref:../types/Vector.adoc[Vector]` |The movement vector (e.g., `{x: -1, y: 0}`).
+|===
 
 **Returns**
 
-`Record<string, string | number | boolean>` - Object containing `width` and `height`.
+`xref:../types/Piece.adoc[Piece] | null` - The new piece with updated coordinates if the move is valid, or `null` if blocked.
+
+**Behavior**
+
+Validates that all new positions are within grid boundaries and are not occupied by other active cells. Cells that are already part of the input `piece` are ignored during collision detection to allow a piece to move "into its own space."
+
+
+'''
+
+==== `movePieceLeft(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece] | null`
+
+Alias for `movePiece` shifting one unit to the left.
+
+
+'''
+
+==== `movePieceRight(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece] | null`
+
+Alias for `movePiece` shifting one unit to the right.
+
+
+'''
+
+==== `movePieceUp(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece] | null`
+
+Alias for `movePiece` shifting one unit up.
+
+
+'''
+
+==== `movePieceDown(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece] | null`
+
+Alias for `movePiece` shifting one unit down.
+
+
+'''
+
+==== `moveCell(cell: xref:../types/Cell.adoc[Cell], direction: xref:../types/Vector.adoc[Vector]): xref:../types/Cell.adoc[Cell] | null`
+
+Attempts to shift a single cell in a specified direction.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`cell` |`xref:../types/Cell.adoc[Cell]` |The current cell.
+|`direction` |`xref:../types/Vector.adoc[Vector]` |The movement vector.
+|===
+
+**Returns**
+
+`xref:../types/Cell.adoc[Cell] | null` - The new cell with updated coordinate if the move is valid, or `null` if blocked.
+
+**Behavior**
+
+Validates that the target position is within grid boundaries and is currently empty (inactive).
+
+
+'''
+
+==== `moveCellLeft(cell: xref:../types/Cell.adoc[Cell]): xref:../types/Cell.adoc[Cell] | null`
+
+Alias for `moveCell` shifting one unit to the left.
+
+
+'''
+
+==== `moveCellRight(cell: xref:../types/Cell.adoc[Cell]): xref:../types/Cell.adoc[Cell] | null`
+
+Alias for `moveCell` shifting one unit to the right.
+
+
+'''
+
+==== `moveCellUp(cell: xref:../types/Cell.adoc[Cell]): xref:../types/Cell.adoc[Cell] | null`
+
+Alias for `moveCell` shifting one unit up.
+
+
+'''
+
+==== `moveCellDown(cell: xref:../types/Cell.adoc[Cell]): xref:../types/Cell.adoc[Cell] | null`
+
+Alias for `moveCell` shifting one unit down.
+
+
+'''
+
+==== `getDropPath(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece]`
+
+Calculates the final vertical resting position of a piece if it were dropped continuously downwards.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to project.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - A new piece representing the final resting position. Useful for rendering "ghost" or "preview" pieces.
+
+
+'''
+
+==== `getRisePath(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece]`
+
+Calculates the final vertical resting position of a piece if it were moved continuously upwards.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to project.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - A new piece representing the highest resting position.
+
+
+'''
+
+==== `getReachPathLeft(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece]`
+
+Calculates the final horizontal resting position of a piece if it were moved continuously to the left.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to project.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - A new piece representing the leftmost resting position.
+
+
+'''
+
+==== `getReachPathRight(piece: xref:../types/Piece.adoc[Piece]): xref:../types/Piece.adoc[Piece]`
+
+Calculates the final horizontal resting position of a piece if it were moved continuously to the right.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to project.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - A new piece representing the rightmost resting position.
+
+
+'''
+
+=== Transformations
+
+Geometric operations for rotating or mirroring complex shapes within the grid boundaries.
+
+==== `rotatePiece(piece: xref:../types/Piece.adoc[Piece], origin: xref:../types/Coordinate.adoc[Coordinate], clockwise: boolean = true): xref:../types/Piece.adoc[Piece] | null`
+
+Attempts to rotate a collection of cells 90 degrees around a specific origin point.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to rotate.
+|`origin` |`xref:../types/Coordinate.adoc[Coordinate]` |The pivot point for rotation.
+|`clockwise` |`boolean` |If true, rotates 90° clockwise; otherwise, 90° counter-clockwise.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece] | null` - The new piece if rotation is valid (no collisions), or `null` if blocked.
+
+
+'''
+
+==== `mirrorPiece(piece: xref:../types/Piece.adoc[Piece], axis: xref:../types/Axis.adoc[Axis]): xref:../types/Piece.adoc[Piece]`
+
+Mirrors a piece across its own center on a specific axis.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`piece` |`xref:../types/Piece.adoc[Piece]` |The piece to mirror.
+|`axis` |`xref:../types/Axis.adoc[Axis]` |The axis ('x' or 'y') to flip across.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - The mirrored piece.
+
+
+'''
+
+=== Grid Analysis
+
+Methods for inspecting grid state, finding patterns, and performing searches over the active cell data.
+
+==== `getFullRows(): number[]`
+
+Identifies all rows that are completely filled with active cells.
+
+**Returns**
+
+`number[]` - An array of `y` indices representing the filled rows.
+
+
+'''
+
+==== `getFullColumns(): number[]`
+
+Identifies all columns that are completely filled with active cells.
+
+**Returns**
+
+`number[]` - An array of `x` indices representing the filled columns.
+
+
+'''
+
+==== `getNeighbors(coord: xref:../types/Coordinate.adoc[Coordinate], includeDiagonal: boolean = false): xref:../types/Cell.adoc[Cell][]`
+
+Returns all active cells adjacent to a specific coordinate.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coord` |`xref:../types/Coordinate.adoc[Coordinate]` |The central coordinate.
+|`includeDiagonal` |`boolean` |If true, checks 8 neighbors; otherwise, checks the 4 cardinal neighbors.
+|===
+
+**Returns**
+
+`xref:../types/Cell.adoc[Cell][]` - List of neighboring cells found.
+
+
+'''
+
+==== `findConnectedCells(coord: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Piece.adoc[Piece]`
+
+Finds all connected active cells of the same value starting from a specific coordinate using a Breadth-First Search (BFS) algorithm.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`coord` |`xref:../types/Coordinate.adoc[Coordinate]` |The starting point for the search.
+|===
+
+**Returns**
+
+`xref:../types/Piece.adoc[Piece]` - A collection of all connected cells found.
+
+
+'''
+
+==== `swapCells(a: xref:../types/Coordinate.adoc[Coordinate], b: xref:../types/Coordinate.adoc[Coordinate]): void`
+
+Swaps the values and colors of two specified cells on the grid.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`a` |`xref:../types/Coordinate.adoc[Coordinate]` |First coordinate.
+|`b` |`xref:../types/Coordinate.adoc[Coordinate]` |Second coordinate.
+|===
+
+
+'''

@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Represents a generic 2D vector for directional or magnitude calculations.">
-<meta name="keywords" content="vector, direction, magnitude, 2d, transformation">
-<title>Vector Reference</title>
+<meta name="description" content="Represents an axis in a 2D coordinate system.">
+<meta name="keywords" content="axis, coordinate, 2d, transformation, mirror">
+<title>Axis Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,11 +439,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Vector Reference</h1>
+<h1>Axis Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#attributes">1. Attributes</a></li>
+<li><a href="#possible-values">1. Possible Values</a></li>
 <li><a href="#general-usage">2. General Usage</a></li>
 </ul>
 </div>
@@ -452,34 +452,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Represents a generic 2D vector for directional or magnitude calculations.</p>
+<p>Represents an axis in a 2D coordinate system.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="attributes"><a class="link" href="#attributes">1. Attributes</a></h2>
+<h2 id="possible-values"><a class="link" href="#possible-values">1. Possible Values</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
+<col style="width: 25%;">
+<col style="width: 75%;">
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-1 | 0 | 1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Horizontal direction offset.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'x'</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The horizontal axis.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-1 | 0 | 1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Vertical direction offset.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>'y'</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The vertical axis.</p></td>
 </tr>
 </tbody>
 </table>
@@ -489,7 +485,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Unlike <code><a href="Coordinate.html">Coordinate</a></code>, which usually implies a position, <code>Vector</code> is used for transformations, velocities, and offsets applied to coordinates.</p>
+<p>The <code>Axis</code> type is primarily used for transformation operations that apply selectively to one dimension, such as mirroring a piece across a specific axis.</p>
 </div>
 </div>
 </div>

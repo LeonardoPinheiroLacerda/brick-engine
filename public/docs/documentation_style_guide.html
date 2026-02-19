@@ -469,8 +469,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#persistence-namespacing">3.5. Persistence Namespacing</a></li>
 <li><a href="#documentation-granularity">3.6. Documentation Granularity</a></li>
 <li><a href="#cross-linking-context">3.7. Cross-Linking Context</a></li>
-<li><a href="#redundant-separators">3.8. Redundant Separators</a></li>
-<li><a href="#module-interface-organization">3.9. Module Interface Organization</a></li>
+<li><a href="#topic-based-scannability">3.8. Topic-Based Scannability</a></li>
+<li><a href="#redundant-separators">3.9. Redundant Separators</a></li>
+<li><a href="#module-interface-organization">3.10. Module Interface Organization</a></li>
 </ul>
 </li>
 <li><a href="#cross-referencing-standards">4. Cross-Referencing Standards</a>
@@ -625,24 +626,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p>Use <code>===</code> for all methods within a module/interface file.</p>
+<p>Use <code>===</code> for all functional topics within a module&#8217;s API reference.</p>
 </li>
 <li>
-<p><strong>Separators</strong>: Place a horizontal rule (<code>''&#8216;) before every `===</code> header.
-+
-[IMPORTANT]
-====
-<strong>NEVER</strong> place a horizontal rule (&#8217;''`) before the <strong>first</strong> method in a section. The first method should follow the section header (e.g., <code>== Methods</code>) after a single blank line.
-====</p>
+<p><strong>Topic Summaries</strong>: Each topic section should begin with a brief description of its general utility before listing its methods.</p>
 </li>
 <li>
-<p>Maintain a <strong>flat list</strong> of methods under the <code>== API Reference</code> or <code>== Methods</code> sections.</p>
+<p><strong>Method Headers</strong>: Use <code>====</code> for method headers when they are nested under functional topics.</p>
+</li>
+<li>
+<p><strong>Separators</strong>: Place a horizontal rule (<code>'''</code>) before every method/topic header except the first one in a section.</p>
+</li>
+<li>
+<p><strong>Organization Strategy</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Simple Modules</strong>: Maintain a flat list of methods using <code>===</code> headers.</p>
+</li>
+<li>
+<p><strong>Complex Modules</strong>: Group methods into logical topics (e.g., "Movement", "Transformations"). This improves scannability when a module exceeds ~10 methods.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p><strong>Parameters</strong>:</p>
 </li>
 </ol>
+</div>
+</li>
+</ul>
 </div>
 </li>
 <li>
@@ -857,7 +869,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="redundant-separators"><a class="link" href="#redundant-separators">3.8. Redundant Separators</a></h3>
+<h3 id="topic-based-scannability"><a class="link" href="#topic-based-scannability">3.8. Topic-Based Scannability</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Issue</strong>: Modules with many methods (e.g., <code>GameGrid</code>) become "walls of text" when documented as a single flat list, making it hard for developers to find specific functionality.</p>
+</li>
+<li>
+<p><strong>Solution</strong>: Group methods by functional topics (e.g., "Line Management", "Grid Analysis"). Each topic acts as a sub-module view, providing context on why those methods exist together.</p>
+</li>
+<li>
+<p><strong>Rule</strong>: When a module exceeds 10 methods, transitioning to a topic-based structure is <strong>mandatory</strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="redundant-separators"><a class="link" href="#redundant-separators">3.9. Redundant Separators</a></h3>
 <div class="ulist">
 <ul>
 <li>
@@ -870,7 +898,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="module-interface-organization"><a class="link" href="#module-interface-organization">3.9. Module Interface Organization</a></h3>
+<h3 id="module-interface-organization"><a class="link" href="#module-interface-organization">3.10. Module Interface Organization</a></h3>
 <div class="ulist">
 <ul>
 <li>

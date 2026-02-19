@@ -1,9 +1,14 @@
 import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
 import CellHelper from '../../helpers/CellHelper';
-import { Cell, Coordinate } from '../../types/Types';
+import { Cell, Coordinate, Vector, Piece, Axis } from '../../types/Types';
 import { Debuggable } from '../../types/Interfaces';
 import { Grid } from '../../types/modules';
+import GridMovementEngine from './engines/GridMovementEngine';
+import GridTransformEngine from './engines/GridTransformEngine';
+import GridAnalysisEngine from './engines/GridAnalysisEngine';
+import GridLineEngine from './engines/GridLineEngine';
+import GridRegionEngine from './engines/GridRegionEngine';
 
 /**
  * Manages the game's logical grid state and operations.
@@ -16,6 +21,20 @@ export default class GameGrid implements Grid, Debuggable {
      * The internal 2D array representing the game grid [y][x].
      */
     protected _grid: Cell[][] = [];
+
+    private _movementEngine: GridMovementEngine;
+    private _transformEngine: GridTransformEngine;
+    private _analysisEngine: GridAnalysisEngine;
+    private _lineEngine: GridLineEngine;
+    private _regionEngine: GridRegionEngine;
+
+    constructor() {
+        this._movementEngine = new GridMovementEngine(this);
+        this._transformEngine = new GridTransformEngine(this);
+        this._analysisEngine = new GridAnalysisEngine(this);
+        this._lineEngine = new GridLineEngine(this);
+        this._regionEngine = new GridRegionEngine(this);
+    }
 
     // --- CORE & UTILITIES ---
 
@@ -168,8 +187,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {boolean} True if the row is completely full.
      */
     isRowFull(y: number): boolean {
-        if (y < 0 || y >= this.height) return false;
-        return this._grid[y].every(cell => cell.value > 0);
+        return this._lineEngine.isRowFull(y);
     }
 
     /**
@@ -179,8 +197,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {boolean} True if the row is completely empty.
      */
     isRowEmpty(y: number): boolean {
-        if (y < 0 || y >= this.height) return true;
-        return this._grid[y].every(cell => cell.value === 0);
+        return this._lineEngine.isRowEmpty(y);
     }
 
     /**
@@ -190,10 +207,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     clearRow(y: number): void {
-        if (y < 0 || y >= this.height) return;
-        for (let x = 0; x < this.width; x++) {
-            this._grid[y][x] = CellHelper.emptyCell({ x, y });
-        }
+        this._lineEngine.clearRow(y);
     }
 
     /**
@@ -205,14 +219,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     shiftRowsDown(fromY: number): void {
-        for (let y = fromY; y > 0; y--) {
-            for (let x = 0; x < this.width; x++) {
-                const prevCell = this._grid[y - 1][x];
-                this._grid[y][x].value = prevCell.value;
-                this._grid[y][x].color = prevCell.color;
-            }
-        }
-        this.clearRow(0);
+        this._lineEngine.shiftRowsDown(fromY);
     }
 
     /**
@@ -224,14 +231,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     shiftRowsUp(fromY: number): void {
-        for (let y = fromY; y < this.height - 1; y++) {
-            for (let x = 0; x < this.width; x++) {
-                const nextCell = this._grid[y + 1][x];
-                this._grid[y][x].value = nextCell.value;
-                this._grid[y][x].color = nextCell.color;
-            }
-        }
-        this.clearRow(this.height - 1);
+        this._lineEngine.shiftRowsUp(fromY);
     }
 
     /**
@@ -242,16 +242,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {number} The total number of rows cleared during the operation.
      */
     clearFullRows(): number {
-        let rowsCleared = 0;
-        for (let y = this.height - 1; y >= 0; y--) {
-            if (this.isRowFull(y)) {
-                this.clearRow(y);
-                this.shiftRowsDown(y);
-                rowsCleared++;
-                y++; // Re-check the same row index after shifting
-            }
-        }
-        return rowsCleared;
+        return this._lineEngine.clearFullRows();
     }
 
     // --- COLUMN OPERATIONS ---
@@ -263,11 +254,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {boolean} True if the column is completely full.
      */
     isColumnFull(x: number): boolean {
-        if (x < 0 || x >= this.width) return false;
-        for (let y = 0; y < this.height; y++) {
-            if (this._grid[y][x].value === 0) return false;
-        }
-        return true;
+        return this._lineEngine.isColumnFull(x);
     }
 
     /**
@@ -277,11 +264,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {boolean} True if the column is completely empty.
      */
     isColumnEmpty(x: number): boolean {
-        if (x < 0 || x >= this.width) return true;
-        for (let y = 0; y < this.height; y++) {
-            if (this._grid[y][x].value !== 0) return false;
-        }
-        return true;
+        return this._lineEngine.isColumnEmpty(x);
     }
 
     /**
@@ -291,10 +274,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     clearColumn(x: number): void {
-        if (x < 0 || x >= this.width) return;
-        for (let y = 0; y < this.height; y++) {
-            this._grid[y][x] = CellHelper.emptyCell({ x, y });
-        }
+        this._lineEngine.clearColumn(x);
     }
 
     /**
@@ -306,14 +286,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     shiftColumnsRight(fromX: number): void {
-        for (let x = fromX; x > 0; x--) {
-            for (let y = 0; y < this.height; y++) {
-                const prevCell = this._grid[y][x - 1];
-                this._grid[y][x].value = prevCell.value;
-                this._grid[y][x].color = prevCell.color;
-            }
-        }
-        this.clearColumn(0);
+        this._lineEngine.shiftColumnsRight(fromX);
     }
 
     /**
@@ -325,14 +298,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     shiftColumnsLeft(fromX: number): void {
-        for (let x = fromX; x < this.width - 1; x++) {
-            for (let y = 0; y < this.height; y++) {
-                const nextCell = this._grid[y][x + 1];
-                this._grid[y][x].value = nextCell.value;
-                this._grid[y][x].color = nextCell.color;
-            }
-        }
-        this.clearColumn(this.width - 1);
+        this._lineEngine.shiftColumnsLeft(fromX);
     }
 
     /**
@@ -341,16 +307,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {number} The total number of columns cleared during the operation.
      */
     clearFullColumns(): number {
-        let columnsCleared = 0;
-        for (let x = this.width - 1; x >= 0; x--) {
-            if (this.isColumnFull(x)) {
-                this.clearColumn(x);
-                this.shiftColumnsRight(x);
-                columnsCleared++;
-                x++; // Re-check the same column index after shifting
-            }
-        }
-        return columnsCleared;
+        return this._lineEngine.clearFullColumns();
     }
 
     // --- ADVANCED OPERATIONS ---
@@ -362,10 +319,7 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {boolean} True if the area is occupied or invalid, false if completely clear.
      */
     isAreaOccupied(coordinates: Coordinate[]): boolean {
-        return coordinates.some(coord => {
-            if (!this.isValidCoordinate(coord)) return true;
-            return this.isCellActive(coord);
-        });
+        return this._regionEngine.isAreaOccupied(coordinates);
     }
 
     /**
@@ -380,45 +334,261 @@ export default class GameGrid implements Grid, Debuggable {
      * @returns {void}
      */
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void {
-        const xMin = Math.max(0, Math.min(start.x, end.x));
-        const xMax = Math.min(this.width - 1, Math.max(start.x, end.x));
-        const yMin = Math.max(0, Math.min(start.y, end.y));
-        const yMax = Math.min(this.height - 1, Math.max(start.y, end.y));
-
-        for (let y = yMin; y <= yMax; y++) {
-            for (let x = xMin; x <= xMax; x++) {
-                this.setCellValue({ x, y }, value);
-                this.setCellColor({ x, y }, color);
-            }
-        }
+        this._regionEngine.fillArea(start, end, value, color);
     }
 
     /**
-     * Applies a value and color to multiple coordinates simultaneously.
+     * Updates multiple coordinates simultaneously with their specific values and colors.
      *
      * Effectively "stamps" a piece's shape onto the static grid.
      *
-     * @param {Coordinate[]} coordinates - The list of coordinates to update.
-     * @param {number} value - The status value to apply.
-     * @param {Color} color - The color to apply.
+     * @param {Piece} piece - The collection of cells to stamp.
      * @returns {void}
      */
-    stampPiece(coordinates: Coordinate[], value: number, color: Color): void {
-        coordinates.forEach(coord => {
-            this.setCellValue(coord, value);
-            this.setCellColor(coord, color);
-        });
+    stampPiece(piece: Piece): void {
+        this._regionEngine.stampPiece(piece);
     }
 
     /**
-     * Retrieves debug information about the grid's dimensions.
+     * Updates a single coordinate with a specific value and color from a Cell.
      *
-     * @returns {Record<string, string | number | boolean>} The debug data.
+     * @param {Cell} cell - The cell containing coordinate, value and color.
+     * @returns {void}
+     */
+    stampCell(cell: Cell): void {
+        this._regionEngine.stampCell(cell);
+    }
+
+    /**
+     * Attempts to shift a collection of cells (a piece) in a given direction.
+     *
+     * Validates that all new positions are within grid boundaries and are not
+     * occupied by other active cells (excluding the cells that are part of the original piece).
+     *
+     * @param {Piece} piece - The current piece (collection of cells).
+     * @param {Vector} direction - The movement vector (e.g., {x: -1, y: 0} for left).
+     * @returns {Piece | null} The new piece with updated coordinates if the move is valid, or null if blocked.
+     */
+    movePiece(piece: Piece, direction: Vector): Piece | null {
+        return this._movementEngine.movePiece(piece, direction);
+    }
+
+    /**
+     * Alias for {@link movePiece} shifting one unit to the left.
+     * @param {Piece} piece - The current piece.
+     * @returns {Piece | null}
+     */
+    movePieceLeft(piece: Piece): Piece | null {
+        return this._movementEngine.movePieceLeft(piece);
+    }
+
+    /**
+     * Alias for {@link movePiece} shifting one unit to the right.
+     * @param {Piece} piece - The current piece.
+     * @returns {Piece | null}
+     */
+    movePieceRight(piece: Piece): Piece | null {
+        return this._movementEngine.movePieceRight(piece);
+    }
+
+    /**
+     * Alias for {@link movePiece} shifting one unit up.
+     * @param {Piece} piece - The current piece.
+     * @returns {Piece | null}
+     */
+    movePieceUp(piece: Piece): Piece | null {
+        return this._movementEngine.movePieceUp(piece);
+    }
+
+    /**
+     * Alias for {@link movePiece} shifting one unit down.
+     * @param {Piece} piece - The current piece.
+     * @returns {Piece | null}
+     */
+    movePieceDown(piece: Piece): Piece | null {
+        return this._movementEngine.movePieceDown(piece);
+    }
+
+    /**
+     * Attempts to shift a single cell in a given direction.
+     *
+     * Validates that the new position is within grid boundaries and is not occupied.
+     *
+     * @param {Cell} cell - The current cell.
+     * @param {Vector} direction - The movement vector.
+     * @returns {Cell | null} The new cell with updated coordinate if the move is valid, or null if blocked.
+     */
+    moveCell(cell: Cell, direction: Vector): Cell | null {
+        return this._movementEngine.moveCell(cell, direction);
+    }
+
+    /**
+     * Alias for {@link moveCell} shifting one unit to the left.
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null}
+     */
+    moveCellLeft(cell: Cell): Cell | null {
+        return this._movementEngine.moveCellLeft(cell);
+    }
+
+    /**
+     * Alias for {@link moveCell} shifting one unit to the right.
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null}
+     */
+    moveCellRight(cell: Cell): Cell | null {
+        return this._movementEngine.moveCellRight(cell);
+    }
+
+    /**
+     * Alias for {@link moveCell} shifting one unit up.
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null}
+     */
+    moveCellUp(cell: Cell): Cell | null {
+        return this._movementEngine.moveCellUp(cell);
+    }
+
+    /**
+     * Alias for {@link moveCell} shifting one unit down.
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null}
+     */
+    moveCellDown(cell: Cell): Cell | null {
+        return this._movementEngine.moveCellDown(cell);
+    }
+
+    /**
+     * Attempts to rotate a piece 90 degrees around a specific origin.
+     *
+     * @param {Piece} piece - The current piece.
+     * @param {Coordinate} origin - The center of rotation.
+     * @param {boolean} [clockwise=true] - Direction of rotation.
+     * @returns {Piece | null} The new piece if rotation is valid, or null if blocked.
+     */
+    rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null {
+        return this._transformEngine.rotatePiece(piece, origin, clockwise);
+    }
+
+    /**
+     * Identifies all rows that are completely filled with active cells.
+     *
+     * @returns {number[]} Array of row indices (y).
+     */
+    getFullRows(): number[] {
+        return this._analysisEngine.getFullRows();
+    }
+
+    /**
+     * Identifies all columns that are completely filled with active cells.
+     *
+     * @returns {number[]} Array of column indices (x).
+     */
+    getFullColumns(): number[] {
+        return this._analysisEngine.getFullColumns();
+    }
+
+    /**
+     * Calculates the final resting position of a piece if it were dropped continuously.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its final vertical resting position.
+     */
+    getDropPath(piece: Piece): Piece {
+        return this._movementEngine.getDropPath(piece);
+    }
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously upwards.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its highest vertical resting position.
+     */
+    getRisePath(piece: Piece): Piece {
+        return this._movementEngine.getRisePath(piece);
+    }
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously to the left.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its leftmost resting position.
+     */
+    getReachPathLeft(piece: Piece): Piece {
+        return this._movementEngine.getReachPathLeft(piece);
+    }
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously to the right.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its rightmost resting position.
+     */
+    getReachPathRight(piece: Piece): Piece {
+        return this._movementEngine.getReachPathRight(piece);
+    }
+
+    /**
+     * Returns the active cells adjacent to a specific coordinate.
+     *
+     * @param {Coordinate} coord - The center coordinate.
+     * @param {boolean} [includeDiagonal=false] - Whether to include 8 neighbors or just 4.
+     * @returns {Cell[]} List of neighboring cells.
+     */
+    getNeighbors(coord: Coordinate, includeDiagonal: boolean = false): Cell[] {
+        return this._analysisEngine.getNeighbors(coord, includeDiagonal);
+    }
+
+    /**
+     * Finds all connected active cells of the same value starting from a specific coordinate.
+     * Uses a Breadth-First Search (BFS) algorithm.
+     *
+     * @param {Coordinate} coord - Starting coordinate.
+     * @returns {Piece} Collection of connected cells.
+     */
+    findConnectedCells(coord: Coordinate): Piece {
+        return this._analysisEngine.findConnectedCells(coord);
+    }
+
+    /**
+     * Mirrors a piece across a specific axis relative to its bounding box.
+     *
+     * @param {Piece} piece - The piece to mirror.
+     * @param {Axis} axis - The axis to flip across ('x' for horizontal flip, 'y' for vertical).
+     * @returns {Piece} The mirrored piece.
+     */
+    mirrorPiece(piece: Piece, axis: Axis): Piece {
+        return this._transformEngine.mirrorPiece(piece, axis);
+    }
+
+    /**
+     * Swaps the values and colors of two cells.
+     *
+     * @param {Coordinate} a - First coordinate.
+     * @param {Coordinate} b - Second coordinate.
+     * @returns {void}
+     */
+    swapCells(a: Coordinate, b: Coordinate): void {
+        this._analysisEngine.swapCells(a, b);
+    }
+
+    /**
+     * Private helper to get piece bounds, delegated to transform engine.
+     */
+    protected getPieceBounds(piece: Piece): { min: Coordinate; max: Coordinate } {
+        return this._transformEngine.getPieceBounds(piece);
+    }
+
+    /**
+     * Returns metadata for the real-time debugger.
+     *
+     * @returns {Record<string, string | number | boolean>} Technical debugging data.
      */
     getDebugData(): Record<string, string | number | boolean> {
         return {
             width: this.width,
             height: this.height,
+            activeCells: this._grid.flat().filter(cell => cell.value > 0).length,
         };
     }
 }

@@ -1,0 +1,28 @@
+= Axis Reference
+:description: Represents an axis in a 2D coordinate system.
+:keywords: axis, coordinate, 2d, transformation, mirror
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Represents an axis in a 2D coordinate system.
+
+== Possible Values
+
+[cols="1,3"]
+|===
+|Value |Description
+|`'x'` |The horizontal axis.
+|`'y'` |The vertical axis.
+|===
+
+== General Usage
+
+The `Axis` type is primarily used for transformation operations that apply selectively to one dimension, such as mirroring a piece across a specific axis.

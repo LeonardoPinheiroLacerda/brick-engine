@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Represents a generic 2D vector for directional or magnitude calculations.">
-<meta name="keywords" content="vector, direction, magnitude, 2d, transformation">
-<title>Vector Reference</title>
+<meta name="description" content="Represents a collection of cells that form a game piece or "stamp".">
+<meta name="keywords" content="piece, stamp, cells, grid, collection">
+<title>Piece Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,11 +439,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Vector Reference</h1>
+<h1>Piece Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#attributes">1. Attributes</a></li>
+<li><a href="#definition">1. Definition</a></li>
 <li><a href="#general-usage">2. General Usage</a></li>
 </ul>
 </div>
@@ -452,44 +452,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Represents a generic 2D vector for directional or magnitude calculations.</p>
+<p>Represents a collection of <code><a href="Cell.html">Cell</a></code> objects that form a cohesive game piece or a pattern to be "stamped" onto the grid.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="attributes"><a class="link" href="#attributes">1. Attributes</a></h2>
+<h2 id="definition"><a class="link" href="#definition">1. Definition</a></h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-1 | 0 | 1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Horizontal direction offset.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>-1 | 0 | 1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Vertical direction offset.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">export type Piece = Cell[];</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Unlike <code><a href="Coordinate.html">Coordinate</a></code>, which usually implies a position, <code>Vector</code> is used for transformations, velocities, and offsets applied to coordinates.</p>
+<p>The <code>Piece</code> type is the main unit of interaction for complex grid operations. By working with an array of <code><a href="Cell.html">Cell</a></code> instead of raw <code><a href="Coordinate.html">Coordinate</a></code>, the engine can preserve properties like color and value during movement and transformation.</p>
+</div>
+<div class="paragraph">
+<p>Common operations involving pieces include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Stamping</strong>: Permanently applying the piece&#8217;s cells to the grid.</p>
+</li>
+<li>
+<p><strong>Movement</strong>: Shifting all cells within a piece simultaneously while checking for collisions.</p>
+</li>
+<li>
+<p><strong>Transformation</strong>: Rotating, mirroring, or projecting the piece onto different grid locations.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

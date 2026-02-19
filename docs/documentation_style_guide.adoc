@@ -75,14 +75,13 @@ Documentation should be optimized for both internal reading and HTML conversion.
 :idseparator: -
 ----
 
-    *   Use `===` for all methods within a module/interface file.
-    *   **Separators**: Place a horizontal rule (`'''`) before every `===` header.
-    +
-    [IMPORTANT]
-    ====
-    **NEVER** place a horizontal rule (`'''`) before the **first** method in a section. The first method should follow the section header (e.g., `== Methods`) after a single blank line.
-    ====
-    *   Maintain a **flat list** of methods under the `== API Reference` or `== Methods` sections.
+    *   Use `===` for all functional topics within a module's API reference.
+    *   **Topic Summaries**: Each topic section should begin with a brief description of its general utility before listing its methods.
+    *   **Method Headers**: Use `====` for method headers when they are nested under functional topics.
+    *   **Separators**: Place a horizontal rule (`'''`) before every method/topic header except the first one in a section.
+    *   **Organization Strategy**:
+        ** **Simple Modules**: Maintain a flat list of methods using `===` headers.
+        ** **Complex Modules**: Group methods into logical topics (e.g., "Movement", "Transformations"). This improves scannability when a module exceeds ~10 methods.
 .   **Parameters**:
     *   Use a table for arguments.
     *   **OMIT this section completely** if there are no parameters.
@@ -165,6 +164,11 @@ Refer to `docs/jsdoc_standard.adoc` for inline code documentation rules.
 === Cross-Linking Context
 *   **Recommendation**: When referencing an entity in a table (e.g., a return type or parameter type), always use an `xref:` link to its dedicated documentation page.
 *   **Pattern**: Use relative paths (e.g., `xref:../enums/Color.adoc[Color]`) to link between subdirectories.
+
+=== Topic-Based Scannability
+*   **Issue**: Modules with many methods (e.g., `GameGrid`) become "walls of text" when documented as a single flat list, making it hard for developers to find specific functionality.
+*   **Solution**: Group methods by functional topics (e.g., "Line Management", "Grid Analysis"). Each topic acts as a sub-module view, providing context on why those methods exist together.
+*   **Rule**: When a module exceeds 10 methods, transitioning to a topic-based structure is **mandatory**.
 
 === Redundant Separators
 *   **Issue**: Automated or careless application of the "expanded method" style often leads to placing a horizontal rule (`'''`) at the very beginning of the `== Methods` section.

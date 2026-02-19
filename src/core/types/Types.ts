@@ -16,15 +16,25 @@ export type Cell = {
 };
 
 /**
- * Represents a 2D vector with X and Y components.
- * Typically used for dimensions or directions.
+ * Represents a 2D direction vector with X and Y components.
+ * Values are restricted to -1, 0, or 1 to ensure unit-based movement.
  */
 export type Vector = {
-    /** The X component. */
-    x: number;
-    /** The Y component. */
-    y: number;
+    /** The X component (-1: left, 0: none, 1: right). */
+    x: -1 | 0 | 1;
+    /** The Y component (-1: up, 0: none, 1: down). */
+    y: -1 | 0 | 1;
 };
+
+/**
+ * Represents an axis in a 2D coordinate system.
+ */
+export type Axis = 'x' | 'y';
+
+/**
+ * Represents a piece which is a collection of cells.
+ */
+export type Piece = Cell[];
 
 /**
  * Represents a 2D point in a coordinate system.

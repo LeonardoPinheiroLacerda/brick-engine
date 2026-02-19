@@ -1,7 +1,7 @@
 import p5 from 'p5';
 import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound } from './enums';
 import { Initializable, RendererInitializable } from './Interfaces';
-import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
+import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty, Vector, Piece, Axis } from './Types';
 
 /**
  * Interface for a specific rendering layer.
@@ -281,13 +281,190 @@ export interface Grid extends Initializable {
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void;
 
     /**
-     * Stamps a pattern of cells onto the grid.
+     * Updates multiple coordinates simultaneously with their specific values and colors.
      *
-     * @param {Coordinate[]} coordinates - The list of cell locations to update.
-     * @param {number} value - The value to apply.
-     * @param {Color} color - The color to apply.
+     * @param {Piece} piece - The collection of cells to stamp.
      */
-    stampPiece(coordinates: Coordinate[], value: number, color: Color): void;
+    stampPiece(piece: Piece): void;
+
+    /**
+     * Updates a single coordinate with a specific value and color from a Cell.
+     *
+     * @param {Cell} cell - The cell containing coordinate, value and color.
+     */
+    stampCell(cell: Cell): void;
+
+    /**
+     * Attempts to move a piece in a given direction.
+     *
+     * @param {Piece} piece - The current piece coordinates.
+     * @param {Vector} direction - The movement vector.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    movePiece(piece: Piece, direction: Vector): Piece | null;
+
+    /**
+     * Attempts to move a piece one unit to the left.
+     *
+     * @param {Piece} piece - The current piece coordinates.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    movePieceLeft(piece: Piece): Piece | null;
+
+    /**
+     * Attempts to move a piece one unit to the right.
+     *
+     * @param {Piece} piece - The current piece coordinates.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    movePieceRight(piece: Piece): Piece | null;
+
+    /**
+     * Attempts to move a piece one unit up.
+     *
+     * @param {Piece} piece - The current piece coordinates.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    movePieceUp(piece: Piece): Piece | null;
+
+    /**
+     * Attempts to move a piece one unit down.
+     *
+     * @param {Piece} piece - The current piece coordinates.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    movePieceDown(piece: Piece): Piece | null;
+
+    /**
+     * Attempts to move a single coordinate in a given direction.
+     *
+     * @param {Cell} cell - The current cell.
+     * @param {Vector} direction - The movement vector.
+     * @returns {Cell | null} The new cell or null if blocked.
+     */
+    moveCell(cell: Cell, direction: Vector): Cell | null;
+
+    /**
+     * Attempts to move a single coordinate one unit to the left.
+     *
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null} The new cell or null if blocked.
+     */
+    moveCellLeft(cell: Cell): Cell | null;
+
+    /**
+     * Attempts to move a single coordinate one unit to the right.
+     *
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null} The new cell or null if blocked.
+     */
+    moveCellRight(cell: Cell): Cell | null;
+
+    /**
+     * Attempts to move a single coordinate one unit up.
+     *
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null} The new cell or null if blocked.
+     */
+    moveCellUp(cell: Cell): Cell | null;
+
+    /**
+     * Attempts to move a single coordinate one unit down.
+     *
+     * @param {Cell} cell - The current cell.
+     * @returns {Cell | null} The new cell or null if blocked.
+     */
+    moveCellDown(cell: Cell): Cell | null;
+
+    /**
+     * Attempts to rotate a piece 90 degrees around a specific origin.
+     *
+     * @param {Piece} piece - The current piece.
+     * @param {Coordinate} origin - The center of rotation.
+     * @param {boolean} [clockwise=true] - Direction of rotation.
+     * @returns {Piece | null} The new piece or null if blocked.
+     */
+    rotatePiece(piece: Piece, origin: Coordinate, clockwise?: boolean): Piece | null;
+
+    /**
+     * Identifies all rows that are completely filled with active cells.
+     *
+     * @returns {number[]} Array of row indices (y).
+     */
+    getFullRows(): number[];
+
+    /**
+     * Identifies all columns that are completely filled with active cells.
+     *
+     * @returns {number[]} Array of column indices (x).
+     */
+    getFullColumns(): number[];
+
+    /**
+     * Calculates the final resting position of a piece if it were dropped continuously.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its final vertical resting position.
+     */
+    getDropPath(piece: Piece): Piece;
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously upwards.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its highest vertical resting position.
+     */
+    getRisePath(piece: Piece): Piece;
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously to the left.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its leftmost resting position.
+     */
+    getReachPathLeft(piece: Piece): Piece;
+
+    /**
+     * Calculates the final resting position of a piece if it were moved continuously to the right.
+     *
+     * @param {Piece} piece - The piece to project.
+     * @returns {Piece} The piece at its rightmost resting position.
+     */
+    getReachPathRight(piece: Piece): Piece;
+
+    /**
+     * Returns the active cells adjacent to a specific coordinate.
+     *
+     * @param {Coordinate} coord - The center coordinate.
+     * @param {boolean} [includeDiagonal=false] - Whether to include 8 neighbors or just 4.
+     * @returns {Cell[]} List of neighboring cells.
+     */
+    getNeighbors(coord: Coordinate, includeDiagonal?: boolean): Cell[];
+
+    /**
+     * Finds all connected active cells of the same value starting from a specific coordinate.
+     *
+     * @param {Coordinate} coord - Starting coordinate.
+     * @returns {Piece} Collection of connected cells.
+     */
+    findConnectedCells(coord: Coordinate): Piece;
+
+    /**
+     * Mirrors a piece across a specific axis relative to its bounding box.
+     *
+     * @param {Piece} piece - The piece to mirror.
+     * @param {Axis} axis - The axis to flip across.
+     * @returns {Piece} The mirrored piece.
+     */
+    mirrorPiece(piece: Piece, axis: Axis): Piece;
+
+    /**
+     * Swaps the values and colors of two cells.
+     *
+     * @param {Coordinate} a - First coordinate.
+     * @param {Coordinate} b - Second coordinate.
+     */
+    swapCells(a: Coordinate, b: Coordinate): void;
 }
 
 /**

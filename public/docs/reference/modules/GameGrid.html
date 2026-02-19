@@ -446,33 +446,79 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#specialized-instances">1. Specialized Instances</a></li>
 <li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#width-number">2.1. <code>width: number</code></a></li>
-<li><a href="#height-number">2.2. <code>height: number</code></a></li>
-<li><a href="#resetgrid-void">2.3. <code>resetGrid(): void</code></a></li>
-<li><a href="#getgrid-cell">2.4. <code>getGrid(): Cell[][]</code></a></li>
-<li><a href="#foreachcallback-cell-cell-void-void">2.5. <code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
-<li><a href="#isvalidcoordinatecoordinate-coordinate-boolean">2.6. <code>isValidCoordinate(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#getcellcoordinate-coordinate-cell-null">2.7. <code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
-<li><a href="#setcellvaluecoordinate-coordinate-value-number-void">2.8. <code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
-<li><a href="#setcellcolorcoordinate-coordinate-color-color-void">2.9. <code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
-<li><a href="#iscellactivecoordinate-coordinate-boolean">2.10. <code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#iscellinactivecoordinate-coordinate-boolean">2.11. <code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#isrowfully-number-boolean">2.12. <code>isRowFull(y: number): boolean</code></a></li>
-<li><a href="#isrowemptyy-number-boolean">2.13. <code>isRowEmpty(y: number): boolean</code></a></li>
-<li><a href="#clearrowy-number-void">2.14. <code>clearRow(y: number): void</code></a></li>
-<li><a href="#shiftrowsdownfromy-number-void">2.15. <code>shiftRowsDown(fromY: number): void</code></a></li>
-<li><a href="#shiftrowsupfromy-number-void">2.16. <code>shiftRowsUp(fromY: number): void</code></a></li>
-<li><a href="#clearfullrows-number">2.17. <code>clearFullRows(): number</code></a></li>
-<li><a href="#iscolumnfullx-number-boolean">2.18. <code>isColumnFull(x: number): boolean</code></a></li>
-<li><a href="#iscolumnemptyx-number-boolean">2.19. <code>isColumnEmpty(x: number): boolean</code></a></li>
-<li><a href="#clearcolumnx-number-void">2.20. <code>clearColumn(x: number): void</code></a></li>
-<li><a href="#shiftcolumnsrightfromx-number-void">2.21. <code>shiftColumnsRight(fromX: number): void</code></a></li>
-<li><a href="#shiftcolumnsleftfromx-number-void">2.22. <code>shiftColumnsLeft(fromX: number): void</code></a></li>
-<li><a href="#clearfullcolumns-number">2.23. <code>clearFullColumns(): number</code></a></li>
-<li><a href="#isareaoccupiedcoordinates-coordinate-boolean">2.24. <code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
-<li><a href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.25. <code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
-<li><a href="#stamppiececoordinates-coordinate-value-number-color-color-void">2.26. <code>stampPiece(coordinates: Coordinate[], value: number, color: Color): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#core-utilities">2.1. Core &amp; Utilities</a>
+<ul class="sectlevel3">
+<li><a href="#width-number">2.1.1. <code>width: number</code></a></li>
+<li><a href="#height-number">2.1.2. <code>height: number</code></a></li>
+<li><a href="#resetgrid-void">2.1.3. <code>resetGrid(): void</code></a></li>
+<li><a href="#getgrid-cell">2.1.4. <code>getGrid(): Cell[][]</code></a></li>
+<li><a href="#foreachcallback-cell-cell-void-void">2.1.5. <code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
+<li><a href="#isvalidcoordinatecoordinate-coordinate-boolean">2.1.6. <code>isValidCoordinate(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#getcellcoordinate-coordinate-cell-null">2.1.7. <code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
+<li><a href="#setcellvaluecoordinate-coordinate-value-number-void">2.1.8. <code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
+<li><a href="#setcellcolorcoordinate-coordinate-color-color-void">2.1.9. <code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
+<li><a href="#iscellactivecoordinate-coordinate-boolean">2.1.10. <code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#iscellinactivecoordinate-coordinate-boolean">2.1.11. <code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+</ul>
+</li>
+<li><a href="#line-column-management">2.2. Line &amp; Column Management</a>
+<ul class="sectlevel3">
+<li><a href="#isrowfully-number-boolean">2.2.1. <code>isRowFull(y: number): boolean</code></a></li>
+<li><a href="#isrowemptyy-number-boolean">2.2.2. <code>isRowEmpty(y: number): boolean</code></a></li>
+<li><a href="#clearrowy-number-void">2.2.3. <code>clearRow(y: number): void</code></a></li>
+<li><a href="#shiftrowsdownfromy-number-void">2.2.4. <code>shiftRowsDown(fromY: number): void</code></a></li>
+<li><a href="#shiftrowsupfromy-number-void">2.2.5. <code>shiftRowsUp(fromY: number): void</code></a></li>
+<li><a href="#clearfullrows-number">2.2.6. <code>clearFullRows(): number</code></a></li>
+<li><a href="#iscolumnfullx-number-boolean">2.2.7. <code>isColumnFull(x: number): boolean</code></a></li>
+<li><a href="#iscolumnemptyx-number-boolean">2.2.8. <code>isColumnEmpty(x: number): boolean</code></a></li>
+<li><a href="#clearcolumnx-number-void">2.2.9. <code>clearColumn(x: number): void</code></a></li>
+<li><a href="#shiftcolumnsrightfromx-number-void">2.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></li>
+<li><a href="#shiftcolumnsleftfromx-number-void">2.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></li>
+<li><a href="#clearfullcolumns-number">2.2.12. <code>clearFullColumns(): number</code></a></li>
+</ul>
+</li>
+<li><a href="#region-area-management">2.3. Region &amp; Area Management</a>
+<ul class="sectlevel3">
+<li><a href="#isareaoccupiedcoordinates-coordinate-boolean">2.3.1. <code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
+<li><a href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.3.2. <code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
+<li><a href="#stamppiecepiece-piece-void">2.3.3. <code>stampPiece(piece: Piece): void</code></a></li>
+<li><a href="#stampcellcell-cell-void">2.3.4. <code>stampCell(cell: Cell): void</code></a></li>
+</ul>
+</li>
+<li><a href="#movement-projections">2.4. Movement &amp; Projections</a>
+<ul class="sectlevel3">
+<li><a href="#movepiecepiece-piece-direction-vector-piece-null">2.4.1. <code>movePiece(piece: Piece, direction: Vector): Piece | null</code></a></li>
+<li><a href="#movepieceleftpiece-piece-piece-null">2.4.2. <code>movePieceLeft(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepiecerightpiece-piece-piece-null">2.4.3. <code>movePieceRight(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepieceuppiece-piece-piece-null">2.4.4. <code>movePieceUp(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepiecedownpiece-piece-piece-null">2.4.5. <code>movePieceDown(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movecellcell-cell-direction-vector-cell-null">2.4.6. <code>moveCell(cell: Cell, direction: Vector): Cell | null</code></a></li>
+<li><a href="#movecellleftcell-cell-cell-null">2.4.7. <code>moveCellLeft(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecellrightcell-cell-cell-null">2.4.8. <code>moveCellRight(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecellupcell-cell-cell-null">2.4.9. <code>moveCellUp(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecelldowncell-cell-cell-null">2.4.10. <code>moveCellDown(cell: Cell): Cell | null</code></a></li>
+<li><a href="#getdroppathpiece-piece-piece">2.4.11. <code>getDropPath(piece: Piece): Piece</code></a></li>
+<li><a href="#getrisepathpiece-piece-piece">2.4.12. <code>getRisePath(piece: Piece): Piece</code></a></li>
+<li><a href="#getreachpathleftpiece-piece-piece">2.4.13. <code>getReachPathLeft(piece: Piece): Piece</code></a></li>
+<li><a href="#getreachpathrightpiece-piece-piece">2.4.14. <code>getReachPathRight(piece: Piece): Piece</code></a></li>
+</ul>
+</li>
+<li><a href="#transformations">2.5. Transformations</a>
+<ul class="sectlevel3">
+<li><a href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">2.5.1. <code>rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null</code></a></li>
+<li><a href="#mirrorpiecepiece-piece-axis-axis-piece">2.5.2. <code>mirrorPiece(piece: Piece, axis: Axis): Piece</code></a></li>
+</ul>
+</li>
+<li><a href="#grid-analysis">2.6. Grid Analysis</a>
+<ul class="sectlevel3">
+<li><a href="#getfullrows-number">2.6.1. <code>getFullRows(): number[]</code></a></li>
+<li><a href="#getfullcolumns-number">2.6.2. <code>getFullColumns(): number[]</code></a></li>
+<li><a href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">2.6.3. <code>getNeighbors(coord: Coordinate, includeDiagonal: boolean = false): Cell[]</code></a></li>
+<li><a href="#findconnectedcellscoord-coordinate-piece">2.6.4. <code>findConnectedCells(coord: Coordinate): Piece</code></a></li>
+<li><a href="#swapcellsa-coordinate-b-coordinate-void">2.6.5. <code>swapCells(a: Coordinate, b: Coordinate): void</code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -500,7 +546,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="width-number"><a class="link" href="#width-number">2.1. <code>width: number</code></a></h3>
+<h3 id="core-utilities"><a class="link" href="#core-utilities">2.1. Core &amp; Utilities</a></h3>
+<div class="paragraph">
+<p>Fundamental methods for grid initialization, basic cell access, and iteration. These methods form the backbone of grid state management.</p>
+</div>
+<div class="sect3">
+<h4 id="width-number"><a class="link" href="#width-number">2.1.1. <code>width: number</code></a></h4>
 <div class="paragraph">
 <p>Read-only property returning the number of columns in the grid.</p>
 </div>
@@ -512,8 +563,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="height-number"><a class="link" href="#height-number">2.2. <code>height: number</code></a></h3>
+<div class="sect3">
+<h4 id="height-number"><a class="link" href="#height-number">2.1.2. <code>height: number</code></a></h4>
 <div class="paragraph">
 <p>Read-only property returning the number of rows in the grid.</p>
 </div>
@@ -525,8 +576,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="resetgrid-void"><a class="link" href="#resetgrid-void">2.3. <code>resetGrid(): void</code></a></h3>
+<div class="sect3">
+<h4 id="resetgrid-void"><a class="link" href="#resetgrid-void">2.1.3. <code>resetGrid(): void</code></a></h4>
 <div class="paragraph">
 <p>Resets the entire grid to its empty state.</p>
 </div>
@@ -538,8 +589,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="getgrid-cell"><a class="link" href="#getgrid-cell">2.4. <code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></a></h3>
+<div class="sect3">
+<h4 id="getgrid-cell"><a class="link" href="#getgrid-cell">2.1.4. <code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></a></h4>
 <div class="paragraph">
 <p>Returns the underlying 2D array of cells.</p>
 </div>
@@ -551,8 +602,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="foreachcallback-cell-cell-void-void"><a class="link" href="#foreachcallback-cell-cell-void-void">2.5. <code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></a></h3>
+<div class="sect3">
+<h4 id="foreachcallback-cell-cell-void-void"><a class="link" href="#foreachcallback-cell-cell-void-void">2.1.5. <code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></a></h4>
 <div class="paragraph">
 <p>Iterates over every cell and executes the provided callback.</p>
 </div>
@@ -580,8 +631,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="isvalidcoordinatecoordinate-coordinate-boolean"><a class="link" href="#isvalidcoordinatecoordinate-coordinate-boolean">2.6. <code>isValidCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="isvalidcoordinatecoordinate-coordinate-boolean"><a class="link" href="#isvalidcoordinatecoordinate-coordinate-boolean">2.1.6. <code>isValidCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Verifies if a coordinate is within the current grid boundaries.</p>
 </div>
@@ -615,8 +666,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="getcellcoordinate-coordinate-cell-null"><a class="link" href="#getcellcoordinate-coordinate-cell-null">2.7. <code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h3>
+<div class="sect3">
+<h4 id="getcellcoordinate-coordinate-cell-null"><a class="link" href="#getcellcoordinate-coordinate-cell-null">2.1.7. <code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Retrieves a cell at a specific coordinate.</p>
 </div>
@@ -650,8 +701,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="setcellvaluecoordinate-coordinate-value-number-void"><a class="link" href="#setcellvaluecoordinate-coordinate-value-number-void">2.8. <code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="setcellvaluecoordinate-coordinate-value-number-void"><a class="link" href="#setcellvaluecoordinate-coordinate-value-number-void">2.1.8. <code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></a></h4>
 <div class="paragraph">
 <p>Updates the numeric value of a cell.</p>
 </div>
@@ -690,8 +741,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="setcellcolorcoordinate-coordinate-color-color-void"><a class="link" href="#setcellcolorcoordinate-coordinate-color-color-void">2.9. <code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
+<div class="sect3">
+<h4 id="setcellcolorcoordinate-coordinate-color-color-void"><a class="link" href="#setcellcolorcoordinate-coordinate-color-color-void">2.1.9. <code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Updates the color of a cell.</p>
 </div>
@@ -724,8 +775,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="iscellactivecoordinate-coordinate-boolean"><a class="link" href="#iscellactivecoordinate-coordinate-boolean">2.10. <code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="iscellactivecoordinate-coordinate-boolean"><a class="link" href="#iscellactivecoordinate-coordinate-boolean">2.1.10. <code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a cell is currently occupied.</p>
 </div>
@@ -759,8 +810,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="iscellinactivecoordinate-coordinate-boolean"><a class="link" href="#iscellinactivecoordinate-coordinate-boolean">2.11. <code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="iscellinactivecoordinate-coordinate-boolean"><a class="link" href="#iscellinactivecoordinate-coordinate-boolean">2.1.11. <code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a cell is currently empty.</p>
 </div>
@@ -794,8 +845,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
+<div class="sect3">
+<h4 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h4>
+<div class="paragraph">
+<p>Returns metadata for the real-time debugger.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Record&lt;string, string | number | boolean&gt;</code> - Object containing <code>width</code>, <code>height</code>, and <code>activeCells</code> count.</p>
+</div>
+<hr>
+</div>
+</div>
 <div class="sect2">
-<h3 id="isrowfully-number-boolean"><a class="link" href="#isrowfully-number-boolean">2.12. <code>isRowFull(y: number): boolean</code></a></h3>
+<h3 id="line-column-management"><a class="link" href="#line-column-management">2.2. Line &amp; Column Management</a></h3>
+<div class="paragraph">
+<p>Methods for managing entire lines (rows) or columns. These are essential for mechanics like clearing full lines in Tetris-style games or shifting grid content as a single block.</p>
+</div>
+<div class="sect3">
+<h4 id="isrowfully-number-boolean"><a class="link" href="#isrowfully-number-boolean">2.2.1. <code>isRowFull(y: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific row has no empty cells.</p>
 </div>
@@ -829,8 +899,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="isrowemptyy-number-boolean"><a class="link" href="#isrowemptyy-number-boolean">2.13. <code>isRowEmpty(y: number): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="isrowemptyy-number-boolean"><a class="link" href="#isrowemptyy-number-boolean">2.2.2. <code>isRowEmpty(y: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific row is completely empty.</p>
 </div>
@@ -864,8 +934,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="clearrowy-number-void"><a class="link" href="#clearrowy-number-void">2.14. <code>clearRow(y: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="clearrowy-number-void"><a class="link" href="#clearrowy-number-void">2.2.3. <code>clearRow(y: number): void</code></a></h4>
 <div class="paragraph">
 <p>Resets all cells in a row to the empty state.</p>
 </div>
@@ -893,8 +963,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="shiftrowsdownfromy-number-void"><a class="link" href="#shiftrowsdownfromy-number-void">2.15. <code>shiftRowsDown(fromY: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="shiftrowsdownfromy-number-void"><a class="link" href="#shiftrowsdownfromy-number-void">2.2.4. <code>shiftRowsDown(fromY: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all rows above an index down by one position.</p>
 </div>
@@ -928,8 +998,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="shiftrowsupfromy-number-void"><a class="link" href="#shiftrowsupfromy-number-void">2.16. <code>shiftRowsUp(fromY: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="shiftrowsupfromy-number-void"><a class="link" href="#shiftrowsupfromy-number-void">2.2.5. <code>shiftRowsUp(fromY: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all rows below an index up by one position.</p>
 </div>
@@ -963,8 +1033,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="clearfullrows-number"><a class="link" href="#clearfullrows-number">2.17. <code>clearFullRows(): number</code></a></h3>
+<div class="sect3">
+<h4 id="clearfullrows-number"><a class="link" href="#clearfullrows-number">2.2.6. <code>clearFullRows(): number</code></a></h4>
 <div class="paragraph">
 <p>Scans for, clears, and collapses full rows.</p>
 </div>
@@ -982,8 +1052,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="iscolumnfullx-number-boolean"><a class="link" href="#iscolumnfullx-number-boolean">2.18. <code>isColumnFull(x: number): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="iscolumnfullx-number-boolean"><a class="link" href="#iscolumnfullx-number-boolean">2.2.7. <code>isColumnFull(x: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific column has no empty cells.</p>
 </div>
@@ -1017,8 +1087,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="iscolumnemptyx-number-boolean"><a class="link" href="#iscolumnemptyx-number-boolean">2.19. <code>isColumnEmpty(x: number): boolean</code></a></h3>
+<div class="sect3">
+<h4 id="iscolumnemptyx-number-boolean"><a class="link" href="#iscolumnemptyx-number-boolean">2.2.8. <code>isColumnEmpty(x: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific column is completely empty.</p>
 </div>
@@ -1052,8 +1122,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="clearcolumnx-number-void"><a class="link" href="#clearcolumnx-number-void">2.20. <code>clearColumn(x: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="clearcolumnx-number-void"><a class="link" href="#clearcolumnx-number-void">2.2.9. <code>clearColumn(x: number): void</code></a></h4>
 <div class="paragraph">
 <p>Resets all cells in a column to the empty state.</p>
 </div>
@@ -1081,8 +1151,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="shiftcolumnsrightfromx-number-void"><a class="link" href="#shiftcolumnsrightfromx-number-void">2.21. <code>shiftColumnsRight(fromX: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="shiftcolumnsrightfromx-number-void"><a class="link" href="#shiftcolumnsrightfromx-number-void">2.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all columns to the right of an index.</p>
 </div>
@@ -1110,8 +1180,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="shiftcolumnsleftfromx-number-void"><a class="link" href="#shiftcolumnsleftfromx-number-void">2.22. <code>shiftColumnsLeft(fromX: number): void</code></a></h3>
+<div class="sect3">
+<h4 id="shiftcolumnsleftfromx-number-void"><a class="link" href="#shiftcolumnsleftfromx-number-void">2.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all columns to the left of an index.</p>
 </div>
@@ -1139,8 +1209,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="clearfullcolumns-number"><a class="link" href="#clearfullcolumns-number">2.23. <code>clearFullColumns(): number</code></a></h3>
+<div class="sect3">
+<h4 id="clearfullcolumns-number"><a class="link" href="#clearfullcolumns-number">2.2.12. <code>clearFullColumns(): number</code></a></h4>
 <div class="paragraph">
 <p>Detects and clears all full columns.</p>
 </div>
@@ -1152,8 +1222,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
+</div>
 <div class="sect2">
-<h3 id="isareaoccupiedcoordinates-coordinate-boolean"><a class="link" href="#isareaoccupiedcoordinates-coordinate-boolean">2.24. <code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></a></h3>
+<h3 id="region-area-management"><a class="link" href="#region-area-management">2.3. Region &amp; Area Management</a></h3>
+<div class="paragraph">
+<p>Operations for handling multi-cell areas, rectangular regions, and piece shapes. These methods facilitate the logical placement and validation of game objects within the grid.</p>
+</div>
+<div class="sect3">
+<h4 id="isareaoccupiedcoordinates-coordinate-boolean"><a class="link" href="#isareaoccupiedcoordinates-coordinate-boolean">2.3.1. <code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks for collisions between a list of coordinates and active cells in the grid.</p>
 </div>
@@ -1187,8 +1263,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="fillareastart-coordinate-end-coordinate-value-number-color-color-void"><a class="link" href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.25. <code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
+<div class="sect3">
+<h4 id="fillareastart-coordinate-end-coordinate-value-number-color-color-void"><a class="link" href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.3.2. <code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Fills a rectangular area with specified properties.</p>
 </div>
@@ -1231,10 +1307,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="stamppiececoordinates-coordinate-value-number-color-color-void"><a class="link" href="#stamppiececoordinates-coordinate-value-number-color-color-void">2.26. <code>stampPiece(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[], value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h3>
+<div class="sect3">
+<h4 id="stamppiecepiece-piece-void"><a class="link" href="#stamppiecepiece-piece-void">2.3.3. <code>stampPiece(piece: <a href="../types/Piece.html">Piece</a>): void</code></a></h4>
 <div class="paragraph">
-<p>Updates multiple specific coordinates simultaneously.</p>
+<p>Updates multiple specific coordinates simultaneously with their specific values and colors.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -1252,34 +1328,568 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinates</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a>[]</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Points to update.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New cell value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>color</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/Color.html">Color</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">New cell color.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The collection of cells to stamp.</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.27. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<div class="sect3">
+<h4 id="stampcellcell-cell-void"><a class="link" href="#stampcellcell-cell-void">2.3.4. <code>stampCell(cell: <a href="../types/Cell.html">Cell</a>): void</code></a></h4>
 <div class="paragraph">
-<p>Returns metadata for the real-time debugger.</p>
+<p>Updates a single coordinate with a specific value and color from a Cell.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cell</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Cell.html">Cell</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cell object containing the target coordinate, value, and color.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="movement-projections"><a class="link" href="#movement-projections">2.4. Movement &amp; Projections</a></h3>
+<div class="paragraph">
+<p>Advanced methods for handling piece and cell movement with built-in collision detection and trajectory prediction.</p>
+</div>
+<div class="sect3">
+<h4 id="movepiecepiece-piece-direction-vector-piece-null"><a class="link" href="#movepiecepiece-piece-direction-vector-piece-null">2.4.1. <code>movePiece(piece: <a href="../types/Piece.html">Piece</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Attempts to shift a collection of cells (a piece) in a specified direction.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current collection of cells.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>direction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Vector.html">Vector</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The movement vector (e.g., <code>{x: -1, y: 0}</code>).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a> | null</code> - The new piece with updated coordinates if the move is valid, or <code>null</code> if blocked.</p>
+</div>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Validates that all new positions are within grid boundaries and are not occupied by other active cells. Cells that are already part of the input <code>piece</code> are ignored during collision detection to allow a piece to move "into its own space."</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movepieceleftpiece-piece-piece-null"><a class="link" href="#movepieceleftpiece-piece-piece-null">2.4.2. <code>movePieceLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>movePiece</code> shifting one unit to the left.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movepiecerightpiece-piece-piece-null"><a class="link" href="#movepiecerightpiece-piece-piece-null">2.4.3. <code>movePieceRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>movePiece</code> shifting one unit to the right.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movepieceuppiece-piece-piece-null"><a class="link" href="#movepieceuppiece-piece-piece-null">2.4.4. <code>movePieceUp(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>movePiece</code> shifting one unit up.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movepiecedownpiece-piece-piece-null"><a class="link" href="#movepiecedownpiece-piece-piece-null">2.4.5. <code>movePieceDown(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>movePiece</code> shifting one unit down.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movecellcell-cell-direction-vector-cell-null"><a class="link" href="#movecellcell-cell-direction-vector-cell-null">2.4.6. <code>moveCell(cell: <a href="../types/Cell.html">Cell</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Attempts to shift a single cell in a specified direction.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cell</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Cell.html">Cell</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current cell.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>direction</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Vector.html">Vector</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The movement vector.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Cell.html">Cell</a> | null</code> - The new cell with updated coordinate if the move is valid, or <code>null</code> if blocked.</p>
+</div>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Validates that the target position is within grid boundaries and is currently empty (inactive).</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movecellleftcell-cell-cell-null"><a class="link" href="#movecellleftcell-cell-cell-null">2.4.7. <code>moveCellLeft(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>moveCell</code> shifting one unit to the left.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movecellrightcell-cell-cell-null"><a class="link" href="#movecellrightcell-cell-cell-null">2.4.8. <code>moveCellRight(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>moveCell</code> shifting one unit to the right.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movecellupcell-cell-cell-null"><a class="link" href="#movecellupcell-cell-cell-null">2.4.9. <code>moveCellUp(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>moveCell</code> shifting one unit up.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="movecelldowncell-cell-cell-null"><a class="link" href="#movecelldowncell-cell-cell-null">2.4.10. <code>moveCellDown(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Alias for <code>moveCell</code> shifting one unit down.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getdroppathpiece-piece-piece"><a class="link" href="#getdroppathpiece-piece-piece">2.4.11. <code>getDropPath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Calculates the final vertical resting position of a piece if it were dropped continuously downwards.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to project.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - A new piece representing the final resting position. Useful for rendering "ghost" or "preview" pieces.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getrisepathpiece-piece-piece"><a class="link" href="#getrisepathpiece-piece-piece">2.4.12. <code>getRisePath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Calculates the final vertical resting position of a piece if it were moved continuously upwards.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to project.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - A new piece representing the highest resting position.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getreachpathleftpiece-piece-piece"><a class="link" href="#getreachpathleftpiece-piece-piece">2.4.13. <code>getReachPathLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Calculates the final horizontal resting position of a piece if it were moved continuously to the left.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to project.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - A new piece representing the leftmost resting position.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getreachpathrightpiece-piece-piece"><a class="link" href="#getreachpathrightpiece-piece-piece">2.4.14. <code>getReachPathRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Calculates the final horizontal resting position of a piece if it were moved continuously to the right.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to project.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - A new piece representing the rightmost resting position.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="transformations"><a class="link" href="#transformations">2.5. Transformations</a></h3>
+<div class="paragraph">
+<p>Geometric operations for rotating or mirroring complex shapes within the grid boundaries.</p>
+</div>
+<div class="sect3">
+<h4 id="rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null"><a class="link" href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">2.5.1. <code>rotatePiece(piece: <a href="../types/Piece.html">Piece</a>, origin: <a href="../types/Coordinate.html">Coordinate</a>, clockwise: boolean = true): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<div class="paragraph">
+<p>Attempts to rotate a collection of cells 90 degrees around a specific origin point.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to rotate.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>origin</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The pivot point for rotation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clockwise</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, rotates 90° clockwise; otherwise, 90° counter-clockwise.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a> | null</code> - The new piece if rotation is valid (no collisions), or <code>null</code> if blocked.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="mirrorpiecepiece-piece-axis-axis-piece"><a class="link" href="#mirrorpiecepiece-piece-axis-axis-piece">2.5.2. <code>mirrorPiece(piece: <a href="../types/Piece.html">Piece</a>, axis: <a href="../types/Axis.html">Axis</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Mirrors a piece across its own center on a specific axis.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>piece</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Piece.html">Piece</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The piece to mirror.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>axis</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Axis.html">Axis</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The axis ('x' or 'y') to flip across.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - The mirrored piece.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="grid-analysis"><a class="link" href="#grid-analysis">2.6. Grid Analysis</a></h3>
+<div class="paragraph">
+<p>Methods for inspecting grid state, finding patterns, and performing searches over the active cell data.</p>
+</div>
+<div class="sect3">
+<h4 id="getfullrows-number"><a class="link" href="#getfullrows-number">2.6.1. <code>getFullRows(): number[]</code></a></h4>
+<div class="paragraph">
+<p>Identifies all rows that are completely filled with active cells.</p>
 </div>
 <div class="paragraph">
 <p><strong>Returns</strong></p>
 </div>
 <div class="paragraph">
-<p><code>Record&lt;string, string | number | boolean&gt;</code> - Object containing <code>width</code> and <code>height</code>.</p>
+<p><code>number[]</code> - An array of <code>y</code> indices representing the filled rows.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getfullcolumns-number"><a class="link" href="#getfullcolumns-number">2.6.2. <code>getFullColumns(): number[]</code></a></h4>
+<div class="paragraph">
+<p>Identifies all columns that are completely filled with active cells.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>number[]</code> - An array of <code>x</code> indices representing the filled columns.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="getneighborscoord-coordinate-includediagonal-boolean-false-cell"><a class="link" href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">2.6.3. <code>getNeighbors(coord: <a href="../types/Coordinate.html">Coordinate</a>, includeDiagonal: boolean = false): <a href="../types/Cell.html">Cell</a>[]</code></a></h4>
+<div class="paragraph">
+<p>Returns all active cells adjacent to a specific coordinate.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>coord</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The central coordinate.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>includeDiagonal</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If true, checks 8 neighbors; otherwise, checks the 4 cardinal neighbors.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Cell.html">Cell</a>[]</code> - List of neighboring cells found.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="findconnectedcellscoord-coordinate-piece"><a class="link" href="#findconnectedcellscoord-coordinate-piece">2.6.4. <code>findConnectedCells(coord: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<div class="paragraph">
+<p>Finds all connected active cells of the same value starting from a specific coordinate using a Breadth-First Search (BFS) algorithm.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>coord</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The starting point for the search.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code><a href="../types/Piece.html">Piece</a></code> - A collection of all connected cells found.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="swapcellsa-coordinate-b-coordinate-void"><a class="link" href="#swapcellsa-coordinate-b-coordinate-void">2.6.5. <code>swapCells(a: <a href="../types/Coordinate.html">Coordinate</a>, b: <a href="../types/Coordinate.html">Coordinate</a>): void</code></a></h4>
+<div class="paragraph">
+<p>Swaps the values and colors of two specified cells on the grid.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>a</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">First coordinate.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>b</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Second coordinate.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
 </div>
 </div>
 </div>
