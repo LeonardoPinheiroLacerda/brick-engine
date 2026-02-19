@@ -9,6 +9,11 @@ import configs from '../../../config/configs';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 
+/**
+ * Composite renderer that manages multiple sub-renderers.
+ * Orchestrates the rendering of the main display and the HUD.
+ * Handles the calculation of shared rendering metrics (sizes, positions) to ensure consistency.
+ */
 export default class GameRenderer implements RendererComposite, Debuggable {
     private _p: p5;
 
@@ -20,14 +25,28 @@ export default class GameRenderer implements RendererComposite, Debuggable {
     // Cache for renderer metrics
     private _rendererMetrics: RendererMetrics;
 
+    /**
+     * Creates an instance of GameRenderer.
+     *
+     * @param {p5} p - The p5 instance.
+     */
     constructor(p: p5) {
         this._p = p;
     }
 
+    /**
+     * Adds a sub-renderer to the composition.
+     *
+     * @param {Renderer} renderer - The renderer to add.
+     */
     addRenderer(renderer: Renderer) {
         this._renderers.push(renderer);
     }
 
+    /**
+     * Initializes all sub-renderers and calculates layout metrics.
+     * This method must be called before rendering begins.
+     */
     setup() {
         this._displayRenderer = new DisplayRenderer(this._p);
         this._hudRenderer = new HudRenderer(this._p);
@@ -42,6 +61,10 @@ export default class GameRenderer implements RendererComposite, Debuggable {
         this._renderers.forEach(renderer => renderer.setup(this.rendererMetrics));
     }
 
+    /**
+     * Calculates the layout dimensions for the display and HUD.
+     * Based on screen configuration and relative values.
+     */
     private _calculateMetrics() {
         const { width, height, margin: displayMargin } = configs.screenLayout.display;
         const { columns: gridColumns } = configs.screenLayout.grid;
@@ -84,14 +107,31 @@ export default class GameRenderer implements RendererComposite, Debuggable {
         };
     }
 
+    /**
+     * Delegating render method.
+     * Calls render on all registered sub-renderers.
+     *
+     * @param {Cell[][]} grid - The main game grid.
+     * @param {GameModules} modules - The game modules collection.
+     */
     render(grid: Cell[][], modules: GameModules) {
         this._renderers.forEach(renderer => renderer.render(grid, modules));
     }
 
+    /**
+     * Retrieves the calculated renderer metrics.
+     *
+     * @returns {RendererMetrics} The metrics object.
+     */
     get rendererMetrics(): RendererMetrics {
         return this._rendererMetrics;
     }
 
+    /**
+     * Retrieves debug information about the renderer's calculated metrics.
+     *
+     * @returns {Record<string, string | number | boolean>} The debug data.
+     */
     getDebugData(): Record<string, string | number | boolean> {
         return {
             display_width: this._rendererMetrics.display.width.toFixed(2),

@@ -1,0 +1,118 @@
+= CoordinateHelper Reference
+:description: Specialized math utilities for converting between Grid, Display, and Pixel coordinate systems.
+:keywords: coordinates, math, grid, display, conversion, helper
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+The `CoordinateHelper` is a static utility class that handles translations between different coordinate systems: the logical xref:../modules/GameGrid.adoc[Game Grid], the normalized Display area, and absolute pixel positions.
+
+== API Reference
+
+=== `getRelativeCoordinate(p: p5, coordinate: xref:../types/Coordinate.adoc[Coordinate]): xref:../types/Coordinate.adoc[Coordinate]`
+
+Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 1.0).
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`p5` |The P5.js instance.
+|`coordinate` |xref:../types/Coordinate.adoc[Coordinate] |The absolute pixel coordinate.
+|===
+
+**Returns**
+
+`xref:../types/Coordinate.adoc[Coordinate]` - The normalized `{x, y}` point.
+
+
+'''
+
+=== `getDisplayPosX(p: p5, x: number, displayWidth: number): number`
+
+Calculates the absolute X pixel position on the main game display.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`p5` |The P5.js instance.
+|`x` |`number` |Normalized horizontal position (0.0 to 1.0).
+|`displayWidth` |`number` |The total width of the display area.
+|===
+
+**Returns**
+
+`number` - The absolute horizontal pixel position.
+
+
+'''
+
+=== `getDisplayPosY(p: p5, y: number, displayHeight: number): number`
+
+Calculates the absolute Y pixel position on the main game display.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`p5` |The P5.js instance.
+|`y` |`number` |Normalized vertical position (0.0 to 1.0).
+|`displayHeight` |`number` |The total height of the display area.
+|===
+
+**Returns**
+
+`number` - The absolute vertical pixel position.
+
+
+'''
+
+=== `getHudPosX(p: p5, x: number, displayWidth: number): number`
+
+Calculates the absolute X pixel position within the HUD area.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`p5` |The P5.js instance.
+|`x` |`number` |Normalized horizontal position (0.0 to 1.0) relative to the HUD area.
+|`displayWidth` |`number` |The width of the main display (used to calculate the HUD offset).
+|===
+
+**Returns**
+
+`number` - The absolute horizontal pixel position within the HUD.
+
+
+'''
+
+=== `getHudPosY(p: p5, y: number, displayHeight: number): number`
+
+Calculates the absolute Y pixel position within the HUD area.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`p` |`p5` |The P5.js instance.
+|`y` |`number` |Normalized vertical position (0.0 to 1.0) relative to the HUD area.
+|`displayHeight` |`number` |The total height of the display area.
+|===
+
+**Returns**
+
+`number` - The absolute vertical pixel position within the HUD.

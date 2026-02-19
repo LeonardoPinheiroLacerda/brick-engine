@@ -1,10 +1,16 @@
-= Brick Engine Documentation
-:toc: macro
-:toc-title: Table of Contents
+= Brick Engine JS Documentation
+:description: Modular TypeScript game engine for retro grid-based games.
+:keywords: typescript, game-engine, retro, grid-based, p5js, modular
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
 :icons: font
 :source-highlighter: highlight.js
-
-toc::[]
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
 
 == Objective
 
@@ -17,13 +23,7 @@ The **Brick Engine** is a modular, TypeScript-based game engine designed for cre
 * **Modular Architecture**: core functionality is split into distinct modules (Grid, Control, Renderer, State, Text, Time, Score) for clean separation of concerns.
 * **Input Handling**: Unified control system supporting keyboard and on-screen button inputs.
 * **Game Loop**: Separated logic ticks (game speed) from rendering frames (60fps smooth animations).
-* **Debugger**: Built-in real-time state inspector. See xref:docs/reference/Debugger.adoc[Debugger Reference].
-
-// == Engine Lifecycle
-
-// The engine follows a strict loop to ensure logic consistency and visual smoothness.
-
-// image::docs/images/lifecycle.svg[Engine Lifecycle]
+* **Debugger**: Built-in real-time state inspector. See xref:docs/reference/modules/Debugger.adoc[Debugger Reference].
 
 == Installation
  
@@ -43,44 +43,46 @@ To create a game, you must extend the abstract `Game` class and implement its co
 
 [source,typescript]
 ----
-import Game from './core/Game';
+import { Game, FontSize, ControlKey, ControlEventType } from 'brick-engine-js';
 
 export default class MyGame extends Game {
     
     // 1. Setup: Called once after engine initialization
     setupGame(): void {
         // Initialize your game state here
-        this.modules.state.startGame();
         this.modules.text.setTextSize(FontSize.MEDIUM);
+        
+        // Subscribe to controls
+        this.modules.control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, () => {
+             console.log('Action pressed!');
+        });
     }
 
     // 2. Game Logic: Called every game tick (controlled by tickInterval)
-    // Use this for movement, collision, state limits
     update(deltaTime: number): void {
         if (!this.modules.state.isPlaying()) return;
-        
         // ... game logic ...
     }
 
-    // 3. Rendering: Called every frame (60 times per second)
-    // Use this for visual effects independent of game logic (particles, animations)
+    // 3. Visual Effects: Called every frame (60fps)
     render(): void {
-        // ... visual effects ...
+        // ... visual effects independent of game logic ...
     }
 
-    // 4. Persistence: Provide a unique key for LocalStorage prefixing
+    // 4. Persistence: Unique key for LocalStorage (prevents collisions between games)
     getPersistenceKey(): string {
         return 'my-awesome-game-v1';
     }
 
     // 5. Title Screen: Rendered when game is ON but not STARTED
     drawTitleScreen(): void {
-        this.modules.text.textOnDisplay('Press Start', { x: 0.5, y: 0.5 });
+        this.modules.text.textOnDisplay('MY AWESOME GAME', { x: 0.5, y: 0.3 });
+        this.modules.text.textOnDisplay('PRESS START', { x: 0.5, y: 0.7 });
     }
 
-    // 6. Game Over Screen: Rendered when game is over
+    // 6. Game Over Screen: Rendered when health/lives reach zero
     drawGameOverScreen(): void {
-        this.modules.text.textOnDisplay('Game Over', { x: 0.5, y: 0.5 });
+        this.modules.text.textOnDisplay('GAME OVER', { x: 0.5, y: 0.5 });
     }
 }
 ----
@@ -89,12 +91,34 @@ export default class MyGame extends Game {
 
 The engine is organized into the following core modules:
 
-* xref:docs/reference/Game.adoc[Game (Core)]: The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
-* xref:docs/reference/GameGrid.adoc[GameGrid]: Manages the 2D grid data structure. Handles cell values, colors, row/column operations (clearing, shifting), and collision detection. The engine also includes `GameHudGrid`, a specialized 4x4 grid instance. It is a separate module that developers can manipulate freely (e.g., clearing it, setting specific cells) to display custom content like the "Next Piece" in Tetris.
-* xref:docs/reference/GameControl.adoc[GameControl]: The input system. It abstracts physical keys (keyboard) into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
-* xref:docs/reference/GameRenderer.adoc[GameRenderer]: Handles the visual representation. It draws the grid, cells, and UI elements to the canvas using P5.js context.
-* xref:docs/reference/GameState.adoc[GameState]: Tracks global game properties like `playing`, `paused`, `muted`, and `score`. Supports state persistence (e.g., saving preferences).
-* xref:docs/reference/GameText.adoc[GameText]: A specialized renderer for drawing retro-style pixelated text on the HUD and main display areas.
-* xref:docs/reference/GameTime.adoc[GameTime]: Controls the game loop timing. It separates logic updates (Ticks) from visual rendering (Frames) to ensure consistent gameplay speed independent of frame rate.
-* xref:docs/reference/GameSound.adoc[GameSound]: Manages audio playback using the **Web Audio API**. Supports multiple simultaneous sounds, volume control, and automatically syncs mute state with `GameState`.
-* xref:docs/reference/GameScore.adoc[GameScore]: Tracks the current session score, calculates level/multiplier logic, and syncs the high score with `GameState` for persistence.
+[cols="1,3", options="header"]
+|===
+| Module | Description
+
+| xref:docs/reference/modules/Game.adoc[Game (Core)]
+| The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
+
+| xref:docs/reference/modules/GameGrid.adoc[GameGrid]
+| Manages the 2D grid data structure. Handles cell values, colors, row/column operations, and collision detection. Includes `GameHudGrid` for custom HUD content.
+
+| xref:docs/reference/modules/GameControl.adoc[GameControl]
+| The input system. Abstracts physical keys into virtual actions (UP, DOWN, ACTION) and provides an event subscription API.
+
+| xref:docs/reference/modules/GameRenderer.adoc[GameRenderer]
+| Handles visual representation. Draws the grid, cells, and UI elements to the canvas using P5.js.
+
+| xref:docs/reference/modules/GameState.adoc[GameState]
+| Tracks global game properties (playing, paused, score) and supports state persistence.
+
+| xref:docs/reference/modules/GameText.adoc[GameText]
+| Specialized renderer for drawing retro-style pixelated text on the HUD and main display.
+
+| xref:docs/reference/modules/GameTime.adoc[GameTime]
+| Controls game loop timing, separating logic updates (Ticks) from visual rendering (Frames).
+
+| xref:docs/reference/modules/GameSound.adoc[GameSound]
+| Manages audio playback using the Web Audio API, supporting simultaneous sounds and volume control.
+
+| xref:docs/reference/modules/GameScore.adoc[GameScore]
+| Tracks session score, level logic, and syncs high scores with `GameState`.
+|===

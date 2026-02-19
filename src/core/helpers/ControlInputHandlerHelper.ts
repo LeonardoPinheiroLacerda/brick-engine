@@ -3,21 +3,29 @@ import { Control } from '../types/modules';
 import configs from '../../config/configs';
 
 /**
- * Handles input logic for both keyboard and UI events.
- * Manages press, hold, and release states uniformly.
+ * Helper class that standardizes input handling logic.
+ * It manages the distinction between single 'press' events and continuous 'hold' events
+ * for both keyboard and UI button inputs.
  */
 export default class ControlInputHandlerHelper {
     private _control: Control;
     private _activeKeys: Map<ControlKey, { delay: NodeJS.Timeout; hold: NodeJS.Timeout }> = new Map();
 
+    /**
+     * Creates an instance of the input handler.
+     *
+     * @param {Control} control - The control module instance to notify.
+     */
     constructor(control: Control) {
         this._control = control;
     }
 
     /**
-     * Handles a key press or generic press event.
-     * Triggers 'pressed' immediately and schedules 'held'.
-     * @param key The control key pressed.
+     * Processes a key down or button press action.
+     * Triggers an immediate {@link ControlEventType.PRESSED} event, and schedules
+     * a {@link ControlEventType.HELD} loop if the key remains active.
+     *
+     * @param {ControlKey} key - The identity of the control key being pressed.
      */
     handlePress(key: ControlKey): void {
         if (this._activeKeys.has(key)) return; // Prevent double handling
@@ -42,9 +50,10 @@ export default class ControlInputHandlerHelper {
     }
 
     /**
-     * Handles a key release event.
-     * Clears any active timers for the key.
-     * @param key The control key released.
+     * Processes a key up or button release action.
+     * Cancels any pending hold timers and cleans up the active key state.
+     *
+     * @param {ControlKey} key - The identity of the control key being released.
      */
     handleRelease(key: ControlKey): void {
         const timers = this._activeKeys.get(key);

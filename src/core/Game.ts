@@ -37,6 +37,12 @@ export default abstract class Game implements Initializable {
         Game._switchHandler = handler;
     }
 
+    /**
+     * Creates an instance of the Game.
+     *
+     * @param {p5} p - The p5 instance.
+     * @param {GameView} view - The view strategy associated with this game.
+     */
     constructor(p: p5, view: GameView) {
         this._p = p;
         this._view = view;
@@ -44,7 +50,8 @@ export default abstract class Game implements Initializable {
 
     /**
      * Gets the game view.
-     * @returns {GameView} The game view.
+     *
+     * @returns {GameView} The game view instance.
      */
     get view(): GameView {
         return this._view;
@@ -53,7 +60,8 @@ export default abstract class Game implements Initializable {
     /**
      * Switches execution to a new game instance.
      * Use this instead of global window methods.
-     * @param newGame The new game instance to load.
+     *
+     * @param {Game} newGame - The new game instance to load.
      */
     switchGame(newGame: Game): void {
         this.destroy(); // Clean up current game
@@ -66,7 +74,8 @@ export default abstract class Game implements Initializable {
 
     /**
      * Gets the game modules.
-     * @returns {GameModules} The game modules.
+     *
+     * @returns {GameModules} The collection of initialized game modules.
      */
     get modules(): GameModules {
         return this._modules;
@@ -74,7 +83,7 @@ export default abstract class Game implements Initializable {
 
     /**
      * Sets up the game, initializing all modules and viewing components.
-     * Called automatically by the engine.
+     * Called automatically by the engine key sequence.
      */
     setup() {
         this._view.build();
@@ -171,7 +180,8 @@ export default abstract class Game implements Initializable {
     /**
      * Abstract method for processing game logic.
      * Called every tick, but ONLY when the game is in the 'playing' state.
-     * @param deltaTime Time elapsed since last tick.
+     *
+     * @param {number} deltaTime - Time elapsed since last tick.
      */
     abstract update(deltaTime: number): void;
 
@@ -182,7 +192,7 @@ export default abstract class Game implements Initializable {
     abstract render(): void;
 
     /**
-     * Abstract method for setting up the game.
+     * Abstract method for setting up the game specific logic.
      * Called after the game modules are initialized.
      */
     abstract setupGame(): void;
@@ -190,6 +200,8 @@ export default abstract class Game implements Initializable {
     /**
      * Abstract method for getting the persistence key.
      * Called after the game modules are initialized and sets itself in the state module.
+     *
+     * @returns {string} The persistence key.
      */
     abstract getPersistenceKey(): string;
 

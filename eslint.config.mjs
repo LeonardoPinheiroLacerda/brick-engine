@@ -4,7 +4,7 @@ import tseslint from 'typescript-eslint';
 
 export default [
     {
-        ignores: ['dist/', 'node_modules/', 'docs/'],
+        ignores: ['dist/', 'node_modules/', 'docs/', 'public/docs/', 'scripts/'],
     },
     // Base config for all files
     pluginJs.configs.recommended,

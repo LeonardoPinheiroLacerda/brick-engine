@@ -1,0 +1,19 @@
+graph TD
+    Start([Start]) --> Setup[Setup Modules]
+    Setup --> DrawLoop{Draw Loop}
+    
+    subgraph "Each Frame (Draw)"
+        DrawLoop --> TimeUpdate[Time Update]
+        TimeUpdate --> CheckTick{"Should Tick?"}
+        CheckTick -- Yes --> ProcessTick["Process Logic (Tick) [processTick()]"]
+        CheckTick -- No --> RenderGrid
+        ProcessTick --> RenderGrid[Render Grid]
+        RenderGrid --> CheckFrame{"Frame Interval?"}
+        CheckFrame -- Yes --> ProcessFrame["Process Visuals (Frame) [processFrame()]"]
+        CheckFrame -- No --> CheckPerf
+        ProcessFrame --> CheckPerf{"Performance Monitor Enabled?"}
+        CheckPerf -- Yes --> RenderPerf[Render Performance Monitor]
+    end
+    
+    CheckPerf -- No --> DrawLoop
+    RenderPerf --> DrawLoop

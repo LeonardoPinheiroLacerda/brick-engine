@@ -1,0 +1,42 @@
+= Sound Reference
+:description: Maps sound identifiers to their relative asset paths.
+:keywords: sound, audio, assets, game-events
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Maps sound identifiers to their relative asset paths.
+
+== Values
+
+[cols="1,2"]
+|===
+|Value |Asset Path
+|`SPAWN` |`./sounds/sound_01.wav`
+|`SCORE_1` |`./sounds/sound_15.wav`
+|`SCORE_2` |`./sounds/sound_03.wav`
+|`SCORE_3` |`./sounds/sound_02.wav`
+|`KEY_PRESS` |`./sounds/sound_14.wav`
+|`ACTION_1` |`./sounds/sound_05.wav`
+|`ACTION_2` |`./sounds/sound_13.wav`
+|`HIT_1` |`./sounds/sound_06.wav`
+|`HIT_2` |`./sounds/sound_08.wav`
+|`DODGE` |`./sounds/sound_07.wav`
+|`DROP` |`./sounds/sound_11.wav`
+|`EXPLOSION` |`./sounds/sound_09.wav`
+|`GAME_START` |`./sounds/sound_04.wav`
+|`SHOT` |`./sounds/sound_12.wav`
+|`START_THEME` |`./sounds/sound_10.wav`
+|===
+
+== General Usage
+
+Use these constants to trigger audio effects via the `xref:../modules/GameSound.adoc[GameSound]` module.
+Example: `modules.sound.play(Sound.EXPLOSION)`.

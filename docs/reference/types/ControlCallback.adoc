@@ -1,0 +1,23 @@
+= ControlCallback Reference
+:description: Type definition for functions that handle engine input.
+:keywords: callback, control, input, subscriber
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Type definition for functions that handle engine input.
+
+== Structure
+
+`type ControlCallback = (event: xref:GameEvent.adoc[GameEvent]) => void;`
+
+== General Usage
+
+This type ensures that functions passed to `modules.control.subscribe(key, type, callback)` (see `xref:../modules/GameControl.adoc[GameControl]`) correctly accept the `xref:GameEvent.adoc[GameEvent]` context.

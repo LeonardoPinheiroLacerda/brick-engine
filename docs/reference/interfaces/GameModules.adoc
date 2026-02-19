@@ -1,0 +1,35 @@
+= GameModules Reference
+:description: The central hub providing component-to-component visibility.
+:keywords: architecture, dependency-injection, registry, modules
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+The central hub providing component-to-component visibility.
+
+== Properties
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`grid` |xref:modules/Grid.adoc[Grid] |Main game field manager.
+|`hudGrid` |xref:modules/Grid.adoc[Grid] |Secondary 4x4 grid for HUD elements.
+|`state` |xref:modules/State.adoc[State] |Single source of truth for game flags.
+|`control` |xref:modules/Control.adoc[Control] |Input handling service.
+|`text` |xref:modules/Text.adoc[Text] |Canvas typography service.
+|`time` |xref:modules/Time.adoc[Time] |Logical clock manager.
+|`sound` |xref:Sound.adoc[Sound] |Audio playback service.
+|`score` |xref:modules/Score.adoc[Score] |Session performance tracker.
+|`renderer` |xref:modules/RendererComposite.adoc[RendererComposite] |The visual orchestration layer.
+|===
+
+== General Usage
+
+This registry is passed to almost every lifecycle method (`update`, `render`, `ControlCallback`). It allows modules to interact without tight coupling. For example, the `xref:modules/Sound.adoc[Sound]` module uses it to play sounds via `modules.sound.play()`.

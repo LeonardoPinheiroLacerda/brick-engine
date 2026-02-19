@@ -27,12 +27,21 @@ const DEFAULT_KEY_MAP: Record<string, ControlKey> = {
     Digit6: ControlKey.COLOR,
 };
 
+/**
+ * Handles the binding of physical keyboard events to logical control actions.
+ * Translates Browser `KeyboardEvent`s into engine `ControlKey`s.
+ */
 export default class GameControlKeyBinding {
     private _inputHandler: ControlInputHandler;
 
     private _boundHandleKeyDown: (event: KeyboardEvent) => void;
     private _boundHandleKeyUp: (event: KeyboardEvent) => void;
 
+    /**
+     * Creates an instance of GameControlKeyBinding.
+     *
+     * @param {Control} control - The parent control module.
+     */
     constructor(control: Control) {
         this._inputHandler = new ControlInputHandler(control);
         this._boundHandleKeyDown = this._handleKeyDown.bind(this);
@@ -40,7 +49,7 @@ export default class GameControlKeyBinding {
     }
 
     /**
-     * Binds keyboard events to the window.
+     * Binds keyboard events to the global window object.
      */
     bindControls() {
         window.addEventListener('keydown', this._boundHandleKeyDown);
@@ -48,13 +57,18 @@ export default class GameControlKeyBinding {
     }
 
     /**
-     * Unbinds keyboard events from the window.
+     * Unbinds keyboard events from the global window object.
      */
     unbindControls() {
         window.removeEventListener('keydown', this._boundHandleKeyDown);
         window.removeEventListener('keyup', this._boundHandleKeyUp);
     }
 
+    /**
+     * Internal handler for key down events.
+     *
+     * @param {KeyboardEvent} event - The browser keyboard event.
+     */
     private _handleKeyDown(event: KeyboardEvent) {
         const controlKey = DEFAULT_KEY_MAP[event.code];
         if (!controlKey) return;
@@ -64,6 +78,11 @@ export default class GameControlKeyBinding {
         this._inputHandler.handlePress(controlKey);
     }
 
+    /**
+     * Internal handler for key up events.
+     *
+     * @param {KeyboardEvent} event - The browser keyboard event.
+     */
     private _handleKeyUp(event: KeyboardEvent) {
         const controlKey = DEFAULT_KEY_MAP[event.code];
         if (!controlKey) return;

@@ -4,321 +4,395 @@ import { Initializable, RendererInitializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty } from './Types';
 
 /**
- * Interface for the renderer module.
+ * Interface for a specific rendering layer.
+ * Extensions of this interface implement specific drawing logic (e.g., Grid, HUD).
  */
 export interface Renderer extends RendererInitializable {
     /**
-     * Renders the grid.
-     * @param grid The grid to render.
+     * Renders the visual content for this layer.
+     *
+     * @param {Cell[][]} grid - The current state of the game grid.
+     * @param {GameModules} modules - Access to other engine modules for context (e.g., Score, State).
      */
     render(grid: Cell[][], modules: GameModules): void;
 }
 
 /**
- * Interface for the composite renderer module.
+ * Interface for the composite renderer that manages multiple rendering layers.
  */
 export interface RendererComposite {
     /**
-     * Adds a renderer to the composite renderer.
-     * @param renderer The renderer to add.
+     * Registers a new renderer layer to the composite system.
+     *
+     * @param {Renderer} renderer - The renderer instance to add.
      */
     addRenderer(renderer: Renderer): void;
+
     /**
-     * Renders the grid.
-     * @param grid The grid to render.
+     * Orchestrates the rendering process by delegating to all registered renderers.
+     *
+     * @param {Cell[][]} grid - The current state of the game grid.
+     * @param {GameModules} modules - Access to other engine modules.
      */
     render(grid: Cell[][], modules: GameModules): void;
+
     /**
-     * The display metrics of the renderer.
+     * The calculated display metrics shared across all renderers.
      */
     rendererMetrics: RendererMetrics;
 }
 
 /**
- * Interface for the text module.
+ * Interface for the text rendering module.
+ * Handles font sizing, alignment, and writing text to relative coordinates.
  */
 export interface Text extends Initializable {
     /**
-     * Sets the display metrics for the text module.
-     * @param rendererMetrics The renderer metrics to set.
+     * Sets the display metrics used for coordinate calculations.
+     *
+     * @param {RendererMetrics} rendererMetrics - The calculated layout metrics.
      */
     setRendererMetrics(rendererMetrics: RendererMetrics): void;
+
     /**
-     * Sets the active text.
+     * Sets the text color to the "active" theme color.
      */
     setActiveText(): void;
+
     /**
-     * Sets the inactive text.
+     * Sets the text color to the "inactive" theme color.
      */
     setInactiveText(): void;
+
     /**
-     * Sets the font size for the text module.
-     * @param fontSize The font size to set.
+     * Sets the current font size.
+     *
+     * @param {FontSize} fontSize - The desired size enum value.
      */
     setTextSize(fontSize: FontSize): void;
+
     /**
-     * Sets the text alignment for the text module.
-     * @param fontAlign The font alignment to set.
-     * @param fontVerticalAlign The font vertical alignment to set.
+     * Configures the text alignment settings.
+     *
+     * @param {FontAlign} fontAlign - The horizontal alignment.
+     * @param {FontVerticalAlign} fontVerticalAlign - The vertical alignment.
      */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void;
+
     /**
-     * Displays text on the HUD.
-     * @param text The text to display.
-     * @param coordinate The coordinate to display the text at.
+     * Renders text on the HUD area.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
      */
     textOnHud(text: string, coordinate: Coordinate): void;
+
     /**
-     * Displays text on the display.
-     * @param text The text to display.
-     * @param coordinate The coordinate to display the text at.
+     * Renders text on the main display area.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the Display.
      */
     textOnDisplay(text: string, coordinate: Coordinate): void;
 }
 
 /**
  * Interface for the grid module.
+ * Manages the state and manipulation of the game's cell matrix.
  */
 export interface Grid extends Initializable {
     /**
-     * Gets the grid.
-     * @returns The grid.
+     * Retrieves the current 2D grid of cells.
+     *
+     * @returns {Cell[][]} The matrix of cells.
      */
     getGrid(): Cell[][];
-    /**
-     * The width of the grid.
-     */
+
+    /** The number of columns in the grid. */
     width: number;
-    /**
-     * The height of the grid.
-     */
+
+    /** The number of rows in the grid. */
     height: number;
+
     /**
-     * Resets the grid.
+     * Resets the entire grid to its empty state.
      */
     resetGrid(): void;
+
     /**
-     * Iterates over the grid.
-     * @param callback The callback to execute for each cell.
+     * Iterates over every cell in the grid.
+     *
+     * @param {function(Cell): void} callback - The function to execute for each cell.
      */
     forEach(callback: (cell: Cell) => void): void;
+
     /**
-     * Checks if a coordinate is valid.
-     * @param coordinate The coordinate to check.
-     * @returns True if the coordinate is valid, false otherwise.
+     * Validates if a coordinate exists within the grid boundaries.
+     *
+     * @param {Coordinate} coordinate - The coordinate to check.
+     * @returns {boolean} `true` if valid, `false` otherwise.
      */
     isValidCoordinate(coordinate: Coordinate): boolean;
+
     /**
-     * Gets the cell at a specific coordinate.
-     * @param coordinate The coordinate to get the cell from.
-     * @returns The cell at the specified coordinate.
+     * Retrieves a cell at a specific location.
+     *
+     * @param {Coordinate} coordinate - The location of the cell.
+     * @returns {Cell | null} The cell object, or `null` if the coordinate is invalid.
      */
     getCell(coordinate: Coordinate): Cell | null;
+
     /**
-     * Sets the value of a cell.
-     * @param coordinate The coordinate to set the cell value at.
-     * @param value The value to set.
+     * Sets the state value of a specific cell.
+     *
+     * @param {Coordinate} coordinate - The target location.
+     * @param {number} value - The new value (0 for empty).
      */
     setCellValue(coordinate: Coordinate, value: number): void;
+
     /**
-     * Sets the color of a cell.
-     * @param coordinate The coordinate to set the cell color at.
-     * @param color The color to set.
+     * Sets the color of a specific cell.
+     *
+     * @param {Coordinate} coordinate - The target location.
+     * @param {Color} color - The new color.
      */
     setCellColor(coordinate: Coordinate, color: Color): void;
+
     /**
-     * Checks if a cell is active.
-     * @param coordinate The coordinate to check.
-     * @returns True if the cell is active, false otherwise.
+     * Checks if a cell is occupied (value > 0).
+     *
+     * @param {Coordinate} coordinate - The location to check.
+     * @returns {boolean} `true` if active.
      */
     isCellActive(coordinate: Coordinate): boolean;
+
     /**
-     * Checks if a cell is inactive.
-     * @param coordinate The coordinate to check.
-     * @returns True if the cell is inactive, false otherwise.
+     * Checks if a cell is empty (value == 0).
+     *
+     * @param {Coordinate} coordinate - The location to check.
+     * @returns {boolean} `true` if inactive.
      */
     isCellInactive(coordinate: Coordinate): boolean;
+
     /**
-     * Checks if a row is full.
-     * @param y The y-coordinate of the row.
-     * @returns True if the row is full, false otherwise.
+     * Checks if a specific row is completely full.
+     *
+     * @param {number} y - The row index.
+     * @returns {boolean} `true` if all cells in the row are active.
      */
     isRowFull(y: number): boolean;
+
     /**
-     * Checks if a row is empty.
-     * @param y The y-coordinate of the row.
-     * @returns True if the row is empty, false otherwise.
+     * Checks if a specific row is completely empty.
+     *
+     * @param {number} y - The row index.
+     * @returns {boolean} `true` if all cells in the row are inactive.
      */
     isRowEmpty(y: number): boolean;
+
     /**
-     * Clears a row.
-     * @param y The y-coordinate of the row.
+     * Clears all cells in a specific row.
+     *
+     * @param {number} y - The row index.
      */
     clearRow(y: number): void;
+
     /**
-     * Shifts rows down.
-     * @param fromY The y-coordinate to start shifting from.
+     * Shifts all rows above the specified index down by one.
+     *
+     * @param {number} fromY - The row index to start from.
      */
     shiftRowsDown(fromY: number): void;
+
     /**
-     * Shifts rows up.
-     * @param fromY The y-coordinate to start shifting from.
+     * Shifts all rows below the specified index up by one.
+     *
+     * @param {number} fromY - The row index to start from.
      */
     shiftRowsUp(fromY: number): void;
+
     /**
-     * Clears full rows.
-     * @returns The number of cleared rows.
+     * Detects and clears all full rows, shifting the grid accordingly.
+     *
+     * @returns {number} The count of rows cleared.
      */
     clearFullRows(): number;
+
     /**
-     * Checks if a column is full.
-     * @param x The x-coordinate of the column.
-     * @returns True if the column is full, false otherwise.
+     * Checks if a specific column is completely full.
+     *
+     * @param {number} x - The column index.
+     * @returns {boolean} `true` if all cells in the column are active.
      */
     isColumnFull(x: number): boolean;
+
     /**
-     * Checks if a column is empty.
-     * @param x The x-coordinate of the column.
-     * @returns True if the column is empty, false otherwise.
+     * Checks if a specific column is completely empty.
+     *
+     * @param {number} x - The column index.
+     * @returns {boolean} `true` if all cells in the column are inactive.
      */
     isColumnEmpty(x: number): boolean;
+
     /**
-     * Clears a column.
-     * @param x The x-coordinate of the column.
+     * Clears all cells in a specific column.
+     *
+     * @param {number} x - The column index.
      */
     clearColumn(x: number): void;
+
     /**
-     * Shifts columns right.
-     * @param fromX The x-coordinate to start shifting from.
+     * Shifts all columns to the right of the specified index.
+     *
+     * @param {number} fromX - The column index to start from.
      */
     shiftColumnsRight(fromX: number): void;
+
     /**
-     * Shifts columns left.
-     * @param fromX The x-coordinate to start shifting from.
+     * Shifts all columns to the left of the specified index.
+     *
+     * @param {number} fromX - The column index to start from.
      */
     shiftColumnsLeft(fromX: number): void;
+
     /**
-     * Clears full columns.
-     * @returns The number of cleared columns.
+     * Detects and clears all full columns.
+     *
+     * @returns {number} The count of columns cleared.
      */
     clearFullColumns(): number;
+
     /**
-     * Checks if an area is occupied.
-     * @param coordinates The coordinates to check.
-     * @returns True if the area is occupied, false otherwise.
+     * Checks if any of the provided coordinates are occupied.
+     *
+     * @param {Coordinate[]} coordinates - The list of coordinates to test.
+     * @returns {boolean} `true` if any coordinate is active or invalid.
      */
     isAreaOccupied(coordinates: Coordinate[]): boolean;
+
     /**
-     * Fills an area.
-     * @param start The starting coordinate of the area.
-     * @param end The ending coordinate of the area.
-     * @param value The value to fill the area with.
-     * @param color The color to fill the area with.
+     * Fills a rectangular area with a value and color.
+     *
+     * @param {Coordinate} start - Top-left coordinate.
+     * @param {Coordinate} end - Bottom-right coordinate.
+     * @param {number} value - The value to fill.
+     * @param {Color} color - The color to fill.
      */
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void;
+
     /**
-     * Applies a value and color to multiple coordinates simultaneously.
+     * Stamps a pattern of cells onto the grid.
      *
-     * Effectively "stamps" a piece's shape onto the static grid.
-     *
-     * @param {Coordinate[]} coordinates - The list of coordinates to update.
-     * @param {number} value - The status value to apply.
+     * @param {Coordinate[]} coordinates - The list of cell locations to update.
+     * @param {number} value - The value to apply.
      * @param {Color} color - The color to apply.
-     * @returns {void}
      */
     stampPiece(coordinates: Coordinate[], value: number, color: Color): void;
 }
 
 /**
- * Manages the core boolean states of the game and handles state-change events.
- *
- * Provides a central hub for tracking game lifecycle states (on, running, gameOver)
- * and user preferences (color enabled), with persistence support.
- *
- * @interface
+ * Interface for the state module.
+ * Represents the central hub for game lifecycle and user preferences.
  */
 export interface State extends Initializable {
     /**
      * Checks if the game system is "on" (powered up).
+     *
+     * @returns {boolean} `true` if the system is on.
      */
     isOn(): boolean;
 
     /**
      * Checks if the game system is "off" (powered down).
+     *
+     * @returns {boolean} `true` if the system is off.
      */
     isOff(): boolean;
 
     /**
-     * Checks if a game session has started (passed menu).
+     * Checks if a game session has fully started (passed the title screen).
+     *
+     * @returns {boolean} `true` if gameplay is active or paused.
      */
     isStarted(): boolean;
 
     /**
-     * Checks if the game is currently playing (active gameplay).
+     * Checks if the game is currently efficiently playing (logic is updating).
+     *
+     * @returns {boolean} `true` if playing (not paused).
      */
     isPlaying(): boolean;
 
     /**
-     * Checks if the game is paused (started but not playing).
+     * Checks if the game is paused.
+     *
+     * @returns {boolean} `true` if started but not playing.
      */
     isPaused(): boolean;
 
     /**
      * Checks if the game is in a game over state.
+     *
+     * @returns {boolean} `true` if the game ended.
      */
     isGameOver(): boolean;
 
     /**
      * Checks if color rendering is enabled.
+     *
+     * @returns {boolean} `true` if colors are enabled.
      */
     isColorEnabled(): boolean;
 
     /**
-     * Sets whether color rendering is enabled.
-     * @param value - The new value.
+     * Sets the color rendering preference.
+     *
+     * @param {boolean} value - The new state.
      */
     setColorEnabled(value: boolean): void;
 
     /**
-     * Checks if audio is muted.
+     * Checks if audio is globally muted.
+     *
+     * @returns {boolean} `true` if muted.
      */
     isMuted(): boolean;
 
     /**
-     * Sets whether audio is muted.
-     * @param value - The new value.
+     * Sets the master mute state.
+     *
+     * @param {boolean} value - The new mute state.
      */
     setMuted(value: boolean): void;
 
     /**
-     * Gets the high score.
+     * Retrieves the high score from persistence.
+     *
+     * @returns {number} The current high score.
      */
     getHighScore(): number;
 
     /**
-     * Sets the high score.
-     * @param value - The new high score.
+     * Updates and persists the high score.
+     *
+     * @param {number} value - The new record.
      */
     setHighScore(value: number): void;
 
     /**
-     * Subscribes to changes in specific state properties.
+     * Subscribes to changes in a specific state property.
      *
      * @param {StateProperty} property - The state property to monitor.
      * @param {function(boolean | number): void} callback - The function to execute when the property changes.
-     * @returns {void}
      */
-
     subscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
-     * Unsubscribes from changes in specific state properties.
+     * Unsubscribes a callback from a specific state property.
      *
-     * @param {StateProperty} property - The state property to monitor.
-     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
-     * @returns {void}
+     * @param {StateProperty} property - The state property being monitored.
+     * @param {function(boolean | number): void} callback - The callback reference to remove.
      */
-
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /** Turn the game system on. */
@@ -327,240 +401,252 @@ export interface State extends Initializable {
     /** Turn the game system off. */
     turnOff(): void;
 
-    /** Start a new game session. */
+    /** Initiate a new game (transition from Title Screen to Gameplay). */
     startGame(): void;
 
-    /** Exit the current game session. */
+    /** Exit the current game session (transition to Title Screen). */
     exitGame(): void;
 
-    /** Pause the current game. */
+    /** Pause the current game logic. */
     pause(): void;
 
-    /** Resume the current game. */
+    /** Resume the game logic from a paused state. */
     resume(): void;
 
     /** Trigger a game over state. */
     triggerGameOver(): void;
 
-    /** Reset the game state for a new round. */
+    /** Reset the game state flags for a new round (post-Game Over). */
     resetGame(): void;
 
-    /** Toggles the 'colorEnabled' state. */
+    /** Toggles the {@link StateProperty.COLOR_ENABLED} state. */
     toggleColorEnabled(): void;
 
-    /** Toggles the 'muted' state. */
+    /** Toggles the {@link StateProperty.MUTED} state. */
     toggleMuted(): void;
 
     /**
-     * Sets the persistence key.
-     * @param key The persistence key.
+     * Configures the key used for local storage persistence.
+     *
+     * @param {string} key - The unique prefix for storage keys.
      */
     setPersistenceKey(key: string): void;
 
     /**
-     * Gets the persistence key.
-     * @returns The persistence key.
+     * Retrieves the current persistence key.
+     *
+     * @returns {string} The storage prefix.
      */
     getPersistenceKey(): string;
 }
 
 /**
  * Interface for the control module.
+ * Manages input handling, binding, and event notification.
  */
 export interface Control extends Initializable {
     /**
-     * Triggers a control event. Used by input drivers (Keyboard, UI).
-     * @param key The key to trigger.
-     * @param type The event type (ControlEventType).
+     * Triggers a control event manually.
+     *
+     * @param {ControlKey} key - The key identity.
+     * @param {ControlEventType} type - The type of event (press/hold).
      */
     notify(key: ControlKey, type: ControlEventType): void;
 
     /**
-     * Sets the modules required for the GameEvent context.
-     * @param modules The game modules.
+     * Injects the module references required for populating the event context.
+     *
+     * @param {GameModules} modules - The collection of system modules.
      */
     setModules(modules: GameModules): void;
 
     /**
-     * Subscribes to a control event.
-     * @param key The key to listen for.
-     * @param type The event type (ControlEventType).
-     * @param callback The function to call when the event occurs, receiving the game event info.
+     * Registers a callback for a specific control event.
+     *
+     * @param {ControlKey} key - The key to listen for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function to execute.
      */
     subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
-     * Unsubscribes from a control event.
-     * @param key The key to stop listening for.
-     * @param type The event type.
-     * @param callback The function to remove.
+     * Removes an existing subscription.
+     *
+     * @param {ControlKey} key - The key to stop listening for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
      */
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
     /**
-     * Unbinds all control events.
+     * Detaches all hardware/DOM event listeners.
      */
     unbindControls(): void;
 
     /**
-     * Binds all control events.
+     * Attaches all hardware/DOM event listeners.
      */
     bindControls(): void;
 }
 
 /**
  * Interface for the time module.
+ * Manages the game loop timing, ticks, and delta time.
  */
 export interface Time extends Initializable {
     /**
-     * Updates the time accumulator.
-     * @param deltaTime Time elapsed since last frame in milliseconds.
+     * Accumulates passed time and calculates FPS/TPS.
+     *
+     * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
      */
     update(deltaTime: number): void;
 
     /**
-     * Checks if enough time has passed for a game tick.
-     * @returns True if a tick should occur.
+     * Determines if a logic tick should occur based on the accumulator.
+     *
+     * @returns {boolean} `true` if a tick is due.
      */
     shouldTick(): boolean;
 
     /**
-     * Resets the time accumulator.
+     * Resets internal time accumulators and counters.
      */
     reset(): void;
 
-    /**
-     * Sets the tick interval.
-     * @param interval The new tick interval in milliseconds.
-     */
+    /** The interval between logic ticks in milliseconds. */
     tickInterval: number;
 
     /**
-     * Increments the tick interval.
-     * @param amount The amount to increment the tick interval by.
+     * Increases the tick interval (slowing down the game logic).
+     *
+     * @param {number} amount - Milliseconds to add.
      */
     incrementTickInterval(amount: number): void;
 
     /**
-     * Decrements the tick interval.
-     * @param amount The amount to decrement the tick interval by.
+     * Decreases the tick interval (speeding up the game logic).
+     *
+     * @param {number} amount - Milliseconds to subtract.
      */
     decrementTickInterval(amount: number): void;
 }
 
 /**
- * Interface for the sound module.
+ * Interface for the audio module.
  */
 export interface SoundModule extends Initializable {
     /**
      * Plays a sound effect.
-     * @param sound The sound to play.
+     *
+     * @param {Sound} sound - The {@link Sound} enum to play.
+     * @returns {Promise<void>} Resolves when playback starts.
      */
     play(sound: Sound): Promise<void>;
 
     /**
-     * Stops a specific sound effect.
-     * @param sound The sound to stop.
+     * Stops all active instances of a specific sound.
+     *
+     * @param {Sound} sound - The {@link Sound} enum to stop.
+     * @returns {Promise<void>} Resolves when stopped.
      */
     stop(sound: Sound): Promise<void>;
 
     /**
-     * Stops all playing sounds.
+     * Stops all audio playback immediately.
+     *
+     * @returns {Promise<void>} Resolves when all sounds are stopped.
      */
     stopAll(): Promise<void>;
 
     /**
-     * Toggles the mute state.
+     * Toggles the master mute setting.
      */
     toggleMute(): void;
 
-    /**
-     * Sets the mute state.
-     */
+    /** Current master mute state. */
     muted: boolean;
 }
 
 /**
- * Interface for the time performance module.
+ * Interface for the time performance monitoring module.
  */
 export interface TimePerformanceMonitor {
-    /**
-     * Whether the performance overlay is enabled.
-     */
+    /** Accessor for the enabled state of the monitor. */
     enabled: boolean;
 
     /**
-     * Updates the performance module logic (e.g. TPS calculation).
-     * @param deltaTime Time elapsed since last frame.
+     * Updates performance calculations.
+     *
+     * @param {number} deltaTime - Time elapsed since last frame.
      */
     update(deltaTime: number): void;
 
     /**
-     * Logs a game tick for TPS measurement.
+     * Records a logic tick occurrence for TPS calculation.
      */
     logTick(): void;
 
     /**
-     * Renders the performance overlay.
-     * @param p The p5 instance.
-     * @param tickInterval The current tick interval.
+     * Renders the performance overlay stats.
+     *
+     * @param {p5} p - The P5 instance to draw on.
+     * @param {number} tickInterval - The expected tick interval.
      */
     render(p: p5, tickInterval: number): void;
 }
 
 /**
- * Interface for the score module.
+ * Interface for the score and progression module.
  */
 export interface Score extends Initializable {
-    /**
-     * Current session score.
-     */
+    /** Current session score points. */
     score: number;
 
     /**
-     * Increases score by amount, applying current multiplier.
-     * @param amount The amount to increase by.
+     * Adds points to the score, applying the current multiplier.
+     *
+     * @param {number} amount - Base points to add.
      */
     increaseScore(amount: number): void;
 
     /**
-     * Resets current score to 0.
+     * Resets the score to zero.
      */
     resetScore(): void;
 
     /**
-     * Helper to get score with leading zeros.
-     * @param digits Number of digits (default 6).
+     * Formats the current score as a padded string.
+     *
+     * @param {number} [digits] - Total characters (default: 6).
+     * @returns {string} The formatted score (e.g., "000100").
      */
     getFormattedScore(digits?: number): string;
 
-    /**
-     * Current score multiplier.
-     */
+    /** Current point multiplier factor. */
     multiplier: number;
 
-    /**
-     * Current game level.
-     */
+    /** Current game difficulty level. */
     level: number;
 
-    /**
-     * Maximum game level.
-     */
+    /** Maximum allowed game level. */
     maxLevel: number;
 
     /**
-     * Increases the game level.
+     * Increases the difficulty level.
+     *
+     * @param {number} amount - Levels to advance.
      */
     increaseLevel(amount: number): void;
 
     /**
-     * Resets the game level to 1.
+     * Resets the level to the starting value (1).
      */
     resetLevel(): void;
 
     /**
-     * Sets the state module required for the Score context.
-     * @param state The game state module.
+     * Dependencies injection map for Score context.
+     *
+     * @param {State} state - The game state module for high score persistence.
      */
     setState(state: State): void;
 }

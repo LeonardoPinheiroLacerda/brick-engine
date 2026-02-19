@@ -1,0 +1,29 @@
+= GameEvent Reference
+:description: The context object delivered to input subscribers during events.
+:keywords: event, input, subscriber, context
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+The context object delivered to input subscribers.
+
+== Attributes
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |xref:../enums/ControlKey.adoc[ControlKey] |The identifier for the triggered key.
+|`type` |xref:../enums/ControlEventType.adoc[ControlEventType] |Whether the key was `PRESSED` or is being `HELD`.
+|`modules` |xref:../interfaces/GameModules.adoc[GameModules] |Accessor for all engine services.
+|===
+
+== General Usage
+
+When a control callback is executed, it receives a `GameEvent`. This allows the game logic to react based on the key type and interact with the `xref:../interfaces/modules/Grid.adoc[Grid]`, `xref:../interfaces/modules/State.adoc[State]`, or `xref:../interfaces/modules/Score.adoc[Score]` modules.

@@ -1,0 +1,290 @@
+= State Reference
+:description: Interface for managing global game lifecycle flags, persistence, and preferences.
+:keywords: state, lifecycle, persistence, preferences
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Interface for managing global game lifecycle flags, persistence, and preferences.
+
+== Methods
+
+=== `isOn(): boolean`
+
+Returns `true` if the engine is "powered on".
+
+**Returns**
+
+`boolean` - `true` if on.
+
+
+'''
+
+=== `isOff(): boolean`
+
+Returns `true` if the engine is "powered off".
+
+**Returns**
+
+`boolean` - `true` if off.
+
+
+'''
+
+=== `isStarted(): boolean`
+
+Returns `true` if a game session has been initialized.
+
+**Returns**
+
+`boolean` - `true` if started.
+
+
+'''
+
+=== `isPlaying(): boolean`
+
+Returns `true` if the game is active and logic ticks are flowing.
+
+**Returns**
+
+`boolean` - `true` if playing.
+
+
+'''
+
+=== `isPaused(): boolean`
+
+Returns `true` if the game is started but currently paused.
+
+**Returns**
+
+`boolean` - `true` if paused.
+
+
+'''
+
+=== `isGameOver(): boolean`
+
+Returns `true` if the current session has ended in defeat.
+
+**Returns**
+
+`boolean` - `true` if game over.
+
+
+'''
+
+=== `isColorEnabled(): boolean`
+
+Returns `true` if themed color rendering is active.
+
+**Returns**
+
+`boolean` - `true` if color is enabled.
+
+
+'''
+
+=== `setColorEnabled(value: boolean): void`
+
+Manually sets the color rendering preference.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`value` |`boolean` |`true` to enable colors, `false` for monochrome/grayscale.
+|===
+
+
+'''
+
+=== `isMuted(): boolean`
+
+Returns `true` if the audio system is suppressed.
+
+**Returns**
+
+`boolean` - `true` if muted.
+
+
+'''
+
+=== `setMuted(value: boolean): void`
+
+Manually sets the audio suppression preference.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`value` |`boolean` |`true` to mute, `false` to unmute.
+|===
+
+
+'''
+
+=== `getHighScore(): number`
+
+Retrieves the persistent high score for the current game.
+
+**Returns**
+
+`number` - The current high score.
+
+
+'''
+
+=== `setHighScore(value: number): void`
+
+Updates the persistent high score.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`value` |`number` |The new high score to save.
+|===
+
+
+'''
+
+=== `subscribe(property: xref:../../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
+
+Registers a listener for changes to a specific state property.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`property` |`xref:../../enums/StateProperty.adoc[StateProperty]` |The property to watch.
+|`callback` |`(value: boolean \| number) => void` |Function called when the property changes.
+|===
+
+
+'''
+
+=== `unsubscribe(property: xref:../../enums/StateProperty.adoc[StateProperty], callback: (value: boolean | number) => void): void`
+
+Removes a previously registered property listener.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`property` |`xref:../../enums/StateProperty.adoc[StateProperty]` |The property being watched.
+|`callback` |`(value: boolean \| number) => void` |The function to remove.
+|===
+
+
+'''
+
+=== `turnOn(): void`
+
+Powers up the engine.
+
+
+'''
+
+=== `turnOff(): void`
+
+Powers down the engine and saves state.
+
+
+'''
+
+=== `startGame(): void`
+
+Transitions from the menu to an active game session.
+
+
+'''
+
+=== `exitGame(): void`
+
+Ends the current game session and returns to the menu.
+
+
+'''
+
+=== `pause(): void`
+
+Toggles the gameplay state to paused.
+
+
+'''
+
+=== `resume(): void`
+
+Toggles the gameplay state back to playing.
+
+
+'''
+
+=== `triggerGameOver(): void`
+
+Transitions to the game over screen.
+
+
+'''
+
+=== `resetGame(): void`
+
+Resets session-specific state (score, grids) while maintaining high score and preferences.
+
+
+'''
+
+=== `toggleColorEnabled(): void`
+
+Flips the current `colorEnabled` flag.
+
+
+'''
+
+=== `toggleMuted(): void`
+
+Flips the current `muted` flag.
+
+
+'''
+
+=== `setPersistenceKey(key: string): void`
+
+Sets the unique namespace used for `localStorage`.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |`string` |The unique key prefix.
+|===
+
+
+'''
+
+=== `getPersistenceKey(): string`
+
+Returns the active namespace prefix.
+
+**Returns**
+
+`string` - The persistence key.
+
+== General Usage
+
+Implemented by `xref:../../modules/GameState.adoc[GameState]`. It serves as the single source of truth for the engine's behavior tree.

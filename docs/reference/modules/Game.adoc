@@ -1,0 +1,179 @@
+= Game Class Reference
+:description: The heart of the application, managing the game loop and orchestration of modules.
+:keywords: core, game-loop, architecture, orchestration
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.
+
+== Properties
+
+[cols="1,1,2"]
+|===
+|Property |Type |Description
+|`modules` |`xref:../interfaces/GameModules.adoc[GameModules]` |Access to all engine modules (grid, control, state, etc.).
+|===
+
+== API Reference
+
+
+'''
+
+=== `update(deltaTime: number): void`
+
+Abstract method for processing game logic.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`deltaTime` |`number` |Time elapsed since the last tick (in milliseconds).
+|===
+
+**Behavior**
+
+Called by the engine on every game logic tick, but **only** when the game state is `playing`. The tick frequency is controlled by `configs.game.tickInterval`.
+
+**Example**
+
+[source,typescript]
+----
+update(deltaTime: number): void {
+    const { grid } = this.modules;
+    grid.shiftRowsDown(1);
+}
+----
+
+
+'''
+
+=== `render(): void`
+
+Abstract method for processing visual frames.
+
+**Behavior**
+
+Called by the engine on every render frame (based on browser refresh rate, typically 60fps). Use this for animations, particles, or visual effects that do not affect the logical game state.
+
+**Example**
+
+[source,typescript]
+----
+render(): void {
+    // Logic for smooth animations
+}
+----
+
+
+'''
+
+=== `setupGame(): void`
+
+Abstract method for setting up the specific game instance.
+
+**Behavior**
+
+Called once after all engine modules are initialized and linked. Use this to set initial player state, subscribe to custom controls, or prepare level data.
+
+**Example**
+
+[source,typescript]
+----
+setupGame(): void {
+    this.modules.text.setTextSize(FontSize.MEDIUM);
+}
+----
+
+
+'''
+
+=== `getPersistenceKey(): string`
+
+Abstract method that returns a unique identifier for the game.
+
+**Returns**
+
+`string` - A unique prefix for LocalStorage.
+
+**Behavior**
+
+This key prevents data collisions in LocalStorage if multiple games built with the engine are hosted on the same domain. It's used as a prefix for all persistent state properties (e.g., `my-game.highScore`).
+
+
+'''
+
+=== `drawTitleScreen(): void`
+
+Abstract method for rendering the game's welcome screen.
+
+**Behavior**
+
+Called when the engine is powered ON but the game has not yet been started. Executed during the main draw loop instead of `update` and `render`.
+
+
+'''
+
+=== `drawGameOverScreen(): void`
+
+Abstract method for rendering the screen after a game ends.
+
+**Behavior**
+
+Called when the game state is `gameOver`. Executed after the final `render` call to overlay messages or recovery menus.
+
+
+'''
+
+=== `switchGame(newGame: Game): void`
+
+Switches execution to a new game instance.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`newGame` |`Game` |The instance of the new game class to load.
+|===
+
+**Behavior**
+
+Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered switch handler. This is the recommended way to move between different games or menus.
+
+**Example**
+
+[source,typescript]
+----
+this.switchGame(new MyOtherGame(this.p, this.view));
+----
+
+
+'''
+
+=== `destroy(): void`
+
+Cleans up the game instance.
+
+**Behavior**
+
+Stops the P5.js loop, unbinds all control event listeners, and stops all playing sounds. Use this before disposing of a game instance to prevent memory leaks.
+
+== Automated System Controls
+
+The `Game` base class automatically registers listeners for system-level buttons:
+
+*   **POWER**: Toggles engine state.
+*   **SOUND**: Toggles master mute.
+*   **COLOR**: Toggles theme color mode.
+*   **RESET**: Resets the grid and score.
+*   **START_PAUSE**: Starts the game or toggles pause.
+*   **EXIT**: Hard stop of the draw loop.

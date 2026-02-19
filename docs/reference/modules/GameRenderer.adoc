@@ -1,0 +1,79 @@
+= GameRenderer Module Reference
+:description: Orchestrates multiple specialized renderers to draw the game grid, background, and HUD.
+:keywords: rendering, orchestration, graphics, canvas, layers
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+The `GameRenderer` module is the visual engine of the application. It orchestrates multiple specialized renderers to draw the game grid, background, borders, and HUD elements on the HTML5 canvas.
+
+== API Reference
+
+=== `rendererMetrics: RendererMetrics`
+
+Read-only property containing the calculated dimensions and origins for all UI components.
+
+**Returns**
+
+`xref:../types/RendererMetrics.adoc[RendererMetrics]` - An object containing geometric data for `display`, `hud`, and individual `cells`.
+
+**Behavior**
+
+Calculates metrics once during initialization based on the current canvas size and configuration. These values are used by all other modules (like `xref:GameText.adoc[GameText]`) to ensure pixel-perfect alignment.
+
+
+'''
+
+=== `addRenderer(renderer: Renderer): void`
+
+Registers a new rendering layer.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`renderer` |`xref:../interfaces/modules/Renderer.adoc[Renderer]` |An implementation of the `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface (e.g., `xref:DisplayRenderer.adoc[DisplayRenderer]`).
+|===
+
+**Behavior**
+
+Adds the renderer to an internal stack. Layers are executed in the order they are added.
+
+
+'''
+
+=== `render(grid: Cell[][], modules: GameModules): void`
+
+The main drawing execution call.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`grid` |`xref:../types/Cell.adoc[Cell][][]` |The current 2D matrix of cells to visualize.
+|`modules` |`xref:../interfaces/GameModules.adoc[GameModules]` |Reference to all available modules for context-aware rendering.
+|===
+
+**Behavior**
+
+Called by the engine's main loop. It iterates through all registered renderers and executes their specific `render` logic.
+
+
+'''
+
+=== `getDebugData(): Record<string, string | number | boolean>`
+
+Returns metadata for the real-time debugger.
+
+**Returns**
+
+`Record<string, string | number | boolean>` - Object containing `display_width`, `display_height`, `hud_width`, `hud_height`, and `cell_size`.

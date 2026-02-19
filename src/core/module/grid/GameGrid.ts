@@ -410,6 +410,11 @@ export default class GameGrid implements Grid, Debuggable {
         });
     }
 
+    /**
+     * Retrieves debug information about the grid's dimensions.
+     *
+     * @returns {Record<string, string | number | boolean>} The debug data.
+     */
     getDebugData(): Record<string, string | number | boolean> {
         return {
             width: this.width,

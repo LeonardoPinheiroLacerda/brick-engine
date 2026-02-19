@@ -1,0 +1,28 @@
+= Vector Reference
+:description: Represents a generic 2D vector for directional or magnitude calculations.
+:keywords: vector, direction, magnitude, 2d, transformation
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+Represents a generic 2D vector for directional or magnitude calculations.
+
+== Attributes
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`x` |`number` |Horizontal offset.
+|`y` |`number` |Vertical offset.
+|===
+
+== General Usage
+
+Unlike `xref:Coordinate.adoc[Coordinate]`, which usually implies a position, `Vector` is used for transformations, velocities, and offsets applied to coordinates.

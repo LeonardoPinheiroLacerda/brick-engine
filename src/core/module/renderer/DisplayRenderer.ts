@@ -6,6 +6,10 @@ import { Cell, RendererMetrics } from '../../types/Types';
 import { Renderer } from '../../types/modules';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
+/**
+ * Responsible for rendering the main game field (the grid where the game is played).
+ * Handles cell rendering, background drawing, and optimizes static elements using an off-screen buffer.
+ */
 export default class DisplayRenderer implements Renderer {
     private _p: p5;
 
@@ -23,10 +27,21 @@ export default class DisplayRenderer implements Renderer {
     // Static graphics buffer for optimized rendering
     private _staticGraphics: p5.Graphics;
 
+    /**
+     * Creates an instance of the DisplayRenderer.
+     *
+     * @param {p5} p - The p5 instance.
+     */
     constructor(p: p5) {
         this._p = p;
     }
 
+    /**
+     * Initializes the renderer with the calculated metrics.
+     * Pre-calculates cell geometry for faster rendering.
+     *
+     * @param {RendererMetrics} rendererMetrics - The shared renderer metrics.
+     */
     setup(rendererMetrics: RendererMetrics) {
         this._rendererMetrics = rendererMetrics;
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
@@ -47,6 +62,12 @@ export default class DisplayRenderer implements Renderer {
         this._renderStaticElements();
     }
 
+    /**
+     * Renders the game grid.
+     * Draws the static background first, then iterates over the grid to draw cells.
+     *
+     * @param {Cell[][]} grid - The current grid state.
+     */
     render(grid: Cell[][]) {
         this._p.push();
 
@@ -58,6 +79,7 @@ export default class DisplayRenderer implements Renderer {
 
     /**
      * Renders static elements (background and borders) to an off-screen buffer.
+     * This improves performance by avoiding re-drawing static shapes every frame.
      */
     private _renderStaticElements() {
         const { borderWeight } = configs.screenLayout.display;
@@ -80,6 +102,8 @@ export default class DisplayRenderer implements Renderer {
     /**
      * Renders a single brick at grid coordinates.
      * Uses translation matrices to keep drawing logic clean.
+     *
+     * @param {Cell} cell - The cell data to render.
      */
     protected renderCell({ coordinate, color, value }: Cell) {
         const { x, y } = coordinate;
@@ -111,6 +135,11 @@ export default class DisplayRenderer implements Renderer {
         this._p.pop();
     }
 
+    /**
+     * Iterates through the grid and renders each cell.
+     *
+     * @param {Cell[][]} grid - The grid to render.
+     */
     protected renderGrid(grid: Cell[][]) {
         grid.forEach(row => {
             row.forEach(cell => {
