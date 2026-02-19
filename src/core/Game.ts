@@ -26,15 +26,23 @@ export default abstract class Game implements Initializable {
 
     protected _modules: GameModules;
 
-    private static _switchHandler: (newGame: Game) => void;
+    private _switchHandler: (newGame: Game) => void;
 
     /**
      * Registers the callback to be used when a game requests to switch to another game.
      * This is typically called by the engine's main loop (index.ts).
      * @param handler The callback function.
      */
-    static setSwitchHandler(handler: (newGame: Game) => void) {
-        Game._switchHandler = handler;
+    setSwitchHandler(handler: (newGame: Game) => void) {
+        this._switchHandler = handler;
+    }
+
+    /**
+     * Propagates the switch handler to the new game.
+     * @param game Game instance that has the switch handler.
+     */
+    propagateSwitchHandler(game: Game) {
+        this.setSwitchHandler(game._switchHandler);
     }
 
     /**
@@ -65,8 +73,8 @@ export default abstract class Game implements Initializable {
      */
     switchGame(newGame: Game): void {
         this.destroy(); // Clean up current game
-        if (Game._switchHandler) {
-            Game._switchHandler(newGame);
+        if (this._switchHandler) {
+            this._switchHandler(newGame);
         } else {
             console.error('Game switch handler not registered. Cannot switch game.');
         }
@@ -247,10 +255,6 @@ export default abstract class Game implements Initializable {
             } else if (state.isGameOver()) {
                 state.resetGameOver();
             }
-        });
-
-        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-            this._p.noLoop();
         });
     }
 }

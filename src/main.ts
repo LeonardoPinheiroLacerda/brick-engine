@@ -6,19 +6,23 @@ import GameMenu from './menu/GameMenu';
 import './config/styles';
 import Debugger from './core/Debugger';
 
+import { isClientMode, isServerMode } from './config/env';
 // @ts-expect-error - This alias is defined in webpack.config.js
 import ClientGame from '@client-game';
+import { ControlEventType, ControlKey } from './core/types/enums';
+import GameMenuSingleton from './menu/GameMenuSingleton';
 
 export const p5Instance = new p5((p: p5) => {
     const view = new GameView(p, document.body);
     let activeGame: Game;
 
-    if (process.env.APP_MODE === 'client') {
+    if (isClientMode()) {
         // In client mode, we instantiate the game provided via alias
         activeGame = new ClientGame(p, view);
-    } else if (process.env.APP_MODE === 'server') {
+    } else if (isServerMode()) {
         // In server mode, we instantiate the game menu
         activeGame = new GameMenu(p, view);
+        GameMenuSingleton.setInstance(activeGame as GameMenu);
     } else {
         throw new Error('Invalid APP_MODE');
     }
@@ -26,7 +30,7 @@ export const p5Instance = new p5((p: p5) => {
     let debuggerInstance: Debugger;
 
     // Register the switch handler
-    Game.setSwitchHandler((newGame: Game) => {
+    activeGame.setSwitchHandler((newGame: Game) => {
         try {
             // Destroy the previous debugger instance
             if (debuggerInstance) {
@@ -36,10 +40,12 @@ export const p5Instance = new p5((p: p5) => {
             // Unbind the previous game controls
             view.unbindControls();
 
+            // Propagate the switch handler to the new game
+            newGame.propagateSwitchHandler(activeGame);
+
             // Set the new game
             activeGame = newGame;
             activeGame.setup();
-
             // Bind the new game controls
             view.bindControls(activeGame.modules.control);
             activeGame.modules.state.turnOn();
@@ -47,6 +53,12 @@ export const p5Instance = new p5((p: p5) => {
             // Create the new debugger instance
             debuggerInstance = new Debugger(activeGame.modules);
             debuggerInstance.setup();
+
+            if (isServerMode() && newGame !== GameMenuSingleton.getInstance()) {
+                newGame.modules.control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
+                    newGame.switchGame(GameMenuSingleton.getInstance());
+                });
+            }
         } catch (error) {
             console.error('Error switching game:', error);
         }
