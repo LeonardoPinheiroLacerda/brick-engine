@@ -8,7 +8,7 @@ export default class GameMenu extends Game {
     private _isLoading = false;
 
     private _gameRepository = new GameRepository();
-    private _gameManager = new GameManager(this._gameRepository);
+    private _gameManager = new GameManager();
 
     setupGame() {
         const { state, control, sound } = this.modules;
@@ -18,7 +18,7 @@ export default class GameMenu extends Game {
 
             if (state.isStarted()) {
                 const selectedGame = this._gameRepository.games[this._gameSelectionPointer];
-                this._gameManager.handleGameSelection(selectedGame, this);
+                this._gameManager.handleGameSwitch(selectedGame, this);
             }
         });
 

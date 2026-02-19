@@ -447,13 +447,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
 <li><a href="#updatedeltatime-number-void">2.1. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#render-void">2.2. <code>render(): void</code></a></li>
-<li><a href="#setupgame-void">2.3. <code>setupGame(): void</code></a></li>
-<li><a href="#getpersistencekey-string">2.4. <code>getPersistenceKey(): string</code></a></li>
-<li><a href="#drawtitlescreen-void">2.5. <code>drawTitleScreen(): void</code></a></li>
-<li><a href="#drawgameoverscreen-void">2.6. <code>drawGameOverScreen(): void</code></a></li>
-<li><a href="#switchgamenewgame-game-void">2.7. <code>switchGame(newGame: Game): void</code></a></li>
-<li><a href="#destroy-void">2.8. <code>destroy(): void</code></a></li>
+<li><a href="#setswitchhandlerhandler-newgame-game-void-void">2.2. <code>setSwitchHandler(handler: (newGame: Game) &#8658; void): void</code></a></li>
+<li><a href="#propagateswitchhandlergame-game-void">2.3. <code>propagateSwitchHandler(game: Game): void</code></a></li>
+<li><a href="#updatedeltatime-number-void-2">2.4. <code>update(deltaTime: number): void</code></a></li>
+<li><a href="#render-void">2.5. <code>render(): void</code></a></li>
+<li><a href="#setupgame-void">2.6. <code>setupGame(): void</code></a></li>
+<li><a href="#getpersistencekey-string">2.7. <code>getPersistenceKey(): string</code></a></li>
+<li><a href="#drawtitlescreen-void">2.8. <code>drawTitleScreen(): void</code></a></li>
+<li><a href="#drawgameoverscreen-void">2.9. <code>drawGameOverScreen(): void</code></a></li>
+<li><a href="#switchgamenewgame-game-void">2.10. <code>switchGame(newGame: Game): void</code></a></li>
+<li><a href="#destroy-void">2.11. <code>destroy(): void</code></a></li>
 </ul>
 </li>
 <li><a href="#automated-system-controls">3. Automated System Controls</a></li>
@@ -523,6 +526,100 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </tbody>
 </table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="setswitchhandlerhandler-newgame-game-void-void"><a class="link" href="#setswitchhandlerhandler-newgame-game-void-void">2.2. <code>setSwitchHandler(handler: (newGame: Game) &#8658; void): void</code></a></h3>
+<div class="paragraph">
+<p>Registers the callback to be used when a game requests to switch to another game.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handler</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The callback function receiving the target <code><a href="../modules/Game.html">Game</a></code> instance.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>This method is used by the engine orchestrator (typically in <code>main.ts</code>) to define how game switches should be handled (e.g., re-binding controls, resetting the debugger). It allows the <code>Game</code> class to remain decoupled from the specific implementation of the menu or other games.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="propagateswitchhandlergame-game-void"><a class="link" href="#propagateswitchhandlergame-game-void">2.3. <code>propagateSwitchHandler(game: Game): void</code></a></h3>
+<div class="paragraph">
+<p>Copies the active switch handler from one game instance to another.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>game</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../modules/Game.html">Game</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The source game instance providing the handler.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Ensures continuity of the orchestration logic during a switch. When a new game is instantiated and about to become active, this method is called to pass the <code>_switchHandler</code> from the current <code>activeGame</code> to the new one.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="updatedeltatime-number-void-2"><a class="link" href="#updatedeltatime-number-void-2">2.4. <code>update(deltaTime: number): void</code></a></h3>
+<div class="paragraph">
+<p>Abstract method for processing game logic.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deltaTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time elapsed since the last tick (in milliseconds).</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
@@ -543,7 +640,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="render-void"><a class="link" href="#render-void">2.2. <code>render(): void</code></a></h3>
+<h3 id="render-void"><a class="link" href="#render-void">2.5. <code>render(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for processing visual frames.</p>
 </div>
@@ -566,7 +663,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setupgame-void"><a class="link" href="#setupgame-void">2.3. <code>setupGame(): void</code></a></h3>
+<h3 id="setupgame-void"><a class="link" href="#setupgame-void">2.6. <code>setupGame(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for setting up the specific game instance.</p>
 </div>
@@ -589,7 +686,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.4. <code>getPersistenceKey(): string</code></a></h3>
+<h3 id="getpersistencekey-string"><a class="link" href="#getpersistencekey-string">2.7. <code>getPersistenceKey(): string</code></a></h3>
 <div class="paragraph">
 <p>Abstract method that returns a unique identifier for the game.</p>
 </div>
@@ -608,7 +705,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.5. <code>drawTitleScreen(): void</code></a></h3>
+<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.8. <code>drawTitleScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the game&#8217;s welcome screen.</p>
 </div>
@@ -621,7 +718,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.6. <code>drawGameOverScreen(): void</code></a></h3>
+<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.9. <code>drawGameOverScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the screen after a game ends.</p>
 </div>
@@ -634,7 +731,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="switchgamenewgame-game-void"><a class="link" href="#switchgamenewgame-game-void">2.7. <code>switchGame(newGame: Game): void</code></a></h3>
+<h3 id="switchgamenewgame-game-void"><a class="link" href="#switchgamenewgame-game-void">2.10. <code>switchGame(newGame: Game): void</code></a></h3>
 <div class="paragraph">
 <p>Switches execution to a new game instance.</p>
 </div>
@@ -664,7 +761,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered switch handler. This is the recommended way to move between different games or menus.</p>
+<p>Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered <code>_switchHandler</code>. This is the core mechanism for moving between different games or menus.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>[!NOTE]
+The switch handler must be set or propagated before calling this method, otherwise an error will be logged.</p>
+</div>
+</blockquote>
 </div>
 <div class="paragraph">
 <p><strong>Example</strong></p>
@@ -677,7 +782,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="destroy-void"><a class="link" href="#destroy-void">2.8. <code>destroy(): void</code></a></h3>
+<h3 id="destroy-void"><a class="link" href="#destroy-void">2.11. <code>destroy(): void</code></a></h3>
 <div class="paragraph">
 <p>Cleans up the game instance.</p>
 </div>
@@ -727,7 +832,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </li>
 <li>
-<p><strong>EXIT</strong>: Hard stop of the draw loop.</p>
+<p><strong>EXIT</strong>: Hard stop of the draw loop. In server mode, the orchestrator typically uses the switch handler to return to the <code>GameMenu</code>.</p>
 </li>
 </ul>
 </div>

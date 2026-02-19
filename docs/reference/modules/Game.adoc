@@ -49,31 +49,44 @@ Registers the callback to be used when a game requests to switch to another game
 
 [cols="1,1,3"]
 |===
-|Name |Type |Description
-|`handler` |`Function` |The callback function receiving the new game instance.
+|`handler` |`Function` |The callback function receiving the target `xref:../modules/Game.adoc[Game]` instance.
 |===
 
 **Behavior**
 
-This is typically set by the engine's main loop (e.g., in `main.ts`) to orchestrate transitions between different game states or modules.
+This method is used by the engine orchestrator (typically in `main.ts`) to define how game switches should be handled (e.g., re-binding controls, resetting the debugger). It allows the `Game` class to remain decoupled from the specific implementation of the menu or other games.
 
 '''
 
 === `propagateSwitchHandler(game: Game): void`
 
-Propagates the switch handler from an existing game instance to a new one.
+Copies the active switch handler from one game instance to another.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`game` |`Game` |The source game instance that already has the switch handler registered.
+|`game` |`xref:../modules/Game.adoc[Game]` |The source game instance providing the handler.
 |===
 
 **Behavior**
 
-Ensures that the new game instance inherits the same orchestration logic for future switches, maintaining the execution chain.
+Ensures continuity of the orchestration logic during a switch. When a new game is instantiated and about to become active, this method is called to pass the `_switchHandler` from the current `activeGame` to the new one.
+
+'''
+
+=== `update(deltaTime: number): void`
+
+Abstract method for processing game logic.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`deltaTime` |`number` |Time elapsed since the last tick (in milliseconds).
+|===
 
 **Behavior**
 

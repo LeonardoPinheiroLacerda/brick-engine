@@ -20,8 +20,7 @@ Defines the structure for games registered in the engine's repository.
 |===
 |Name |Type |Description
 |`name` |`string` |The human-readable label for the game.
-|`url` |`string` |(Optional) The route or address for web-bound games.
-|`instance` |xref:../modules/Game.adoc[Game] |(Optional) A pre-instantiated game object.
+|`url` |`string` |The remote URL of the game's JavaScript bundle.
 |===
 
 == General Usage
