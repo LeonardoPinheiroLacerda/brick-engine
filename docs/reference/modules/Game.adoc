@@ -39,6 +39,42 @@ Abstract method for processing game logic.
 |`deltaTime` |`number` |Time elapsed since the last tick (in milliseconds).
 |===
 
+'''
+
+=== `setSwitchHandler(handler: (newGame: Game) => void): void`
+
+Registers the callback to be used when a game requests to switch to another game.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`handler` |`Function` |The callback function receiving the new game instance.
+|===
+
+**Behavior**
+
+This is typically set by the engine's main loop (e.g., in `main.ts`) to orchestrate transitions between different game states or modules.
+
+'''
+
+=== `propagateSwitchHandler(game: Game): void`
+
+Propagates the switch handler from an existing game instance to a new one.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`game` |`Game` |The source game instance that already has the switch handler registered.
+|===
+
+**Behavior**
+
+Ensures that the new game instance inherits the same orchestration logic for future switches, maintaining the execution chain.
+
 **Behavior**
 
 Called by the engine on every game logic tick, but **only** when the game state is `playing`. The tick frequency is controlled by `configs.game.tickInterval`.
@@ -147,7 +183,10 @@ Switches execution to a new game instance.
 
 **Behavior**
 
-Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered switch handler. This is the recommended way to move between different games or menus.
+Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered `_switchHandler`. This is the core mechanism for moving between different games or menus.
+
+> [!NOTE]
+> The switch handler must be set or propagated before calling this method, otherwise an error will be logged.
 
 **Example**
 
@@ -179,4 +218,4 @@ The `Game` base class automatically registers listeners for system-level buttons
 ** Starts the game from the Title Screen.
 ** Toggles pause during gameplay.
 ** Restarts the game immediately if in a Game Over state (via `resetGameOver`).
-*   **EXIT**: Hard stop of the draw loop.
+*   **EXIT**: Hard stop of the draw loop. In server mode, the orchestrator typically uses the switch handler to return to the `GameMenu`.

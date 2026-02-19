@@ -45,7 +45,7 @@ The engine is organized into the following core modules:
 | Module | Description
 
 | xref:docs/reference/modules/Game.adoc[Game (Core)]
-| The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and provides access to all other modules.
+| The central orchestrator. It initializes the engine, manages the main loop (ticks and frames), and coordinates transitions between game instances via an instance-based switch handler.
 
 | xref:docs/reference/modules/GameGrid.adoc[GameGrid]
 | Manages the 2D grid data structure. Handles cell values, colors, row/column operations, and collision detection. Includes `GameHudGrid` for custom HUD content.
