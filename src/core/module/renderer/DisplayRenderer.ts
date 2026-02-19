@@ -2,8 +2,8 @@ import p5 from 'p5';
 
 import configs from '../../../config/configs';
 import { Color } from '../../types/enums';
-import { Cell, RendererMetrics } from '../../types/Types';
-import { Renderer } from '../../types/modules';
+import { Cell, GameModules, RendererMetrics } from '../../types/Types';
+import { Renderer, State } from '../../types/modules';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 
 /**
@@ -68,11 +68,11 @@ export default class DisplayRenderer implements Renderer {
      *
      * @param {Cell[][]} grid - The current grid state.
      */
-    render(grid: Cell[][]) {
+    render(grid: Cell[][], modules: GameModules) {
         this._p.push();
 
         this._p.image(this._staticGraphics, 0, 0);
-        this.renderGrid(grid);
+        this.renderGrid(grid, modules.state);
 
         this._p.pop();
     }
@@ -105,12 +105,14 @@ export default class DisplayRenderer implements Renderer {
      *
      * @param {Cell} cell - The cell data to render.
      */
-    protected renderCell({ coordinate, color, value }: Cell) {
+    protected renderCell({ coordinate, color, value }: Cell, state: State) {
         const { x, y } = coordinate;
         const { innerOffset, innerSize, paddingOffset, paddingSize, strokeWeight } = this._cellPreCalculatedGeometry;
 
         if (value === 0) {
             color = Color.INACTIVE;
+        } else {
+            color = state.isColorEnabled() ? color : Color.DEFAULT;
         }
 
         this._p.push();
@@ -140,10 +142,10 @@ export default class DisplayRenderer implements Renderer {
      *
      * @param {Cell[][]} grid - The grid to render.
      */
-    protected renderGrid(grid: Cell[][]) {
+    protected renderGrid(grid: Cell[][], state: State) {
         grid.forEach(row => {
             row.forEach(cell => {
-                this.renderCell(cell);
+                this.renderCell(cell, state);
             });
         });
     }
