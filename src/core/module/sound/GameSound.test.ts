@@ -104,8 +104,7 @@ describe('GameSound', () => {
             mockAudioContext.state = 'suspended';
             gameSound.setup();
 
-            // @ts-expect-error - accessing private property for testing
-            gameSound._buffers.set(Sound.SPAWN, {} as AudioBuffer);
+            (gameSound as unknown as { _buffers: Map<Sound, AudioBuffer> })['_buffers'].set(Sound.SPAWN, {} as AudioBuffer);
 
             // [ACT]
             await gameSound.play(Sound.SPAWN);

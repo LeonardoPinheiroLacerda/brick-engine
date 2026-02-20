@@ -113,23 +113,19 @@ describe('GameMenu', () => {
         expect(state.isPlaying()).toBe(true);
 
         // Initial selection should be 0 (Game 1)
-        // @ts-expect-error - testing private property
-        expect(menu._gameSelectionPointer).toBe(0);
+        expect((menu as unknown as Record<string, unknown>)['_gameSelectionPointer']).toBe(0);
 
         // Press RIGHT
         control.notify(ControlKey.RIGHT, ControlEventType.PRESSED);
-        // @ts-expect-error - testing private property
-        expect(menu._gameSelectionPointer).toBe(1);
+        expect((menu as unknown as Record<string, unknown>)['_gameSelectionPointer']).toBe(1);
 
         // Press RIGHT again (should cycle)
         control.notify(ControlKey.RIGHT, ControlEventType.PRESSED);
-        // @ts-expect-error - testing private property
-        expect(menu._gameSelectionPointer).toBe(0);
+        expect((menu as unknown as Record<string, unknown>)['_gameSelectionPointer']).toBe(0);
 
         // Press LEFT (should cycle back)
         control.notify(ControlKey.LEFT, ControlEventType.PRESSED);
-        // @ts-expect-error - testing private property
-        expect(menu._gameSelectionPointer).toBe(1);
+        expect((menu as unknown as Record<string, unknown>)['_gameSelectionPointer']).toBe(1);
     });
 
     it('should handle game switch on ACTION press', () => {
@@ -139,8 +135,7 @@ describe('GameMenu', () => {
 
         expect(state.isStarted()).toBe(true);
 
-        // @ts-expect-error - testing private property
-        const managerSpy = menu._gameManager.handleGameSwitch;
+        const managerSpy = (menu as unknown as { _gameManager: { handleGameSwitch: import('vitest').Mock } })._gameManager.handleGameSwitch;
 
         control.notify(ControlKey.ACTION, ControlEventType.PRESSED);
 

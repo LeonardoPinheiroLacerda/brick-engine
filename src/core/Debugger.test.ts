@@ -40,8 +40,7 @@ describe('Debugger', () => {
             // [ARRANGE]
             debug.setup();
 
-            // @ts-expect-error - testing private/dynamic property
-            mockModules.state.getDebugData.mockReturnValue({ isOn: false, score: 200 });
+            (mockModules.state as unknown as Record<string, import('vitest').Mock>).getDebugData.mockReturnValue({ isOn: false, score: 200 });
 
             // [ACT]
             vi.advanceTimersByTime(200);

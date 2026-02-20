@@ -7,7 +7,6 @@ import './config/styles';
 import Debugger from './core/Debugger';
 
 import { isClientMode, isServerMode } from './config/env';
-// @ts-expect-error - This alias is defined in webpack.config.js
 import ClientGame from '@client-game';
 import { ControlEventType, ControlKey } from './core/types/enums';
 import GameMenuSingleton from './menu/GameMenuSingleton';
@@ -38,7 +37,7 @@ export const p5Instance = new p5((p: p5) => {
             }
 
             // Unbind the previous game controls
-            view.unbindControls();
+            activeGame.view.unbindControls();
 
             // Propagate the switch handler to the new game
             newGame.propagateSwitchHandler(activeGame);
@@ -47,7 +46,7 @@ export const p5Instance = new p5((p: p5) => {
             activeGame = newGame;
             activeGame.setup();
             // Bind the new game controls
-            view.bindControls(activeGame.modules.control);
+            activeGame.view.bindControls(activeGame.modules.control);
             activeGame.modules.state.turnOn();
 
             // Create the new debugger instance

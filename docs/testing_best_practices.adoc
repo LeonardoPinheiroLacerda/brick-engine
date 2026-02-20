@@ -122,6 +122,28 @@ it('should init in client mode', async () => {
 });
 ----
 
+=== Workaround for Dynamic Imports with Webpack/TS (TS1323)
+
+When the project uses a `tsconfig.json` meant for the browser (e.g., configuring `module: commonjs`), running bundlers like `webpack` over the test files can trigger **TS1323** because the TS compiler doesn't understand the dynamic inputs naturally.
+
+**To resolve this properly without ANY `@ts-expect-error`:**
+1.  Set the `module` resolving option in `tsconfig.json` to `"ESNext"` or `"ES2020"` so TS allows dynamic imports. Webpack can still easily compile it targeting ES5.
+2.  Create ambient definition files (e.g., `src/client-game.d.ts`) containing module declarations (`declare module '@client-game';`) to resolve TS2307 dynamically missing paths.
+
+[source,typescript]
+----
+it('should init in client mode', async () => {
+    // Both dynamic imports work natively without errors!
+    const { isClientMode } = await import('./config/env');
+    (isClientMode as unknown as Mock).mockReturnValue(true);
+    
+    // Import and execute
+    await import('./main');
+    
+    // ... assertions ...
+});
+----
+
 == ESLint & Type Safety in Tests
 
 Maintain code quality even in tests:

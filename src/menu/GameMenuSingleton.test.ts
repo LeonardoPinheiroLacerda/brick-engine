@@ -10,8 +10,7 @@ describe('GameMenuSingleton', () => {
         const retrieved = GameMenuSingleton.getInstance();
 
         expect(retrieved).toBe(mockInstance);
-        // @ts-expect-error - testing mock property
-        expect(retrieved.name).toBe('MockGameMenu');
+        expect((retrieved as unknown as { name: string }).name).toBe('MockGameMenu');
     });
 
     it('should overwrite the previous instance when setInstance is called again', () => {

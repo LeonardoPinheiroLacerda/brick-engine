@@ -66,8 +66,7 @@ describe('DisplayRenderer', () => {
             const mockState = { isColorEnabled: () => false } as unknown as State;
 
             // [ACT]
-            // @ts-expect-error - accessing protected method for testing
-            renderer.renderCell(cell, mockState);
+            (renderer as unknown as { renderCell: (c: unknown, s: unknown) => void })['renderCell'](cell, mockState);
 
             // [ASSERT]
             expect(mockP5.stroke).toHaveBeenCalledWith(Color.DEFAULT);
@@ -78,8 +77,7 @@ describe('DisplayRenderer', () => {
             const mockState = { isColorEnabled: () => true } as unknown as State;
 
             // [ACT]
-            // @ts-expect-error - accessing protected method for testing
-            renderer.renderCell(cell, mockState);
+            (renderer as unknown as { renderCell: (c: unknown, s: unknown) => void })['renderCell'](cell, mockState);
 
             // [ASSERT]
             expect(mockP5.stroke).toHaveBeenCalledWith(Color.INACTIVE);

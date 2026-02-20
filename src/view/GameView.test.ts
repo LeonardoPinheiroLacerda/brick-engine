@@ -1,5 +1,5 @@
 /** @vitest-environment jsdom */
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import GameView from './GameView';
 import type p5 from 'p5';
 import { ControlKey } from '../core/types/enums';
@@ -70,7 +70,7 @@ describe('GameView', () => {
         expect(actionBtn.mousePressed).toHaveBeenCalled();
 
         // Trigger a click simulation
-        const pressHandler = actionBtn.mousePressed.mock.calls[0][0];
+        const pressHandler = (actionBtn.mousePressed as unknown as Mock).mock.calls[0][0];
         pressHandler();
 
         expect(mockControl.notify).toHaveBeenCalledWith(ControlKey.ACTION, expect.anything());
@@ -83,7 +83,7 @@ describe('GameView', () => {
 
         // @ts-expect-error - testing private property
         const actionBtn = gameView._actionBtn;
-        const initialCalls = actionBtn.mousePressed.mock.calls.length;
+        const initialCalls = (actionBtn.mousePressed as unknown as Mock).mock.calls.length;
 
         // [ACT]
         gameView.unbindControls();
