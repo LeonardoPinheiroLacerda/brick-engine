@@ -1,0 +1,168 @@
+= Testing Best Practices with Vitest
+:toc: left
+:icons: font
+
+This document defines the standards and best practices for unit testing in the Brick Engine project using **Vitest**. It is designed to be easily parsed by both developers and AI assistants.
+
+== Core Pattern: Triple A (AAA)
+
+All tests must follow the **Arrange, Act, Assert** pattern. Use explicit comments to demarcate these phases, as this helps AI models understand the test logic context.
+
+=== [ARRANGE]
+Set up the test environment, prepare data, and initialize the object under test.
+[source,typescript]
+----
+// [ARRANGE]
+const grid = new GameGrid();
+const coordinate = { x: 5, y: 5 };
+----
+
+=== [ACT]
+Execute the specific method or behavior being tested. Limit this to a single action if possible.
+[source,typescript]
+----
+// [ACT]
+const result = grid.isValidCoordinate(coordinate);
+----
+
+=== [ASSERT]
+Verify the outcome. Use descriptive expectations.
+[source,typescript]
+----
+// [ASSERT]
+expect(result).toBe(true);
+----
+
+== Naming Conventions
+
+Test descriptions should follow the pattern: `should [expected result] when [scenario or action]`.
+
+*   *Bad:* `test grid validation`
+*   *Good:* `should return true when coordinate is within grid boundaries`
+
+== AI-Assisted Testing Best Practices
+
+To facilitate AI-driven test generation and debugging:
+
+1.  **Be Explicit**: Use the `// [ARRANGE]`, `// [ACT]`, and `// [ASSERT]` tags.
+2.  **Context Injection**: When asking an AI to write a test, provide the interface of the module and dependencies.
+3.  **One Logic per Test**: Avoid "Giant Tests". Test one specific behavior per `it` block.
+4.  **Mocking Constants**: Always mock global configurations (like `configs`) to ensure tests are deterministic.
+
+== Vitest Configuration Standard
+
+*   **Globals**: Use `globals: true` to avoid importing `describe`, `it`, `expect` in every file.
+*   **Environment**: Use `@vitest-environment jsdom` at the top of files that interact with DOM or p5.js.
+*   **Coverage**: Target at least 80% coverage for "Engines" and "Helpers".
+*   **Aliases**: If using bundler aliases (e.g., `@client-game`), define them in `vitest.config.ts` using `resolve.alias`.
+
+== Advanced Mocking & Stubs
+
+=== Mocking Browser APIs
+For tests requiring browser features in JSDOM:
+
+[source,typescript]
+----
+// [ARRANGE]
+vi.stubGlobal('localStorage', {
+    getItem: vi.fn(),
+    setItem: vi.fn(),
+});
+
+vi.stubGlobal('AudioContext', vi.fn().mockImplementation(function() {
+    return {
+        createGain: vi.fn().mockReturnThis(),
+        destination: {},
+    };
+}));
+----
+
+=== Constructible Mocks
+When mocking a class that will be instantiated with `new`, Vitest requires the mock to be a `function` or `class`:
+
+[source,typescript]
+----
+vi.mock('./MyModule', () => ({
+    default: vi.fn().mockImplementation(function() {
+        return {
+            doSomething: vi.fn()
+        };
+    })
+}));
+----
+
+=== Hoisted Variables
+If you need to share variables between your test and the `vi.mock` factory (which is hoisted), use `vi.hoisted`:
+
+[source,typescript]
+----
+const { mockRef } = vi.hoisted(() => ({
+    mockRef: { id: 1 }
+}));
+
+vi.mock('./module', () => ({
+    default: () => mockRef
+}));
+----
+
+== Testing Entry Points (main.ts)
+
+Tests for entry points that execute code on import require isolation:
+
+1.  Use `vi.resetModules()` in `beforeEach`.
+2.  Use dynamic `import()` within the `it` block.
+3.  Set environment flags (like `APP_MODE`) *before* the dynamic import.
+
+[source,typescript]
+----
+it('should init in client mode', async () => {
+    (isClientMode as vi.Mock).mockReturnValue(true);
+    await import('./main'); // Triggers execution
+    expect(p5).toHaveBeenCalled();
+});
+----
+
+== ESLint & Type Safety in Tests
+
+Maintain code quality even in tests:
+
+*   **Avoid `any`**: Use `unknown as vi.Mock` or cast to specific interfaces.
+*   **Private Members**: Use `// @ts-expect-error` or `(instance as any)._privateProp` only when absolutely necessary to verify internal state, but prefer testing public behavior.
+*   **Mock Dependencies**: Mock sub-packages (e.g., `view` or `manager`) when testing core orchestrators to isolate logic.
+
+== Example: Testing a Grid Engine
+
+[source,typescript]
+----
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import GridAnalysisEngine from './GridAnalysisEngine';
+import { Grid } from '../../../types/modules';
+
+describe('GridAnalysisEngine', () => {
+    let engine: GridAnalysisEngine;
+    let mockGrid: Grid;
+
+    beforeEach(() => {
+        // [ARRANGE]
+        mockGrid = {
+            width: 10,
+            height: 20,
+            isCellActive: vi.fn(),
+            // ... other properties
+        } as unknown as Grid;
+        engine = new GridAnalysisEngine(mockGrid);
+    });
+
+    it('should identify full rows when all cells in a row are active', () => {
+        // [ARRANGE]
+        vi.mocked(mockGrid.isCellActive).mockImplementation(({ y }) => y === 5);
+
+        // [ACT]
+        const fullRows = engine.getFullRows();
+
+        // [ASSERT]
+        expect(fullRows).toContain(5);
+        expect(fullRows.length).toBe(1);
+    });
+});
+----
