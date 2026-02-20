@@ -18,20 +18,13 @@ describe('GameState', () => {
     });
 
     describe('setup', () => {
-        it('should initialize with default values and load from localStorage', () => {
-            // [ARRANGE] Mock stored High Score
-            vi.mocked(localStorage.getItem).mockImplementation(key => {
-                if (key === 'GAME.SCORE') return '500';
-                return null;
-            });
-
+        it('should initialize with default values', () => {
             // [ACT]
             state.setup();
 
             // [ASSERT]
             expect(state.isOn()).toBe(false);
             expect(state.isColorEnabled()).toBe(true);
-            expect(state.getHighScore()).toBe(500);
         });
     });
 
@@ -97,13 +90,12 @@ describe('GameState', () => {
         it('should save to localStorage when a persisted property changes', () => {
             // [ARRANGE]
             state.setup();
-            state.setPersistenceKey('MY_APP');
 
             // [ACT]
-            state.setHighScore(1000);
+            state.setColorEnabled(false);
 
             // [ASSERT]
-            expect(localStorage.setItem).toHaveBeenCalledWith('MY_APP.GAME.SCORE', '1000');
+            expect(localStorage.setItem).toHaveBeenCalledWith('colorEnabled', 'false');
         });
     });
 });

@@ -51,6 +51,13 @@ export default abstract class Game implements Initializable {
         this.setSwitchHandler(game._switchHandler);
     }
 
+    /**
+     * Registers a custom object or module for session persistence.
+     * Custom serializables allow games to save specific properties in the browser session.
+     * These properties are restored automatically alongside engine modules when resuming a `PLAYING` state.
+     *
+     * @param {Serializable} serializable - The custom object to be saved.
+     */
     addSerializable(serializable: Serializable) {
         this._serializables.push(serializable);
     }
@@ -123,8 +130,6 @@ export default abstract class Game implements Initializable {
                 module.setup();
             }
         });
-
-        this._modules.state.setPersistenceKey(this.getPersistenceKey());
 
         Object.values(this._modules).forEach(module => {
             if (InterfaceIdentifierHelper.isStateSyncable(module)) {

@@ -110,5 +110,4 @@ export enum StateProperty {
     GAME_OVER = 'gameOver',
     COLOR_ENABLED = 'colorEnabled',
     MUTED = 'muted',
-    HIGH_SCORE = 'highScore',
 }

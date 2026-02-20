@@ -1,37 +1,27 @@
-import { Debuggable, StateSyncable } from '../../types/Interfaces';
-import { Score, State } from '../../types/modules';
+import { Debuggable } from '../../types/Interfaces';
+import { Score } from '../../types/modules';
 import { Serializable } from '../../../types/interfaces';
 
 /**
  * Manages game scoring, levels, and high score tracking.
- * Handles multipliers and synchronizes high scores with the state module.
+ * Acts as the authority for the game's `highScore`, persisting it directly to `LocalStorage`.
+ * Handles multipliers and supports Session serialization out of the box.
  */
-export default class GameScore implements Score, StateSyncable, Debuggable, Serializable {
+export default class GameScore implements Score, Debuggable, Serializable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
     private _maxLevel: number = 10;
-
-    _state: State;
+    private _highScore: number = 0;
 
     serialId: string = 'score';
-
-    /**
-     * Sets the state module explicitly.
-     * Use {@link syncState} for automated injection.
-     *
-     * @param {State} state - The game state module.
-     */
-    setState(state: State): void {
-        this._state = state;
-    }
 
     /**
      * Initializes the score module.
      * Currently a no-op but required by interface.
      */
     setup(): void {
-        // No setup needed for now
+        this._highScore = Number(localStorage.getItem('highScore'));
     }
 
     /**
@@ -42,7 +32,9 @@ export default class GameScore implements Score, StateSyncable, Debuggable, Seri
      */
     increaseScore(amount: number): void {
         this._score += amount * this._multiplier;
-        this._checkHighScore();
+        if (this._score > this._highScore) {
+            this.highScore = this._score;
+        }
     }
 
     /**
@@ -76,18 +68,6 @@ export default class GameScore implements Score, StateSyncable, Debuggable, Seri
      */
     resetLevel(): void {
         this._level = 1;
-    }
-
-    /**
-     * Checks if the current score is higher than the known high score.
-     * If so, updates the high score in the state manager.
-     */
-    private _checkHighScore(): void {
-        if (!this._state) return;
-
-        if (this._score > this._state.getHighScore()) {
-            this._state.setHighScore(this._score);
-        }
     }
 
     /**
@@ -145,12 +125,22 @@ export default class GameScore implements Score, StateSyncable, Debuggable, Seri
     }
 
     /**
-     * Receives the shared game state module for high score synchronization.
+     * Gets the current high score.
      *
-     * @param {State} state - The game state module.
+     * @returns {number} The current high score.
      */
-    syncState(state: State): void {
-        this._state = state;
+    get highScore(): number {
+        return this._highScore;
+    }
+
+    /**
+     * Sets the high score.
+     *
+     * @param {number} value - The new high score.
+     */
+    set highScore(value: number) {
+        this._highScore = value;
+        localStorage.setItem('highScore', value.toString());
     }
 
     /**
@@ -167,17 +157,32 @@ export default class GameScore implements Score, StateSyncable, Debuggable, Seri
         };
     }
 
+    /**
+     * Serializes the current score and level progress into a JSON string.
+     * This is used by the SessionManager to save transient state.
+     *
+     * @returns {string} The serialized JSON data.
+     */
     serialize(): string {
         return JSON.stringify({
             score: this._score,
             multiplier: this._multiplier,
             level: this._level,
+            max_level: this._maxLevel,
         });
     }
+
+    /**
+     * Restores score and level progress from a serialized JSON string.
+     * Used by the SessionManager when recovering an active session.
+     *
+     * @param {string} data - The JSON string containing the saved session data.
+     */
     deserialize(data: string): void {
         const parsed = JSON.parse(data);
         this._score = parsed.score;
         this._multiplier = parsed.multiplier;
         this._level = parsed.level;
+        this._maxLevel = parsed.max_level;
     }
 }

@@ -1,19 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GameScore from './GameScore';
-import { State } from '../../types/modules';
 
 describe('GameScore', () => {
     let gameScore: GameScore;
-    let mockState: State;
 
     beforeEach(() => {
-        mockState = {
-            getHighScore: vi.fn().mockReturnValue(100),
-            setHighScore: vi.fn(),
-        } as unknown as State;
+        vi.stubGlobal('localStorage', {
+            getItem: vi.fn().mockReturnValue('100'),
+            setItem: vi.fn(),
+        });
 
         gameScore = new GameScore();
-        gameScore.syncState(mockState);
+        gameScore.setup();
     });
 
     describe('increaseScore', () => {
@@ -33,7 +31,8 @@ describe('GameScore', () => {
             gameScore.increaseScore(150);
 
             // [ASSERT]
-            expect(mockState.setHighScore).toHaveBeenCalledWith(150);
+            expect(localStorage.setItem).toHaveBeenCalledWith('highScore', '150');
+            expect(gameScore.highScore).toBe(150);
         });
 
         it('should NOT update high score if current score is lower than high score', () => {
@@ -41,7 +40,8 @@ describe('GameScore', () => {
             gameScore.increaseScore(50);
 
             // [ASSERT]
-            expect(mockState.setHighScore).not.toHaveBeenCalled();
+            expect(localStorage.setItem).not.toHaveBeenCalled();
+            expect(gameScore.highScore).toBe(100);
         });
     });
 

@@ -448,13 +448,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#score-number">1.1. <code>score: number</code></a></li>
 <li><a href="#level-number">1.2. <code>level: number</code></a></li>
 <li><a href="#multiplier-number">1.3. <code>multiplier: number</code></a></li>
-<li><a href="#increasescoreamount-number-void">1.4. <code>increaseScore(amount: number): void</code></a></li>
-<li><a href="#resetscore-void">1.5. <code>resetScore(): void</code></a></li>
-<li><a href="#increaselevelamount-number-void">1.6. <code>increaseLevel(amount: number): void</code></a></li>
-<li><a href="#resetlevel-void">1.7. <code>resetLevel(): void</code></a></li>
-<li><a href="#getformattedscoredigits-number-string">1.8. <code>getFormattedScore(digits: number): string</code></a></li>
-<li><a href="#syncstatestate-state-void">1.9. <code>syncState(state: State): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.10. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#highscore-number">1.4. <code>highScore: number</code></a></li>
+<li><a href="#increasescoreamount-number-void">1.5. <code>increaseScore(amount: number): void</code></a></li>
+<li><a href="#resetscore-void">1.6. <code>resetScore(): void</code></a></li>
+<li><a href="#increaselevelamount-number-void">1.7. <code>increaseLevel(amount: number): void</code></a></li>
+<li><a href="#resetlevel-void">1.8. <code>resetLevel(): void</code></a></li>
+<li><a href="#getformattedscoredigits-number-string">1.9. <code>getFormattedScore(digits: number): string</code></a></li>
+<li><a href="#serialize-string">1.10. <code>serialize(): string</code></a></li>
+<li><a href="#deserializedata-string-void">1.11. <code>deserialize(data: string): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
@@ -464,7 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameScore</code> module tracks player performance during a session. It manages the current score, game levels, and multipliers, while ensuring high scores are correctly validated and persisted via <code>GameState</code>.</p>
+<p>The <code>GameScore</code> module tracks player performance during a session. It manages the current score, game levels, multipliers, and acts as the authority for the game&#8217;s <code>highScore</code>, persisting it directly to <code>LocalStorage</code>. It also fully supports Session serialization out of the box.</p>
 </div>
 </div>
 </div>
@@ -493,7 +495,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">1.4. <code>increaseScore(amount: number): void</code></a></h3>
+<h3 id="highscore-number"><a class="link" href="#highscore-number">1.4. <code>highScore: number</code></a></h3>
+<div class="paragraph">
+<p>Read and Write property for the highest overall score achieved.</p>
+</div>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>When set, it automatically persists the value directly to <code>LocalStorage</code> under the <code>highScore</code> key. It does not use <code>GameState</code> for this persistence.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">1.5. <code>increaseScore(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Adds points to the current session.</p>
 </div>
@@ -523,19 +538,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Increases the score by <code>amount * multiplier</code>. Automatically compares the new score against the persisted <code>highScore</code> in <code><a href="GameState.html">GameState</a></code> and updates it if a new record is reached.</p>
+<p>Increases the score by <code>amount * multiplier</code>. Automatically compares the new score against the internal <code>highScore</code> property and updates it if a new record is reached (which in turn persists the new record to <code>LocalStorage</code>).</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="resetscore-void"><a class="link" href="#resetscore-void">1.5. <code>resetScore(): void</code></a></h3>
+<h3 id="resetscore-void"><a class="link" href="#resetscore-void">1.6. <code>resetScore(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the session score to zero.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">1.6. <code>increaseLevel(amount: number): void</code></a></h3>
+<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">1.7. <code>increaseLevel(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Increases the game difficulty level.</p>
 </div>
@@ -564,14 +579,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">1.7. <code>resetLevel(): void</code></a></h3>
+<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">1.8. <code>resetLevel(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the level counter to 1.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">1.8. <code>getFormattedScore(digits: number): string</code></a></h3>
+<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">1.9. <code>getFormattedScore(digits: number): string</code></a></h3>
 <div class="paragraph">
 <p>Returns the score as a padded string suitable for HUD display.</p>
 </div>
@@ -606,42 +621,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">1.9. <code>syncState(state: State): void</code></a></h3>
-<div class="paragraph">
-<p>Links the score module with the persistent game state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>state</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/modules/State.html">State</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code><a href="GameState.html">GameState</a></code> module.</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="serialize-string"><a class="link" href="#serialize-string">1.10. <code>serialize(): string</code></a></h3>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Implements the <code><a href="../interfaces/StateSyncable.html">StateSyncable</a></code> interface. This connection is used to fetch and update the global high score.</p>
+<p>Implements <code><a href="../interfaces/Serializable.html">Serializable</a></code>. Packs the current <code>score</code>, <code>level</code>, <code>max_level</code>, <code>multiplier</code>, and <code>highScore</code> into a JSON string to be managed by the active game session.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.10. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="deserializedata-string-void"><a class="link" href="#deserializedata-string-void">1.11. <code>deserialize(data: string): void</code></a></h3>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Implements <code><a href="../interfaces/Serializable.html">Serializable</a></code>. Restores all progress from a saved session string.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

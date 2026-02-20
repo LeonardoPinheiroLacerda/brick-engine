@@ -51,12 +51,12 @@ describe('HudRenderer', () => {
                     isOff: vi.fn().mockReturnValue(false),
                     isPlaying: vi.fn().mockReturnValue(true),
                     isColorEnabled: vi.fn().mockReturnValue(true),
-                    getHighScore: vi.fn().mockReturnValue(1000),
                 },
                 score: {
                     score: 500,
                     level: 1,
                     maxLevel: 10,
+                    highScore: 1000,
                 },
                 hudGrid: {
                     forEach: vi.fn(callback => {
@@ -92,9 +92,8 @@ describe('HudRenderer', () => {
                     isMuted: vi.fn().mockReturnValue(false),
                     isOff: vi.fn().mockReturnValue(false),
                     isPlaying: vi.fn().mockReturnValue(true),
-                    getHighScore: vi.fn().mockReturnValue(1000),
                 },
-                score: { score: 0, level: 1, maxLevel: 10 },
+                score: { score: 0, level: 1, maxLevel: 10, highScore: 1000 },
                 hudGrid: { forEach: vi.fn() },
             } as unknown as GameModules;
 

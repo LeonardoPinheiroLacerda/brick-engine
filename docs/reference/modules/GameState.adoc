@@ -18,6 +18,13 @@ The `GameState` module acts as the central, single source of truth for the game'
 
 As defined in the Architectural Patterns, `GameState` is responsible for all `LocalStorage` logic. Other modules (like `xref:GameSound.adoc[GameSound]`) must sync their internal state with this module via the `xref:../interfaces/StateSyncable.adoc[StateSyncable]` interface.
 
+== Persistence vs. Session
+
+It is important to understand the boundary between `GameState` persistence and the `Game` Session management:
+
+*   **GameState Persistence**: Manages **long-term, cross-session** data. It persists user preferences (like `muted`, `colorEnabled`) to `LocalStorage`. This data remains even after a Game Over or when completely restarting the engine.
+*   **Game Session**: Managed by the `xref:Game.adoc[Game]` class utilizing a `SessionManager` and `Serializable` modules. A Session saves the **transient, intra-session** progress (e.g., the active grid layout, the current score, the current level). Session data is automatically cleared when the game reaches a `GAME_OVER` state, when the `RESET` button is pressed, or when the player manually uses the `EXIT` control.
+
 == API Reference
 
 === `isOn(): boolean`
@@ -259,35 +266,7 @@ Toggles the master mute status.
 
 '''
 
-=== `getHighScore(): number`
 
-Retrieves the highest score recorded.
-
-**Returns**
-
-`number` - The stored high score.
-
-
-'''
-
-=== `setHighScore(value: number): void`
-
-Updates the high score.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`value` |`number` |The new record score.
-|===
-
-**Behavior**
-
-Updates the value and persists it to `LocalStorage`. High scores are prefixed by the game's persistence key.
-
-
-'''
 
 === `subscribe(property: StateProperty, callback: (value: boolean | number) => void): void`
 
@@ -332,31 +311,7 @@ Removes a state change listener.
 
 '''
 
-=== `setPersistenceKey(key: string): void`
 
-Configures the unique identifier for storage.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`key` |`string` |The prefix to use for `LocalStorage` entries.
-|===
-
-
-'''
-
-=== `getPersistenceKey(): string`
-
-Retrieves the currently configured storage key.
-
-**Returns**
-
-`string` - The persistence key.
-
-
-'''
 
 === `getDebugData(): Record<string, string | number | boolean>`
 

@@ -12,7 +12,7 @@
 :idprefix:
 :idseparator: -
 
-The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.
+The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, session restoration, and integration with P5.js. All games must extend this class.
 
 == Properties
 
@@ -23,6 +23,25 @@ The `Game` class is the heart of your application. It manages the game loop (tic
 |===
 
 == API Reference
+
+
+'''
+
+=== `addSerializable(serializable: Serializable): void`
+
+Registers a custom object or module for session persistence.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`serializable` |`xref:../interfaces/Serializable.adoc[Serializable]` |The custom object to be saved in the active session.
+|===
+
+**Behavior**
+
+This method serves to add new custom serializables of the game being developed. This allows the game to save custom properties (like specific player power-ups or puzzle progress) in the browser session. These properties can be automatically restored if the user leaves and returns, continuing the game from the `PLAYING` state. Note that engine modules implementing `Serializable` are automatically detected and added.
 
 
 '''
@@ -219,6 +238,13 @@ Cleans up the game instance.
 
 Stops the P5.js loop, unbinds all control event listeners, and stops all playing sounds. Use this before disposing of a game instance to prevent memory leaks.
 
+== Session Management
+
+The `Game` base class automatically orchestrates gameplay sessions by subscribing to system-level `xref:GameState.adoc[GameState]` events:
+
+*   **Restoring Sessions**: When the state changes to `PLAYING`, the `Game` checks if there are any active sessions stored for its registered `Serializable` instances. If an active session is detected, it triggers a UI modal asking the user if they wish to resume their previous session.
+*   **Clearing Sessions**: The active session is automatically wiped when the state changes to `GAME_OVER`, ensuring that players do not resume a lost game.
+
 == Automated System Controls
 
 The `Game` base class automatically registers listeners for system-level buttons:
@@ -226,9 +252,9 @@ The `Game` base class automatically registers listeners for system-level buttons
 *   **POWER**: Toggles engine state.
 *   **SOUND**: Toggles master mute.
 *   **COLOR**: Toggles theme color mode.
-*   **RESET**: Resets the grid and score.
+*   **RESET**: Resets the grid, score, clears the active session, and resets the game state.
 *   **START_PAUSE**: Manages the game lifecycle:
 ** Starts the game from the Title Screen.
 ** Toggles pause during gameplay.
-** Restarts the game immediately if in a Game Over state (via `resetGameOver`).
-*   **EXIT**: Hard stop of the draw loop. In server mode, the orchestrator typically uses the switch handler to return to the `GameMenu`.
+** Restarts the game immediately if in a Game Over state (via `resetGameOver`), and clears the active session.
+*   **EXIT**: Clears the active session and performs a hard stop of the draw loop. In server mode, the orchestrator typically uses the switch handler to return to the `GameMenu`.

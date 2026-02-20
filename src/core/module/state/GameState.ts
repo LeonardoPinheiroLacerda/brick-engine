@@ -1,4 +1,3 @@
-import configs from '../../../config/configs';
 import { Debuggable } from '../../types/Interfaces';
 import { State } from '../../types/modules';
 import { StateProperty } from '../../types/Types';
@@ -14,9 +13,8 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
     [StateProperty.START]           : { defaultValue: false },
     [StateProperty.PLAYING]         : { defaultValue: false },
     [StateProperty.GAME_OVER]       : { defaultValue: false },
-    [StateProperty.COLOR_ENABLED]   : { defaultValue: true  , storageKey: configs.storageKeys.colorEnabled },
-    [StateProperty.MUTED]           : { defaultValue: false , storageKey: configs.storageKeys.muted },
-    [StateProperty.HIGH_SCORE]      : { defaultValue: 0     , storageKey: configs.storageKeys.score },
+    [StateProperty.COLOR_ENABLED]   : { defaultValue: true   , storageKey: 'colorEnabled' },
+    [StateProperty.MUTED]           : { defaultValue: false  , storageKey: 'muted'        },
 };
 
 /**
@@ -25,13 +23,13 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
  * Provides a central hub for tracking game lifecycle states (on, running, gameOver)
  * and user preferences (color enabled).
  *
+ *
  * **Persistence Responsibility:**
- * This class is the SOLE responsible for persisting and loading player state
- * (like mute settings) from LocalStorage. Other modules should NOT access LocalStorage directly.
+ * This class is the SOLE responsible for persisting and loading generic, cross-session
+ * player preferences (like mute settings and color toggle) from LocalStorage.
+ * It does NOT handle transient session data (GameSession) or specific scoring logic (GameScore).
  */
 export default class GameState implements State, Debuggable {
-    private _persistenceKey: string = '';
-
     private _state: Map<StateProperty, boolean | number> = new Map();
 
     /** Map to store property names and their associated subscription callbacks. */
@@ -80,7 +78,7 @@ export default class GameState implements State, Debuggable {
 
             const config = STATE_CONFIG[property];
             if (config.storageKey) {
-                localStorage.setItem(`${this._persistenceKey}.${config.storageKey}`, JSON.stringify(value));
+                localStorage.setItem(config.storageKey, JSON.stringify(value));
             }
 
             this._notify(property, value);
@@ -280,24 +278,6 @@ export default class GameState implements State, Debuggable {
     }
 
     /**
-     * Gets the current high score.
-     *
-     * @returns {number} The high score.
-     */
-    getHighScore(): number {
-        return this._state.get(StateProperty.HIGH_SCORE) as number;
-    }
-
-    /**
-     * Updates the high score.
-     *
-     * @param {number} value - The new high score.
-     */
-    setHighScore(value: number): void {
-        this._set(StateProperty.HIGH_SCORE, value);
-    }
-
-    /**
      * Toggles the color enabled state.
      */
     toggleColorEnabled(): void {
@@ -341,25 +321,6 @@ export default class GameState implements State, Debuggable {
     }
 
     /**
-     * Sets the persistence key for the state.
-     * This key is used to generate unique keys for each state property in LocalStorage.
-     *
-     * @param {string} key - The persistence key.
-     */
-    setPersistenceKey(key: string): void {
-        this._persistenceKey = key;
-    }
-
-    /**
-     * Gets the persistence key for the state.
-     *
-     * @returns {string} The persistence key.
-     */
-    getPersistenceKey(): string {
-        return this._persistenceKey;
-    }
-
-    /**
      * Retrieves debug information about the game state.
      *
      * @returns {Record<string, string | number | boolean>} The debug data.
@@ -373,7 +334,6 @@ export default class GameState implements State, Debuggable {
             game_over: this.isGameOver(),
             color_enabled: this.isColorEnabled(),
             muted: this.isMuted(),
-            high_score: this.getHighScore(),
         };
     }
 }

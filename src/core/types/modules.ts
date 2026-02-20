@@ -543,20 +543,6 @@ export interface State extends Initializable {
     setMuted(value: boolean): void;
 
     /**
-     * Retrieves the high score from persistence.
-     *
-     * @returns {number} The current high score.
-     */
-    getHighScore(): number;
-
-    /**
-     * Updates and persists the high score.
-     *
-     * @param {number} value - The new record.
-     */
-    setHighScore(value: number): void;
-
-    /**
      * Subscribes to changes in a specific state property.
      *
      * @param {StateProperty} property - The state property to monitor.
@@ -606,20 +592,6 @@ export interface State extends Initializable {
      * Resets the game over state and starts the game again.
      */
     resetGameOver(): void;
-
-    /**
-     * Configures the key used for local storage persistence.
-     *
-     * @param {string} key - The unique prefix for storage keys.
-     */
-    setPersistenceKey(key: string): void;
-
-    /**
-     * Retrieves the current persistence key.
-     *
-     * @returns {string} The storage prefix.
-     */
-    getPersistenceKey(): string;
 }
 
 /**
@@ -784,6 +756,9 @@ export interface Score extends Initializable {
     /** Current session score points. */
     score: number;
 
+    /** Current high score. */
+    highScore: number;
+
     /**
      * Adds points to the score, applying the current multiplier.
      *
@@ -824,11 +799,4 @@ export interface Score extends Initializable {
      * Resets the level to the starting value (1).
      */
     resetLevel(): void;
-
-    /**
-     * Dependencies injection map for Score context.
-     *
-     * @param {State} state - The game state module for high score persistence.
-     */
-    setState(state: State): void;
 }

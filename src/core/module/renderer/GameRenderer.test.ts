@@ -74,9 +74,8 @@ describe('GameRenderer', () => {
                     isOff: vi.fn().mockReturnValue(false),
                     isPlaying: vi.fn().mockReturnValue(true),
                     isColorEnabled: vi.fn().mockReturnValue(true),
-                    getHighScore: vi.fn().mockReturnValue(0),
                 },
-                score: { score: 0, level: 1, maxLevel: 10 },
+                score: { score: 0, level: 1, maxLevel: 10, highScore: 0 },
                 hudGrid: { forEach: vi.fn() },
             } as unknown as GameModules;
 

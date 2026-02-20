@@ -94,7 +94,7 @@ export default class HudRenderer implements Renderer {
 
         //Hi-Score text
         text.textOnHud('Hi-Score', { x: 0.05, y: 0.23 });
-        text.textOnHud(state.getHighScore().toString(), { x: 0.05, y: 0.3 });
+        text.textOnHud(score.highScore.toString(), { x: 0.05, y: 0.3 });
 
         //Level text
         text.textOnHud('Level', { x: 0.05, y: 0.72 });
