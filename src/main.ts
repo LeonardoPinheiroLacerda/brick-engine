@@ -65,6 +65,7 @@ export const p5Instance = new p5((p: p5) => {
     p.setup = () => {
         activeGame.setup();
         activeGame.view.setupDebugger(activeGame.modules);
+        activeGame.view.setupSessionModal();
     };
 
     p.draw = () => {

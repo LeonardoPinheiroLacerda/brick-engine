@@ -18,6 +18,7 @@ import { Control } from '../core/types/modules';
 import ControlInputHandler from '../core/helpers/ControlInputHandlerHelper';
 import Debugger from './Debugger';
 import { GameModules } from '../core/types/Types';
+import SessionModal from './SessionModal';
 
 // prettier-ignore
 /**
@@ -50,6 +51,7 @@ export default class GameView {
     private _cachedCanvas     : { canvas: p5.Element; canvasWidth: number; canvasHeight: number };
 
     private _debugger         : Debugger;
+    private _sessionModal     : SessionModal;
 
     /**
      * Creates an instance of GameView.
@@ -130,6 +132,19 @@ export default class GameView {
 
         this._cachedCanvas = { canvas, canvasWidth, canvasHeight };
         return this._cachedCanvas;
+    }
+
+    /**
+     * Sets up the session modal with the current game modules.
+     * @param gameModules - The game modules to be used in the session modal.
+     */
+    setupSessionModal() {
+        this._sessionModal = new SessionModal(this._p);
+        this._sessionModal.setup();
+    }
+
+    showSessionModal(onConfirm: () => void, onCancel: () => void) {
+        this._sessionModal.show(onConfirm, onCancel);
     }
 
     /**

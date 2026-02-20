@@ -1,17 +1,20 @@
 import { Debuggable, StateSyncable } from '../../types/Interfaces';
 import { Score, State } from '../../types/modules';
+import { Serializable } from '../../../types/interfaces';
 
 /**
  * Manages game scoring, levels, and high score tracking.
  * Handles multipliers and synchronizes high scores with the state module.
  */
-export default class GameScore implements Score, StateSyncable, Debuggable {
+export default class GameScore implements Score, StateSyncable, Debuggable, Serializable {
     private _score: number = 0;
     private _multiplier: number = 1;
     private _level: number = 1;
     private _maxLevel: number = 10;
 
     _state: State;
+
+    serialId: string = 'score';
 
     /**
      * Sets the state module explicitly.
@@ -162,5 +165,19 @@ export default class GameScore implements Score, StateSyncable, Debuggable {
             level: this._level,
             max_level: this._maxLevel,
         };
+    }
+
+    serialize(): string {
+        return JSON.stringify({
+            score: this._score,
+            multiplier: this._multiplier,
+            level: this._level,
+        });
+    }
+    deserialize(data: string): void {
+        const parsed = JSON.parse(data);
+        this._score = parsed.score;
+        this._multiplier = parsed.multiplier;
+        this._level = parsed.level;
     }
 }

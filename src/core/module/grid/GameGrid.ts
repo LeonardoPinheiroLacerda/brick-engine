@@ -9,6 +9,7 @@ import GridTransformEngine from './engines/GridTransformEngine';
 import GridAnalysisEngine from './engines/GridAnalysisEngine';
 import GridLineEngine from './engines/GridLineEngine';
 import GridRegionEngine from './engines/GridRegionEngine';
+import { Serializable } from '../../../types/interfaces';
 
 /**
  * Manages the game's logical grid state and operations.
@@ -16,7 +17,7 @@ import GridRegionEngine from './engines/GridRegionEngine';
  * Provides a robust API for cell manipulation, row/column management,
  * collision detection, and mass grid modifications.
  */
-export default class GameGrid implements Grid, Debuggable {
+export default class GameGrid implements Grid, Debuggable, Serializable {
     /**
      * The internal 2D array representing the game grid [y][x].
      */
@@ -27,6 +28,8 @@ export default class GameGrid implements Grid, Debuggable {
     private _analysisEngine: GridAnalysisEngine;
     private _lineEngine: GridLineEngine;
     private _regionEngine: GridRegionEngine;
+
+    serialId: string = 'grid';
 
     constructor() {
         this._movementEngine = new GridMovementEngine(this);
@@ -590,5 +593,16 @@ export default class GameGrid implements Grid, Debuggable {
             height: this.height,
             activeCells: this._grid.flat().filter(cell => cell.value > 0).length,
         };
+    }
+
+    serialize(): string {
+        return JSON.stringify({
+            grid: this._grid,
+        });
+    }
+
+    deserialize(data: string): void {
+        const parsed = JSON.parse(data);
+        this._grid = parsed.grid;
     }
 }

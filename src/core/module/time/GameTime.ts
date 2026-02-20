@@ -1,11 +1,12 @@
 import { Debuggable } from '../../types/Interfaces';
 import { Time } from '../../types/modules';
+import { Serializable } from '../../../types/interfaces';
 
 /**
  * Manages game time, frame rates, and tick intervals.
  * Handles the game loop timing and debug statistics (FPS, TPS).
  */
-export default class GameTime implements Time, Debuggable {
+export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
     protected _accumulatedTime: number = 0;
     protected _tickInterval: number;
@@ -13,6 +14,8 @@ export default class GameTime implements Time, Debuggable {
     protected _tps: number = 0;
     protected _tickCounter: number = 0;
     protected _timeSinceLastTpsUpdate: number = 0;
+
+    serialId: string = 'time';
 
     /**
      * Creates an instance of GameTime.
@@ -126,5 +129,15 @@ export default class GameTime implements Time, Debuggable {
             tick_interval: this._tickInterval.toFixed(2),
             accumulated_time: this._accumulatedTime.toFixed(2),
         };
+    }
+
+    serialize(): string {
+        return JSON.stringify({
+            tickInterval: this._tickInterval,
+        });
+    }
+    deserialize(data: string): void {
+        const parsed = JSON.parse(data);
+        this._tickInterval = parsed.tickInterval;
     }
 }

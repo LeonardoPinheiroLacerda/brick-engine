@@ -9,10 +9,13 @@ import GameTime from './module/time/GameTime';
 import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
-import { Initializable, StateSyncable } from './types/Interfaces';
-import { ControlEventType, ControlKey, GameModules } from './types/Types';
+import { Initializable } from './types/Interfaces';
+import { ControlEventType, ControlKey, GameModules, StateProperty } from './types/Types';
 import configs from '../config/configs';
 import GameHudGrid from './module/grid/GameHudGrid';
+import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
+import { Serializable, SessionManager } from '../types/interfaces';
+import LocalStorageSessionManager from './session/LocalStorageSessionManager';
 
 /**
  * Base abstract class for the game.
@@ -25,6 +28,9 @@ export default abstract class Game implements Initializable {
     protected _view: GameView;
 
     protected _modules: GameModules;
+
+    protected _sessionManager: SessionManager;
+    protected _serializables: Serializable[] = [];
 
     private _switchHandler: (newGame: Game) => void;
 
@@ -43,6 +49,10 @@ export default abstract class Game implements Initializable {
      */
     propagateSwitchHandler(game: Game) {
         this.setSwitchHandler(game._switchHandler);
+    }
+
+    addSerializable(serializable: Serializable) {
+        this._serializables.push(serializable);
     }
 
     /**
@@ -109,7 +119,7 @@ export default abstract class Game implements Initializable {
         };
 
         Object.values(this._modules).forEach(module => {
-            if ('setup' in module) {
+            if (InterfaceIdentifierHelper.isInitializable(module)) {
                 module.setup();
             }
         });
@@ -117,8 +127,8 @@ export default abstract class Game implements Initializable {
         this._modules.state.setPersistenceKey(this.getPersistenceKey());
 
         Object.values(this._modules).forEach(module => {
-            if ('syncState' in module && !(module instanceof GameState)) {
-                (module as unknown as StateSyncable).syncState(this._modules.state);
+            if (InterfaceIdentifierHelper.isStateSyncable(module)) {
+                module.syncState(this._modules.state);
             }
         });
 
@@ -131,6 +141,8 @@ export default abstract class Game implements Initializable {
         this.setupGame();
 
         this._subscribeSystemControls();
+        this._subscribeSystemStates();
+
         this._view.bindControls(control);
     }
 
@@ -154,6 +166,11 @@ export default abstract class Game implements Initializable {
                 // Process Logic Tick
                 if (time.shouldTick()) {
                     this.update(this._p.deltaTime);
+
+                    // Save session
+                    this._serializables.forEach(serializable => {
+                        this._sessionManager.saveSession(serializable, this.getPersistenceKey());
+                    });
                 }
 
                 this.render();
@@ -224,6 +241,54 @@ export default abstract class Game implements Initializable {
      */
     abstract drawGameOverScreen(): void;
 
+    private _subscribeSystemStates() {
+        const { state } = this._modules;
+
+        state.subscribe(StateProperty.GAME_OVER, (gameOver: boolean) => {
+            if (gameOver) {
+                this._serializables.forEach(serializable => {
+                    this._sessionManager.clearSession(serializable, this.getPersistenceKey());
+                });
+            }
+        });
+
+        state.subscribe(StateProperty.PLAYING, (playing: boolean) => {
+            if (playing) {
+                const activeSessions: Serializable[] = [];
+
+                // Check for custom serializables
+                this._serializables.forEach(serializable => {
+                    if (this._sessionManager.hasSession(serializable, this.getPersistenceKey())) {
+                        activeSessions.push(serializable);
+                    }
+                });
+
+                // Check for modules serializables
+                this._sessionManager = new LocalStorageSessionManager();
+                Object.values(this._modules).forEach(module => {
+                    if (InterfaceIdentifierHelper.isSerializable(module)) {
+                        this._serializables.push(module);
+                        if (this._sessionManager.hasSession(module, this.getPersistenceKey())) {
+                            activeSessions.push(module);
+                        }
+                    }
+                });
+
+                // If there are active sessions, show the modal
+                if (activeSessions.length > 0 && !this._amIGameMenu()) {
+                    this._view.showSessionModal(
+                        () => {
+                            console.log('Confirm');
+                        },
+                        () => {
+                            console.log('Cancel');
+                        },
+                    );
+                }
+            }
+        });
+    }
+
     private _subscribeSystemControls(): void {
         const { control, state, grid } = this._modules;
 
@@ -242,7 +307,12 @@ export default abstract class Game implements Initializable {
             grid.resetGrid();
             this.modules.score.resetScore();
             this.modules.score.resetLevel();
+            this._clearSession();
             state.resetGame();
+        });
+
+        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
+            this._clearSession();
         });
 
         control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
@@ -254,7 +324,17 @@ export default abstract class Game implements Initializable {
                 state.resume();
             } else if (state.isGameOver()) {
                 state.resetGameOver();
+                this._clearSession();
             }
         });
+    }
+    private _clearSession(): void {
+        this._serializables.forEach(serializable => {
+            this._sessionManager.clearSession(serializable, this.getPersistenceKey());
+        });
+    }
+
+    private _amIGameMenu(): boolean {
+        return this.constructor.name === 'GameMenu';
     }
 }
