@@ -14,6 +14,12 @@ const createMockGame = () => ({
         control: { subscribe: vi.fn() },
         time: { update: vi.fn() },
     },
+    view: {
+        unbindControls: vi.fn(),
+        bindControls: vi.fn(),
+        updateDebuggerGameModules: vi.fn(),
+        setupDebugger: vi.fn(),
+    },
 });
 
 const mockGame = createMockGame();
@@ -40,6 +46,8 @@ vi.mock('./view/GameView', () => {
                 build: vi.fn().mockReturnValue({ canvas: {}, canvasHeight: 100, canvasWidth: 100 }),
                 bindControls: vi.fn(),
                 unbindControls: vi.fn(),
+                setupDebugger: vi.fn(),
+                updateDebuggerGameModules: vi.fn(),
             };
         }),
     };
