@@ -446,7 +446,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#api-reference">1. API Reference</a>
 <ul class="sectlevel2">
 <li><a href="#setup-void">1.1. <code>setup(): void</code></a></li>
-<li><a href="#update-promisevoid">1.2. <code>update(): Promise&lt;void&gt;</code></a></li>
+<li><a href="#setgamemodulesgamemodules-gamemodules-void">1.2. <code>setGameModules(gameModules: GameModules): void</code></a></li>
+<li><a href="#update-promisevoid">1.3. <code>update(): Promise&lt;void&gt;</code></a></li>
 </ul>
 </li>
 <li><a href="#configuration">2. Configuration</a></li>
@@ -479,7 +480,44 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="update-promisevoid"><a class="link" href="#update-promisevoid">1.2. <code>update(): Promise&lt;void&gt;</code></a></h3>
+<h3 id="setgamemodulesgamemodules-gamemodules-void"><a class="link" href="#setgamemodulesgamemodules-gamemodules-void">1.2. <code>setGameModules(gameModules: GameModules): void</code></a></h3>
+<div class="paragraph">
+<p>Updates the active game modules being monitored by the debugger.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gameModules</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/GameModules.html">GameModules</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The new instance of game modules to track.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>When switching games or game states, this method replaces the internal module references and automatically triggers a UI rebuild by calling <code>setup()</code>. Importantly, it preserves the <code>open</code> state of any currently expanded module details (<code>&lt;details&gt;</code> tags) so the layout does not unexpectedly collapse when the new modules load.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="update-promisevoid"><a class="link" href="#update-promisevoid">1.3. <code>update(): Promise&lt;void&gt;</code></a></h3>
 <div class="paragraph">
 <p>Refreshes the overlay with new data from the modules.</p>
 </div>
