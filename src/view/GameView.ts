@@ -16,6 +16,8 @@ import SmallButton from './components/ui/SmallButton';
 import { ControlKey } from '../core/types/enums';
 import { Control } from '../core/types/modules';
 import ControlInputHandler from '../core/helpers/ControlInputHandlerHelper';
+import Debugger from './Debugger';
+import { GameModules } from '../core/types/Types';
 
 // prettier-ignore
 /**
@@ -46,6 +48,8 @@ export default class GameView {
     private _inputHandler     : ControlInputHandler;
 
     private _cachedCanvas     : { canvas: p5.Element; canvasWidth: number; canvasHeight: number };
+
+    private _debugger         : Debugger;
 
     /**
      * Creates an instance of GameView.
@@ -126,6 +130,26 @@ export default class GameView {
 
         this._cachedCanvas = { canvas, canvasWidth, canvasHeight };
         return this._cachedCanvas;
+    }
+
+    /**
+     * Sets up the debugger with the current game modules.
+     * @param gameModules - The game modules to be debugged.
+     */
+    setupDebugger(gameModules: GameModules) {
+        this._debugger = new Debugger(gameModules, this._p);
+        this._debugger.setup();
+    }
+
+    updateDebuggerGameModules(gameModules: GameModules) {
+        this._debugger.setGameModules(gameModules);
+    }
+
+    /**
+     * Updates the debugger with the current game state.
+     */
+    updateDebugger() {
+        this._debugger.update();
     }
 
     /**

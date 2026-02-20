@@ -4,7 +4,6 @@ import GameView from './view/GameView';
 import GameMenu from './menu/GameMenu';
 
 import './config/styles';
-import Debugger from './core/Debugger';
 
 import { isClientMode, isServerMode } from './config/env';
 import ClientGame from '@client-game';
@@ -26,16 +25,9 @@ export const p5Instance = new p5((p: p5) => {
         throw new Error('Invalid APP_MODE');
     }
 
-    let debuggerInstance: Debugger;
-
     // Register the switch handler
     activeGame.setSwitchHandler((newGame: Game) => {
         try {
-            // Destroy the previous debugger instance
-            if (debuggerInstance) {
-                debuggerInstance.destroy();
-            }
-
             // Unbind the previous game controls
             activeGame.view.unbindControls();
 
@@ -45,14 +37,15 @@ export const p5Instance = new p5((p: p5) => {
             // Set the new game
             activeGame = newGame;
             activeGame.setup();
+
+            // Update debugger
+            activeGame.view.updateDebuggerGameModules(activeGame.modules);
+
             // Bind the new game controls
             activeGame.view.bindControls(activeGame.modules.control);
             activeGame.modules.state.turnOn();
 
-            // Create the new debugger instance
-            debuggerInstance = new Debugger(activeGame.modules);
-            debuggerInstance.setup();
-
+            // Setup exit and power buttons
             if (isServerMode() && newGame !== GameMenuSingleton.getInstance()) {
                 newGame.modules.control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
                     newGame.switchGame(GameMenuSingleton.getInstance());
@@ -71,13 +64,11 @@ export const p5Instance = new p5((p: p5) => {
 
     p.setup = () => {
         activeGame.setup();
-
-        debuggerInstance = new Debugger(activeGame.modules);
-        debuggerInstance.setup();
+        activeGame.view.setupDebugger(activeGame.modules);
     };
 
     p.draw = () => {
         activeGame.draw();
-        debuggerInstance.update();
+        activeGame.view.updateDebugger();
     };
 }, document.body);
