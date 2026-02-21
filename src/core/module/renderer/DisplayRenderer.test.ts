@@ -47,7 +47,7 @@ describe('DisplayRenderer', () => {
             // [ARRANGE]
             const grid = [[{ coordinate: { x: 0, y: 0 }, value: 1, color: Color.RED }]];
             const mockModules = {
-                state: { isColorEnabled: () => true },
+                state: { isColorEnabled: () => true, isPlaying: () => true },
             } as unknown as GameModules;
 
             // [ACT]
@@ -63,7 +63,7 @@ describe('DisplayRenderer', () => {
     describe('renderCell', () => {
         it('should use DEFAULT color if color mode is disabled', () => {
             const cell = { coordinate: { x: 0, y: 0 }, value: 1, color: Color.RED };
-            const mockState = { isColorEnabled: () => false } as unknown as State;
+            const mockState = { isColorEnabled: () => false, isPlaying: () => true } as unknown as State;
 
             // [ACT]
             (renderer as unknown as { renderCell: (c: unknown, s: unknown) => void })['renderCell'](cell, mockState);
@@ -74,7 +74,7 @@ describe('DisplayRenderer', () => {
 
         it('should use INACTIVE color if cell value is 0', () => {
             const cell = { coordinate: { x: 0, y: 0 }, value: 0, color: Color.RED };
-            const mockState = { isColorEnabled: () => true } as unknown as State;
+            const mockState = { isColorEnabled: () => true, isPlaying: () => true } as unknown as State;
 
             // [ACT]
             (renderer as unknown as { renderCell: (c: unknown, s: unknown) => void })['renderCell'](cell, mockState);
