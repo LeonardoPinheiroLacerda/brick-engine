@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GameControl from './GameControl';
 import { ControlKey, ControlEventType } from '../../types/enums';
 import { GameModules } from '../../types/Types';
+import { State } from '../../types/modules';
 
 describe('GameControl', () => {
     let control: GameControl;
@@ -9,7 +10,11 @@ describe('GameControl', () => {
 
     beforeEach(() => {
         control = new GameControl();
-        mockModules = {} as GameModules;
+        mockModules = {
+            state: {
+                isOn: vi.fn().mockReturnValue(true),
+            } as unknown as State,
+        } as GameModules;
         control.setModules(mockModules);
     });
 

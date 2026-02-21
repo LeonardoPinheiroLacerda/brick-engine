@@ -666,7 +666,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Executes all callbacks associated with the given key and event type. This is primarily used internally by the input handler but can be used for automated testing or input simulation.</p>
+<p>Executes all callbacks associated with the given key and event type. Events are only dispatched if the game state is ON (<code>isOn()</code>), with the exception of the <code>POWER</code> key, which is always processed.</p>
+</div>
+<div class="paragraph">
+<p><strong>Throws an error</strong> if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.</p>
 </div>
 <hr>
 </div>

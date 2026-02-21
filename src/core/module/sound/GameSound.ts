@@ -152,6 +152,10 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
         // If muted, volume is 0. Otherwise, use configured volume.
         const isMuted = this._state ? this._state.isMuted() : false;
 
+        if (!this._gainNode) {
+            return;
+        }
+
         if (isMuted) {
             this._gainNode.gain.setValueAtTime(0, this._audioContext.currentTime);
         } else {
@@ -201,6 +205,9 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
         state.subscribe(StateProperty.MUTED, () => {
             this._updateGain();
         });
+
+        // Ensure the initial state is applied when synced
+        this._updateGain();
     }
 
     /**

@@ -77,6 +77,7 @@ describe('Game', () => {
         mockView = {
             build: vi.fn(),
             bindControls: vi.fn(),
+            showSessionModal: vi.fn(),
         } as unknown as GameView;
 
         game = new MockGame(mockP5 as unknown as p5, mockView);
@@ -153,12 +154,13 @@ describe('Game', () => {
             const state = game.modules.state;
             const grid = game.modules.grid;
 
+            state.turnOn();
             const spy = vi.spyOn(grid, 'resetGrid');
 
             control.notify(ControlKey.RESET, ControlEventType.PRESSED);
 
             expect(spy).toHaveBeenCalled();
-            expect(state.isStarted()).toBe(false);
+            expect(state.isStarted()).toBe(true);
         });
     });
 });
