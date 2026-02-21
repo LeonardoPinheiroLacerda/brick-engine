@@ -29,8 +29,9 @@ export default abstract class Game implements Initializable {
 
     protected _modules: GameModules;
 
-    protected _sessionManager: SessionManager;
+    protected _sessionManager: SessionManager = new LocalStorageSessionManager();
     protected _serializables: Serializable[] = [];
+    protected _isSessionModalClosed: boolean = false;
 
     private _switchHandler: (newGame: Game) => void;
 
@@ -172,10 +173,13 @@ export default abstract class Game implements Initializable {
                 if (time.shouldTick()) {
                     this.update(this._p.deltaTime);
 
-                    // Save session
-                    this._serializables.forEach(serializable => {
-                        this._sessionManager.saveSession(serializable, this.getPersistenceKey());
-                    });
+                    // Only save session if the session modal was closed
+                    if (this._isSessionModalClosed) {
+                        // Save session
+                        this._serializables.forEach(serializable => {
+                            this._sessionManager.saveSession(serializable, this.getPersistenceKey());
+                        });
+                    }
                 }
 
                 this.render();
@@ -269,7 +273,6 @@ export default abstract class Game implements Initializable {
                 });
 
                 // Check for modules serializables
-                this._sessionManager = new LocalStorageSessionManager();
                 Object.values(this._modules).forEach(module => {
                     if (InterfaceIdentifierHelper.isSerializable(module)) {
                         this._serializables.push(module);
@@ -283,12 +286,19 @@ export default abstract class Game implements Initializable {
                 if (activeSessions.length > 0 && !this._amIGameMenu()) {
                     this._view.showSessionModal(
                         () => {
-                            console.log('Confirm');
+                            // Restore session
+                            this._serializables.forEach(serializable => {
+                                this._sessionManager.loadSession(serializable, this.getPersistenceKey());
+                            });
+                            this._isSessionModalClosed = true;
                         },
                         () => {
-                            console.log('Cancel');
+                            this._clearSession();
+                            this._isSessionModalClosed = true;
                         },
                     );
+                } else {
+                    this._isSessionModalClosed = true;
                 }
             }
         });

@@ -109,7 +109,7 @@ export default class DisplayRenderer implements Renderer {
         const { x, y } = coordinate;
         const { innerOffset, innerSize, paddingOffset, paddingSize, strokeWeight } = this._cellPreCalculatedGeometry;
 
-        if (value === 0) {
+        if (value === 0 || !state.isPlaying()) {
             color = Color.INACTIVE;
         } else {
             color = state.isColorEnabled() ? color : Color.DEFAULT;
