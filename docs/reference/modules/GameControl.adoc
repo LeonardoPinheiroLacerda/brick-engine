@@ -117,7 +117,9 @@ Manually triggers an input event.
 
 **Behavior**
 
-Executes all callbacks associated with the given key and event type. This is primarily used internally by the input handler but can be used for automated testing or input simulation.
+Executes all callbacks associated with the given key and event type. Events are only dispatched if the game state is ON (`isOn()`), with the exception of the `POWER` key, which is always processed. 
+
+*Throws an error* if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.
 
 
 '''

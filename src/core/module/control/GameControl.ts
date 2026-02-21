@@ -103,8 +103,10 @@ export default class GameControl implements Control, Debuggable {
             modules: this._modules,
         };
 
+        const isOn = this._modules.state.isOn() || key === ControlKey.POWER;
+
         const callbacks = this._subscribers.get(key)?.get(type);
-        if (callbacks) {
+        if (callbacks && isOn) {
             callbacks.forEach(callback => callback(event));
         }
     }
