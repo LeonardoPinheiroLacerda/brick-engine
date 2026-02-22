@@ -245,6 +245,14 @@ The `Game` base class automatically orchestrates gameplay sessions by subscribin
 *   **Restoring Sessions**: When the state changes to `PLAYING`, the `Game` checks if there are any active sessions stored for its registered `Serializable` instances. If an active session is detected, it triggers a UI modal asking the user if they wish to resume their previous session.
 *   **Clearing Sessions**: The active session is automatically wiped when the state changes to `GAME_OVER`, ensuring that players do not resume a lost game.
 
+== Client State Snapshot (Reset)
+
+To provide a seamless developer experience, the `Game` class implements an internal mechanism to transparently cache and restore custom client properties. 
+
+When a game is instantiated and its `setupGame()` method is invoked, the base `Game` orchestrates a capture of the client's custom properties using the `xref:InitialStateSnapshot.adoc[InitialStateSnapshot]` utility. This ensures that any attributes added by the developer (e.g., player lives, custom counters) are saved in memory without requiring manual implementation.
+
+When the user triggers a **RESET** action, the `Game` class automatically uses this internal snapshot to restore the custom properties back to their original values, eliminating the need for developers to manually reset their own state variables.
+
 == Automated System Controls
 
 The `Game` base class automatically registers listeners for system-level buttons:

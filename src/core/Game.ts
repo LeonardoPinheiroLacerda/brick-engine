@@ -14,6 +14,7 @@ import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
 import GameHudGrid from './module/grid/GameHudGrid';
 import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
+import InitialStateSnapshot from './InitialStateSnapshot';
 import GameSession from './module/session/GameSession';
 
 /**
@@ -26,9 +27,11 @@ export default abstract class Game implements Initializable {
     protected _p: p5;
     protected _view: GameView;
 
-    private _modules: GameModules;
+    private _modules: GameModules = undefined as unknown as GameModules;
 
-    private _switchHandler: (newGame: Game) => void;
+    private _initialStateSnapshot = new InitialStateSnapshot();
+
+    private _switchHandler: (newGame: Game) => void = undefined as unknown as (newGame: Game) => void;
 
     /**
      * Registers the callback to be used when a game requests to switch to another game.
@@ -56,6 +59,7 @@ export default abstract class Game implements Initializable {
     constructor(p: p5, view: GameView) {
         this._p = p;
         this._view = view;
+        this._initialStateSnapshot.captureBaseProperties(this);
     }
 
     /**
@@ -139,6 +143,7 @@ export default abstract class Game implements Initializable {
         text.setRendererMetrics(renderer.rendererMetrics);
 
         this.setupGame();
+        this._initialStateSnapshot.captureInitialState(this);
 
         this._subscribeSystemControls();
 
@@ -251,6 +256,7 @@ export default abstract class Game implements Initializable {
             this.modules.score.resetLevel();
             this._modules.session.clearSession();
             state.resetGame();
+            this._initialStateSnapshot.restoreInitialState(this);
         });
 
         control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
