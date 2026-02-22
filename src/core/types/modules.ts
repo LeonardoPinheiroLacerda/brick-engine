@@ -1,6 +1,6 @@
 import p5 from 'p5';
 import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound } from './enums';
-import { Initializable, RendererInitializable } from './Interfaces';
+import { Debuggable, Initializable, RendererInitializable, StateSyncable, Serializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty, Vector, Piece, Axis } from './Types';
 
 /**
@@ -799,4 +799,30 @@ export interface Score extends Initializable {
      * Resets the level to the starting value (1).
      */
     resetLevel(): void;
+}
+
+export interface Session extends StateSyncable, Debuggable {
+    gameId: string;
+
+    /**
+     * Registers a serializable object to be saved in the session.
+     *
+     * @param {Serializable} serializable - The object to register.
+     */
+    register(serializable: Serializable): void;
+    /**
+     * Creates or updates the current session.
+     */
+    saveSession(): void;
+
+    /**
+     * Clears the current session.
+     */
+    clearSession(): void;
+
+    /**
+     * Sets the function to be called when the session modal should be shown.
+     * @param {function} callback - The function to be called.
+     */
+    setShowModalFunction(showModal: (onConfirm: () => void, onCancel: () => void) => void): void;
 }

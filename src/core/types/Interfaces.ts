@@ -51,3 +51,9 @@ export interface Debuggable {
      */
     getDebugData(): Record<string, string | number | boolean>;
 }
+
+export interface Serializable {
+    serialId: string;
+    serialize(): string;
+    deserialize(data: string): void;
+}

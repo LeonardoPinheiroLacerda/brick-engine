@@ -164,17 +164,17 @@ setupGame(): void {
 
 '''
 
-=== `getPersistenceKey(): string`
+=== `getGameId(): string`
 
 Abstract method that returns a unique identifier for the game.
 
 **Returns**
 
-`string` - A unique prefix for LocalStorage.
+`string` - A unique identifier for the specific game implementation.
 
 **Behavior**
 
-This key prevents data collisions in LocalStorage if multiple games built with the engine are hosted on the same domain. It's used as a prefix for all persistent state properties (e.g., `my-game.highScore`).
+This identifier is used as a namespace for local storage and other session-specific requirements logic. It is used as a prefix for all persistent state properties (e.g., `my-game::highScore`), avoiding collisions across multiple games hosted on the same domain.
 
 
 '''

@@ -40,6 +40,7 @@ class MockGame extends Game {
     render = vi.fn();
     setupGame = vi.fn();
     getPersistenceKey = () => 'test-game';
+    getGameId = () => 'test-game';
     drawTitleScreen = vi.fn();
     drawGameOverScreen = vi.fn();
 }
@@ -78,6 +79,7 @@ describe('Game', () => {
             build: vi.fn(),
             bindControls: vi.fn(),
             showSessionModal: vi.fn(),
+            onModal: vi.fn(),
         } as unknown as GameView;
 
         game = new MockGame(mockP5 as unknown as p5, mockView);

@@ -1,6 +1,6 @@
 import { Debuggable } from '../../types/Interfaces';
 import { Score } from '../../types/modules';
-import { Serializable } from '../../../types/interfaces';
+import { Serializable } from '../../types/Interfaces';
 
 /**
  * Manages game scoring, levels, and high score tracking.

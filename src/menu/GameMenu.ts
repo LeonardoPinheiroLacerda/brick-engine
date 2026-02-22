@@ -116,7 +116,7 @@ export default class GameMenu extends Game {
         // Menu doesn't have a game over screen
     }
 
-    getPersistenceKey(): string {
+    getGameId(): string {
         return 'game-menu';
     }
 }

@@ -97,6 +97,7 @@ describe('GameMenu', () => {
         mockView = {
             build: vi.fn(),
             bindControls: vi.fn(),
+            showSessionModal: vi.fn(),
         };
 
         menu = new GameMenu(mockP5 as unknown as p5, mockView as unknown as GameView);

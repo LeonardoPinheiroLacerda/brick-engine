@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="The heart of the application, managing the game loop and orchestration of modules.">
-<meta name="keywords" content="core, game-loop, architecture, orchestration">
-<title>Game Class Reference</title>
+<meta name="description" content="Represents the orchestrator entry state, allowing navigation between games.">
+<meta name="keywords" content="menu, selection, entry point, root">
+<title>GameMenu Module Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,33 +435,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Game Class Reference</h1>
+<h1>GameMenu Module Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#_initialization_configuration">1. Initialization &amp; Configuration</a>
 <ul class="sectlevel2">
-<li><a href="#addserializableserializable-serializable-void">2.1. <code>addSerializable(serializable: Serializable): void</code></a></li>
-<li><a href="#updatedeltatime-number-void">2.2. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#setswitchhandlerhandler-newgame-game-void-void">2.3. <code>setSwitchHandler(handler: (newGame: Game) &#8658; void): void</code></a></li>
-<li><a href="#propagateswitchhandlergame-game-void">2.4. <code>propagateSwitchHandler(game: Game): void</code></a></li>
-<li><a href="#updatedeltatime-number-void-2">2.5. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#render-void">2.6. <code>render(): void</code></a></li>
-<li><a href="#setupgame-void">2.7. <code>setupGame(): void</code></a></li>
-<li><a href="#getgameid-string">2.8. <code>getGameId(): string</code></a></li>
-<li><a href="#drawtitlescreen-void">2.9. <code>drawTitleScreen(): void</code></a></li>
-<li><a href="#drawgameoverscreen-void">2.10. <code>drawGameOverScreen(): void</code></a></li>
-<li><a href="#switchgamenewgame-game-void">2.11. <code>switchGame(newGame: Game): void</code></a></li>
-<li><a href="#destroy-void">2.12. <code>destroy(): void</code></a></li>
+<li><a href="#_setupgame_void">1.1. <code>setupGame(): void</code></a></li>
+<li><a href="#_getgameid_string">1.2. <code>getGameId(): string</code></a></li>
 </ul>
 </li>
-<li><a href="#session-management">3. Session Management</a></li>
-<li><a href="#automated-system-controls">4. Automated System Controls</a></li>
+<li><a href="#_rendering">2. Rendering</a>
+<ul class="sectlevel2">
+<li><a href="#_drawtitlescreen_void">2.1. <code>drawTitleScreen(): void</code></a></li>
+<li><a href="#_drawgameoverscreen_void">2.2. <code>drawGameOverScreen(): void</code></a></li>
+</ul>
+</li>
+<li><a href="#_event_handling">3. Event Handling</a>
+<ul class="sectlevel2">
+<li><a href="#_menu_controls">3.1. Menu Controls</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -469,441 +466,73 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>Game</code> class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, session restoration, and integration with P5.js. All games must extend this class.</p>
+<p>The <code>GameMenu</code> is a concrete implementation of <code><a href="Game.html">Game</a></code>. It serves as the primary gateway or entry screen for players, allowing them to browse and select which logic/game module to initialize from the central <code>GameRepository</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="_initialization_configuration"><a class="link" href="#_initialization_configuration">1. Initialization &amp; Configuration</a></h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>modules</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/GameModules.html">GameModules</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Access to all engine modules (grid, control, state, etc.).</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
-<div class="sectionbody">
-<hr>
 <div class="sect2">
-<h3 id="addserializableserializable-serializable-void"><a class="link" href="#addserializableserializable-serializable-void">2.1. <code>addSerializable(serializable: Serializable): void</code></a></h3>
+<h3 id="_setupgame_void"><a class="link" href="#_setupgame_void">1.1. <code>setupGame(): void</code></a></h3>
 <div class="paragraph">
-<p>Registers a custom object or module for session persistence.</p>
+<p>Adjusts formatting and presentation logic specific to the menu&#8217;s state (e.g., Font setup). Unbinds standard game inputs and hooks into UP/DOWN/ENTER for menu navigation.</p>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serializable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/Serializable.html">Serializable</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The custom object to be saved in the active session.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>This method serves to add new custom serializables of the game being developed. This allows the game to save custom properties (like specific player power-ups or puzzle progress) in the browser session. These properties can be automatically restored if the user leaves and returns, continuing the game from the <code>PLAYING</code> state. Note that engine modules implementing <code>Serializable</code> are automatically detected and added.</p>
-</div>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">2.2. <code>update(deltaTime: number): void</code></a></h3>
+<h3 id="_getgameid_string"><a class="link" href="#_getgameid_string">1.2. <code>getGameId(): string</code></a></h3>
 <div class="paragraph">
-<p>Abstract method for processing game logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deltaTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time elapsed since the last tick (in milliseconds).</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setswitchhandlerhandler-newgame-game-void-void"><a class="link" href="#setswitchhandlerhandler-newgame-game-void-void">2.3. <code>setSwitchHandler(handler: (newGame: Game) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Registers the callback to be used when a game requests to switch to another game.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>handler</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The callback function receiving the target <code><a href="../modules/Game.html">Game</a></code> instance.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>This method is used by the engine orchestrator (typically in <code>main.ts</code>) to define how game switches should be handled (e.g., re-binding controls, resetting the debugger). It allows the <code>Game</code> class to remain decoupled from the specific implementation of the menu or other games.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="propagateswitchhandlergame-game-void"><a class="link" href="#propagateswitchhandlergame-game-void">2.4. <code>propagateSwitchHandler(game: Game): void</code></a></h3>
-<div class="paragraph">
-<p>Copies the active switch handler from one game instance to another.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>game</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../modules/Game.html">Game</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The source game instance providing the handler.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Ensures continuity of the orchestration logic during a switch. When a new game is instantiated and about to become active, this method is called to pass the <code>_switchHandler</code> from the current <code>activeGame</code> to the new one.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="updatedeltatime-number-void-2"><a class="link" href="#updatedeltatime-number-void-2">2.5. <code>update(deltaTime: number): void</code></a></h3>
-<div class="paragraph">
-<p>Abstract method for processing game logic.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>deltaTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time elapsed since the last tick (in milliseconds).</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Called by the engine on every game logic tick, but <strong>only</strong> when the game state is <code>playing</code>. The tick frequency is controlled by <code>configs.game.tickInterval</code>.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">update(deltaTime: number): void {
-    const { grid } = this.modules;
-    grid.shiftRowsDown(1);
-}</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="render-void"><a class="link" href="#render-void">2.6. <code>render(): void</code></a></h3>
-<div class="paragraph">
-<p>Abstract method for processing visual frames.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Called by the engine on every render frame (based on browser refresh rate, typically 60fps). Use this for animations, particles, or visual effects that do not affect the logical game state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">render(): void {
-    // Logic for smooth animations
-}</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setupgame-void"><a class="link" href="#setupgame-void">2.7. <code>setupGame(): void</code></a></h3>
-<div class="paragraph">
-<p>Abstract method for setting up the specific game instance.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Called once after all engine modules are initialized and linked. Use this to set initial player state, subscribe to custom controls, or prepare level data.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">setupGame(): void {
-    this.modules.text.setTextSize(FontSize.MEDIUM);
-}</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="getgameid-string"><a class="link" href="#getgameid-string">2.8. <code>getGameId(): string</code></a></h3>
-<div class="paragraph">
-<p>Abstract method that returns a unique identifier for the game.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>string</code> - A unique identifier for the specific game implementation.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>This identifier is used as a namespace for local storage and other session-specific requirements logic. It is used as a prefix for all persistent state properties (e.g., <code>my-game::highScore</code>), avoiding collisions across multiple games hosted on the same domain.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.9. <code>drawTitleScreen(): void</code></a></h3>
-<div class="paragraph">
-<p>Abstract method for rendering the game&#8217;s welcome screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Called when the engine is powered ON but the game has not yet been started. Executed during the main draw loop instead of <code>update</code> and <code>render</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.10. <code>drawGameOverScreen(): void</code></a></h3>
-<div class="paragraph">
-<p>Abstract method for rendering the screen after a game ends.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Called when the game state is <code>gameOver</code>. Executed as the primary rendering logic during Game Over, replacing the standard <code>render()</code> call to allow for clean menus or high-score displays.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="switchgamenewgame-game-void"><a class="link" href="#switchgamenewgame-game-void">2.11. <code>switchGame(newGame: Game): void</code></a></h3>
-<div class="paragraph">
-<p>Switches execution to a new game instance.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>newGame</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Game</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The instance of the new game class to load.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Destroys the current game instance (cleaning up listeners and stopping sound) and passes the new instance to the registered <code>_switchHandler</code>. This is the core mechanism for moving between different games or menus.</p>
-</div>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph">
-<p>[!NOTE]
-The switch handler must be set or propagated before calling this method, otherwise an error will be logged.</p>
-</div>
-</blockquote>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">this.switchGame(new MyOtherGame(this.p, this.view));</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="destroy-void"><a class="link" href="#destroy-void">2.12. <code>destroy(): void</code></a></h3>
-<div class="paragraph">
-<p>Cleans up the game instance.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Stops the P5.js loop, unbinds all control event listeners, and stops all playing sounds. Use this before disposing of a game instance to prevent memory leaks.</p>
+<p>Returns <code>game-menu</code>. This ensures the menu state is intentionally ignored by the <code><a href="GameSession.html">GameSession</a></code> mechanism, averting logic conflicts that would try to parse the "menu" as a playable state.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="session-management"><a class="link" href="#session-management">3. Session Management</a></h2>
+<h2 id="_rendering"><a class="link" href="#_rendering">2. Rendering</a></h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_drawtitlescreen_void"><a class="link" href="#_drawtitlescreen_void">2.1. <code>drawTitleScreen(): void</code></a></h3>
 <div class="paragraph">
-<p>The <code>Game</code> base class automatically orchestrates gameplay sessions by subscribing to system-level <code><a href="GameState.html">GameState</a></code> events:</p>
+<p>Renders the interactive menu. Reads from <code>GameRepository</code> and formats the available games interactively according to the internal active pointer value (<code>_gameSelectionPointer</code>). Updates dynamically when UP/DOWN are pressed.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_drawgameoverscreen_void"><a class="link" href="#_drawgameoverscreen_void">2.2. <code>drawGameOverScreen(): void</code></a></h3>
+<div class="paragraph">
+<p>The <code>GameMenu</code> does not have a Game Over logic screen hook. Attempting to enter the <code>GAME_OVER</code> state will have no visual effect.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event_handling"><a class="link" href="#_event_handling">3. Event Handling</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_menu_controls"><a class="link" href="#_menu_controls">3.1. Menu Controls</a></h3>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Restoring Sessions</strong>: When the state changes to <code>PLAYING</code>, the <code>Game</code> checks if there are any active sessions stored for its registered <code>Serializable</code> instances. If an active session is detected, it triggers a UI modal asking the user if they wish to resume their previous session.</p>
+<p><strong>UP</strong>: Decrements the selection pointer.</p>
 </li>
 <li>
-<p><strong>Clearing Sessions</strong>: The active session is automatically wiped when the state changes to <code>GAME_OVER</code>, ensuring that players do not resume a lost game.</p>
+<p><strong>DOWN</strong>: Increments the selection pointer.</p>
+</li>
+<li>
+<p><strong>START_PAUSE</strong> (Enter): Instantiates the game at the current selection pointer and invokes <code>this.switchGame()</code> to seamlessly hand over control.</p>
+</li>
+<li>
+<p><strong>EXIT</strong>: In the context of the menu, it does not apply switching behaviors.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="automated-system-controls"><a class="link" href="#automated-system-controls">4. Automated System Controls</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The <code>Game</code> base class automatically registers listeners for system-level buttons:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>POWER</strong>: Toggles engine state.</p>
-</li>
-<li>
-<p><strong>SOUND</strong>: Toggles master mute.</p>
-</li>
-<li>
-<p><strong>COLOR</strong>: Toggles theme color mode.</p>
-</li>
-<li>
-<p><strong>RESET</strong>: Resets the grid, score, clears the active session, and resets the game state.</p>
-</li>
-<li>
-<p><strong>START_PAUSE</strong>: Manages the game lifecycle:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Starts the game from the Title Screen.</p>
-</li>
-<li>
-<p>Toggles pause during gameplay.</p>
-</li>
-<li>
-<p>Restarts the game immediately if in a Game Over state (via <code>resetGameOver</code>), and clears the active session.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>EXIT</strong>: Clears the active session and performs a hard stop of the draw loop. In server mode, the orchestrator typically uses the switch handler to return to the <code>GameMenu</code>.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2026-02-22 17:04:15 -0300
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
-<script>
-if (!hljs.initHighlighting.called) {
-  hljs.initHighlighting.called = true
-  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
-}
-</script>
 </body>
 </html>

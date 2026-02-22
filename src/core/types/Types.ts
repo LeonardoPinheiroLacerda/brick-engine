@@ -1,5 +1,5 @@
 import { Color, ControlKey, ControlEventType, StateProperty } from './enums';
-import { Control, Grid, RendererComposite, Score, SoundModule, State, Text, Time } from './modules';
+import { Control, Grid, RendererComposite, Score, Session, SoundModule, State, Text, Time } from './modules';
 
 export { Color, ControlKey, ControlEventType, StateProperty };
 
@@ -100,6 +100,8 @@ export type GameModules = {
     sound: SoundModule;
     /** The scoring and progression module. */
     score: Score;
+    /** The game session module. */
+    session: Session;
 };
 
 /**

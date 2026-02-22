@@ -9,7 +9,7 @@ import GridTransformEngine from './engines/GridTransformEngine';
 import GridAnalysisEngine from './engines/GridAnalysisEngine';
 import GridLineEngine from './engines/GridLineEngine';
 import GridRegionEngine from './engines/GridRegionEngine';
-import { Serializable } from '../../../types/interfaces';
+import { Serializable } from '../../types/Interfaces';
 
 /**
  * Manages the game's logical grid state and operations.

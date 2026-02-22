@@ -18,6 +18,7 @@
     "docs:build": "node ./scripts/generate-docs.js",
     "test": "vitest run",
     "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build && npm run build:types"
   },
   "dependencies": {

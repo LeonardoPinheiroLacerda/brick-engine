@@ -10,12 +10,11 @@ import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
 import { Initializable } from './types/Interfaces';
-import { ControlEventType, ControlKey, GameModules, StateProperty } from './types/Types';
+import { ControlEventType, ControlKey, GameModules } from './types/Types';
 import configs from '../config/configs';
 import GameHudGrid from './module/grid/GameHudGrid';
 import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
-import { Serializable, SessionManager } from '../types/interfaces';
-import LocalStorageSessionManager from './session/LocalStorageSessionManager';
+import GameSession from './module/session/GameSession';
 
 /**
  * Base abstract class for the game.
@@ -27,11 +26,7 @@ export default abstract class Game implements Initializable {
     protected _p: p5;
     protected _view: GameView;
 
-    protected _modules: GameModules;
-
-    protected _sessionManager: SessionManager = new LocalStorageSessionManager();
-    protected _serializables: Serializable[] = [];
-    protected _isSessionModalClosed: boolean = false;
+    private _modules: GameModules;
 
     private _switchHandler: (newGame: Game) => void;
 
@@ -50,17 +45,6 @@ export default abstract class Game implements Initializable {
      */
     propagateSwitchHandler(game: Game) {
         this.setSwitchHandler(game._switchHandler);
-    }
-
-    /**
-     * Registers a custom object or module for session persistence.
-     * Custom serializables allow games to save specific properties in the browser session.
-     * These properties are restored automatically alongside engine modules when resuming a `PLAYING` state.
-     *
-     * @param {Serializable} serializable - The custom object to be saved.
-     */
-    addSerializable(serializable: Serializable) {
-        this._serializables.push(serializable);
     }
 
     /**
@@ -124,6 +108,7 @@ export default abstract class Game implements Initializable {
             time: new GameTime(configs.game.tickInterval),
             sound: new GameSound(),
             score: new GameScore(),
+            session: new GameSession(),
         };
 
         Object.values(this._modules).forEach(module => {
@@ -138,7 +123,16 @@ export default abstract class Game implements Initializable {
             }
         });
 
-        const { text, control, renderer } = this._modules;
+        Object.values(this._modules).forEach(module => {
+            if (InterfaceIdentifierHelper.isSerializable(module)) {
+                this._modules.session.register(module);
+            }
+        });
+
+        const { text, control, renderer, session } = this._modules;
+
+        session.gameId = this.getGameId();
+        session.setShowModalFunction(this._view.showSessionModal.bind(this._view));
 
         control.setModules(this._modules);
 
@@ -147,7 +141,6 @@ export default abstract class Game implements Initializable {
         this.setupGame();
 
         this._subscribeSystemControls();
-        this._subscribeSystemStates();
 
         this._view.bindControls(control);
     }
@@ -173,13 +166,7 @@ export default abstract class Game implements Initializable {
                 if (time.shouldTick()) {
                     this.update(this._p.deltaTime);
 
-                    // Only save session if the session modal was closed
-                    if (this._isSessionModalClosed) {
-                        // Save session
-                        this._serializables.forEach(serializable => {
-                            this._sessionManager.saveSession(serializable, this.getPersistenceKey());
-                        });
-                    }
+                    this._modules.session.saveSession();
                 }
 
                 this.render();
@@ -231,14 +218,6 @@ export default abstract class Game implements Initializable {
     abstract setupGame(): void;
 
     /**
-     * Abstract method for getting the persistence key.
-     * Called after the game modules are initialized and sets itself in the state module.
-     *
-     * @returns {string} The persistence key.
-     */
-    abstract getPersistenceKey(): string;
-
-    /**
      * Abstract method for drawing the Title Screen (Welcome).
      * Called when the game is ON but not yet STARTED.
      */
@@ -250,59 +229,7 @@ export default abstract class Game implements Initializable {
      */
     abstract drawGameOverScreen(): void;
 
-    private _subscribeSystemStates() {
-        const { state } = this._modules;
-
-        state.subscribe(StateProperty.GAME_OVER, (gameOver: boolean) => {
-            if (gameOver) {
-                this._serializables.forEach(serializable => {
-                    this._sessionManager.clearSession(serializable, this.getPersistenceKey());
-                });
-            }
-        });
-
-        state.subscribe(StateProperty.PLAYING, (playing: boolean) => {
-            if (playing) {
-                const activeSessions: Serializable[] = [];
-
-                // Check for custom serializables
-                this._serializables.forEach(serializable => {
-                    if (this._sessionManager.hasSession(serializable, this.getPersistenceKey())) {
-                        activeSessions.push(serializable);
-                    }
-                });
-
-                // Check for modules serializables
-                Object.values(this._modules).forEach(module => {
-                    if (InterfaceIdentifierHelper.isSerializable(module)) {
-                        this._serializables.push(module);
-                        if (this._sessionManager.hasSession(module, this.getPersistenceKey())) {
-                            activeSessions.push(module);
-                        }
-                    }
-                });
-
-                // If there are active sessions, show the modal
-                if (activeSessions.length > 0 && !this._amIGameMenu()) {
-                    this._view.showSessionModal(
-                        () => {
-                            // Restore session
-                            this._serializables.forEach(serializable => {
-                                this._sessionManager.loadSession(serializable, this.getPersistenceKey());
-                            });
-                            this._isSessionModalClosed = true;
-                        },
-                        () => {
-                            this._clearSession();
-                            this._isSessionModalClosed = true;
-                        },
-                    );
-                } else {
-                    this._isSessionModalClosed = true;
-                }
-            }
-        });
-    }
+    abstract getGameId(): string;
 
     private _subscribeSystemControls(): void {
         const { control, state, grid } = this._modules;
@@ -322,12 +249,12 @@ export default abstract class Game implements Initializable {
             grid.resetGrid();
             this.modules.score.resetScore();
             this.modules.score.resetLevel();
-            this._clearSession();
+            this._modules.session.clearSession();
             state.resetGame();
         });
 
         control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-            this._clearSession();
+            this._modules.session.clearSession();
         });
 
         control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
@@ -339,17 +266,7 @@ export default abstract class Game implements Initializable {
                 state.resume();
             } else if (state.isGameOver()) {
                 state.resetGameOver();
-                this._clearSession();
             }
         });
-    }
-    private _clearSession(): void {
-        this._serializables.forEach(serializable => {
-            this._sessionManager.clearSession(serializable, this.getPersistenceKey());
-        });
-    }
-
-    private _amIGameMenu(): boolean {
-        return this.constructor.name === 'GameMenu';
     }
 }

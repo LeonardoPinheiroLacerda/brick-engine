@@ -42,12 +42,13 @@ describe('SessionModal', () => {
         };
 
         mockP5 = {
-            select: vi.fn().mockReturnValue({}), // Mock body select
+            select: vi.fn().mockImplementation(() => {
+                return {};
+            }), // Mock body select
             createDiv: vi.fn().mockImplementation(() => {
                 // If it's the first time, return the container mock
                 // Otherwise return a generic element mock
-                // @ts-expect-error This is a mock function, it's fine
-                if (mockP5.createDiv.mock.calls.length === 1) return mockContainer;
+                if ((mockP5.createDiv as import('vitest').Mock).mock.calls.length === 1) return mockContainer;
                 return mockGenericElement;
             }),
             createP: vi.fn().mockReturnValue(mockGenericElement),

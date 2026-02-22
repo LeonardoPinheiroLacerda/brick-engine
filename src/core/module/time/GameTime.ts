@@ -1,6 +1,6 @@
 import { Debuggable } from '../../types/Interfaces';
 import { Time } from '../../types/modules';
-import { Serializable } from '../../../types/interfaces';
+import { Serializable } from '../../types/Interfaces';
 
 /**
  * Manages game time, frame rates, and tick intervals.

@@ -1,4 +1,4 @@
-import { Serializable } from '../../../types/interfaces';
+import { Serializable } from '../../types/Interfaces';
 import GameGrid from './GameGrid';
 
 /**

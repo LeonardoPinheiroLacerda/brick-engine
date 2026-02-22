@@ -1,6 +1,5 @@
 import GameState from '../module/state/GameState';
-import { Debuggable, Initializable, StateSyncable } from '../types/Interfaces';
-import { Serializable } from '../../types/interfaces';
+import { Debuggable, Initializable, StateSyncable, Serializable } from '../types/Interfaces';
 
 export default class InterfaceIdentifierHelper {
     static isSerializable(module: object): module is Serializable {
