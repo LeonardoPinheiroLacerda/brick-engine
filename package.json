@@ -28,7 +28,6 @@
     "prepublishOnly": "npm run build && npm run build:types"
   },
   "dependencies": {
-    "brick-engine-js": "file:brick-engine-js-1.0.0.tgz",
     "colord": "^2.9.3",
     "p5": "^2.2.0"
   },
