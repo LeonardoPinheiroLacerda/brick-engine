@@ -77,6 +77,8 @@ const _switchHandler = (newGame: Game) => {
  * @returns {p5} The p5 instance.
  */
 export function bootstrap(ClientGame: ClientGameConstructor) {
+    require.context('../public/style', true, /\.css$/);
+
     return new p5((p: p5) => {
         _p = p;
 
