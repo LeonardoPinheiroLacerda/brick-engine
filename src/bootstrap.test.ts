@@ -91,8 +91,6 @@ vi.mock('./menu/GameMenuSingleton', () => ({
     },
 }));
 
-vi.mock('./config/styles', () => ({}));
-
 describe('main.ts', () => {
     beforeEach(() => {
         vi.clearAllMocks();
