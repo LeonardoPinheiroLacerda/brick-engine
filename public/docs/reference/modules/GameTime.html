@@ -451,7 +451,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#reset-void">1.4. <code>reset(): void</code></a></li>
 <li><a href="#incrementtickintervalamount-number-void">1.5. <code>incrementTickInterval(amount: number): void</code></a></li>
 <li><a href="#decrementtickintervalamount-number-void">1.6. <code>decrementTickInterval(amount: number): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.7. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#settickintervalinterval-number-void">1.7. <code>setTickInterval(interval: number): void</code></a></li>
+<li><a href="#setmintickintervalinterval-number-void">1.8. <code>setMinTickInterval(interval: number): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.9. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
@@ -607,7 +609,65 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.7. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="settickintervalinterval-number-void"><a class="link" href="#settickintervalinterval-number-void">1.7. <code>setTickInterval(interval: number): void</code></a></h3>
+<div class="paragraph">
+<p>Sets the tick interval exactly to the specified value.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>interval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The new interval between logic updates (in milliseconds).</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="setmintickintervalinterval-number-void"><a class="link" href="#setmintickintervalinterval-number-void">1.8. <code>setMinTickInterval(interval: number): void</code></a></h3>
+<div class="paragraph">
+<p>Sets the minimum limit for the tick interval, preventing the game from speeding up beyond this point.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>interval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum interval allowed (in milliseconds).</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.9. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

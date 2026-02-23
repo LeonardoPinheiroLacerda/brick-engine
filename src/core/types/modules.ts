@@ -482,7 +482,7 @@ export interface State extends Initializable {
     /**
      * Checks if the game system is "off" (powered down).
      *
-     * @returns {boolean} `true` if the system is offƒ.
+     * @returns {boolean} `true` if the system is off.
      */
     isOff(): boolean;
 

@@ -34,7 +34,8 @@ Subscribes to `xref:GameState.adoc[GameState]` interactions.
 **Behavior**
 
 Reacts to:
-- `PLAYING`: If a session for the current `gameId` exists and is NOT the game menu, it invokes the modal via `_showSessionModal`. If accepted, calls `deserialize` on all registered targets. If canceled or if no previous session exists, proceeds normally. 
+- `PLAYING`: If a session for the current `gameId` exists, is NOT the game menu, and the modal hasn't been closed, it invokes the modal via `_showSessionModal`. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
+- `ON` (when false): Resets the modal state tracking closure, allowing the session modal to appear again after the device is powered back on.
 - `GAME_OVER`: Clears active session entirely.
 
 == Internals

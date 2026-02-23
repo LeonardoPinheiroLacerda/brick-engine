@@ -508,7 +508,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Reacts to:
-- <code>PLAYING</code>: If a session for the current <code>gameId</code> exists and is NOT the game menu, it invokes the modal via <code>_showSessionModal</code>. If accepted, calls <code>deserialize</code> on all registered targets. If canceled or if no previous session exists, proceeds normally.
+- <code>PLAYING</code>: If a session for the current <code>gameId</code> exists, is NOT the game menu, and the modal hasn&#8217;t been closed, it invokes the modal via <code>_showSessionModal</code>. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
+- <code>ON</code> (when false): Resets the modal state tracking closure, allowing the session modal to appear again after the device is powered back on.
 - <code>GAME_OVER</code>: Clears active session entirely.</p>
 </div>
 </div>
@@ -525,7 +526,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-22 17:03:55 -0300
+Last updated 2026-02-22 22:09:51 -0300
 </div>
 </div>
 </body>

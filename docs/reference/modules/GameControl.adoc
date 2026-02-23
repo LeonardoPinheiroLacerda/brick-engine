@@ -117,7 +117,11 @@ Manually triggers an input event.
 
 **Behavior**
 
-Executes all callbacks associated with the given key and event type. Events are only dispatched if the game state is ON (`isOn()`), with the exception of the `POWER` key, which is always processed. 
+Executes all callbacks associated with the given key and event type, subject to the following state-based rules:
+
+*   **System Off (`isOff()`)**: Only the `xref:../enums/ControlKey.adoc[POWER]` key is processed. All other keys are ignored.
+*   **Active States (`!isStarted() || isPlaying() || isGameOver()`)**: All keys are processed normally.
+*   **Paused State (`isPaused()`)**: Only system keys (e.g., `START_PAUSE`, `SOUND`, `COLOR`, `RESET`, `EXIT`) are processed. Gameplay keys are ignored.
 
 *Throws an error* if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.
 

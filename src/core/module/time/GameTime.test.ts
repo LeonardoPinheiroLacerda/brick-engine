@@ -7,6 +7,8 @@ describe('GameTime', () => {
     beforeEach(() => {
         gameTime = new GameTime();
         gameTime.setup();
+        gameTime.setTickInterval(100);
+        gameTime.setMinTickInterval(10);
     });
 
     describe('update & shouldTick', () => {
