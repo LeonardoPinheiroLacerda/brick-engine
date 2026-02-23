@@ -596,12 +596,14 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
     }
 
     serialize(): string {
+        console.log('serialize');
         return JSON.stringify({
             grid: this._grid,
         });
     }
 
     deserialize(data: string): void {
+        console.log('deserialize');
         const parsed = JSON.parse(data);
         this._grid = parsed.grid;
     }

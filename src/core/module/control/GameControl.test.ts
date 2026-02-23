@@ -13,6 +13,11 @@ describe('GameControl', () => {
         mockModules = {
             state: {
                 isOn: vi.fn().mockReturnValue(true),
+                isOff: vi.fn().mockReturnValue(false),
+                isStarted: vi.fn().mockReturnValue(false),
+                isPlaying: vi.fn().mockReturnValue(false),
+                isPaused: vi.fn().mockReturnValue(false),
+                isGameOver: vi.fn().mockReturnValue(false),
             } as unknown as State,
         } as GameModules;
         control.setModules(mockModules);

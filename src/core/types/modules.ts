@@ -482,7 +482,7 @@ export interface State extends Initializable {
     /**
      * Checks if the game system is "off" (powered down).
      *
-     * @returns {boolean} `true` if the system is off.
+     * @returns {boolean} `true` if the system is offƒ.
      */
     isOff(): boolean;
 
@@ -648,6 +648,8 @@ export interface Control extends Initializable {
  * Manages the game loop timing, ticks, and delta time.
  */
 export interface Time extends Initializable {
+    /** The interval between logic ticks in milliseconds. */
+    tickInterval: number;
     /**
      * Accumulates passed time and calculates FPS/TPS.
      *
@@ -667,9 +669,6 @@ export interface Time extends Initializable {
      */
     reset(): void;
 
-    /** The interval between logic ticks in milliseconds. */
-    tickInterval: number;
-
     /**
      * Increases the tick interval (slowing down the game logic).
      *
@@ -683,6 +682,20 @@ export interface Time extends Initializable {
      * @param {number} amount - Milliseconds to subtract.
      */
     decrementTickInterval(amount: number): void;
+
+    /**
+     * Sets the tick interval.
+     *
+     * @param {number} interval - The new tick interval in milliseconds.
+     */
+    setTickInterval(interval: number): void;
+
+    /**
+     * Sets the minimum tick interval.
+     *
+     * @param {number} interval - The new minimum tick interval in milliseconds.
+     */
+    setMinTickInterval(interval: number): void;
 }
 
 /**

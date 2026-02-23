@@ -10,8 +10,7 @@ import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
 import { Initializable } from './types/Interfaces';
-import { ControlEventType, ControlKey, GameModules } from './types/Types';
-import configs from '../config/configs';
+import { ControlEventType, ControlKey, GameModules, StateProperty } from './types/Types';
 import GameHudGrid from './module/grid/GameHudGrid';
 import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
 import InitialStateSnapshot from './InitialStateSnapshot';
@@ -109,7 +108,7 @@ export default abstract class Game implements Initializable {
             text: new GameText(this._p),
             state: new GameState(),
             control: new GameControl(),
-            time: new GameTime(configs.game.tickInterval),
+            time: new GameTime(),
             sound: new GameSound(),
             score: new GameScore(),
             session: new GameSession(),
@@ -254,6 +253,7 @@ export default abstract class Game implements Initializable {
             grid.resetGrid();
             this.modules.score.resetScore();
             this.modules.score.resetLevel();
+            this.modules.time.reset();
             this._modules.session.clearSession();
             state.resetGame();
             this._initialStateSnapshot.restoreInitialState(this);
@@ -271,7 +271,22 @@ export default abstract class Game implements Initializable {
             } else if (state.isPaused()) {
                 state.resume();
             } else if (state.isGameOver()) {
+                grid.resetGrid();
+                this.modules.score.resetScore();
+                this.modules.score.resetLevel();
+                this.modules.time.reset();
+                this.modules.session.clearSession();
+                this._initialStateSnapshot.restoreInitialState(this);
                 state.resetGameOver();
+            }
+        });
+
+        state.subscribe(StateProperty.ON, isOn => {
+            if (!isOn) {
+                grid.resetGrid();
+                this.modules.score.resetScore();
+                this.modules.score.resetLevel();
+                this.modules.time.reset();
             }
         });
     }

@@ -56,7 +56,7 @@ export default class GameSession implements Session {
 
     syncState(state: State): void {
         state.subscribe(StateProperty.PLAYING, isPlaying => {
-            if (isPlaying) {
+            if (isPlaying && this._isModalClosed === false) {
                 if (!this._hasSession() || this._isGameMenuInstance()) {
                     this._isModalClosed = true;
                     return;
@@ -80,6 +80,12 @@ export default class GameSession implements Session {
         state.subscribe(StateProperty.GAME_OVER, isGameOver => {
             if (isGameOver) {
                 this._destroySession();
+            }
+        });
+
+        state.subscribe(StateProperty.ON, isOn => {
+            if (!isOn) {
+                this._isModalClosed = false;
             }
         });
     }

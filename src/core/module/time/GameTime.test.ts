@@ -3,10 +3,9 @@ import GameTime from './GameTime';
 
 describe('GameTime', () => {
     let gameTime: GameTime;
-    const INTERVAL = 100;
 
     beforeEach(() => {
-        gameTime = new GameTime(INTERVAL);
+        gameTime = new GameTime();
         gameTime.setup();
     });
 
@@ -52,7 +51,7 @@ describe('GameTime', () => {
         it('should update TPS every 1000ms', () => {
             // [ARRANGE] Trigger 5 ticks
             for (let i = 0; i < 5; i++) {
-                gameTime.update(INTERVAL);
+                gameTime.update(100);
                 gameTime.shouldTick();
             }
 

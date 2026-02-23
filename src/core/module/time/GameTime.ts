@@ -1,6 +1,7 @@
 import { Debuggable } from '../../types/Interfaces';
 import { Time } from '../../types/modules';
 import { Serializable } from '../../types/Interfaces';
+import configs from '../../../config/configs';
 
 /**
  * Manages game time, frame rates, and tick intervals.
@@ -9,22 +10,15 @@ import { Serializable } from '../../types/Interfaces';
 export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
     protected _accumulatedTime: number = 0;
-    protected _tickInterval: number;
+    protected _initialTickInterval: number = configs.game.tickInterval;
+    protected _minTickInterval: number = configs.game.minTickInterval;
+    protected _tickInterval: number = configs.game.tickInterval;
     protected _fps: number = 0;
     protected _tps: number = 0;
     protected _tickCounter: number = 0;
     protected _timeSinceLastTpsUpdate: number = 0;
 
     serialId: string = 'time';
-
-    /**
-     * Creates an instance of GameTime.
-     *
-     * @param {number} tickInterval - The target interval between game ticks in milliseconds.
-     */
-    constructor(tickInterval: number) {
-        this._tickInterval = tickInterval;
-    }
 
     /**
      * Initializes the time module.
@@ -76,6 +70,7 @@ export default class GameTime implements Time, Debuggable, Serializable {
         this._tps = 0;
         this._tickCounter = 0;
         this._timeSinceLastTpsUpdate = 0;
+        this._tickInterval = this._initialTickInterval;
     }
 
     /**
@@ -113,7 +108,7 @@ export default class GameTime implements Time, Debuggable, Serializable {
      * @param {number} amount - The amount to subtract from the interval.
      */
     decrementTickInterval(amount: number) {
-        const newInterval = Math.max(10, this._tickInterval - amount);
+        const newInterval = Math.max(this._minTickInterval, this._tickInterval - amount);
         this.tickInterval = newInterval;
     }
 
@@ -139,5 +134,11 @@ export default class GameTime implements Time, Debuggable, Serializable {
     deserialize(data: string): void {
         const parsed = JSON.parse(data);
         this._tickInterval = parsed.tickInterval;
+    }
+    setTickInterval(interval: number): void {
+        this._tickInterval = interval;
+    }
+    setMinTickInterval(interval: number): void {
+        this._minTickInterval = interval;
     }
 }

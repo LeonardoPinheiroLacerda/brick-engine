@@ -76,17 +76,17 @@ export enum Sound {
  * These are mapped to physical keys in the Control module.
  */
 export enum ControlKey {
-    UP = 'up',
-    DOWN = 'down',
-    LEFT = 'left',
-    RIGHT = 'right',
-    ACTION = 'action',
-    POWER = 'power',
-    START_PAUSE = 'start_pause',
-    SOUND = 'sound',
-    RESET = 'reset',
-    EXIT = 'exit',
-    COLOR = 'color',
+    UP = 'up;control',
+    DOWN = 'down;control',
+    LEFT = 'left;control',
+    RIGHT = 'right;control',
+    ACTION = 'action;control',
+    POWER = 'power;system',
+    START_PAUSE = 'start_pause;system',
+    SOUND = 'sound;system',
+    RESET = 'reset;system',
+    EXIT = 'exit;system',
+    COLOR = 'color;system',
 }
 
 /**
