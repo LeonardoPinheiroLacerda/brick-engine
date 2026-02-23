@@ -3,8 +3,6 @@ dist/
 .vscode/
 test/
 
-.github/
-
 # Environment files
 .env
 .env.local
