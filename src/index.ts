@@ -7,3 +7,4 @@ export * from './types/interfaces';
 export { default as Game } from './core/Game';
 export { default as GameView } from './view/GameView';
 export { default as configs } from './config/configs';
+export { bootstrap } from './bootstrap';
