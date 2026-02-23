@@ -142,4 +142,6 @@ export default class MyGame extends Game {
 
 == Next Steps
 
-Once you've set up your project and created your game class, explore the modules documentation to learn about all the engine's capabilities.
+Once you've set up your project and created your game class:
+* Explore the modules reference to learn about all the engine's capabilities.
+* Learn how to share your completed game in the **xref:publishing.adoc[Publishing Guide]**.
