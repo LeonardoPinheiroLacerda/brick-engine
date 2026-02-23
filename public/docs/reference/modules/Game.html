@@ -453,11 +453,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#updatedeltatime-number-void-2">2.5. <code>update(deltaTime: number): void</code></a></li>
 <li><a href="#render-void">2.6. <code>render(): void</code></a></li>
 <li><a href="#setupgame-void">2.7. <code>setupGame(): void</code></a></li>
-<li><a href="#getgameid-string">2.8. <code>getGameId(): string</code></a></li>
-<li><a href="#drawtitlescreen-void">2.9. <code>drawTitleScreen(): void</code></a></li>
-<li><a href="#drawgameoverscreen-void">2.10. <code>drawGameOverScreen(): void</code></a></li>
-<li><a href="#switchgamenewgame-game-void">2.11. <code>switchGame(newGame: Game): void</code></a></li>
-<li><a href="#destroy-void">2.12. <code>destroy(): void</code></a></li>
+<li><a href="#drawtitlescreen-void">2.8. <code>drawTitleScreen(): void</code></a></li>
+<li><a href="#drawgameoverscreen-void">2.9. <code>drawGameOverScreen(): void</code></a></li>
+<li><a href="#switchgamenewgame-game-void">2.10. <code>switchGame(newGame: Game): void</code></a></li>
+<li><a href="#destroy-void">2.11. <code>destroy(): void</code></a></li>
 </ul>
 </li>
 <li><a href="#session-management">3. Session Management</a></li>
@@ -488,6 +487,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Property</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gameId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique identifier for the specific game implementation. Used as a namespace for local storage and other session-specific requirements logic.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>modules</code></p></td>
@@ -724,26 +728,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getgameid-string"><a class="link" href="#getgameid-string">2.8. <code>getGameId(): string</code></a></h3>
-<div class="paragraph">
-<p>Abstract method that returns a unique identifier for the game.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>string</code> - A unique identifier for the specific game implementation.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>This identifier is used as a namespace for local storage and other session-specific requirements logic. It is used as a prefix for all persistent state properties (e.g., <code>my-game::highScore</code>), avoiding collisions across multiple games hosted on the same domain.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.9. <code>drawTitleScreen(): void</code></a></h3>
+<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.8. <code>drawTitleScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the game&#8217;s welcome screen.</p>
 </div>
@@ -756,7 +741,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.10. <code>drawGameOverScreen(): void</code></a></h3>
+<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.9. <code>drawGameOverScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the screen after a game ends.</p>
 </div>
@@ -769,7 +754,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="switchgamenewgame-game-void"><a class="link" href="#switchgamenewgame-game-void">2.11. <code>switchGame(newGame: Game): void</code></a></h3>
+<h3 id="switchgamenewgame-game-void"><a class="link" href="#switchgamenewgame-game-void">2.10. <code>switchGame(newGame: Game): void</code></a></h3>
 <div class="paragraph">
 <p>Switches execution to a new game instance.</p>
 </div>
@@ -820,7 +805,7 @@ The switch handler must be set or propagated before calling this method, otherwi
 <hr>
 </div>
 <div class="sect2">
-<h3 id="destroy-void"><a class="link" href="#destroy-void">2.12. <code>destroy(): void</code></a></h3>
+<h3 id="destroy-void"><a class="link" href="#destroy-void">2.11. <code>destroy(): void</code></a></h3>
 <div class="paragraph">
 <p>Cleans up the game instance.</p>
 </div>

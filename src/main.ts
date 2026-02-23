@@ -17,9 +17,11 @@ export const p5Instance = new p5((p: p5) => {
     if (isClientMode()) {
         // In client mode, we instantiate the game provided via alias
         activeGame = new ClientGame(p, view);
+        activeGame.gameId = 'client-game';
     } else if (isServerMode()) {
         // In server mode, we instantiate the game menu
         activeGame = new GameMenu(p, view);
+        activeGame.gameId = 'game-menu';
         GameMenuSingleton.setInstance(activeGame as GameMenu);
     } else {
         throw new Error('Invalid APP_MODE');

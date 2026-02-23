@@ -30,7 +30,23 @@ export default abstract class Game implements Initializable {
 
     private _initialStateSnapshot = new InitialStateSnapshot();
 
+    private _gameId: string = 'unknown';
+
     private _switchHandler: (newGame: Game) => void = undefined as unknown as (newGame: Game) => void;
+
+    /**
+     * Gets the game ID
+     */
+    get gameId(): string {
+        return this._gameId;
+    }
+
+    /**
+     * Sets the game ID
+     */
+    set gameId(id: string) {
+        this._gameId = id;
+    }
 
     /**
      * Registers the callback to be used when a game requests to switch to another game.
@@ -134,7 +150,7 @@ export default abstract class Game implements Initializable {
 
         const { text, control, renderer, session } = this._modules;
 
-        session.gameId = this.getGameId();
+        session.gameId = this.gameId;
         session.setShowModalFunction(this._view.showSessionModal.bind(this._view));
 
         control.setModules(this._modules);
@@ -232,8 +248,6 @@ export default abstract class Game implements Initializable {
      * Called when the game is in GAME OVER state.
      */
     abstract drawGameOverScreen(): void;
-
-    abstract getGameId(): string;
 
     private _subscribeSystemControls(): void {
         const { control, state, grid } = this._modules;

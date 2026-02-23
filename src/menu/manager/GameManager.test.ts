@@ -24,7 +24,7 @@ describe('GameManager', () => {
 
     it('should load script and switch game', async () => {
         // [ARRANGE]
-        const entry = { name: 'TestGame', url: 'http://example.com/test.js' };
+        const entry = { id: 'test-game', name: 'TestGame', url: 'http://example.com/test.js' };
 
         // Mocking script loading behavior
         const appendSpy = vi.spyOn(document.head, 'appendChild').mockImplementation(((el: HTMLScriptElement) => {
@@ -49,7 +49,7 @@ describe('GameManager', () => {
 
     it('should handle script load failure', async () => {
         // [ARRANGE]
-        const entry = { name: 'FailGame', url: 'http://example.com/fail.js' };
+        const entry = { id: 'fail-game', name: 'FailGame', url: 'http://example.com/fail.js' };
         vi.spyOn(document.head, 'appendChild').mockImplementation(((el: HTMLScriptElement) => {
             setTimeout(() => {
                 if (el.onerror) el.onerror(new Event('error'));

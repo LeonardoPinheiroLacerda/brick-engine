@@ -36,6 +36,17 @@ npx brick-engine-cli init my-brick-game
 
 For a detailed walkthrough on installation, project structure, and how to implement your game logic, see our **xref:docs/getting-started.adoc[Getting Started Guide]**.
 
+== Publishing Your Game
+
+Once your game is ready, you can bundle and publish it directly to the Brick Engine library using the CLI. This will submit your game for review and make it available in the main engine menu.
+
+[source,bash]
+----
+npx brick-engine-cli publish
+----
+
+For detailed information about the publishing and review process, see the **xref:docs/publishing.adoc[Publishing Guide]**.
+
 == Structure
 
 The engine is organized into the following core modules:

@@ -19,6 +19,7 @@ Defines the structure for games registered in the engine's repository.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
+|`id` |`string` |The unique identifier of the game instance.
 |`name` |`string` |The human-readable label for the game.
 |`url` |`string` |The remote URL of the game's JavaScript bundle.
 |===

@@ -3,4 +3,9 @@ dist/
 .vscode/
 test/
 
-manager2/
+.github/
+
+# Environment files
+.env
+.env.local
+.env.*.local

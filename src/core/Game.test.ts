@@ -40,7 +40,6 @@ class MockGame extends Game {
     render = vi.fn();
     setupGame = vi.fn();
     getPersistenceKey = () => 'test-game';
-    getGameId = () => 'test-game';
     drawTitleScreen = vi.fn();
     drawGameOverScreen = vi.fn();
 }

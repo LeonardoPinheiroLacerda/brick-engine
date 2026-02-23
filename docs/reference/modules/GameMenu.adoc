@@ -15,9 +15,9 @@ The `GameMenu` is a concrete implementation of `xref:Game.adoc[Game]`. It serves
 
 Adjusts formatting and presentation logic specific to the menu's state (e.g., Font setup). Unbinds standard game inputs and hooks into UP/DOWN/ENTER for menu navigation.
 
-=== `getGameId(): string`
+=== `gameId` Property
 
-Returns `game-menu`. This ensures the menu state is intentionally ignored by the `xref:GameSession.adoc[GameSession]` mechanism, averting logic conflicts that would try to parse the "menu" as a playable state.
+Set to `game-menu` upon instantiation. This ensures the menu state is intentionally ignored by the `xref:GameSession.adoc[GameSession]` mechanism, averting logic conflicts that would try to parse the "menu" as a playable state.
 
 == Rendering
 

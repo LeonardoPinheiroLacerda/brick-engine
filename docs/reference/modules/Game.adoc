@@ -19,6 +19,7 @@ The `Game` class is the heart of your application. It manages the game loop (tic
 [cols="1,1,2"]
 |===
 |Property |Type |Description
+|`gameId` |`string` |Unique identifier for the specific game implementation. Used as a namespace for local storage and other session-specific requirements logic.
 |`modules` |`xref:../interfaces/GameModules.adoc[GameModules]` |Access to all engine modules (grid, control, state, etc.).
 |===
 
@@ -164,20 +165,7 @@ setupGame(): void {
 
 '''
 
-=== `getGameId(): string`
 
-Abstract method that returns a unique identifier for the game.
-
-**Returns**
-
-`string` - A unique identifier for the specific game implementation.
-
-**Behavior**
-
-This identifier is used as a namespace for local storage and other session-specific requirements logic. It is used as a prefix for all persistent state properties (e.g., `my-game::highScore`), avoiding collisions across multiple games hosted on the same domain.
-
-
-'''
 
 === `drawTitleScreen(): void`
 

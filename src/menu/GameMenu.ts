@@ -1,3 +1,5 @@
+import p5 from 'p5';
+import GameView from '../view/GameView';
 import Game from '../core/Game';
 import { ControlEventType, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, StateProperty } from '../core/types/enums';
 import GameRepository from './GameRepository';
@@ -9,6 +11,10 @@ export default class GameMenu extends Game {
 
     private _gameRepository = new GameRepository();
     private _gameManager = new GameManager();
+
+    constructor(p: p5, view: GameView) {
+        super(p, view);
+    }
 
     setupGame() {
         const { state, control, sound } = this.modules;
@@ -114,9 +120,5 @@ export default class GameMenu extends Game {
 
     drawGameOverScreen() {
         // Menu doesn't have a game over screen
-    }
-
-    getGameId(): string {
-        return 'game-menu';
     }
 }

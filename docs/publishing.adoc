@@ -1,0 +1,58 @@
+= Publishing Your Game
+:description: Guide on how to bundle and publish your game to the Brick Engine library.
+:keywords: publish, cli, bundle, deployment
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+
+This guide explains how to use the **Brick Engine CLI** `publish` command to bundle your game and submit it to the central repository, making it available for everyone in the main engine menu.
+
+== Prerequisites
+
+Before you can publish your game, ensure you have:
+* **Completed Development**: Your game should be fully playable and tested locally (`npm start`).
+* **Author Details**: Ensure you know the author email you want associated with this publication.
+
+== The `publish` Command
+
+The `publish` command connects your local project to the central Brick Engine repository.
+
+Run the following command in the root of your project directory:
+
+[source,bash]
+----
+npx brick-engine-cli publish
+----
+
+=== What happens during `publish`?
+
+When you run the publish command, the CLI will automatically perform the following steps:
+
+1.  **Build**: It executes `npm run build:bundle` to generate a production-ready, optimized JavaScript bundle of your game in the `dist/` directory.
+2.  **Prompt for Details**: It will ask for the developer's email address. This is used to notify you about the status of your publication request.
+3.  **Upload**: The CLI securely uploads your generated `game.bundle.js` to Supabase Storage.
+4.  **Registration**: It creates a database entry linking your bundle URL with your game's metadata (extracted from `package.json`, including name and version).
+
+== The Review Process
+
+After a successful upload, your game is placed in a **Pending** status.
+
+1.  **Approval Required**: To ensure the quality and safety of the central library, all games must be manually reviewed before they appear in the public menu.
+2.  **Notification**: You will receive an email (at the address you provided during the prompt) once your game has been reviewed. This email will confirm if the game was approved and is now live, or if it was rejected with feedback.
+
+== Troubleshooting Publish Errors
+
+=== Duplicate Publication
+
+If you attempt to publish the exact same version of a game that is already published or pending, the CLI will reject the upload.
+
+**Solution**: If you made changes, increment the `version` field in your `package.json` before running the publish command again.
+
+=== Build Failures
+
+If the `npm run build:bundle` step fails, the publish process will abort.
+
+**Solution**: Check your terminal output for TypeScript or Webpack errors. Fix these issues and ensure that `npm run build:bundle` executes successfully on its own before trying to publish again.

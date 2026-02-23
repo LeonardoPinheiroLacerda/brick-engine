@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Defines the contract for the module responsible for managing game sessions and restoring serializable data.">
-<meta name="keywords" content="interface, session, storage, save, serialization">
-<title>Session Interface Reference</title>
+<meta name="description" content="Guide on how to bundle and publish your game to the Brick Engine library.">
+<meta name="keywords" content="publish, cli, bundle, deployment">
+<title>Publishing Your Game</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,23 +435,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Session Interface Reference</h1>
+<h1>Publishing Your Game</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_attributes_properties_values">1. Attributes / Properties / Values</a></li>
-<li><a href="#_api_reference">2. API Reference</a>
+<li><a href="#_prerequisites">1. Prerequisites</a></li>
+<li><a href="#_the_publish_command">2. The <code>publish</code> Command</a>
 <ul class="sectlevel2">
-<li><a href="#_registerserializable_serializable_void">2.1. <code>register(serializable: Serializable): void</code></a></li>
-<li><a href="#_savesession_void">2.2. <code>saveSession(): void</code></a></li>
-<li><a href="#_clearsession_void">2.3. <code>clearSession(): void</code></a></li>
-<li><a href="#_setshowmodalfunctionshowmodal_onconfirm_void_oncancel_void_void_void">2.4. <code>setShowModalFunction(showModal: (onConfirm: () &#8658; void, onCancel: () &#8658; void) &#8658; void): void</code></a></li>
+<li><a href="#_what_happens_during_publish">2.1. What happens during <code>publish</code>?</a></li>
 </ul>
 </li>
-<li><a href="#_general_usage">3. General Usage</a></li>
+<li><a href="#_the_review_process">3. The Review Process</a></li>
+<li><a href="#_troubleshooting_publish_errors">4. Troubleshooting Publish Errors</a>
+<ul class="sectlevel2">
+<li><a href="#_duplicate_publication">4.1. Duplicate Publication</a></li>
+<li><a href="#_build_failures">4.2. Build Failures</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -459,127 +463,111 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>Session</code> interface defines the core contract for the game&#8217;s session orchestration. It handles restoring persistent <code><a href="../Serializable.html">Serializable</a></code> data (such as progressive scores or active level states) and presenting UI mechanisms to the user when playing an existing session.</p>
-</div>
-<div class="paragraph">
-<p>This module is a core part of the <code><a href="GameModules.html">GameModules</a></code> composite.</p>
+<p>This guide explains how to use the <strong>Brick Engine CLI</strong> <code>publish</code> command to bundle your game and submit it to the central repository, making it available for everyone in the main engine menu.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_attributes_properties_values"><a class="link" href="#_attributes_properties_values">1. Attributes / Properties / Values</a></h2>
+<h2 id="_prerequisites"><a class="link" href="#_prerequisites">1. Prerequisites</a></h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gameId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique identifier of the game, provided by <code><a href="../../modules/Game.html">Game.gameId</a></code>, used to prefix the LocalStorage entries.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_api_reference"><a class="link" href="#_api_reference">2. API Reference</a></h2>
-<div class="sectionbody">
-<hr>
-<div class="sect2">
-<h3 id="_registerserializable_serializable_void"><a class="link" href="#_registerserializable_serializable_void">2.1. <code>register(serializable: Serializable): void</code></a></h3>
 <div class="paragraph">
-<p>Appends a module or instance that implements <code>Serializable</code> to the session&#8217;s watch list.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>serializable</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../Serializable.html">Serializable</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The instance implementing serialization capability.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="_savesession_void"><a class="link" href="#_savesession_void">2.2. <code>saveSession(): void</code></a></h3>
-<div class="paragraph">
-<p>Persists the current state of all registered <code><a href="../Serializable.html">Serializable</a></code> instances to <code>localStorage</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="_clearsession_void"><a class="link" href="#_clearsession_void">2.3. <code>clearSession(): void</code></a></h3>
-<div class="paragraph">
-<p>Clears out the active session data from <code>localStorage</code>, functionally resetting the user&#8217;s progress for the given <code>gameId</code>.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="_setshowmodalfunctionshowmodal_onconfirm_void_oncancel_void_void_void"><a class="link" href="#_setshowmodalfunctionshowmodal_onconfirm_void_oncancel_void_void_void">2.4. <code>setShowModalFunction(showModal: (onConfirm: () &#8658; void, onCancel: () &#8658; void) &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Registers the callback that triggers the session recovery UI element.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>showModal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The callback that is executed, receiving the internal <code>onConfirm</code> and <code>onCancel</code> closure functions as arguments.</p></td>
-</tr>
-</tbody>
-</table>
+<p>Before you can publish your game, ensure you have:
+* <strong>Completed Development</strong>: Your game should be fully playable and tested locally (<code>npm start</code>).
+* <strong>Author Details</strong>: Ensure you know the author email you want associated with this publication.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_general_usage"><a class="link" href="#_general_usage">3. General Usage</a></h2>
+<h2 id="_the_publish_command"><a class="link" href="#_the_publish_command">2. The <code>publish</code> Command</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>Session</code> module subscribes to the <code>GameState</code> lifecycle. Upon detecting a transition to the <code>PLAYING</code> state, if previous active records exist in <code>localStorage</code>, it invokes the modal logic set via <code>setShowModalFunction</code>. The engine&#8217;s <code>Game</code> orchestrates this by default.</p>
+<p>The <code>publish</code> command connects your local project to the central Brick Engine repository.</p>
+</div>
+<div class="paragraph">
+<p>Run the following command in the root of your project directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">npx brick-engine-cli publish</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_what_happens_during_publish"><a class="link" href="#_what_happens_during_publish">2.1. What happens during <code>publish</code>?</a></h3>
+<div class="paragraph">
+<p>When you run the publish command, the CLI will automatically perform the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Build</strong>: It executes <code>npm run build:bundle</code> to generate a production-ready, optimized JavaScript bundle of your game in the <code>dist/</code> directory.</p>
+</li>
+<li>
+<p><strong>Prompt for Details</strong>: It will ask for the developer&#8217;s email address. This is used to notify you about the status of your publication request.</p>
+</li>
+<li>
+<p><strong>Upload</strong>: The CLI securely uploads your generated <code>game.bundle.js</code> and <code>game.bundle.js.map</code> to Supabase Storage.</p>
+</li>
+<li>
+<p><strong>Registration</strong>: It creates a database entry linking your bundle URL with your game&#8217;s metadata (extracted from <code>package.json</code>, including name and version).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_review_process"><a class="link" href="#_the_review_process">3. The Review Process</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After a successful upload, your game is placed in a <strong>Pending</strong> status.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Approval Required</strong>: To ensure the quality and safety of the central library, all games must be manually reviewed before they appear in the public menu.</p>
+</li>
+<li>
+<p><strong>Notification</strong>: You will receive an email (at the address you provided during the prompt) once your game has been reviewed. This email will confirm if the game was approved and is now live, or if it was rejected with feedback.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_publish_errors"><a class="link" href="#_troubleshooting_publish_errors">4. Troubleshooting Publish Errors</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_duplicate_publication"><a class="link" href="#_duplicate_publication">4.1. Duplicate Publication</a></h3>
+<div class="paragraph">
+<p>If you attempt to publish the exact same version of a game that is already published or pending, the CLI will reject the upload.</p>
+</div>
+<div class="paragraph">
+<p><strong>Solution</strong>: If you made changes, increment the <code>version</code> field in your <code>package.json</code> before running the publish command again.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_build_failures"><a class="link" href="#_build_failures">4.2. Build Failures</a></h3>
+<div class="paragraph">
+<p>If the <code>npm run build:bundle</code> step fails, the publish process will abort.</p>
+</div>
+<div class="paragraph">
+<p><strong>Solution</strong>: Check your terminal output for TypeScript or Webpack errors. Fix these issues and ensure that <code>npm run build:bundle</code> executes successfully on its own before trying to publish again.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-23 16:03:34 -0300
+Last updated 2026-02-23 16:07:44 -0300
 </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
+<script>
+if (!hljs.initHighlighting.called) {
+  hljs.initHighlighting.called = true
+  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
+}
+</script>
 </body>
 </html>

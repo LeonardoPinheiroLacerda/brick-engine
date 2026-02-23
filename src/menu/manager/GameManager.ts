@@ -12,6 +12,10 @@ export default class GameManager {
             if (window.BrickEngineGame) {
                 const gameInstance = new window.BrickEngineGame(actualGame.p, actualGame.view);
                 console.log('Game loaded: ', entry.name);
+                console.log('Game loaded: ', entry.name);
+
+                // Set properly the Game ID using the GameRepository fetch ID
+                gameInstance.gameId = entry.id;
 
                 console.log('Switching to game');
                 actualGame.switchGame(gameInstance);

@@ -11,8 +11,8 @@ vi.mock('./GameRepository', () => {
         default: vi.fn().mockImplementation(function () {
             return {
                 games: [
-                    { name: 'Game 1', url: 'url1' },
-                    { name: 'Game 2', url: 'url2' },
+                    { id: '1', name: 'Game 1', url: 'url1' },
+                    { id: '2', name: 'Game 2', url: 'url2' },
                 ],
             };
         }),
