@@ -5,6 +5,12 @@
   "type": "commonjs",
   "main": "dist/brick-engine.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "README.adoc",
+    "LICENSE"
+  ],
   "license": "ISC",
   "author": "LeonardoPinheiroLacerda",
   "scripts": {
@@ -22,6 +28,7 @@
     "prepublishOnly": "npm run build && npm run build:types"
   },
   "dependencies": {
+    "brick-engine-js": "file:brick-engine-js-1.0.0.tgz",
     "colord": "^2.9.3",
     "p5": "^2.2.0"
   },
