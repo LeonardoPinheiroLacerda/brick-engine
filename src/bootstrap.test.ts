@@ -4,6 +4,11 @@ import p5 from 'p5';
 import Game from './core/Game';
 
 // Mocking everything before importing main.ts logic
+/**
+ * Creates a mock game object with all necessary modules and view methods.
+ *
+ * @returns {any} A mock game object for testing purposes.
+ */
 const createMockGame = () => ({
     setup: vi.fn(),
     setSwitchHandler: vi.fn(),
@@ -82,6 +87,7 @@ vi.mock('./menu/GameMenuSingleton', () => ({
     default: {
         setInstance: vi.fn(),
         getInstance: vi.fn().mockReturnValue(mockGame),
+        hasInstance: vi.fn().mockReturnValue(true),
     },
 }));
 
@@ -94,37 +100,30 @@ describe('main.ts', () => {
     });
 
     it('should initialize the p5 instance and GameMenu in server mode', async () => {
-        const { isClientMode, isServerMode } = await import('./config/env');
         const GameMenu = (await import('./menu/GameMenu')).default;
 
-        (isClientMode as unknown as Mock).mockReturnValue(false);
-        (isServerMode as unknown as Mock).mockReturnValue(true);
-
-        const main = await import('./main');
+        const { bootstrap } = await import('./bootstrap');
+        bootstrap(GameMenu);
 
         expect(p5).toHaveBeenCalled();
         expect(GameMenu).toHaveBeenCalled();
-        expect(main.p5Instance).toBeDefined();
+        expect(bootstrap).toBeDefined();
     });
 
     it('should initialize ClientGame in client mode', async () => {
-        const { isClientMode, isServerMode } = await import('./config/env');
         const ClientGame = (await import('@client-game')).default;
 
-        (isClientMode as unknown as Mock).mockReturnValue(true);
-        (isServerMode as unknown as Mock).mockReturnValue(false);
-
-        await import('./main');
+        const { bootstrap } = await import('./bootstrap');
+        bootstrap(ClientGame);
 
         expect(ClientGame).toHaveBeenCalled();
     });
 
     it('should handle game switching', async () => {
-        const { isClientMode, isServerMode } = await import('./config/env');
-        (isClientMode as unknown as Mock).mockReturnValue(false);
-        (isServerMode as unknown as Mock).mockReturnValue(true);
+        const GameMenu = (await import('./menu/GameMenu')).default;
 
-        await import('./main');
+        const { bootstrap } = await import('./bootstrap');
+        bootstrap(GameMenu);
 
         const switchHandler = (mockGame.setSwitchHandler as unknown as Mock).mock.calls[0][0];
         const nextGame = createMockGame();

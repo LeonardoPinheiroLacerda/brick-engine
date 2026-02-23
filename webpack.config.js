@@ -6,10 +6,8 @@ const webpack = require('webpack');
 const dotenv = require('dotenv');
 const fs = require('fs');
 
-module.exports = (env = {}, argv) => {
+module.exports = argv => {
     const isProduction = argv.mode === 'production';
-    const appMode = env.mode || 'server'; // 'server' or 'client'
-    const clientGamePath = env.game ? path.resolve(process.cwd(), env.game) : path.resolve(__dirname, 'src/menu/GameMenu.ts');
 
     // Load .env files, .env.local takes precedence.
     const envFileLocal = path.resolve(__dirname, '.env.local');
@@ -33,11 +31,11 @@ module.exports = (env = {}, argv) => {
             'brick-engine': './src/index.ts',
             app: './src/main.ts',
         },
-        devtool: isProduction ? 'source-map' : 'eval-source-map',
+        devtool: isProduction ? false : 'source-map',
         output: {
             filename: '[name].js',
             path: path.resolve(__dirname, 'dist'),
-            clean: true, // Clean the output directory before emit.
+            clean: true,
             publicPath: 'auto',
             library: {
                 name: 'BrickEngine',
@@ -77,9 +75,6 @@ module.exports = (env = {}, argv) => {
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.css', '.wav', '.png', '.ico', '.gif', '.json', '.svg', '.webmanifest'],
-            alias: {
-                '@client-game': clientGamePath,
-            },
         },
         devServer: {
             static: [
@@ -94,16 +89,15 @@ module.exports = (env = {}, argv) => {
         },
         plugins: [
             new webpack.DefinePlugin({
-                'process.env.APP_MODE': JSON.stringify(appMode),
                 'process.env.SUPABASE_URL': JSON.stringify(SUPABASE_URL),
                 'process.env.SUPABASE_ANON_KEY': JSON.stringify(SUPABASE_ANON_KEY),
             }),
             new HtmlWebpackPlugin({
                 template: './public/index.html',
-                filename: 'index.html', // Output file name
+                filename: 'index.html',
                 favicon: './public/favicon.ico',
                 inject: 'body',
-                chunks: ['app'], // Only inject the app bundle, not the library
+                chunks: ['app'],
                 minify: isProduction
                     ? {
                           removeComments: true,

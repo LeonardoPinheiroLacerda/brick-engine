@@ -1,77 +1,10 @@
-import p5 from 'p5';
-import Game from './core/Game';
-import GameView from './view/GameView';
+/**
+ * Application entry point.
+ *
+ * This file is responsible for importing the engine's bootstrap function
+ * and the initial game to be executed, effectively launching the application.
+ */
+import { bootstrap } from './bootstrap';
 import GameMenu from './menu/GameMenu';
 
-import './config/styles';
-
-import { isClientMode, isServerMode } from './config/env';
-import ClientGame from '@client-game';
-import { ControlEventType, ControlKey } from './core/types/enums';
-import GameMenuSingleton from './menu/GameMenuSingleton';
-
-export const p5Instance = new p5((p: p5) => {
-    const view = new GameView(p, document.body);
-    let activeGame: Game;
-
-    if (isClientMode()) {
-        // In client mode, we instantiate the game provided via alias
-        activeGame = new ClientGame(p, view);
-        activeGame.gameId = 'client-game';
-    } else if (isServerMode()) {
-        // In server mode, we instantiate the game menu
-        activeGame = new GameMenu(p, view);
-        activeGame.gameId = 'game-menu';
-        GameMenuSingleton.setInstance(activeGame as GameMenu);
-    } else {
-        throw new Error('Invalid APP_MODE');
-    }
-
-    // Register the switch handler
-    activeGame.setSwitchHandler((newGame: Game) => {
-        try {
-            // Unbind the previous game controls
-            activeGame.view.unbindControls();
-
-            // Propagate the switch handler to the new game
-            newGame.propagateSwitchHandler(activeGame);
-
-            // Set the new game
-            activeGame = newGame;
-            activeGame.setup();
-
-            // Update debugger
-            activeGame.view.updateDebuggerGameModules(activeGame.modules);
-
-            // Bind the new game controls
-            activeGame.view.bindControls(activeGame.modules.control);
-            activeGame.modules.state.turnOn();
-
-            // Setup exit and power buttons
-            if (isServerMode() && newGame !== GameMenuSingleton.getInstance()) {
-                newGame.modules.control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-                    newGame.switchGame(GameMenuSingleton.getInstance());
-                });
-
-                newGame.modules.control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-                    newGame.switchGame(GameMenuSingleton.getInstance());
-                    activeGame.modules.state.turnOff();
-                });
-            }
-        } catch (error) {
-            console.error('Error switching game:', error);
-        }
-        p.loop();
-    });
-
-    p.setup = () => {
-        activeGame.setup();
-        activeGame.view.setupDebugger(activeGame.modules);
-        activeGame.view.setupSessionModal();
-    };
-
-    p.draw = () => {
-        activeGame.draw();
-        activeGame.view.updateDebugger();
-    };
-}, document.body);
+bootstrap(GameMenu);
