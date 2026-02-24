@@ -28,8 +28,7 @@ module.exports = (env, argv) => {
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'brick-engine': ['./src/index.ts'],
-            app: ['./src/main.ts'],
+            'game.bundle': ['./src/main.ts', './src/index.ts'],
         },
         devtool: isProduction ? false : 'source-map',
         output: {
@@ -95,7 +94,12 @@ module.exports = (env, argv) => {
                 filename: 'index.html',
                 favicon: './public/favicon.ico',
                 inject: 'body',
-                chunks: ['app', 'brick-engine'],
+                chunks: ['game.bundle'],
+                meta: {
+                    author: 'https://github.com/LeonardoPinheiroLacerda',
+                    'Content-Type': 'text/html; charset=UTF-8',
+                    viewport: 'width=device-width, initial-scale=1.0',
+                },
                 minify: isProduction
                     ? {
                           removeComments: true,
@@ -105,7 +109,7 @@ module.exports = (env, argv) => {
                     : false,
             }),
             new MiniCssExtractPlugin({
-                filename: 'css/[name].bundle.css',
+                filename: 'css/[name].css',
             }),
             new CopyWebpackPlugin({
                 patterns: [
