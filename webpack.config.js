@@ -25,11 +25,17 @@ module.exports = argv => {
     const SUPABASE_URL = process.env.SUPABASE_URL || envConfig.SUPABASE_URL || 'http://127.0.0.1:54321';
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || envConfig.SUPABASE_ANON_KEY || '';
 
+    // Load all CSS files from public/style directory
+    const cssFiles = fs
+        .readdirSync(path.resolve(__dirname, 'public/style'))
+        .filter(file => file.endsWith('.css'))
+        .map(file => './public/style/' + file);
+
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'brick-engine': './src/index.ts',
-            app: './src/main.ts',
+            'brick-engine': ['./src/index.ts', ...cssFiles],
+            app: ['./src/main.ts', ...cssFiles],
         },
         devtool: isProduction ? false : 'source-map',
         output: {
