@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'game.bundle': ['./src/index.ts'],
+            'game.bundle': env.entry || './src/index.ts',
         },
         devtool: isProduction ? false : 'source-map',
         output: {

@@ -7,4 +7,6 @@
 import { bootstrap } from './bootstrap';
 import GameMenu from './menu/GameMenu';
 
+import './index.ts';
+
 bootstrap(GameMenu);

@@ -13,8 +13,8 @@
   "license": "ISC",
   "author": "LeonardoPinheiroLacerda",
   "scripts": {
-    "start": "webpack serve --open",
-    "build": "webpack --mode production && npm run docs:build",
+    "start": "webpack serve --open --env entry=./src/main.ts",
+    "build": "webpack --mode production --env entry=./src/index.ts",
     "build:types": "tsc --emitDeclarationOnly",
     "lint": "eslint .",
     "format": "npx prettier -w .",
