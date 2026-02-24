@@ -34,7 +34,7 @@ module.exports = argv => {
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'brick-engine': ['./src/index.ts', ...cssFiles],
+            'brick-engine': [...cssFiles, './src/index.ts'],
             app: ['./src/main.ts', ...cssFiles],
         },
         devtool: isProduction ? false : 'source-map',
