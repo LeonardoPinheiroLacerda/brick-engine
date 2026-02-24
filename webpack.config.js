@@ -25,17 +25,11 @@ module.exports = (env, argv) => {
     const SUPABASE_URL = process.env.SUPABASE_URL || envConfig.SUPABASE_URL || 'http://127.0.0.1:54321';
     const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || envConfig.SUPABASE_ANON_KEY || '';
 
-    // Load all CSS files from public/style directory
-    const cssFiles = fs
-        .readdirSync(path.resolve(__dirname, 'public/style'))
-        .filter(file => file.endsWith('.css'))
-        .map(file => './public/style/' + file);
-
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'brick-engine': [...cssFiles, './src/index.ts'],
-            app: ['./src/main.ts', ...cssFiles],
+            'brick-engine': ['./src/index.ts'],
+            app: ['./src/main.ts'],
         },
         devtool: isProduction ? false : 'source-map',
         output: {
@@ -103,7 +97,7 @@ module.exports = (env, argv) => {
                 filename: 'index.html',
                 favicon: './public/favicon.ico',
                 inject: 'body',
-                chunks: ['app'],
+                chunks: ['app', 'brick-engine'],
                 minify: isProduction
                     ? {
                           removeComments: true,
@@ -113,13 +107,14 @@ module.exports = (env, argv) => {
                     : false,
             }),
             new MiniCssExtractPlugin({
-                filename: isProduction ? 'css/[name].[contenthash].css' : 'css/[name].bundle.css',
+                filename: 'css/[name].bundle.css',
             }),
             new CopyWebpackPlugin({
                 patterns: [
                     { from: 'node_modules/p5/lib/p5.min.js', to: 'vendor/p5.min.js' },
                     { from: 'public/images', to: 'images' },
                     { from: 'public/sounds', to: 'sounds' },
+                    { from: 'public/fonts', to: 'fonts' },
                     { from: 'public/docs', to: 'docs' },
                     { from: 'public/favicon.ico', to: './' },
                     { from: 'public/CNAME', to: './' },
