@@ -61,20 +61,18 @@ module.exports = (env, argv) => {
                                 publicPath: '../', // CSS is in css/ folder, needs to go up to find images/fonts
                             },
                         },
-                        'css-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                url: false, // Don't resolve url() in CSS, rely on CopyWebpackPlugin
+                            },
+                        },
                     ],
-                },
-                {
-                    test: /\.(woff|woff2|eot|ttf|otf)$/i, // Fonts (Required for CSS url() resolution)
-                    type: 'asset/resource',
-                    generator: {
-                        filename: 'fonts/[name][ext]',
-                    },
                 },
             ],
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.js', '.css', '.wav', '.png', '.ico', '.gif', '.json', '.svg', '.webmanifest'],
+            extensions: ['.tsx', '.ts', '.js', '.css', '.wav', '.png', '.ico', '.gif', '.json', '.svg'],
         },
         devServer: {
             static: [

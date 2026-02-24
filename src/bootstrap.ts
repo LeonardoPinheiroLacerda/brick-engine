@@ -84,9 +84,11 @@ export function bootstrap(ClientGame: ClientGameConstructor) {
 
         if (ClientGame === GameMenu) {
             _game = new ClientGame(p, view);
+            _game.gameId = 'game-menu';
             GameMenuSingleton.setInstance(_game as GameMenu);
         } else {
             _game = new ClientGame(p, view);
+            _game.gameId = 'game';
         }
 
         _game.setSwitchHandler(_switchHandler);
