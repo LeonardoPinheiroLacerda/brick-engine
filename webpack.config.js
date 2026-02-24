@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const dotenv = require('dotenv');
 const fs = require('fs');
 
-module.exports = argv => {
+module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
 
     // Load .env files, .env.local takes precedence.

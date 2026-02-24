@@ -4,11 +4,9 @@
   "description": "A lightweight brick engine built with p5.js and TypeScript",
   "type": "commonjs",
   "main": "dist/brick-engine.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "files": [
     "dist",
-    "docs",
-    "public",
     "README.adoc",
     "LICENSE"
   ],
