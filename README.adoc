@@ -82,3 +82,8 @@ The engine is organized into the following core modules:
 | xref:docs/reference/modules/GameScore.adoc[GameScore]
 | Tracks session score, level logic, and syncs high scores with `GameState`.
 |===
+
+== Core Utilities
+
+* **xref:docs/reference/event/EventEmitter.adoc[EventEmitter]**: Global Pub/Sub bus for decoupled communication.
+* **xref:docs/reference/context/RendererContext.adoc[RendererContext]**: Central provider for the P5.js instance, eliminating the need for manual dependency injection in components.

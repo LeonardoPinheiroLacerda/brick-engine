@@ -3,6 +3,7 @@ import { Control } from '../../types/modules';
 import { Debuggable } from '../../types/Interfaces';
 import { ControlCallback, ControlEventType, GameEvent, GameModules } from '../../types/Types';
 import GameControlKeyBinding from './GameControlKeyBinding';
+import EventEmitter from '../../event/EventEmitter';
 
 /**
  * Manages game control inputs and event dispatching.
@@ -12,7 +13,7 @@ export default class GameControl implements Control, Debuggable {
     private _modules: GameModules;
 
     private _keyBinding: GameControlKeyBinding;
-    private _subscribers: Map<ControlKey, Map<ControlEventType, Set<ControlCallback>>> = new Map();
+    private _activeListeners: Array<{ event: string; callback: ControlCallback }> = [];
 
     /**
      * Initializes the control system.
@@ -29,7 +30,10 @@ export default class GameControl implements Control, Debuggable {
      */
     unbindControls() {
         this._keyBinding.unbindControls();
-        this._subscribers.clear();
+        this._activeListeners.forEach(({ event, callback }) => {
+            EventEmitter.unsubscribe(event, callback);
+        });
+        this._activeListeners = [];
     }
 
     /**
@@ -56,16 +60,9 @@ export default class GameControl implements Control, Debuggable {
      * @param {ControlCallback} callback - The function to execute.
      */
     subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
-        if (!this._subscribers.has(key)) {
-            this._subscribers.set(key, new Map());
-        }
-
-        const keySubscribers = this._subscribers.get(key)!;
-        if (!keySubscribers.has(type)) {
-            keySubscribers.set(type, new Set());
-        }
-
-        keySubscribers.get(type)!.add(callback);
+        const eventStr = `${key}:${type}`;
+        EventEmitter.subscribe(eventStr, callback);
+        this._activeListeners.push({ event: eventStr, callback });
     }
 
     /**
@@ -76,13 +73,63 @@ export default class GameControl implements Control, Debuggable {
      * @param {ControlCallback} callback - The function to remove.
      */
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
-        const keySubscribers = this._subscribers.get(key);
-        if (keySubscribers) {
-            const callbacks = keySubscribers.get(type);
-            if (callbacks) {
-                callbacks.delete(callback);
-            }
-        }
+        const eventStr = `${key}:${type}`;
+        EventEmitter.unsubscribe(eventStr, callback);
+        this._activeListeners = this._activeListeners.filter(l => !(l.event === eventStr && l.callback === callback));
+    }
+
+    /**
+     * Subscribes a callback to a control event ONLY during the title screen.
+     */
+    subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:title`;
+        EventEmitter.subscribe(eventStr, callback);
+        this._activeListeners.push({ event: eventStr, callback });
+    }
+
+    /**
+     * Unsubscribes a callback from a title screen control event.
+     */
+    unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:title`;
+        EventEmitter.unsubscribe(eventStr, callback);
+        this._activeListeners = this._activeListeners.filter(l => !(l.event === eventStr && l.callback === callback));
+    }
+
+    /**
+     * Subscribes a callback to a control event ONLY during the game over screen.
+     */
+    subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:gameover`;
+        EventEmitter.subscribe(eventStr, callback);
+        this._activeListeners.push({ event: eventStr, callback });
+    }
+
+    /**
+     * Unsubscribes a callback from a game over screen control event.
+     */
+    unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:gameover`;
+        EventEmitter.unsubscribe(eventStr, callback);
+        this._activeListeners = this._activeListeners.filter(l => !(l.event === eventStr && l.callback === callback));
+    }
+
+    /**
+     * Subscribes a callback to a control event ONLY during active gameplay.
+     */
+    subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:playing`;
+        EventEmitter.subscribe(eventStr, callback);
+        this._activeListeners.push({ event: eventStr, callback });
+    }
+
+    /**
+     * Unsubscribes a callback from a playing screen control event.
+     */
+    unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        const eventStr = `${key}:${type}:playing`;
+        EventEmitter.unsubscribe(eventStr, callback);
+        this._activeListeners = this._activeListeners.filter(l => !(l.event === eventStr && l.callback === callback));
     }
 
     /**
@@ -115,9 +162,18 @@ export default class GameControl implements Control, Debuggable {
             isAllowed = key.endsWith(';system');
         }
 
-        const callbacks = this._subscribers.get(key)?.get(type);
-        if (callbacks && isAllowed) {
-            callbacks.forEach(callback => callback(event));
+        if (isAllowed) {
+            // Emit to base channel
+            EventEmitter.notify(`${key}:${type}`, event);
+
+            // Context-specific channel dispatch
+            if (state.isPlaying()) {
+                EventEmitter.notify(`${key}:${type}:playing`, event);
+            } else if (state.isOn() && !state.isStarted()) {
+                EventEmitter.notify(`${key}:${type}:title`, event);
+            } else if (state.isGameOver()) {
+                EventEmitter.notify(`${key}:${type}:gameover`, event);
+            }
         }
     }
 
@@ -127,16 +183,8 @@ export default class GameControl implements Control, Debuggable {
      * @returns {Record<string, string | number | boolean>} The debug data.
      */
     getDebugData(): Record<string, string | number | boolean> {
-        let totalSubscribers = 0;
-        this._subscribers.forEach(keyMap => {
-            keyMap.forEach(typeSet => {
-                totalSubscribers += typeSet.size;
-            });
-        });
-
         return {
-            total_subscribers: totalSubscribers,
-            tracked_keys: this._subscribers.size,
+            total_active_listeners: this._activeListeners.length,
         };
     }
 }

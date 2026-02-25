@@ -633,6 +633,36 @@ export interface Control extends Initializable {
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
+     * Registers a callback for a specific control event ONLY during the title screen.
+     */
+    subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Removes an existing title screen subscription.
+     */
+    unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Registers a callback for a specific control event ONLY during the game over screen.
+     */
+    subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Removes an existing game over screen subscription.
+     */
+    unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Registers a callback for a specific control event ONLY during active gameplay.
+     */
+    subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Removes an existing playing screen subscription.
+     */
+    unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
      * Detaches all hardware/DOM event listeners.
      */
     unbindControls(): void;

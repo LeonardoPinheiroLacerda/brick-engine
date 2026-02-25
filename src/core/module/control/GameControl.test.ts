@@ -32,9 +32,11 @@ describe('GameControl', () => {
             expect(() => freshControl.notify(ControlKey.UP, ControlEventType.PRESSED)).toThrow('Modules not initialized');
         });
 
-        it('should notify all subscribers of a key event', () => {
+        it('should notify all subscribers of a key event during gameplay', () => {
             // [ARRANGE]
             const callback = vi.fn();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (mockModules.state.isPlaying as any).mockReturnValue(true);
             control.subscribe(ControlKey.UP, ControlEventType.PRESSED, callback);
 
             // [ACT]
@@ -53,6 +55,8 @@ describe('GameControl', () => {
         it('should not notify unsubscribed callbacks', () => {
             // [ARRANGE]
             const callback = vi.fn();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (mockModules.state.isPlaying as any).mockReturnValue(true);
             control.subscribe(ControlKey.UP, ControlEventType.PRESSED, callback);
             control.unsubscribe(ControlKey.UP, ControlEventType.PRESSED, callback);
 
@@ -62,23 +66,69 @@ describe('GameControl', () => {
             // [ASSERT]
             expect(callback).not.toHaveBeenCalled();
         });
-    });
 
-    describe('getDebugData', () => {
-        it('should return subscriber counts', () => {
+        it('should notify title screen subscribers when game is on but not started', () => {
             // [ARRANGE]
-            control.subscribe(ControlKey.UP, ControlEventType.PRESSED, vi.fn());
-            control.subscribe(ControlKey.DOWN, ControlEventType.PRESSED, vi.fn());
-            control.subscribe(ControlKey.DOWN, ControlEventType.HELD, vi.fn());
+            const callback = vi.fn();
+            control.subscribeForTitleScreen(ControlKey.ACTION, ControlEventType.PRESSED, callback);
 
             // [ACT]
-            const debug = control.getDebugData();
+            control.notify(ControlKey.ACTION, ControlEventType.PRESSED);
+            // Default mockModules has isOn=true, isStarted=false (title screen)
 
             // [ASSERT]
-            expect(debug.total_subscribers).toBe(3);
-            expect(debug.tracked_keys).toBe(2); // UP and DOWN
+            expect(callback).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    key: ControlKey.ACTION,
+                    type: ControlEventType.PRESSED,
+                    modules: mockModules,
+                }),
+            );
+        });
+
+        it('should notify game over screen subscribers when game is over', () => {
+            // [ARRANGE]
+            const callback = vi.fn();
+            control.subscribeForGameOverScreen(ControlKey.ACTION, ControlEventType.PRESSED, callback);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (mockModules.state.isGameOver as any).mockReturnValue(true);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (mockModules.state.isStarted as any).mockReturnValue(true);
+
+            // [ACT]
+            control.notify(ControlKey.ACTION, ControlEventType.PRESSED);
+
+            // [ASSERT]
+            expect(callback).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    key: ControlKey.ACTION,
+                    type: ControlEventType.PRESSED,
+                    modules: mockModules,
+                }),
+            );
+        });
+
+        it('should notify playing screen subscribers when game is playing', () => {
+            // [ARRANGE]
+            const callback = vi.fn();
+            control.subscribeForPlayingScreen(ControlKey.ACTION, ControlEventType.PRESSED, callback);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (mockModules.state.isPlaying as any).mockReturnValue(true);
+
+            // [ACT]
+            control.notify(ControlKey.ACTION, ControlEventType.PRESSED);
+
+            // [ASSERT]
+            expect(callback).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    key: ControlKey.ACTION,
+                    type: ControlEventType.PRESSED,
+                    modules: mockModules,
+                }),
+            );
         });
     });
+
     describe('getDebugData', () => {
         it('should return subscriber counts', () => {
             // [ARRANGE]
@@ -90,8 +140,7 @@ describe('GameControl', () => {
             const debug = control.getDebugData();
 
             // [ASSERT]
-            expect(debug.total_subscribers).toBe(3);
-            expect(debug.tracked_keys).toBe(2); // UP and DOWN
+            expect(debug.total_active_listeners).toBe(3);
         });
     });
 });

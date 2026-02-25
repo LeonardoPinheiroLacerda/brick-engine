@@ -75,7 +75,65 @@ Removes an existing subscription.
 
 **Behavior**
 
-Removes the specified callback from the list. If the callback is not found, the operation does nothing.
+Removes the specified callback from the central `EventEmitter`. If the callback is not found, the operation does nothing.
+
+
+'''
+
+=== `subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Registers a callback for a specific input event ONLY when the game is on the Title Screen.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key to monitor.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The type of trigger.
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The function to execute.
+|===
+
+'''
+
+=== `unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Removes an existing Title Screen subscription.
+
+'''
+
+=== `subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Registers a callback for a specific input event ONLY when the game is on the Game Over Screen.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key to monitor.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The type of trigger.
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The function to execute.
+|===
+
+'''
+
+=== `unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Removes an existing Game Over Screen subscription.
+
+
+'''
+
+=== `subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Registers a callback for a specific input event ONLY during active gameplay. This is functionally equivalent to `subscribe` for control keys, but provides explicit intent.
+
+'''
+
+=== `unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Removes an existing Playing Screen subscription.
 
 
 '''
