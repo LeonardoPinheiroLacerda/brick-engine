@@ -445,8 +445,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_session_management">1. Session Management</a>
 <ul class="sectlevel2">
 <li><a href="#_savesession_void">1.1. <code>saveSession(): void</code></a></li>
-<li><a href="#_clearsession_void">1.2. <code>clearSession(): void</code></a></li>
-<li><a href="#_syncstatestate_state_void">1.3. <code>syncState(state: State): void</code></a></li>
+<li><a href="#_setsessionenabledenabled_boolean_void">1.2. <code>setSessionEnabled(enabled: boolean): void</code></a></li>
+<li><a href="#_clearsession_void">1.3. <code>clearSession(): void</code></a></li>
+<li><a href="#_syncstatestate_state_void">1.4. <code>syncState(state: State): void</code></a></li>
 </ul>
 </li>
 <li><a href="#_internals">2. Internals</a></li>
@@ -467,17 +468,46 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_savesession_void"><a class="link" href="#_savesession_void">1.1. <code>saveSession(): void</code></a></h3>
 <div class="paragraph">
-<p>Creates or updates the session. Early returns if the <code>GameID</code> belongs to the main menu (<code>game-menu</code>) or if the <code>SessionModal</code> (if existing) has not been confirmed/rejected yet.</p>
+<p>Creates or updates the session. Early returns if the session is disabled (via <code>setSessionEnabled</code>) or if the <code>SessionModal</code> (if existing) has not been confirmed/rejected yet.</p>
 </div>
+<hr>
 </div>
 <div class="sect2">
-<h3 id="_clearsession_void"><a class="link" href="#_clearsession_void">1.2. <code>clearSession(): void</code></a></h3>
+<h3 id="_setsessionenabledenabled_boolean_void"><a class="link" href="#_setsessionenabledenabled_boolean_void">1.2. <code>setSessionEnabled(enabled: boolean): void</code></a></h3>
+<div class="paragraph">
+<p>Enables or disables the session recovery mechanism. When disabled, the engine will neither show the session recovery modal nor save the session.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>boolean</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the session should be enabled.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_clearsession_void"><a class="link" href="#_clearsession_void">1.3. <code>clearSession(): void</code></a></h3>
 <div class="paragraph">
 <p>Removes the saved instances from <code>localStorage</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_syncstatestate_state_void"><a class="link" href="#_syncstatestate_state_void">1.3. <code>syncState(state: State): void</code></a></h3>
+<h3 id="_syncstatestate_state_void"><a class="link" href="#_syncstatestate_state_void">1.4. <code>syncState(state: State): void</code></a></h3>
 <div class="paragraph">
 <p>Subscribes to <code><a href="GameState.html">GameState</a></code> interactions.</p>
 </div>
@@ -508,7 +538,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Reacts to:
-- <code>PLAYING</code>: If a session for the current <code>gameId</code> exists, is NOT the game menu, and the modal hasn&#8217;t been closed, it invokes the modal via <code>_showSessionModal</code>. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
+- <code>PLAYING</code>: If a session for the current <code>gameId</code> exists, session is enabled, and the modal hasn&#8217;t been closed, it invokes the modal via <code>_showSessionModal</code>. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
 - <code>ON</code> (when false): Resets the modal state tracking closure, allowing the session modal to appear again after the device is powered back on.
 - <code>GAME_OVER</code>: Clears active session entirely.</p>
 </div>
@@ -526,7 +556,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-22 22:09:51 -0300
+Last updated 2026-02-24 23:17:20 -0300
 </div>
 </div>
 </body>

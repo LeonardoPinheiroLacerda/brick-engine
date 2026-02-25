@@ -13,7 +13,21 @@ The `GameSession` module implements the `xref:../interfaces/modules/Session.adoc
 
 === `saveSession(): void`
 
-Creates or updates the session. Early returns if the `GameID` belongs to the main menu (`game-menu`) or if the `SessionModal` (if existing) has not been confirmed/rejected yet.
+Creates or updates the session. Early returns if the session is disabled (via `setSessionEnabled`) or if the `SessionModal` (if existing) has not been confirmed/rejected yet.
+
+'''
+
+=== `setSessionEnabled(enabled: boolean): void`
+
+Enables or disables the session recovery mechanism. When disabled, the engine will neither show the session recovery modal nor save the session.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`enabled` |`boolean` |Whether the session should be enabled.
+|===
 
 === `clearSession(): void`
 
@@ -34,7 +48,7 @@ Subscribes to `xref:GameState.adoc[GameState]` interactions.
 **Behavior**
 
 Reacts to:
-- `PLAYING`: If a session for the current `gameId` exists, is NOT the game menu, and the modal hasn't been closed, it invokes the modal via `_showSessionModal`. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
+- `PLAYING`: If a session for the current `gameId` exists, session is enabled, and the modal hasn't been closed, it invokes the modal via `_showSessionModal`. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
 - `ON` (when false): Resets the modal state tracking closure, allowing the session modal to appear again after the device is powered back on.
 - `GAME_OVER`: Clears active session entirely.
 

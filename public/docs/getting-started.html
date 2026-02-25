@@ -508,12 +508,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Starts the dev server with hot reload at <code>localhost:8080</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run build:standalone</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Generates a production-ready <code>/dist</code> folder for independent hosting.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run build:bundle</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Generates a bundle optimized for <a href="https://brickengine.com.br">brickengine.com.br</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run build</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generates a production-ready <code>/dist</code> folder and type definitions.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run lint</code> / <code>npm run format</code></p></td>
@@ -583,14 +579,6 @@ export default class MyGame extends Game {
     }
 
     /**
-     * returns a unique key for LocalStorage.
-     * Prevents data collisions between different games on the same domain.
-     */
-    getPersistenceKey(): string {
-        return 'my-awesome-game-v1';
-    }
-
-    /**
      * Rendered every frame when the device is ON but the game hasn't started.
      * Usually displays the title and "Press Start" instructions.
      */
@@ -634,7 +622,7 @@ export default class MyGame extends Game {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-23 16:20:59 -0300
+Last updated 2026-02-24 23:16:56 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
