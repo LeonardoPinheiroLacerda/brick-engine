@@ -558,6 +558,36 @@ export interface State extends Initializable {
      */
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
+    /**
+     * Registers a callback for a specific state change ONLY during the title screen.
+     */
+    subscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Removes an existing title screen subscription.
+     */
+    unsubscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Registers a callback for a specific state change ONLY during the game over screen.
+     */
+    subscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Removes an existing game over screen subscription.
+     */
+    unsubscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Registers a callback for a specific state change ONLY during active gameplay.
+     */
+    subscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Removes an existing playing screen subscription.
+     */
+    unsubscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
     /** Turn the game system on. */
     turnOn(): void;
 
@@ -608,13 +638,6 @@ export interface Control extends Initializable {
     notify(key: ControlKey, type: ControlEventType): void;
 
     /**
-     * Injects the module references required for populating the event context.
-     *
-     * @param {GameModules} modules - The collection of system modules.
-     */
-    setModules(modules: GameModules): void;
-
-    /**
      * Registers a callback for a specific control event.
      *
      * @param {ControlKey} key - The key to listen for.
@@ -661,6 +684,13 @@ export interface Control extends Initializable {
      * Removes an existing playing screen subscription.
      */
     unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Injects the module references required for populating the event context.
+     *
+     * @param {GameModules} modules - The collection of system modules.
+     */
+    setModules(modules: GameModules): void;
 
     /**
      * Detaches all hardware/DOM event listeners.
