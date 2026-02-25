@@ -13,8 +13,8 @@
   "license": "ISC",
   "author": "LeonardoPinheiroLacerda",
   "scripts": {
-    "start": "webpack serve --open --env entry=./src/main.ts",
-    "build": "webpack --mode production --env entry=./src/index.ts",
+    "start": "webpack serve --open",
+    "build": "webpack --mode production",
     "build:types": "tsc --emitDeclarationOnly",
     "lint": "eslint .",
     "format": "npx prettier -w .",
@@ -23,8 +23,7 @@
     "docs:build": "node ./scripts/generate-docs.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
-    "prepublishOnly": "npm run build && npm run build:types"
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "colord": "^2.9.3",

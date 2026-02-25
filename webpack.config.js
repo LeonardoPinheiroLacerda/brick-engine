@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
@@ -10,7 +9,7 @@ module.exports = (env, argv) => {
     return {
         mode: isProduction ? 'production' : 'development',
         entry: {
-            'game.bundle': env.entry || './src/index.ts',
+            'game.bundle': './src/index.ts',
         },
         devtool: isProduction ? false : 'source-map',
         output: {
