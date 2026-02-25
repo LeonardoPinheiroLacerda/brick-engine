@@ -11,7 +11,7 @@ import RendererContext from './core/context/RendererContext';
  * @param {GameView} view - The game view instance.
  * @returns {Game} A new game instance.
  */
-type ClientGameConstructor = new (p: p5, view: GameView) => Game;
+type ClientGameConstructor = new (view: GameView) => Game;
 
 let _game: Game;
 
@@ -39,9 +39,9 @@ export function bootstrap(ClientGame: ClientGameConstructor) {
     return new p5((p: p5) => {
         RendererContext.init(p);
 
-        const view = new GameView(p, document.body);
+        const view = new GameView(document.body);
 
-        setActiveGame(new ClientGame(p, view));
+        setActiveGame(new ClientGame(view));
         if (_game.gameId === 'unknown') {
             _game.gameId = 'game';
         }

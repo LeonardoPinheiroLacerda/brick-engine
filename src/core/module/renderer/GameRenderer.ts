@@ -1,4 +1,3 @@
-import p5 from 'p5';
 import { Cell, GameModules, RendererMetrics } from '../../types/Types';
 import { Debuggable } from '../../types/Interfaces';
 import { Renderer } from '../../types/modules';
@@ -15,8 +14,6 @@ import CoordinateHelper from '../../helpers/CoordinateHelper';
  * Handles the calculation of shared rendering metrics (sizes, positions) to ensure consistency.
  */
 export default class GameRenderer implements RendererComposite, Debuggable {
-    private _p: p5;
-
     private _renderers: Renderer[];
 
     private _displayRenderer: DisplayRenderer;
@@ -24,15 +21,6 @@ export default class GameRenderer implements RendererComposite, Debuggable {
 
     // Cache for renderer metrics
     private _rendererMetrics: RendererMetrics;
-
-    /**
-     * Creates an instance of GameRenderer.
-     *
-     * @param {p5} p - The p5 instance.
-     */
-    constructor(p: p5) {
-        this._p = p;
-    }
 
     /**
      * Adds a sub-renderer to the composition.
@@ -48,8 +36,8 @@ export default class GameRenderer implements RendererComposite, Debuggable {
      * This method must be called before rendering begins.
      */
     setup() {
-        this._displayRenderer = new DisplayRenderer(this._p);
-        this._hudRenderer = new HudRenderer(this._p);
+        this._displayRenderer = new DisplayRenderer();
+        this._hudRenderer = new HudRenderer();
 
         this._renderers = [];
         this.addRenderer(this._displayRenderer);
@@ -70,9 +58,9 @@ export default class GameRenderer implements RendererComposite, Debuggable {
         const { columns: gridColumns } = configs.screenLayout.grid;
 
         // 1. Calculate main display dimensions
-        const displayWidth = RelativeValuesHelper.getRelativeWidth(this._p, width);
-        const displayHeight = RelativeValuesHelper.getRelativeHeight(this._p, height);
-        const displayOrigin = CoordinateHelper.getRelativeCoordinate(this._p, {
+        const displayWidth = RelativeValuesHelper.getRelativeWidth(width);
+        const displayHeight = RelativeValuesHelper.getRelativeHeight(height);
+        const displayOrigin = CoordinateHelper.getRelativeCoordinate({
             x: displayMargin,
             y: displayMargin,
         });
@@ -83,12 +71,12 @@ export default class GameRenderer implements RendererComposite, Debuggable {
         // 3. Calculate HUD dimensions
         // Note: We use 0 and 1 to get start and end positions, then calculate width/height
         const hudOrigin = {
-            x: CoordinateHelper.getHudPosX(this._p, 0, displayWidth),
-            y: CoordinateHelper.getHudPosY(this._p, 0, displayHeight),
+            x: CoordinateHelper.getHudPosX(0, displayWidth),
+            y: CoordinateHelper.getHudPosY(0, displayHeight),
         };
 
-        const hudWidth = CoordinateHelper.getHudPosX(this._p, 1, displayWidth) - hudOrigin.x;
-        const hudHeight = CoordinateHelper.getHudPosY(this._p, 1, displayHeight) - hudOrigin.y;
+        const hudWidth = CoordinateHelper.getHudPosX(1, displayWidth) - hudOrigin.x;
+        const hudHeight = CoordinateHelper.getHudPosY(1, displayHeight) - hudOrigin.y;
 
         this._rendererMetrics = {
             display: {

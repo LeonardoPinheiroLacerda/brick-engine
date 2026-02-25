@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import p5 from 'p5';
 import CoordinateHelper from './CoordinateHelper';
 import RelativeValuesHelper from './RelativeValuesHelper';
+import RendererContext from '../context/RendererContext';
 
 // [ARRANGE] Mock dependencies
 vi.mock('./RelativeValuesHelper');
@@ -23,6 +24,8 @@ describe('CoordinateHelper', () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
+        RendererContext.reset();
+        RendererContext.init(mockP5);
     });
 
     describe('getRelativeCoordinate', () => {
@@ -33,12 +36,12 @@ describe('CoordinateHelper', () => {
             vi.mocked(RelativeValuesHelper.getRelativeHeight).mockReturnValue(1000);
 
             // [ACT]
-            const result = CoordinateHelper.getRelativeCoordinate(mockP5, coord);
+            const result = CoordinateHelper.getRelativeCoordinate(coord);
 
             // [ASSERT]
             expect(result).toEqual({ x: 500, y: 1000 });
-            expect(RelativeValuesHelper.getRelativeWidth).toHaveBeenCalledWith(mockP5, 0.5);
-            expect(RelativeValuesHelper.getRelativeHeight).toHaveBeenCalledWith(mockP5, 0.5);
+            expect(RelativeValuesHelper.getRelativeWidth).toHaveBeenCalledWith(0.5);
+            expect(RelativeValuesHelper.getRelativeHeight).toHaveBeenCalledWith(0.5);
         });
     });
 
@@ -51,12 +54,12 @@ describe('CoordinateHelper', () => {
             vi.mocked(RelativeValuesHelper.getRelativeWidth).mockReturnValue(50);
 
             // [ACT]
-            const result = CoordinateHelper.getDisplayPosX(mockP5, x, displayWidth);
+            const result = CoordinateHelper.getDisplayPosX(x, displayWidth);
 
             // [ASSERT]
             // result = 600 * 0.5 + 50 = 350
             expect(result).toBe(350);
-            expect(RelativeValuesHelper.getRelativeWidth).toHaveBeenCalledWith(mockP5, 0.05);
+            expect(RelativeValuesHelper.getRelativeWidth).toHaveBeenCalledWith(0.05);
         });
     });
 
@@ -68,12 +71,12 @@ describe('CoordinateHelper', () => {
             vi.mocked(RelativeValuesHelper.getRelativeHeight).mockReturnValue(100);
 
             // [ACT]
-            const result = CoordinateHelper.getDisplayPosY(mockP5, y, displayHeight);
+            const result = CoordinateHelper.getDisplayPosY(y, displayHeight);
 
             // [ASSERT]
             // result = 1000 * 0.5 + 100 = 600
             expect(result).toBe(600);
-            expect(RelativeValuesHelper.getRelativeHeight).toHaveBeenCalledWith(mockP5, 0.05);
+            expect(RelativeValuesHelper.getRelativeHeight).toHaveBeenCalledWith(0.05);
         });
     });
 
@@ -88,7 +91,7 @@ describe('CoordinateHelper', () => {
             vi.mocked(RelativeValuesHelper.getRelativeWidth).mockReturnValue(50);
 
             // [ACT]
-            const result = CoordinateHelper.getHudPosX(mockP5, x, displayWidth);
+            const result = CoordinateHelper.getHudPosX(x, displayWidth);
 
             // [ASSERT]
             expect(result).toBe(825);
@@ -103,7 +106,7 @@ describe('CoordinateHelper', () => {
             vi.mocked(RelativeValuesHelper.getRelativeHeight).mockReturnValue(100);
 
             // [ACT]
-            const result = CoordinateHelper.getHudPosY(mockP5, y, displayHeight);
+            const result = CoordinateHelper.getHudPosY(y, displayHeight);
 
             // [ASSERT]
             // 1000 * 0.1 + 100 = 200

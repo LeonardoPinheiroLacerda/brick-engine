@@ -4,6 +4,7 @@ import GameView from './GameView';
 import type p5 from 'p5';
 import { ControlKey } from '../core/types/enums';
 import { Control } from '../core/types/modules';
+import RendererContext from '../core/context/RendererContext';
 
 const { createMockButton } = vi.hoisted(() => ({
     createMockButton: () => ({
@@ -44,7 +45,9 @@ describe('GameView', () => {
         document.body.innerHTML = '<div id="splash"></div>';
         parent = document.body;
         mockP5 = {};
-        gameView = new GameView(mockP5 as unknown as p5, parent);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        gameView = new GameView(parent);
     });
 
     it('should build the game body', () => {

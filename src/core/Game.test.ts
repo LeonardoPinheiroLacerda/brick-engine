@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Game from './Game';
 import p5 from 'p5';
 import type GameView from '../view/GameView';
+import RendererContext from './context/RendererContext';
 import { ControlEventType, ControlKey } from './types/Types';
 
 // Mock localStorage
@@ -50,6 +51,7 @@ describe('Game', () => {
     let mockView: GameView;
 
     beforeEach(() => {
+        RendererContext.reset();
         mockP5 = {
             deltaTime: 16.6,
             noLoop: vi.fn(),
@@ -74,6 +76,7 @@ describe('Game', () => {
                 rect: vi.fn(),
             }),
         };
+        RendererContext.init(mockP5 as unknown as p5);
         mockView = {
             build: vi.fn(),
             bindControls: vi.fn(),
@@ -81,7 +84,7 @@ describe('Game', () => {
             onModal: vi.fn(),
         } as unknown as GameView;
 
-        game = new MockGame(mockP5 as unknown as p5, mockView);
+        game = new MockGame(mockView);
     });
 
     describe('setup', () => {

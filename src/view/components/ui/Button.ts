@@ -1,4 +1,5 @@
 import p5 from 'p5';
+import RendererContext from '../../../core/context/RendererContext';
 
 /**
  * Creates a standard directional button.
@@ -10,7 +11,8 @@ import p5 from 'p5';
  * @param label - The text label for the button.
  * @returns The created button element.
  */
-export default function Button(p: p5, container: p5.Element, label: string) {
+export default function Button(container: p5.Element, label: string) {
+    const { p } = RendererContext;
     //Container
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);

@@ -5,6 +5,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type p5 from 'p5';
 import SessionModal from './SessionModal';
+import RendererContext from '../core/context/RendererContext';
 
 describe('SessionModal', () => {
     let modal: SessionModal;
@@ -59,7 +60,9 @@ describe('SessionModal', () => {
             }),
         };
 
-        modal = new SessionModal(mockP5 as unknown as p5);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        modal = new SessionModal();
     });
 
     describe('setup', () => {

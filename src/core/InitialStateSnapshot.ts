@@ -23,19 +23,26 @@ export default class InitialStateSnapshot {
                 try {
                     // Try to use a custom clone method first
                     if (value && typeof value === 'object') {
-                        // Only use structuredClone for plain objects or arrays
-                        const isPlainObject = Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null;
-                        const isArray = Array.isArray(value);
-
-                        if (isPlainObject || isArray) {
-                            initialValue = structuredClone(value);
+                        const cloneable = value as { clone?: () => unknown; copy?: () => unknown };
+                        if (typeof cloneable.clone === 'function') {
+                            initialValue = cloneable.clone();
+                        } else if (typeof cloneable.copy === 'function') {
+                            initialValue = cloneable.copy();
                         } else {
-                            // It's a class instance without a clone/copy method.
-                            // Save a reference to avoid stripping its prototype.
-                            console.warn(
-                                `[BrickEngine] Property '${key}' is a complex object without a clone() or copy() method. A reference will be saved. State reset might not work for its internal properties.`,
-                            );
-                            initialValue = value;
+                            // Only use structuredClone for plain objects or arrays
+                            const isPlainObject = Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null;
+                            const isArray = Array.isArray(value);
+
+                            if (isPlainObject || isArray) {
+                                initialValue = structuredClone(value);
+                            } else {
+                                // It's a class instance without a clone/copy method.
+                                // Save a reference to avoid stripping its prototype.
+                                console.warn(
+                                    `[BrickEngine] Property '${key}' is a complex object without a clone() or copy() method. A reference will be saved. State reset might not work for its internal properties.`,
+                                );
+                                initialValue = value;
+                            }
                         }
                     } else {
                         initialValue = value;

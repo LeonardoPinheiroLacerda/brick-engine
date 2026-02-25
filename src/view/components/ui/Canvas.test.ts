@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type p5 from 'p5';
 import Canvas from './Canvas';
+import RendererContext from '../../../core/context/RendererContext';
 
 describe('Canvas', () => {
     it('should create a canvas with calculated dimensions from configs', () => {
@@ -20,7 +21,9 @@ describe('Canvas', () => {
         const expectedHeight = expectedWidth * 1.114; // 389.9
 
         // [ACT]
-        const result = Canvas(mockP5, mockContainer, width);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = Canvas(mockContainer, width);
 
         // [ASSERT]
         expect(mockP5.createCanvas).toHaveBeenCalledWith(expectedWidth, expectedHeight);

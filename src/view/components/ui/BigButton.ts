@@ -1,4 +1,5 @@
 import p5 from 'p5';
+import RendererContext from '../../../core/context/RendererContext';
 
 /**
  * Creates the large action button.
@@ -11,7 +12,8 @@ import p5 from 'p5';
  * @param label - The text label for the button (currently used for aria-label or internal logic as visual label is commented out).
  * @returns The created button element.
  */
-export default function BigButton(p: p5, container: p5.Element, label: string) {
+export default function BigButton(container: p5.Element, label: string) {
+    const { p } = RendererContext;
     //Container
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);

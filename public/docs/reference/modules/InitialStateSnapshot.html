@@ -493,7 +493,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="captureinitialstate"><a class="link" href="#captureinitialstate">1.2. <code>captureInitialState</code></a></h3>
 <div class="paragraph">
-<p>Stores the initial state of custom client properties. It selectively clones properties that were not present in the base properties and are not functions, using deep copying (<code>structuredClone</code>) with a fallback to referencing.</p>
+<p>Stores the initial state of custom client properties. It selectively clones properties that were not present in the base properties and are not functions. The deep cloning strategy involves:
+1. Checking if the object has a custom <code>clone()</code> method.
+2. Attempting to use <code>structuredClone</code> for plain objects.
+3. Safely falling back to by-reference assignment for complex objects like P5 Vectors if other methods fail.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -550,7 +553,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-22 17:57:57 -0300
+Last updated 2026-02-25 03:48:13 -0300
 </div>
 </div>
 </body>

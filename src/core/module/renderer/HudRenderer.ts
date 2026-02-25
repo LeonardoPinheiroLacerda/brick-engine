@@ -1,18 +1,16 @@
 import { Renderer } from '../../types/modules';
 import { Cell, Coordinate, GameModules, RendererMetrics } from '../../types/Types';
-import p5 from 'p5';
 import { Color, FontAlign, FontSize, FontVerticalAlign } from '../../types/enums';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import configs from '../../../config/configs';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
+import RendererContext from '../../context/RendererContext';
 
 /**
  * Responsible for rendering the Heads-Up Display (HUD).
  * Displays game information like Score, High Score, Level, and the Next Piece Preview.
  */
 export default class HudRenderer implements Renderer {
-    private _p: p5;
-
     private _gridOrigin: Coordinate;
 
     private _cellSize: number;
@@ -25,15 +23,6 @@ export default class HudRenderer implements Renderer {
     };
 
     /**
-     * Creates an instance of HudRenderer.
-     *
-     * @param {p5} p - The p5 instance.
-     */
-    constructor(p: p5) {
-        this._p = p;
-    }
-
-    /**
      * Initializes the HUD with calculated metrics.
      * Sets up the grid origin and border rectangle for the "next piece" preview area.
      *
@@ -42,15 +31,15 @@ export default class HudRenderer implements Renderer {
     setup(rendererMetrics: RendererMetrics): void {
         this._cellSize = rendererMetrics.cell.size;
         this._gridOrigin = {
-            x: CoordinateHelper.getHudPosX(this._p, 0.078, rendererMetrics.display.width),
-            y: CoordinateHelper.getHudPosY(this._p, 0.375, rendererMetrics.display.height),
+            x: CoordinateHelper.getHudPosX(0.078, rendererMetrics.display.width),
+            y: CoordinateHelper.getHudPosY(0.375, rendererMetrics.display.height),
         };
 
         this._hudBorderRect = {
-            x: this._gridOrigin.x - RelativeValuesHelper.getRelativeWidth(this._p, 0.005),
-            y: this._gridOrigin.y - RelativeValuesHelper.getRelativeHeight(this._p, 0.005),
-            w: this._cellSize * 4 + RelativeValuesHelper.getRelativeWidth(this._p, 0.01),
-            h: this._cellSize * 4 + RelativeValuesHelper.getRelativeHeight(this._p, 0.01),
+            x: this._gridOrigin.x - RelativeValuesHelper.getRelativeWidth(0.005),
+            y: this._gridOrigin.y - RelativeValuesHelper.getRelativeHeight(0.005),
+            w: this._cellSize * 4 + RelativeValuesHelper.getRelativeWidth(0.01),
+            h: this._cellSize * 4 + RelativeValuesHelper.getRelativeHeight(0.01),
         };
     }
 
@@ -71,9 +60,10 @@ export default class HudRenderer implements Renderer {
      * @param {GameModules} modules - The game modules.
      */
     private _renderHud(modules: GameModules): void {
+        const { p } = RendererContext;
         const { text, state, score } = modules;
 
-        this._p.push();
+        p.push();
 
         text.setTextSize(FontSize.SMALL);
         text.setInactiveText();
@@ -119,7 +109,7 @@ export default class HudRenderer implements Renderer {
         }
         text.textOnHud('Muted', { x: 0.5, y: 0.97 });
 
-        this._p.pop();
+        p.pop();
 
         this._drawHudGrid(modules);
     }
@@ -130,9 +120,10 @@ export default class HudRenderer implements Renderer {
      * @param {GameModules} modules - The game modules.
      */
     private _drawHudGrid(modules: GameModules): void {
+        const { p } = RendererContext;
         const { hudGrid, state } = modules;
 
-        this._p.push();
+        p.push();
 
         hudGrid.forEach(cell => {
             const { x, y } = cell.coordinate;
@@ -156,12 +147,12 @@ export default class HudRenderer implements Renderer {
             });
         });
 
-        this._p.noFill();
-        this._p.stroke(state.isOn() ? Color.DEFAULT : Color.INACTIVE);
+        p.noFill();
+        p.stroke(state.isOn() ? Color.DEFAULT : Color.INACTIVE);
 
-        this._p.rect(this._hudBorderRect.x, this._hudBorderRect.y, this._hudBorderRect.w, this._hudBorderRect.h);
+        p.rect(this._hudBorderRect.x, this._hudBorderRect.y, this._hudBorderRect.w, this._hudBorderRect.h);
 
-        this._p.pop();
+        p.pop();
     }
 
     /**
@@ -175,6 +166,7 @@ export default class HudRenderer implements Renderer {
      * @param {Color} params.color - Color of the cell.
      */
     private drawCellElement({ w, posX, posY, color }: { w: number; h: number; posX: number; posY: number; color: Color }): void {
+        const { p } = RendererContext;
         const { margin: cellMargin, padding: cellPadding, strokeWeight: cellStrokeWeight } = configs.screenLayout.cell;
 
         const innerOffset = cellMargin * w;
@@ -183,21 +175,21 @@ export default class HudRenderer implements Renderer {
         const paddingSize = w - cellPadding * w * 2;
         const strokeWeight = cellStrokeWeight * w;
 
-        this._p.push();
+        p.push();
 
-        this._p.translate(posX, posY);
+        p.translate(posX, posY);
 
-        this._p.strokeWeight(strokeWeight);
-        this._p.stroke(color);
+        p.strokeWeight(strokeWeight);
+        p.stroke(color);
 
         // Outer Box
-        this._p.noFill();
-        this._p.rect(innerOffset, innerOffset, innerSize, innerSize);
+        p.noFill();
+        p.rect(innerOffset, innerOffset, innerSize, innerSize);
 
         // Inner Fill
-        this._p.fill(color);
-        this._p.rect(paddingOffset, paddingOffset, paddingSize, paddingSize);
+        p.fill(color);
+        p.rect(paddingOffset, paddingOffset, paddingSize, paddingSize);
 
-        this._p.pop();
+        p.pop();
     }
 }

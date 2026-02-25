@@ -3,6 +3,7 @@ import type p5 from 'p5';
 import HudRenderer from './HudRenderer';
 import { Color } from '../../types/enums';
 import { GameModules, RendererMetrics } from '../../types/Types';
+import RendererContext from '../../context/RendererContext';
 
 describe('HudRenderer', () => {
     let renderer: HudRenderer;
@@ -22,7 +23,9 @@ describe('HudRenderer', () => {
             height: 1000,
         };
 
-        renderer = new HudRenderer(mockP5 as unknown as p5);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        renderer = new HudRenderer();
 
         const metrics: RendererMetrics = {
             display: { width: 600, height: 900, origin: { x: 50, y: 50 } },

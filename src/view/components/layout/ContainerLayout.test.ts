@@ -2,6 +2,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type p5 from 'p5';
 import ContainerLayout from './ContainerLayout';
+import RendererContext from '../../../core/context/RendererContext';
 
 describe('ContainerLayout', () => {
     it('should calculate dimensions for mobile breakpoint', () => {
@@ -14,7 +15,9 @@ describe('ContainerLayout', () => {
         } as unknown as HTMLElement;
 
         // [ACT]
-        const result = ContainerLayout(mockP5, mockParent);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = ContainerLayout(mockParent);
 
         // [ASSERT]
         expect(result.width).toBe(500);
@@ -39,7 +42,9 @@ describe('ContainerLayout', () => {
         // height = 501.25 * 1.9 ≈ 952.38
 
         // [ACT]
-        const result = ContainerLayout(mockP5, mockParent);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = ContainerLayout(mockParent);
 
         // [ASSERT]
         expect(result.width).toBeLessThan(600); // Because vertical limit is tight

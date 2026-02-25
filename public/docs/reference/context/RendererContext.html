@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Specialized math utilities for converting between Grid, Display, and Pixel coordinate systems.">
-<meta name="keywords" content="coordinates, math, grid, display, conversion, helper">
-<title>CoordinateHelper Reference</title>
+<meta name="description" content="Centralized singleton for providing global access to the P5.js instance.">
+<meta name="keywords" content="context, p5, renderer, singleton, global">
+<title>RendererContext Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,19 +439,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>CoordinateHelper Reference</h1>
+<h1>RendererContext Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#purpose">1. Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#getrelativecoordinatecoordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(coordinate: Coordinate): Coordinate</code></a></li>
-<li><a href="#getdisplayposxx-number-displaywidth-number-number">1.2. <code>getDisplayPosX(x: number, displayWidth: number): number</code></a></li>
-<li><a href="#getdisplayposyy-number-displayheight-number-number">1.3. <code>getDisplayPosY(y: number, displayHeight: number): number</code></a></li>
-<li><a href="#gethudposxx-number-displaywidth-number-number">1.4. <code>getHudPosX(x: number, displayWidth: number): number</code></a></li>
-<li><a href="#gethudposyy-number-displayheight-number-number">1.5. <code>getHudPosY(y: number, displayHeight: number): number</code></a></li>
+<li><a href="#initp-p5-void">2.1. <code>init(p: p5): void</code></a></li>
+<li><a href="#reset-void">2.2. <code>reset(): void</code></a></li>
+<li><a href="#p">2.3. <code>p</code></a></li>
 </ul>
 </li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
@@ -459,17 +459,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>CoordinateHelper</code> is a static utility class that handles translations between different coordinate systems: the logical <a href="../modules/GameGrid.html">Game Grid</a>, the normalized Display area, and absolute pixel positions.</p>
+<p>The <code>RendererContext</code> is a singleton utility class used to provide centralized, global access to the P5.js instance (<code>p5</code>) throughout the Brick Engine.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="purpose"><a class="link" href="#purpose">1. Purpose</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By acting as a central provider, <code>RendererContext</code> eliminates the need to pass the <code>p5</code> object via dependency injection (constructor arguments) to every component, view, layout, and module in the architecture. It significantly reduces boilerplate code and prevents tightly coupling components to the rendering library from the top down.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="getrelativecoordinatecoordinate-coordinate-coordinate"><a class="link" href="#getrelativecoordinatecoordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Coordinate.html">Coordinate</a></code></a></h3>
+<h3 id="initp-p5-void"><a class="link" href="#initp-p5-void">2.1. <code>init(p: p5): void</code></a></h3>
 <div class="paragraph">
-<p>Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 1.0).</p>
+<p>Initializes the context with the active P5.js instance.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -480,184 +488,82 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <col style="width: 20%;">
 <col style="width: 60%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../types/Coordinate.html">Coordinate</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The absolute pixel coordinate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>p</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>p5</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The P5.js instance initialized by the engine&#8217;s entry point.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p><strong>Returns</strong></p>
+<p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p><code><a href="../types/Coordinate.html">Coordinate</a></code> - The normalized <code>{x, y}</code> point.</p>
+<p>This method captures the <code>p5</code> instance and stores it internally for global access. It includes a safeguard: trying to call this method if the context is already initialized will output a warning and will not overwrite the existing instance.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdisplayposxx-number-displaywidth-number-number"><a class="link" href="#getdisplayposxx-number-displaywidth-number-number">1.2. <code>getDisplayPosX(x: number, displayWidth: number): number</code></a></h3>
+<h3 id="reset-void"><a class="link" href="#reset-void">2.2. <code>reset(): void</code></a></h3>
 <div class="paragraph">
-<p>Calculates the absolute X pixel position on the main game display.</p>
+<p>Clears the currently stored P5.js instance.</p>
 </div>
 <div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized horizontal position (0.0 to 1.0).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayWidth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total width of the display area.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
+<p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p><code>number</code> - The absolute horizontal pixel position.</p>
+<p>This is an internal utility primarily used for unit testing. It ensures test isolation by wiping the context between tests when virtual P5 mock instances are created and torn down in <code>beforeEach</code> closures.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdisplayposyy-number-displayheight-number-number"><a class="link" href="#getdisplayposyy-number-displayheight-number-number">1.3. <code>getDisplayPosY(y: number, displayHeight: number): number</code></a></h3>
+<h3 id="p"><a class="link" href="#p">2.3. <code>p</code></a></h3>
 <div class="paragraph">
-<p>Calculates the absolute Y pixel position on the main game display.</p>
+<p>Getter property to access the initialized P5.js instance.</p>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized vertical position (0.0 to 1.0).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayHeight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total height of the display area.</p></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
 <p><strong>Returns</strong></p>
 </div>
 <div class="paragraph">
-<p><code>number</code> - The absolute vertical pixel position.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="gethudposxx-number-displaywidth-number-number"><a class="link" href="#gethudposxx-number-displaywidth-number-number">1.4. <code>getHudPosX(x: number, displayWidth: number): number</code></a></h3>
-<div class="paragraph">
-<p>Calculates the absolute X pixel position within the HUD area.</p>
+<p>The initialized P5.js instance.</p>
 </div>
 <div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized horizontal position (0.0 to 1.0) relative to the HUD area.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayWidth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The width of the main display (used to calculate the HUD offset).</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
+<p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p><code>number</code> - The absolute horizontal pixel position within the HUD.</p>
+<p>Returns the internal reference to the <code>p5</code> instance. In standard project operation, it is safe to access. However, accessing this getter before <code>init()</code> is called will result in a runtime error, preventing silent failures.</p>
 </div>
-<hr>
 </div>
-<div class="sect2">
-<h3 id="gethudposyy-number-displayheight-number-number"><a class="link" href="#gethudposyy-number-displayheight-number-number">1.5. <code>getHudPosY(y: number, displayHeight: number): number</code></a></h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Calculates the absolute Y pixel position within the HUD area.</p>
+<p>To access P5.js functions globally, components use ES6 object destructuring against <code>RendererContext</code>:</p>
 </div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized vertical position (0.0 to 1.0) relative to the HUD area.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayHeight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total height of the display area.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The absolute vertical pixel position within the HUD.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">import RendererContext from '../context/RendererContext';
+
+class MyButton {
+    draw() {
+        // Destructure 'p' from the context
+        const { p } = RendererContext;
+
+        // Draw the button
+        p.fill(255);
+        p.rect(0, 0, 10, 10);
+    }
+}</code></pre>
 </div>
 </div>
 </div>

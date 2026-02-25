@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import configs from '../../../config/configs';
+import RendererContext from '../../../core/context/RendererContext';
 
 /**
  * Response object containing container dimensions and element reference.
@@ -22,7 +23,8 @@ interface ContainerResponse {
  * @param {HTMLElement} parent - The DOM element where the container will be appended.
  * @returns {ContainerResponse} Object containing the container element and its calculated width/height.
  */
-export default function ContainerLayout(p: p5, parent: HTMLElement): ContainerResponse {
+export default function ContainerLayout(parent: HTMLElement): ContainerResponse {
+    const { p } = RendererContext;
     const container = p.createDiv();
     container.parent(configs.selectors.parent);
     container.id(configs.selectors.viewElementIds.container);

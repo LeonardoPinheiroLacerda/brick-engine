@@ -1,0 +1,80 @@
+= GameView Reference
+:description: Orchestrates the comprehensive HTML structure, style binding, and user interactions.
+:keywords: view, rendering, layout, dom, interactions
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+
+The `GameView` class acts as the primary View controller in the MVC architecture. It directs the layout, invokes underlying UI components, initializes DOM observers (like the Debugger and Modals), and bridges hardware input (clicks) to engine controls.
+
+== Features
+
+*   **Scaffolding**: Dynamically injects layouts and elements via components like `ContainerLayout` and `Canvas`.
+*   **Aesthetics**: Responsible for dispatching standard dimension calculations (`dimensions.ts`) and theme injections (`applyColors.ts`).
+*   **Orchestration**: Manages auxiliary visual tools such as `xref:../modules/Debugger.adoc[Debugger]` and `xref:../modules/SessionModal.adoc[SessionModal]`.
+
+== Lifecycle
+
+=== `constructor(parent: HTMLElement)`
+
+Initializes the view, storing the specific parent node where the engine interface will attach itself.
+
+**Parameters**
+
+[cols="1,1,3", options="header"]
+|===
+|Name |Type |Description
+|`parent` |`HTMLElement` |The DOM element where the game structure attaches.
+|===
+
+
+'''
+
+=== `build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }`
+
+Builds the visual structure by appending structural layers, generating physical buttons, and initializing canvas metrics.
+
+**Behavior**
+
+This is the dominant method for defining the front-end skeleton. It creates all buttons to subsequently bind them in later pipeline phases. Caches the canvas return parameter avoiding redundant builds (querying `isBodyBuilt()` internal state).
+
+
+'''
+
+=== `setupDebugger(gameModules: GameModules): void`
+
+Initializes and configures the tracking interface connecting registered `gameModules` to the internal Debugger overlay instance.
+
+
+'''
+
+=== `setupSessionModal(): void`
+
+Orchestrates the DOM creation for the active-session modal element (`SessionModal.setup()`), allowing transparent pause menus.
+
+== Controls Binding
+
+=== `bindControls(control: Control): void`
+
+Pairs DOM click events with logical Engine actions.
+
+**Parameters**
+
+[cols="1,1,3", options="header"]
+|===
+|Name |Type |Description
+|`control` |`xref:../interfaces/modules/Control.adoc[Control]` |The active control module resolving interactions.
+|===
+
+**Behavior**
+
+Instantiates a `ControlInputHandlerHelper` mapping each isolated layout button (from `_upBtn`, `_actionBtn`, to specific targets like `_resetBtn`) to their respective `ControlKey` actions using native `mousePressed` and `mouseReleased` hooks. Supports pointer displacement logic mapping `mouseOut` as automatic release handlers to prevent stuck events.
+
+
+'''
+
+=== `unbindControls(): void`
+
+Completely nullifies event listeners on all tracked buttons, preventing interactions when the execution stack prohibits it (e.g., stopping the engine entirely, removing focus).

@@ -26,7 +26,10 @@ Captures the base properties of the instance before any custom client properties
 
 === `captureInitialState`
 
-Stores the initial state of custom client properties. It selectively clones properties that were not present in the base properties and are not functions, using deep copying (`structuredClone`) with a fallback to referencing.
+Stores the initial state of custom client properties. It selectively clones properties that were not present in the base properties and are not functions. The deep cloning strategy involves:
+1. Checking if the object has a custom `clone()` method.
+2. Attempting to use `structuredClone` for plain objects.
+3. Safely falling back to by-reference assignment for complex objects like P5 Vectors if other methods fail.
 
 [cols="1,1,3", options="header"]
 |===

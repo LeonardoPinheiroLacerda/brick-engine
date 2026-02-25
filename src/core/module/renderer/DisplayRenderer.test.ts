@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type p5 from 'p5';
 import DisplayRenderer from './DisplayRenderer';
+import RendererContext from '../../context/RendererContext';
 import { Color } from '../../types/enums';
 import { GameModules } from '../../types/Types';
 import { State } from '../../types/modules';
@@ -34,7 +35,9 @@ describe('DisplayRenderer', () => {
             height: 1000,
         };
 
-        renderer = new DisplayRenderer(mockP5 as unknown as p5);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        renderer = new DisplayRenderer();
         renderer.setup({
             display: { width: 600, height: 900, origin: { x: 50, y: 50 } },
             hud: { width: 400, height: 900, origin: { x: 650, y: 50 } },

@@ -3,6 +3,7 @@ import type p5 from 'p5';
 import GameRenderer from './GameRenderer';
 import { Renderer } from '../../types/modules';
 import { Cell, GameModules } from '../../types/Types';
+import RendererContext from '../../context/RendererContext';
 
 describe('GameRenderer', () => {
     let gameRenderer: GameRenderer;
@@ -30,7 +31,9 @@ describe('GameRenderer', () => {
             }),
         };
 
-        gameRenderer = new GameRenderer(mockP5 as unknown as p5);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        gameRenderer = new GameRenderer();
     });
 
     describe('setup', () => {

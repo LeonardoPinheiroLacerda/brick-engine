@@ -45,7 +45,6 @@ export default class GameView {
     private _actionBtn        : p5.Element;
 
     private _parent           : HTMLElement;
-    private _p                : p5;
     private _inputHandler     : ControlInputHandler;
 
     private _cachedCanvas     : { canvas: p5.Element; canvasWidth: number; canvasHeight: number };
@@ -59,9 +58,8 @@ export default class GameView {
      * @param p - The p5 instance used for rendering and event handling.
      * @param parent - The DOM element where the game view will be attached.
      */
-    constructor(p: p5, parent: HTMLElement) {
+    constructor(parent: HTMLElement) {
         this._parent = parent;
-        this._p = p;
     }
 
     /**
@@ -91,13 +89,13 @@ export default class GameView {
         applyColors();
 
         //Container
-        const { container, height, width } = ContainerLayout(this._p, this._parent);
+        const { container, height, width } = ContainerLayout(this._parent);
 
         //Frame
-        const frame = FrameLayout(this._p, container);
+        const frame = FrameLayout(container);
 
         //Canvas
-        const { canvas, canvasHeight, canvasWidth } = Canvas(this._p, frame, width);
+        const { canvas, canvasHeight, canvasWidth } = Canvas(frame, width);
 
         //Buttons
         const {
@@ -105,24 +103,24 @@ export default class GameView {
             smallButtonContainer,
             directionHorizontalContainer,
             directionVerticalContainer,
-        } = ButtonLayout(this._p, container);
+        } = ButtonLayout(container);
 
         //System buttons
-        this._onOffBtn        = SmallButton(this._p, smallButtonContainer    , 'On<br/>Off'        , true);
-        this._startPauseBtn   = SmallButton(this._p, smallButtonContainer    , 'Start<br/>Pause'   , false);
-        this._soundBtn        = SmallButton(this._p, smallButtonContainer    , 'Sound'             , true);
-        this._resetBtn        = SmallButton(this._p, smallButtonContainer    , 'Reset'             , false);
-        this._exitBtn         = SmallButton(this._p, smallButtonContainer    , 'Exit'              , true);
-        this._enableColorBtn  = SmallButton(this._p, smallButtonContainer    , 'Enable<br/>Colors' , false);
+        this._onOffBtn        = SmallButton(smallButtonContainer    , 'On<br/>Off'        , true);
+        this._startPauseBtn   = SmallButton(smallButtonContainer    , 'Start<br/>Pause'   , false);
+        this._soundBtn        = SmallButton(smallButtonContainer    , 'Sound'             , true);
+        this._resetBtn        = SmallButton(smallButtonContainer    , 'Reset'             , false);
+        this._exitBtn         = SmallButton(smallButtonContainer    , 'Exit'              , true);
+        this._enableColorBtn  = SmallButton(smallButtonContainer    , 'Enable<br/>Colors' , false);
 
         //Direction buttons
-        this._upBtn           = Button(this._p, directionVerticalContainer   , 'UP');
-        this._leftBtn         = Button(this._p, directionHorizontalContainer , 'LEFT');
-        this._downBtn         = Button(this._p, directionVerticalContainer   , 'DOWN');
-        this._rightBtn        = Button(this._p, directionHorizontalContainer , 'RIGHT');
+        this._upBtn           = Button(directionVerticalContainer   , 'UP');
+        this._leftBtn         = Button(directionHorizontalContainer , 'LEFT');
+        this._downBtn         = Button(directionVerticalContainer   , 'DOWN');
+        this._rightBtn        = Button(directionHorizontalContainer , 'RIGHT');
 
         //Action button
-        this._actionBtn       = BigButton(this._p, largeButtonContainer      , 'Action');
+        this._actionBtn       = BigButton(largeButtonContainer      , 'Action');
 
         //Set dimensions
         dimensions(width, height, canvasWidth, canvasHeight);
@@ -139,7 +137,7 @@ export default class GameView {
      * @param gameModules - The game modules to be used in the session modal.
      */
     setupSessionModal() {
-        this._sessionModal = new SessionModal(this._p);
+        this._sessionModal = new SessionModal();
         this._sessionModal.setup();
     }
 
@@ -152,7 +150,7 @@ export default class GameView {
      * @param gameModules - The game modules to be debugged.
      */
     setupDebugger(gameModules: GameModules) {
-        this._debugger = new Debugger(gameModules, this._p);
+        this._debugger = new Debugger(gameModules);
         this._debugger.setup();
     }
 

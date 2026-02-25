@@ -3,6 +3,7 @@ import GameText from './GameText';
 import p5 from 'p5';
 import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
+import RendererContext from '../../context/RendererContext';
 
 // [ARRANGE] Mock CoordinateHelper
 vi.mock('../../helpers/CoordinateHelper', () => ({
@@ -29,7 +30,9 @@ describe('GameText', () => {
             height: 1000,
         } as unknown as p5;
 
-        gameText = new GameText(mockP5);
+        RendererContext.reset();
+        RendererContext.init(mockP5);
+        gameText = new GameText();
         gameText.setRendererMetrics({
             display: { width: 600, height: 900, origin: { x: 0, y: 0 } },
             hud: { width: 400, height: 900, origin: { x: 600, y: 0 } },

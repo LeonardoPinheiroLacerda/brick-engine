@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type p5 from 'p5';
 import ButtonLayout from './ButtonLayout';
+import RendererContext from '../../../core/context/RendererContext';
 
 describe('ButtonLayout', () => {
     it('should create a hierarchy of containers with correct IDs', () => {
@@ -15,7 +16,9 @@ describe('ButtonLayout', () => {
         const mockContainer = {} as p5.Element;
 
         // [ACT]
-        const result = ButtonLayout(mockP5, mockContainer);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = ButtonLayout(mockContainer);
 
         // [ASSERT]
         expect(mockP5.createDiv).toHaveBeenCalledTimes(7); // buttonContainer, small, inner, medium, vertical, horizontal, large

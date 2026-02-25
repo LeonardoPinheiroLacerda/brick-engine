@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type p5 from 'p5';
 import FrameLayout from './FrameLayout';
+import RendererContext from '../../../core/context/RendererContext';
 
 describe('FrameLayout', () => {
     it('should create a frame with branding text', () => {
@@ -13,7 +14,9 @@ describe('FrameLayout', () => {
         const mockContainer = {} as p5.Element;
 
         // [ACT]
-        const result = FrameLayout(mockP5, mockContainer);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = FrameLayout(mockContainer);
 
         // [ASSERT]
         expect(mockP5.createDiv).toHaveBeenCalledTimes(2);

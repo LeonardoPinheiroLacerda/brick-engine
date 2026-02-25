@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import configs from '../../../config/configs';
+import RendererContext from '../../../core/context/RendererContext';
 
 interface ButtonLayoutResponse {
     smallButtonContainer: p5.Element;
@@ -24,7 +25,8 @@ interface ButtonLayoutResponse {
  *  - directionVerticalContainer: For Up/Down buttons.
  *  - directionHorizontalContainer: For Left/Right buttons.
  */
-export default function ButtonLayout(p: p5, container: p5.Element): ButtonLayoutResponse {
+export default function ButtonLayout(container: p5.Element): ButtonLayoutResponse {
+    const { p } = RendererContext;
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);
     buttonContainer.id(configs.selectors.viewElementIds.buttonContainer);

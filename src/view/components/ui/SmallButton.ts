@@ -1,4 +1,5 @@
 import p5 from 'p5';
+import RendererContext from '../../../core/context/RendererContext';
 
 /**
  * Creates a small system button (e.g., Reset, Sound).
@@ -11,7 +12,8 @@ import p5 from 'p5';
  * @param {boolean} top - Determines position/styling nuance (e.g. if it belongs to the top row of small buttons).
  * @returns {p5.Element} The created button element.
  */
-export default function SmallButton(p: p5, container: p5.Element, label: string, top: boolean) {
+export default function SmallButton(container: p5.Element, label: string, top: boolean) {
+    const { p } = RendererContext;
     //Container
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);

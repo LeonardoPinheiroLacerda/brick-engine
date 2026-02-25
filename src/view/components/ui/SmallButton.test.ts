@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type p5 from 'p5';
 import SmallButton from './SmallButton';
+import RendererContext from '../../../core/context/RendererContext';
 
 describe('SmallButton', () => {
     it('should create a small button with paragraph label', () => {
@@ -17,7 +18,9 @@ describe('SmallButton', () => {
         const mockContainer = {} as p5.Element;
 
         // [ACT]
-        const result = SmallButton(mockP5, mockContainer, 'Reset', true);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        const result = SmallButton(mockContainer, 'Reset', true);
 
         // [ASSERT]
         expect(mockP5.createDiv).toHaveBeenCalled();
@@ -40,7 +43,9 @@ describe('SmallButton', () => {
         } as unknown as p5;
 
         // [ACT]
-        SmallButton(mockP5, {} as p5.Element, 'Test', false);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        SmallButton({} as p5.Element, 'Test', false);
 
         // [ASSERT]
         expect(mockElement.addClass).toHaveBeenCalledWith('sm-btn-container-bottom');

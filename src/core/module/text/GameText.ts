@@ -1,4 +1,3 @@
-import p5 from 'p5';
 import configs from '../../../config/configs';
 import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
 import { Coordinate, RendererMetrics } from '../../types/Types';
@@ -6,6 +5,7 @@ import { Debuggable } from '../../types/Interfaces';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import { Text } from '../../types/modules';
+import RendererContext from '../../context/RendererContext';
 
 /**
  * Handles text rendering and font management within the game.
@@ -23,18 +23,6 @@ export default class GameText implements Text, Debuggable {
     /** Stores the current display metrics for relative positioning. */
     private _rendererMetrics: RendererMetrics;
 
-    /** The p5 instance used for rendering. */
-    private _p: p5;
-
-    /**
-     * Creates an instance of GameText.
-     *
-     * @param {p5} p - The p5 instance.
-     */
-    constructor(p: p5) {
-        this._p = p;
-    }
-
     // prettier-ignore
     /**
      * Setup the font and pre-calculates relative font sizes.
@@ -43,18 +31,19 @@ export default class GameText implements Text, Debuggable {
      * based on current container width.
      */
     setup(): void {
+        const { p } = RendererContext;
         const { extraSmall, small, medium, large, extraLarge } = configs.screenLayout.fontSize;
 
-        this._p.textFont(this.defaultFontFamily);
+        p.textFont(this.defaultFontFamily);
 
         // Define font sizes
         this.fontSizes = [];
 
-        this.fontSizes[FontSize.EXTRA_SMALL] = RelativeValuesHelper.getRelativeWidth(this._p, extraSmall);
-        this.fontSizes[FontSize.SMALL]       = RelativeValuesHelper.getRelativeWidth(this._p, small);
-        this.fontSizes[FontSize.MEDIUM]      = RelativeValuesHelper.getRelativeWidth(this._p, medium);
-        this.fontSizes[FontSize.LARGE]       = RelativeValuesHelper.getRelativeWidth(this._p, large);
-        this.fontSizes[FontSize.EXTRA_LARGE] = RelativeValuesHelper.getRelativeWidth(this._p, extraLarge);
+        this.fontSizes[FontSize.EXTRA_SMALL] = RelativeValuesHelper.getRelativeWidth(extraSmall);
+        this.fontSizes[FontSize.SMALL]       = RelativeValuesHelper.getRelativeWidth(small);
+        this.fontSizes[FontSize.MEDIUM]      = RelativeValuesHelper.getRelativeWidth(medium);
+        this.fontSizes[FontSize.LARGE]       = RelativeValuesHelper.getRelativeWidth(large);
+        this.fontSizes[FontSize.EXTRA_LARGE] = RelativeValuesHelper.getRelativeWidth(extraLarge);
     }
 
     /**
@@ -72,8 +61,9 @@ export default class GameText implements Text, Debuggable {
      * @param {boolean} state - Whether the text should use the active or inactive color.
      */
     protected setTextState(state: boolean): void {
+        const { p } = RendererContext;
         const { active, inactive } = configs.colors;
-        this._p.fill(state ? active : inactive);
+        p.fill(state ? active : inactive);
     }
 
     /**
@@ -96,7 +86,8 @@ export default class GameText implements Text, Debuggable {
      * @param {FontSize} fontSize - The enum value representing the desired size.
      */
     setTextSize(fontSize: FontSize): void {
-        this._p.textSize(this.fontSizes[fontSize]);
+        const { p } = RendererContext;
+        p.textSize(this.fontSizes[fontSize]);
     }
 
     /**
@@ -106,7 +97,8 @@ export default class GameText implements Text, Debuggable {
      * @param {FontVerticalAlign} fontVerticalAlign - Vertical alignment value.
      */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void {
-        this._p.textAlign(fontAlign, fontVerticalAlign);
+        const { p } = RendererContext;
+        p.textAlign(fontAlign, fontVerticalAlign);
     }
 
     /**
@@ -116,10 +108,11 @@ export default class GameText implements Text, Debuggable {
      * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the HUD area.
      */
     textOnHud(text: string, coordinate: Coordinate): void {
-        const x = CoordinateHelper.getHudPosX(this._p, coordinate.x, this._rendererMetrics.display.width);
-        const y = CoordinateHelper.getHudPosY(this._p, coordinate.y, this._rendererMetrics.display.height);
+        const { p } = RendererContext;
+        const x = CoordinateHelper.getHudPosX(coordinate.x, this._rendererMetrics.display.width);
+        const y = CoordinateHelper.getHudPosY(coordinate.y, this._rendererMetrics.display.height);
 
-        this._p.text(text, x, y);
+        p.text(text, x, y);
     }
 
     /**
@@ -129,11 +122,12 @@ export default class GameText implements Text, Debuggable {
      * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the display area.
      */
     textOnDisplay(text: string, coordinate: Coordinate): void {
+        const { p } = RendererContext;
         // Fixed argument order: (p, x, displayWidth)
-        const x = CoordinateHelper.getDisplayPosX(this._p, coordinate.x, this._rendererMetrics.display.width);
-        const y = CoordinateHelper.getDisplayPosY(this._p, coordinate.y, this._rendererMetrics.display.height);
+        const x = CoordinateHelper.getDisplayPosX(coordinate.x, this._rendererMetrics.display.width);
+        const y = CoordinateHelper.getDisplayPosY(coordinate.y, this._rendererMetrics.display.height);
 
-        this._p.text(text, x, y);
+        p.text(text, x, y);
     }
 
     /**

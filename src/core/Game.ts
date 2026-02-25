@@ -1,4 +1,3 @@
-import p5 from 'p5';
 import type GameView from '../view/GameView';
 import GameControl from './module/control/GameControl';
 import GameGrid from './module/grid/GameGrid';
@@ -23,7 +22,6 @@ import GameSession from './module/session/GameSession';
  * All game logic should be implemented in subclasses by overriding `processTick` and `processFrame`.
  */
 export default abstract class Game implements Initializable {
-    protected _p: p5;
     protected _view: GameView;
 
     private _modules: GameModules = undefined as unknown as GameModules;
@@ -52,8 +50,7 @@ export default abstract class Game implements Initializable {
      * @param {p5} p - The p5 instance.
      * @param {GameView} view - The view strategy associated with this game.
      */
-    constructor(p: p5, view: GameView) {
-        this._p = p;
+    constructor(view: GameView) {
         this._view = view;
         this._initialStateSnapshot.captureBaseProperties(this);
     }
@@ -88,10 +85,10 @@ export default abstract class Game implements Initializable {
         this._view.build();
 
         this._modules = {
-            renderer: new GameRenderer(this._p),
+            renderer: new GameRenderer(),
             grid: new GameGrid(),
             hudGrid: new GameHudGrid(),
-            text: new GameText(this._p),
+            text: new GameText(),
             state: new GameState(),
             control: new GameControl(),
             time: new GameTime(),
@@ -152,12 +149,12 @@ export default abstract class Game implements Initializable {
             if (!state.isStarted()) {
                 this.drawTitleScreen();
             } else if (state.isPlaying()) {
-                time.update(this._p.deltaTime);
+                time.update(this.p.deltaTime);
                 // Update time accumulator
 
                 // Process Logic Tick
                 if (time.shouldTick()) {
-                    this.update(this._p.deltaTime);
+                    this.update(this.p.deltaTime);
 
                     this._modules.session.saveSession();
                 }
@@ -178,18 +175,13 @@ export default abstract class Game implements Initializable {
      * Call this before switching to another game or when the game is no longer needed.
      */
     destroy() {
-        this._p.noLoop();
+        this.p.noLoop();
 
         if (this._modules) {
             this._modules.control.unbindControls();
             this._modules.sound.stopAll();
         }
     }
-
-    get p() {
-        return this._p;
-    }
-
     /**
      * Abstract method for processing game logic.
      * Called every tick, but ONLY when the game is in the 'playing' state.

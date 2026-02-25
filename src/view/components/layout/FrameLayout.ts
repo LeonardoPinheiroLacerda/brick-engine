@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import configs from '../../../config/configs';
+import RendererContext from '../../../core/context/RendererContext';
 
 /**
  * Creates the decorative frame for the game.
@@ -10,7 +11,8 @@ import configs from '../../../config/configs';
  * @param container - The parent container element.
  * @returns The created frame element.
  */
-export default function FrameLayout(p: p5, container: p5.Element): p5.Element {
+export default function FrameLayout(container: p5.Element): p5.Element {
+    const { p } = RendererContext;
     const frame = p.createDiv();
     frame.parent(container);
     frame.id(configs.selectors.viewElementIds.frame);

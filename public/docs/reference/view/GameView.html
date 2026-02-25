@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Specialized math utilities for converting between Grid, Display, and Pixel coordinate systems.">
-<meta name="keywords" content="coordinates, math, grid, display, conversion, helper">
-<title>CoordinateHelper Reference</title>
+<meta name="description" content="Orchestrates the comprehensive HTML structure, style binding, and user interactions.">
+<meta name="keywords" content="view, rendering, layout, dom, interactions">
+<title>GameView Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -435,21 +435,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/styles/github.min.css">
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>CoordinateHelper Reference</h1>
+<h1>GameView Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#_features">1. Features</a></li>
+<li><a href="#_lifecycle">2. Lifecycle</a>
 <ul class="sectlevel2">
-<li><a href="#getrelativecoordinatecoordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(coordinate: Coordinate): Coordinate</code></a></li>
-<li><a href="#getdisplayposxx-number-displaywidth-number-number">1.2. <code>getDisplayPosX(x: number, displayWidth: number): number</code></a></li>
-<li><a href="#getdisplayposyy-number-displayheight-number-number">1.3. <code>getDisplayPosY(y: number, displayHeight: number): number</code></a></li>
-<li><a href="#gethudposxx-number-displaywidth-number-number">1.4. <code>getHudPosX(x: number, displayWidth: number): number</code></a></li>
-<li><a href="#gethudposyy-number-displayheight-number-number">1.5. <code>getHudPosY(y: number, displayHeight: number): number</code></a></li>
+<li><a href="#_constructorparent_htmlelement">2.1. <code>constructor(parent: HTMLElement)</code></a></li>
+<li><a href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">2.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></li>
+<li><a href="#_setupdebuggergamemodules_gamemodules_void">2.3. <code>setupDebugger(gameModules: GameModules): void</code></a></li>
+<li><a href="#_setupsessionmodal_void">2.4. <code>setupSessionModal(): void</code></a></li>
+</ul>
+</li>
+<li><a href="#_controls_binding">3. Controls Binding</a>
+<ul class="sectlevel2">
+<li><a href="#_bindcontrolscontrol_control_void">3.1. <code>bindControls(control: Control): void</code></a></li>
+<li><a href="#_unbindcontrols_void">3.2. <code>unbindControls(): void</code></a></li>
 </ul>
 </li>
 </ul>
@@ -459,17 +464,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>CoordinateHelper</code> is a static utility class that handles translations between different coordinate systems: the logical <a href="../modules/GameGrid.html">Game Grid</a>, the normalized Display area, and absolute pixel positions.</p>
+<p>The <code>GameView</code> class acts as the primary View controller in the MVC architecture. It directs the layout, invokes underlying UI components, initializes DOM observers (like the Debugger and Modals), and bridges hardware input (clicks) to engine controls.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="_features"><a class="link" href="#_features">1. Features</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Scaffolding</strong>: Dynamically injects layouts and elements via components like <code>ContainerLayout</code> and <code>Canvas</code>.</p>
+</li>
+<li>
+<p><strong>Aesthetics</strong>: Responsible for dispatching standard dimension calculations (<code>dimensions.ts</code>) and theme injections (<code>applyColors.ts</code>).</p>
+</li>
+<li>
+<p><strong>Orchestration</strong>: Manages auxiliary visual tools such as <code><a href="../modules/Debugger.html">Debugger</a></code> and <code><a href="../modules/SessionModal.html">SessionModal</a></code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lifecycle"><a class="link" href="#_lifecycle">2. Lifecycle</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="getrelativecoordinatecoordinate-coordinate-coordinate"><a class="link" href="#getrelativecoordinatecoordinate-coordinate-coordinate">1.1. <code>getRelativeCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Coordinate.html">Coordinate</a></code></a></h3>
+<h3 id="_constructorparent_htmlelement"><a class="link" href="#_constructorparent_htmlelement">2.1. <code>constructor(parent: HTMLElement)</code></a></h3>
 <div class="paragraph">
-<p>Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 1.0).</p>
+<p>Initializes the view, storing the specific parent node where the engine interface will attach itself.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -480,71 +503,58 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <col style="width: 20%;">
 <col style="width: 60%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../types/Coordinate.html">Coordinate</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The absolute pixel coordinate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parent</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HTMLElement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The DOM element where the game structure attaches.</p></td>
 </tr>
 </tbody>
 </table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_build_canvas_p5_element_canvaswidth_number_canvasheight_number"><a class="link" href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">2.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></h3>
 <div class="paragraph">
-<p><strong>Returns</strong></p>
+<p>Builds the visual structure by appending structural layers, generating physical buttons, and initializing canvas metrics.</p>
 </div>
 <div class="paragraph">
-<p><code><a href="../types/Coordinate.html">Coordinate</a></code> - The normalized <code>{x, y}</code> point.</p>
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>This is the dominant method for defining the front-end skeleton. It creates all buttons to subsequently bind them in later pipeline phases. Caches the canvas return parameter avoiding redundant builds (querying <code>isBodyBuilt()</code> internal state).</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdisplayposxx-number-displaywidth-number-number"><a class="link" href="#getdisplayposxx-number-displaywidth-number-number">1.2. <code>getDisplayPosX(x: number, displayWidth: number): number</code></a></h3>
+<h3 id="_setupdebuggergamemodules_gamemodules_void"><a class="link" href="#_setupdebuggergamemodules_gamemodules_void">2.3. <code>setupDebugger(gameModules: GameModules): void</code></a></h3>
 <div class="paragraph">
-<p>Calculates the absolute X pixel position on the main game display.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized horizontal position (0.0 to 1.0).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayWidth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total width of the display area.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The absolute horizontal pixel position.</p>
+<p>Initializes and configures the tracking interface connecting registered <code>gameModules</code> to the internal Debugger overlay instance.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdisplayposyy-number-displayheight-number-number"><a class="link" href="#getdisplayposyy-number-displayheight-number-number">1.3. <code>getDisplayPosY(y: number, displayHeight: number): number</code></a></h3>
+<h3 id="_setupsessionmodal_void"><a class="link" href="#_setupsessionmodal_void">2.4. <code>setupSessionModal(): void</code></a></h3>
 <div class="paragraph">
-<p>Calculates the absolute Y pixel position on the main game display.</p>
+<p>Orchestrates the DOM creation for the active-session modal element (<code>SessionModal.setup()</code>), allowing transparent pause menus.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_controls_binding"><a class="link" href="#_controls_binding">3. Controls Binding</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_bindcontrolscontrol_control_void"><a class="link" href="#_bindcontrolscontrol_control_void">3.1. <code>bindControls(control: Control): void</code></a></h3>
+<div class="paragraph">
+<p>Pairs DOM click events with logical Engine actions.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -555,109 +565,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <col style="width: 20%;">
 <col style="width: 60%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized vertical position (0.0 to 1.0).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayHeight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total height of the display area.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>control</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/modules/Control.html">Control</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The active control module resolving interactions.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p><strong>Returns</strong></p>
+<p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p><code>number</code> - The absolute vertical pixel position.</p>
+<p>Instantiates a <code>ControlInputHandlerHelper</code> mapping each isolated layout button (from <code>_upBtn</code>, <code>_actionBtn</code>, to specific targets like <code>_resetBtn</code>) to their respective <code>ControlKey</code> actions using native <code>mousePressed</code> and <code>mouseReleased</code> hooks. Supports pointer displacement logic mapping <code>mouseOut</code> as automatic release handlers to prevent stuck events.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="gethudposxx-number-displaywidth-number-number"><a class="link" href="#gethudposxx-number-displaywidth-number-number">1.4. <code>getHudPosX(x: number, displayWidth: number): number</code></a></h3>
+<h3 id="_unbindcontrols_void"><a class="link" href="#_unbindcontrols_void">3.2. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
-<p>Calculates the absolute X pixel position within the HUD area.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>x</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized horizontal position (0.0 to 1.0) relative to the HUD area.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayWidth</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The width of the main display (used to calculate the HUD offset).</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The absolute horizontal pixel position within the HUD.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="gethudposyy-number-displayheight-number-number"><a class="link" href="#gethudposyy-number-displayheight-number-number">1.5. <code>getHudPosY(y: number, displayHeight: number): number</code></a></h3>
-<div class="paragraph">
-<p>Calculates the absolute Y pixel position within the HUD area.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized vertical position (0.0 to 1.0) relative to the HUD area.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>displayHeight</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total height of the display area.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>number</code> - The absolute vertical pixel position within the HUD.</p>
+<p>Completely nullifies event listeners on all tracked buttons, preventing interactions when the execution stack prohibits it (e.g., stopping the engine entirely, removing focus).</p>
 </div>
 </div>
 </div>
@@ -665,14 +599,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
+Last updated 2026-02-25 03:55:04 -0300
 </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
-<script>
-if (!hljs.initHighlighting.called) {
-  hljs.initHighlighting.called = true
-  ;[].slice.call(document.querySelectorAll('pre.highlight > code[data-lang]')).forEach(function (el) { hljs.highlightBlock(el) })
-}
-</script>
 </body>
 </html>

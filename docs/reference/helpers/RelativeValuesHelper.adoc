@@ -16,7 +16,7 @@ The `RelativeValuesHelper` provides conversion utilities for scaling absolute si
 
 == Methods
 
-=== `getRelativeWidth(p: p5, size: number): number`
+=== `getRelativeWidth(size: number): number`
 
 Calculates a pixel width based on a normalized percentage.
 
@@ -25,7 +25,6 @@ Calculates a pixel width based on a normalized percentage.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`p` |`p5` |The P5.js instance.
 |`size` |`number` |A float between 0.0 and 1.0 representing percentage of width.
 |===
 
@@ -35,7 +34,7 @@ Calculates a pixel width based on a normalized percentage.
 
 '''
 
-=== `getRelativeHeight(p: p5, size: number): number`
+=== `getRelativeHeight(size: number): number`
 
 Calculates a pixel height based on a normalized percentage.
 
@@ -44,7 +43,6 @@ Calculates a pixel height based on a normalized percentage.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`p` |`p5` |The P5.js instance.
 |`size` |`number` |A float between 0.0 and 1.0 representing percentage of height.
 |===
 

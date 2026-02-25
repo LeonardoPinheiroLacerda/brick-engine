@@ -4,6 +4,7 @@ import Debugger from './Debugger';
 import type p5 from 'p5';
 import configs from '../config/configs';
 import { GameModules } from '../core/types/Types';
+import RendererContext from '../core/context/RendererContext';
 
 // Mock configs
 vi.mock('../config/configs', () => ({
@@ -49,7 +50,9 @@ describe('Debugger', () => {
             },
         };
 
-        debuggerInstance = new Debugger(mockGameModules as unknown as GameModules, mockP5 as unknown as p5);
+        RendererContext.reset();
+        RendererContext.init(mockP5 as unknown as p5);
+        debuggerInstance = new Debugger(mockGameModules as unknown as GameModules);
     });
 
     it('should setup DOM elements when enabled', () => {
