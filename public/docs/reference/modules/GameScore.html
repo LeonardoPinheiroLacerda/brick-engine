@@ -453,10 +453,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#resetscore-void">1.6. <code>resetScore(): void</code></a></li>
 <li><a href="#increaselevelamount-number-void">1.7. <code>increaseLevel(amount: number): void</code></a></li>
 <li><a href="#resetlevel-void">1.8. <code>resetLevel(): void</code></a></li>
-<li><a href="#getformattedscoredigits-number-string">1.9. <code>getFormattedScore(digits: number): string</code></a></li>
-<li><a href="#serialize-string">1.10. <code>serialize(): string</code></a></li>
-<li><a href="#deserializedata-string-void">1.11. <code>deserialize(data: string): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#setupgamehighscoreid-string-void">1.9. <code>setupGameHighScore(id: string): void</code></a></li>
+<li><a href="#getformattedscoredigits-number-string">1.10. <code>getFormattedScore(digits: number): string</code></a></li>
+<li><a href="#serialize-string">1.11. <code>serialize(): string</code></a></li>
+<li><a href="#deserializedata-string-void">1.12. <code>deserialize(data: string): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">1.13. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
@@ -503,7 +504,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>When set, it automatically persists the value directly to <code>LocalStorage</code> under the <code>highScore</code> key. It does not use <code>GameState</code> for this persistence.</p>
+<p>When set, it automatically persists the value directly to <code>LocalStorage</code> under the namespaced key <code>${gameId}::highScore</code>. This ensures that different games do not overwrite each other&#8217;s records.</p>
 </div>
 <hr>
 </div>
@@ -581,12 +582,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">1.8. <code>resetLevel(): void</code></a></h3>
 <div class="paragraph">
-<p>Resets the level counter to 1.</p>
+<p>Resets the level counter to 1.
+'''</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="setupgamehighscoreid-string-void"><a class="link" href="#setupgamehighscoreid-string-void">1.9. <code>setupGameHighScore(id: string): void</code></a></h3>
+<div class="paragraph">
+<p>Initializes the module with the specific game ID and loads the corresponding high score.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique game identifier used as a prefix for LocalStorage.</p></td>
+</tr>
+</tbody>
+</table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">1.9. <code>getFormattedScore(digits: number): string</code></a></h3>
+<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">1.10. <code>getFormattedScore(digits: number): string</code></a></h3>
 <div class="paragraph">
 <p>Returns the score as a padded string suitable for HUD display.</p>
 </div>
@@ -621,7 +651,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="serialize-string"><a class="link" href="#serialize-string">1.10. <code>serialize(): string</code></a></h3>
+<h3 id="serialize-string"><a class="link" href="#serialize-string">1.11. <code>serialize(): string</code></a></h3>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
@@ -631,7 +661,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="deserializedata-string-void"><a class="link" href="#deserializedata-string-void">1.11. <code>deserialize(data: string): void</code></a></h3>
+<h3 id="deserializedata-string-void"><a class="link" href="#deserializedata-string-void">1.12. <code>deserialize(data: string): void</code></a></h3>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
@@ -641,7 +671,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.13. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

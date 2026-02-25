@@ -765,7 +765,7 @@ export interface TimePerformanceMonitor {
 /**
  * Interface for the score and progression module.
  */
-export interface Score extends Initializable {
+export interface Score {
     /** Current session score points. */
     score: number;
 
@@ -812,6 +812,13 @@ export interface Score extends Initializable {
      * Resets the level to the starting value (1).
      */
     resetLevel(): void;
+
+    /**
+     * Sets up the game high score.
+     *
+     * @param {string} id - The game ID.
+     */
+    setupGameHighScore(id: string): void;
 }
 
 export interface Session extends StateSyncable, Debuggable {

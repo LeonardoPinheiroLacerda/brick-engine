@@ -90,16 +90,16 @@ Resets the game difficulty level to its initial value.
 
 '''
 
-=== `setState(state: xref:State.adoc[State]): void`
+=== `setupGameHighScore(id: string): void`
 
-Internal setup method to link the score module with high-score persistence logic.
+Initializes the high score for a specific game, loading it from namespaced storage.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`state` |`xref:State.adoc[State]` |The global state manager.
+|`id` |`string` |The unique identifier of the game (e.g., from `xref:../modules/Game.adoc[Game.gameId]`).
 |===
 
 == General Usage

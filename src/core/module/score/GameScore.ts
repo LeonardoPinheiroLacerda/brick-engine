@@ -14,14 +14,18 @@ export default class GameScore implements Score, Debuggable, Serializable {
     private _maxLevel: number = 10;
     private _highScore: number = 0;
 
+    private _gameId: string = 'unknown';
+
     serialId: string = 'score';
 
     /**
-     * Initializes the score module.
-     * Currently a no-op but required by interface.
+     * Sets up the game high score.
+     *
+     * @param {string} id - The game ID.
      */
-    setup(): void {
-        this._highScore = Number(localStorage.getItem('highScore'));
+    setupGameHighScore(id: string): void {
+        this._gameId = id;
+        this._highScore = Number(localStorage.getItem(`${this._gameId}::highScore`));
     }
 
     /**
@@ -140,7 +144,7 @@ export default class GameScore implements Score, Debuggable, Serializable {
      */
     set highScore(value: number) {
         this._highScore = value;
-        localStorage.setItem('highScore', value.toString());
+        localStorage.setItem(`${this._gameId}::highScore`, value.toString());
     }
 
     /**
