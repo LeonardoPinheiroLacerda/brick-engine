@@ -49,11 +49,6 @@ export default class GameSession implements Session {
             }
         });
     }
-    private _destroySession(): void {
-        this._serializables.forEach(serializable => {
-            localStorage.removeItem(this._key(serializable.serialId));
-        });
-    }
 
     syncState(state: State): void {
         state.subscribe(StateProperty.PLAYING, isPlaying => {
@@ -71,16 +66,10 @@ export default class GameSession implements Session {
                         this._isModalClosed = true;
                     },
                     () => {
-                        this._destroySession();
+                        this.clearSession();
                         this._isModalClosed = true;
                     },
                 );
-            }
-        });
-
-        state.subscribe(StateProperty.GAME_OVER, isGameOver => {
-            if (isGameOver) {
-                this._destroySession();
             }
         });
 

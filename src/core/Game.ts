@@ -235,6 +235,15 @@ export default abstract class Game implements Initializable {
         const { control, state, grid } = this._modules;
 
         control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
+            if (state.isGameOver()) {
+                grid.resetGrid();
+                this.modules.score.resetScore();
+                this.modules.score.resetLevel();
+                this.modules.time.reset();
+                this.modules.session.clearSession();
+                this._initialStateSnapshot.restoreInitialState(this);
+                state.resetGameOver();
+            }
             if (state.isOn()) {
                 state.turnOff();
                 this.modules.sound.stopAll();
@@ -285,6 +294,12 @@ export default abstract class Game implements Initializable {
                 this.modules.score.resetScore();
                 this.modules.score.resetLevel();
                 this.modules.time.reset();
+            }
+        });
+
+        state.subscribe(StateProperty.GAME_OVER, isGameOver => {
+            if (isGameOver) {
+                this._modules.session.clearSession();
             }
         });
     }
