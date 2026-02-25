@@ -32,8 +32,6 @@ export default abstract class Game implements Initializable {
 
     private _gameId: string = 'unknown';
 
-    private _switchHandler: (newGame: Game) => void = undefined as unknown as (newGame: Game) => void;
-
     /**
      * Gets the game ID
      */
@@ -46,23 +44,6 @@ export default abstract class Game implements Initializable {
      */
     set gameId(id: string) {
         this._gameId = id;
-    }
-
-    /**
-     * Registers the callback to be used when a game requests to switch to another game.
-     * This is typically called by the engine's main loop (index.ts).
-     * @param handler The callback function.
-     */
-    setSwitchHandler(handler: (newGame: Game) => void) {
-        this._switchHandler = handler;
-    }
-
-    /**
-     * Propagates the switch handler to the new game.
-     * @param game Game instance that has the switch handler.
-     */
-    propagateSwitchHandler(game: Game) {
-        this.setSwitchHandler(game._switchHandler);
     }
 
     /**
@@ -84,21 +65,6 @@ export default abstract class Game implements Initializable {
      */
     get view(): GameView {
         return this._view;
-    }
-
-    /**
-     * Switches execution to a new game instance.
-     * Use this instead of global window methods.
-     *
-     * @param {Game} newGame - The new game instance to load.
-     */
-    switchGame(newGame: Game): void {
-        this.destroy(); // Clean up current game
-        if (this._switchHandler) {
-            this._switchHandler(newGame);
-        } else {
-            console.error('Game switch handler not registered. Cannot switch game.');
-        }
     }
 
     /**
