@@ -48,6 +48,50 @@ Read-only property returning the number of rows in the grid.
 
 '''
 
+==== `topRow: number`
+
+Read-only property returning the index of the top-most row (always 0).
+
+**Returns**
+
+`number` - Top row index.
+
+
+'''
+
+==== `bottomRow: number`
+
+Read-only property returning the index of the bottom-most row.
+
+**Returns**
+
+`number` - Bottom row index (`height - 1`).
+
+
+'''
+
+==== `leftColumn: number`
+
+Read-only property returning the index of the left-most column (always 0).
+
+**Returns**
+
+`number` - Left column index.
+
+
+'''
+
+==== `rightColumn: number`
+
+Read-only property returning the index of the right-most column.
+
+**Returns**
+
+`number` - Right column index (`width - 1`).
+
+
+'''
+
 ==== `resetGrid(): void`
 
 Resets the entire grid to its empty state.

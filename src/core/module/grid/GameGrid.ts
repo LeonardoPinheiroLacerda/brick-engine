@@ -69,6 +69,42 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
     }
 
     /**
+     * Gets the index of the top-most row.
+     *
+     * @returns {number} The top row index.
+     */
+    get topRow(): number {
+        return 0;
+    }
+
+    /**
+     * Gets the index of the bottom-most row.
+     *
+     * @returns {number} The bottom row index.
+     */
+    get bottomRow(): number {
+        return this.height - 1;
+    }
+
+    /**
+     * Gets the index of the left-most column.
+     *
+     * @returns {number} The left column index.
+     */
+    get leftColumn(): number {
+        return 0;
+    }
+
+    /**
+     * Gets the index of the right-most column.
+     *
+     * @returns {number} The right column index.
+     */
+    get rightColumn(): number {
+        return this.width - 1;
+    }
+
+    /**
      * Initializes the grid by resetting its content to an empty state.
      *
      * @returns {void}

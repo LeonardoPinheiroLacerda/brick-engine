@@ -21,6 +21,10 @@ Interface defining the behaviors of a 2D grid of cells.
 |Name |Type |Description
 |`width` |`number` |The number of columns in the grid.
 |`height` |`number` |The number of rows in the grid.
+|`topRow` |`number` |The index of the top-most row (always 0).
+|`bottomRow` |`number` |The index of the bottom-most row (`height - 1`).
+|`leftColumn` |`number` |The index of the left-most column (always 0).
+|`rightColumn` |`number` |The index of the right-most column (`width - 1`).
 |===
 
 == Methods

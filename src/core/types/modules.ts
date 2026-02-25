@@ -109,10 +109,22 @@ export interface Grid extends Initializable {
     getGrid(): Cell[][];
 
     /** The number of columns in the grid. */
-    width: number;
+    readonly width: number;
 
     /** The number of rows in the grid. */
-    height: number;
+    readonly height: number;
+
+    /** The index of the top-most row (always 0). */
+    readonly topRow: number;
+
+    /** The index of the bottom-most row. */
+    readonly bottomRow: number;
+
+    /** The index of the left-most column (always 0). */
+    readonly leftColumn: number;
+
+    /** The index of the right-most column. */
+    readonly rightColumn: number;
 
     /**
      * Resets the entire grid to its empty state.

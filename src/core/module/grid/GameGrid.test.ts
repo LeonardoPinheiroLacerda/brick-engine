@@ -37,6 +37,13 @@ describe('GameGrid', () => {
         it('should return null for out of bounds cell access', () => {
             expect(grid.getCell({ x: -1, y: 0 })).toBeNull();
         });
+
+        it('should return correct boundary indices', () => {
+            expect(grid.topRow).toBe(0);
+            expect(grid.bottomRow).toBe(grid.height - 1);
+            expect(grid.leftColumn).toBe(0);
+            expect(grid.rightColumn).toBe(grid.width - 1);
+        });
     });
 
     describe('Iteration', () => {
