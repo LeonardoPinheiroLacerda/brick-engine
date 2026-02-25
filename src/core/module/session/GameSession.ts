@@ -6,7 +6,8 @@ export default class GameSession implements Session {
     _state: State;
     gameId: string;
 
-    private _isModalClosed: boolean = false;
+    private _isSessionResolved: boolean = false;
+    private _isModalOpen: boolean = false;
     private _isEnabled: boolean = true;
     private _showSessionModal: (onConfirm: () => void, onCancel: () => void) => void;
     private _serializables: Serializable[] = [];
@@ -16,7 +17,7 @@ export default class GameSession implements Session {
     }
 
     saveSession(): void {
-        if (!this._isModalClosed || !this._isEnabled) return;
+        if (!this._isSessionResolved || !this._isEnabled) return;
 
         this._serializables.forEach(serializable => {
             localStorage.setItem(this._key(serializable.serialId), serializable.serialize());
@@ -37,6 +38,14 @@ export default class GameSession implements Session {
         this._isEnabled = enabled;
     }
 
+    isModalOpen(): boolean {
+        return this._isModalOpen;
+    }
+
+    isSessionResolved(): boolean {
+        return this._isSessionResolved;
+    }
+
     private _hasSession(): boolean {
         return this._serializables.every(serializable => localStorage.getItem(this._key(serializable.serialId)) !== null);
     }
@@ -52,22 +61,23 @@ export default class GameSession implements Session {
 
     syncState(state: State): void {
         state.subscribe(StateProperty.PLAYING, isPlaying => {
-            if (isPlaying && this._isModalClosed === false) {
+            if (isPlaying && !this._isSessionResolved) {
                 if (!this._hasSession() || !this._isEnabled) {
-                    this._isModalClosed = true;
+                    this._isSessionResolved = true;
                     return;
                 }
 
+                this._isModalOpen = true;
                 this._showSessionModal(
                     () => {
-                        if (this._hasSession() && this._isEnabled) {
-                            this._loadSession();
-                        }
-                        this._isModalClosed = true;
+                        this._loadSession();
+                        this._isModalOpen = false;
+                        this._isSessionResolved = true;
                     },
                     () => {
                         this.clearSession();
-                        this._isModalClosed = true;
+                        this._isModalOpen = false;
+                        this._isSessionResolved = true;
                     },
                 );
             }
@@ -75,7 +85,8 @@ export default class GameSession implements Session {
 
         state.subscribe(StateProperty.ON, isOn => {
             if (!isOn) {
-                this._isModalClosed = false;
+                this._isSessionResolved = false;
+                this._isModalOpen = false;
             }
         });
     }

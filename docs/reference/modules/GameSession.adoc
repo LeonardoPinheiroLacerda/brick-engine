@@ -13,7 +13,13 @@ The `GameSession` module implements the `xref:../interfaces/modules/Session.adoc
 
 === `saveSession(): void`
 
-Creates or updates the session. Early returns if the session is disabled (via `setSessionEnabled`) or if the `SessionModal` (if existing) has not been confirmed/rejected yet.
+Persists the current state of all registered `xref:../Serializable.adoc[Serializable]` instances. Early returns if the session is disabled (via `setSessionEnabled`) or if the session restoration flow is not yet complete (`isSessionResolved()` is `false`).
+
+'''
+
+=== `isSessionResolved(): boolean`
+
+Implementation of the interface method. Returns whether the session resolution has been finalized.
 
 '''
 

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GameControl from './GameControl';
 import { ControlKey, ControlEventType } from '../../types/enums';
 import { GameModules } from '../../types/Types';
-import { State } from '../../types/modules';
+import { State, Session } from '../../types/modules';
 
 describe('GameControl', () => {
     let control: GameControl;
@@ -19,6 +19,12 @@ describe('GameControl', () => {
                 isPaused: vi.fn().mockReturnValue(false),
                 isGameOver: vi.fn().mockReturnValue(false),
             } as unknown as State,
+            session: {
+                isModalOpen: vi.fn().mockReturnValue(false),
+                isSessionResolved: vi.fn().mockReturnValue(true),
+                register: vi.fn(),
+                saveSession: vi.fn(),
+            } as unknown as Session,
         } as GameModules;
         control.setModules(mockModules);
     });

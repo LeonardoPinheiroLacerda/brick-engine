@@ -56,7 +56,7 @@ describe('GameSession', () => {
     });
 
     describe('saveSession', () => {
-        it('should return early and not save if modal is not closed', () => {
+        it('should return early and not save if session is not resolved', () => {
             // [ACT]
             session.saveSession();
 
@@ -68,7 +68,7 @@ describe('GameSession', () => {
             // [ARRANGE]
             session.setSessionEnabled(false);
             session.syncState(mockState);
-            // Simulate playing state with no previous session, which closes the modal automatically
+            // Simulate playing state -> resolves session immediately when disabled
             stateSubscriptions[StateProperty.PLAYING]?.(true);
 
             // [ACT]
@@ -78,10 +78,10 @@ describe('GameSession', () => {
             expect(localStorageMock.setItem).not.toHaveBeenCalled();
         });
 
-        it('should save session when modal is closed and session is enabled', () => {
+        it('should save session when resolved and session is enabled', () => {
             // [ARRANGE]
             session.syncState(mockState);
-            // Close the modal automatically since no session exists
+            // Resolve session automatically since no session exists
             stateSubscriptions[StateProperty.PLAYING]?.(true);
 
             // [ACT]
@@ -93,7 +93,7 @@ describe('GameSession', () => {
     });
 
     describe('syncState', () => {
-        it('should automatically close modal and not show when there is no session', () => {
+        it('should not show modal and resolve session when there is no session', () => {
             // [ARRANGE]
             session.syncState(mockState);
 
@@ -102,12 +102,12 @@ describe('GameSession', () => {
 
             // [ASSERT]
             expect(showModalMock).not.toHaveBeenCalled();
-            // Verify _isModalClosed is true internally by verifying if it can save now
+            // Verify session is resolved by saving
             session.saveSession();
             expect(localStorageMock.setItem).toHaveBeenCalled();
         });
 
-        it('should automatically close modal and not show when session is disabled', () => {
+        it('should not show modal when session is disabled', () => {
             // [ARRANGE]
             session.setSessionEnabled(false);
             // Simulate existing session
@@ -121,7 +121,7 @@ describe('GameSession', () => {
             expect(showModalMock).not.toHaveBeenCalled();
         });
 
-        it('should show session modal when playing, has session, and is enabled', () => {
+        it('should show session modal and report open when playing, has session, and is enabled', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
@@ -131,9 +131,10 @@ describe('GameSession', () => {
 
             // [ASSERT]
             expect(showModalMock).toHaveBeenCalledTimes(1);
+            expect(session.isModalOpen()).toBe(true);
         });
 
-        it('should load session when modal is confirmed and session is enabled', () => {
+        it('should load session, close modal, and resolve when confirmed', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
@@ -145,9 +146,14 @@ describe('GameSession', () => {
 
             // [ASSERT]
             expect(mockSerializable.deserialize).toHaveBeenCalledWith('some-data');
+            expect(session.isModalOpen()).toBe(false);
+
+            // Should be able to save now
+            session.saveSession();
+            expect(localStorageMock.setItem).toHaveBeenCalled();
         });
 
-        it('should destroy session when modal is canceled', () => {
+        it('should destroy session, close modal, and resolve when canceled', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
@@ -159,6 +165,11 @@ describe('GameSession', () => {
 
             // [ASSERT]
             expect(localStorageMock.removeItem).toHaveBeenCalledWith('test-game::test-serial');
+            expect(session.isModalOpen()).toBe(false);
+
+            // Should be able to save now
+            session.saveSession();
+            expect(localStorageMock.setItem).toHaveBeenCalled();
         });
     });
 });

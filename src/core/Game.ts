@@ -157,7 +157,9 @@ export default abstract class Game implements Initializable {
 
         if (!this._modules) return;
 
-        const { renderer, grid, time, state } = this._modules;
+        const { renderer, grid, time, state, session } = this._modules;
+
+        if (session.isModalOpen()) return;
 
         renderer.render(grid.getGrid(), this._modules);
         if (state.isOn()) {

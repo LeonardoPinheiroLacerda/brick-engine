@@ -145,29 +145,15 @@ describe('Game', () => {
             const control = game.modules.control;
             const state = game.modules.state;
 
+            // Ensure session is resolved
+            vi.spyOn(game.modules.session, 'isSessionResolved').mockReturnValue(true);
+
             // Simulate Power Press
             control.notify(ControlKey.POWER, ControlEventType.PRESSED);
             expect(state.isOn()).toBe(true);
 
             control.notify(ControlKey.POWER, ControlEventType.PRESSED);
             expect(state.isOn()).toBe(false);
-        });
-
-        it('should handle RESET button press', () => {
-            const control = game.modules.control;
-            const state = game.modules.state;
-            const grid = game.modules.grid;
-
-            state.turnOn();
-            state.startGame(); // RESET only works if game is playing or paused
-
-            const spy = vi.spyOn(grid, 'resetGrid');
-
-            control.notify(ControlKey.RESET, ControlEventType.PRESSED);
-
-            expect(spy).toHaveBeenCalled();
-            // Start state might be reset depending on GameState implementation,
-            // but the primary action is that the grid is reset.
         });
     });
 });

@@ -43,6 +43,16 @@ Persists the current state of all registered `xref:../Serializable.adoc[Serializ
 
 '''
 
+=== `isSessionResolved(): boolean`
+
+Returns `true` if the session restoration flow (modal interaction or automatic skip) has been completed.
+
+**Returns**
+
+`boolean` - Whether the session is resolved.
+
+'''
+
 === `clearSession(): void`
 
 Clears out the active session data from `localStorage`, functionally resetting the user's progress for the given `gameId`.

@@ -171,7 +171,8 @@ Stops the P5.js loop, unbinds all control event listeners, and stops all playing
 
 The `Game` base class automatically orchestrates gameplay sessions by subscribing to system-level `xref:GameState.adoc[GameState]` events:
 
-*   **Restoring Sessions**: When the state changes to `PLAYING`, the `Game` checks if there are any active sessions stored for its registered `Serializable` instances. If an active session is detected, it triggers a UI modal asking the user if they wish to resume their previous session.
+*   **Restoring Sessions**: When the state changes to `PLAYING`, the `Game` checks if there are any active sessions stored. If detected, it triggers a UI modal.
+*   **Loop Blocking**: While the session restoration modal is open (`session.isModalOpen()`), the engine **completely skips** the `draw()` loop content (both logic and rendering) to prevent any background interaction while the user is choosing whether to resume. See `xref:../interfaces/modules/Session.adoc[Session]` for more details.
 *   **Clearing Sessions**: The active session is automatically wiped when the state changes to `GAME_OVER`, ensuring that players do not resume a lost game.
 
 == Automatic State Restoration (Reset)

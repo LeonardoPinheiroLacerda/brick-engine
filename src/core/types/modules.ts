@@ -925,6 +925,14 @@ export interface Session extends StateSyncable, Debuggable {
      * @param {boolean} enabled - Whether the session should be enabled.
      */
     setSessionEnabled(enabled: boolean): void;
+
+    /**
+     * Checks if the session restoration modal is currently open.
+     * @returns {boolean} True if the modal is open.
+     */
+    isModalOpen(): boolean;
+    /** Returns true if the session restoration flow is complete. */
+    isSessionResolved(): boolean;
     /**
      * Sets the function to be called when the session modal should be shown.
      * @param {function} callback - The function to be called.
