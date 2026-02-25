@@ -14,6 +14,8 @@ import GameHudGrid from './module/grid/GameHudGrid';
 import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
 import InitialStateSnapshot from './InitialStateSnapshot';
 import GameSession from './module/session/GameSession';
+import p5 from 'p5';
+import RendererContext from './context/RendererContext';
 
 /**
  * Base abstract class for the game.
@@ -71,6 +73,15 @@ export default abstract class Game implements Initializable {
      */
     get modules(): GameModules {
         return this._modules;
+    }
+
+    /**
+     * Gets the p5 instance.
+     *
+     * @returns {p5} The p5 instance.
+     */
+    get p(): p5 {
+        return RendererContext.p;
     }
 
     /**
@@ -140,6 +151,8 @@ export default abstract class Game implements Initializable {
      * Handles time updates, logic ticks, and rendering.
      */
     draw() {
+        const { p } = RendererContext;
+
         if (!this._modules) return;
 
         const { renderer, grid, time, state } = this._modules;
@@ -149,12 +162,12 @@ export default abstract class Game implements Initializable {
             if (!state.isStarted()) {
                 this.drawTitleScreen();
             } else if (state.isPlaying()) {
-                time.update(this.p.deltaTime);
+                time.update(p.deltaTime);
                 // Update time accumulator
 
                 // Process Logic Tick
                 if (time.shouldTick()) {
-                    this.update(this.p.deltaTime);
+                    this.update(p.deltaTime);
 
                     this._modules.session.saveSession();
                 }
@@ -175,7 +188,7 @@ export default abstract class Game implements Initializable {
      * Call this before switching to another game or when the game is no longer needed.
      */
     destroy() {
-        this.p.noLoop();
+        RendererContext.p.noLoop();
 
         if (this._modules) {
             this._modules.control.unbindControls();
