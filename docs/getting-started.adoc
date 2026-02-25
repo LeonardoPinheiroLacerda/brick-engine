@@ -39,8 +39,11 @@ Once your project is created, use the following commands:
 | `npm start`
 | Starts the dev server with hot reload at `localhost:8080`.
 
-| `npm run build`
-| Generates a production-ready `/dist` folder and type definitions.
+| `npm run build:standalone`
+| Generates a production-ready `/dist` folder for independent hosting.
+
+| `npm run build:bundle`
+| Generates a bundle optimized for link:https://brickengine.com.br[brickengine.com.br].
 
 | `npm run lint` / `npm run format`
 | Checks and fixes code style (if enabled during init).
@@ -98,6 +101,14 @@ export default class MyGame extends Game {
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.CENTER);
         text.textOnDisplay('MY GAME', { x: 0.5, y: 0.4 });
         text.textOnDisplay('Playing', { x: 0.5, y: 0.6 });
+    }
+
+    /**
+     * returns a unique key for LocalStorage.
+     * Prevents data collisions between different games on the same domain.
+     */
+    getPersistenceKey(): string {
+        return 'my-awesome-game-v1';
     }
 
     /**
