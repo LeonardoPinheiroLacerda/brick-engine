@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import Game from './core/Game';
 import GameView from './view/GameView';
+import RendererContext from './core/context/RendererContext';
 
 /**
  * Represents a constructor for a game class.
@@ -36,6 +37,8 @@ export function bootstrap(ClientGame: ClientGameConstructor) {
     window.BrickEngineGame = ClientGame;
 
     return new p5((p: p5) => {
+        RendererContext.init(p);
+
         const view = new GameView(p, document.body);
 
         setActiveGame(new ClientGame(p, view));
