@@ -267,6 +267,7 @@ Toggles the master mute status.
 '''
 
 
+'''
 
 === `notify(property: StateProperty): void`
 
@@ -284,6 +285,7 @@ This method dispatches to the base property channel AND to state-specific contex
 |Name |Type |Description
 |`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The property to trigger notifications for.
 |===
+
 
 '''
 
@@ -310,6 +312,7 @@ state.subscribe(StateProperty.GAME_OVER, (isOver) => {
     }
 });
 ----
+
 
 
 '''

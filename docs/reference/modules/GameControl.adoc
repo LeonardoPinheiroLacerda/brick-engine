@@ -27,6 +27,8 @@ The engine maps physical keys to virtual engine keys:
 *   `xref:../enums/ControlKey.adoc[POWER]`: Main engine power toggle.
 *   `xref:../enums/ControlKey.adoc[EXIT]`: Hard stop of the engine.
 
+'''
+
 == API Reference
 
 === `subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
@@ -182,6 +184,7 @@ Executes all callbacks associated with the given key and event type, subject to 
 *   **Paused State (`isPaused()`)**: Only system keys (e.g., `START_PAUSE`, `SOUND`, `COLOR`, `RESET`, `EXIT`) are processed. Gameplay keys are ignored.
 
 *Throws an error* if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.
+
 
 
 '''

@@ -1,7 +1,7 @@
 import { Debuggable } from '../../types/Interfaces';
 import { State } from '../../types/modules';
 import { StateProperty } from '../../types/Types';
-import EventEmitter from '../../event/EventEmitter';
+import EventEmitter, { EventSuffix } from '../../event/EventEmitter';
 
 type StateMetadata = {
     defaultValue: boolean | number;
@@ -90,18 +90,7 @@ export default class GameState implements State, Debuggable {
      */
     notify(property: StateProperty): void {
         const value = this._state.get(property);
-
-        // Emit to base channel
-        EventEmitter.notify(property, value);
-
-        // Context-specific channel dispatch
-        if (this.isPlaying()) {
-            EventEmitter.notify(`${property}:playing`, value);
-        } else if (this.isOn() && !this.isStarted()) {
-            EventEmitter.notify(`${property}:title`, value);
-        } else if (this.isGameOver()) {
-            EventEmitter.notify(`${property}:gameover`, value);
-        }
+        EventEmitter.notifyContextual(property, value, this);
     }
 
     /**
@@ -298,35 +287,43 @@ export default class GameState implements State, Debuggable {
     }
 
     subscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.subscribe(property, callback);
+        this._subscribe(property, callback);
     }
 
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.unsubscribe(property, callback);
+        this._unsubscribe(property, callback);
     }
 
     subscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.subscribe(`${property}:title`, callback);
+        this._subscribe(property, callback, EventSuffix.TITLE);
     }
 
     unsubscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.unsubscribe(`${property}:title`, callback);
+        this._unsubscribe(property, callback, EventSuffix.TITLE);
     }
 
     subscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.subscribe(`${property}:gameover`, callback);
+        this._subscribe(property, callback, EventSuffix.GAMEOVER);
     }
 
     unsubscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.unsubscribe(`${property}:gameover`, callback);
+        this._unsubscribe(property, callback, EventSuffix.GAMEOVER);
     }
 
     subscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.subscribe(`${property}:playing`, callback);
+        this._subscribe(property, callback, EventSuffix.PLAYING);
     }
 
     unsubscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
-        EventEmitter.unsubscribe(`${property}:playing`, callback);
+        this._unsubscribe(property, callback, EventSuffix.PLAYING);
+    }
+
+    private _subscribe(property: StateProperty, callback: (value: boolean | number) => void, suffix?: EventSuffix): void {
+        EventEmitter.subscribe(EventEmitter.formatName(property, suffix), callback);
+    }
+
+    private _unsubscribe(property: StateProperty, callback: (value: boolean | number) => void, suffix?: EventSuffix): void {
+        EventEmitter.unsubscribe(EventEmitter.formatName(property, suffix), callback);
     }
 
     /**
