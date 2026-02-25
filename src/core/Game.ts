@@ -131,6 +131,7 @@ export default abstract class Game implements Initializable {
 
         session.gameId = this.gameId;
         session.setShowModalFunction(this._view.showSessionModal.bind(this._view));
+        session.setResetFunction(this.reset.bind(this));
 
         control.setModules(this._modules);
 
@@ -140,7 +141,7 @@ export default abstract class Game implements Initializable {
 
         this.setupGame();
 
-        GameEventRegistry.setupControlEvents(this._modules, () => this._initialStateSnapshot.restoreInitialState(this));
+        GameEventRegistry.setupControlEvents(this._modules, this.reset.bind(this));
         GameEventRegistry.setupStateEvents(this._modules);
 
         this._view.bindControls(control);
@@ -159,7 +160,7 @@ export default abstract class Game implements Initializable {
 
         const { renderer, grid, time, state, session } = this._modules;
 
-        if (session.isModalOpen()) return;
+        if (session.isModalOpen() || (state.isPlaying() && !session.isSessionResolved())) return;
 
         renderer.render(grid.getGrid(), this._modules);
         if (state.isOn()) {
@@ -199,6 +200,20 @@ export default abstract class Game implements Initializable {
             this._modules.sound.stopAll();
         }
     }
+
+    /**
+     * Resets the game to its initial state.
+     * This method is called by the reset event handler and should be used to restore the game to its initial state.
+     */
+    reset() {
+        this._modules.grid.resetGrid();
+        this._modules.score.resetScore();
+        this._modules.score.resetLevel();
+        this._modules.time.reset();
+        this._modules.session.clearSession();
+        this._initialStateSnapshot.restoreInitialState(this);
+    }
+
     /**
      * Abstract method for processing game logic.
      * Called every tick, but ONLY when the game is in the 'playing' state.

@@ -132,13 +132,11 @@ describe('GameEventRegistry', () => {
                 expect(mockState.turnOn).toHaveBeenCalled();
             });
 
-            it('should perform full reset when POWER is pressed on Game Over screen', () => {
+            it('should perform reset when POWER is pressed on Game Over screen', () => {
                 // [ACT]
                 controlSubscribers[`${ControlKey.POWER}:${ControlEventType.PRESSED}:gameover`]();
 
                 // [ASSERT]
-                expect(mockGrid.resetGrid).toHaveBeenCalled();
-                expect(mockSession.clearSession).toHaveBeenCalled();
                 expect(onReset).toHaveBeenCalled();
                 expect(mockState.resetGameOver).toHaveBeenCalled();
             });

@@ -935,7 +935,12 @@ export interface Session extends StateSyncable, Debuggable {
     isSessionResolved(): boolean;
     /**
      * Sets the function to be called when the session modal should be shown.
-     * @param {function} callback - The function to be called.
+     * @param {function} showModal - The function to be called.
      */
     setShowModalFunction(showModal: (onConfirm: () => void, onCancel: () => void) => void): void;
+    /**
+     * Sets the function to be called when the session is canceled/cleared to reset the game.
+     * @param {function} resetFn - The function to be called.
+     */
+    setResetFunction(resetFn: () => void): void;
 }

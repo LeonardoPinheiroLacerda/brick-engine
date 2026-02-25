@@ -68,10 +68,3 @@ Registers listeners for:
 *   `StateProperty.GAME_OVER`: Clears the session when the player loses.
 
 '''
-
-== Internal Reset Logic
-
-The registry uses private methods to ensure data consistency during resets:
-
-*   **`resetModules`**: Resets `Grid`, `Score`, `Level`, and `Time` to their defaults.
-*   **`fullReset`**: Combines `resetModules` with `Session` clearing and execution of the `onReset` callback.

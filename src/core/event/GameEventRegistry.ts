@@ -29,7 +29,7 @@ export default class GameEventRegistry {
             }
         });
         control.subscribeForGameOverScreen(ControlKey.POWER, ControlEventType.PRESSED, () => {
-            this.fullReset(modules, onReset);
+            onReset();
             state.resetGameOver();
         });
 
@@ -37,18 +37,18 @@ export default class GameEventRegistry {
         control.subscribeForTitleScreen(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => state.startGame());
         control.subscribeForPlayingScreen(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => state.pause());
         control.subscribeForGameOverScreen(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
-            this.fullReset(modules, onReset);
+            onReset();
             state.resetGameOver();
         });
         control.subscribeForPausedScreen(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => state.resume());
 
         // --- Reset ---
         control.subscribeForPlayingScreen(ControlKey.RESET, ControlEventType.PRESSED, () => {
-            this.fullReset(modules, onReset);
+            onReset();
             state.resetGame();
         });
         control.subscribeForPausedScreen(ControlKey.RESET, ControlEventType.PRESSED, () => {
-            this.fullReset(modules, onReset);
+            onReset();
             state.resetGame();
         });
     }
@@ -62,30 +62,16 @@ export default class GameEventRegistry {
         const { state, session } = modules;
 
         state.subscribe(StateProperty.ON, isOn => {
-            if (!isOn) this.resetModules(modules);
+            if (!isOn) {
+                modules.grid.resetGrid();
+                modules.score.resetScore();
+                modules.score.resetLevel();
+                modules.time.reset();
+            }
         });
 
         state.subscribeForGameOverScreen(StateProperty.GAME_OVER, () => {
             session.clearSession();
         });
-    }
-
-    /**
-     * Resets common modules to their initial values.
-     */
-    private static resetModules(modules: GameModules): void {
-        modules.grid.resetGrid();
-        modules.score.resetScore();
-        modules.score.resetLevel();
-        modules.time.reset();
-    }
-
-    /**
-     * Performs a full reset of modules, session, and game instance state.
-     */
-    private static fullReset(modules: GameModules, onReset: () => void): void {
-        this.resetModules(modules);
-        modules.session.clearSession();
-        onReset();
     }
 }

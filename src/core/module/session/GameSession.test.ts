@@ -26,8 +26,9 @@ describe('GameSession', () => {
     let session: GameSession;
     let mockState: State;
     let mockSerializable: Serializable;
-    let showModalMock: Mock;
+    let resetFnMock: Mock;
     let stateSubscriptions: Record<string, (val: boolean) => void>;
+    let showModalMock: Mock; // Added this line as it was missing from the original context but used in beforeEach
 
     beforeEach(() => {
         // [ARRANGE]
@@ -47,11 +48,13 @@ describe('GameSession', () => {
             deserialize: vi.fn(),
         } as unknown as Serializable;
 
+        resetFnMock = vi.fn();
         showModalMock = vi.fn();
 
         session = new GameSession();
         session.gameId = 'test-game';
         session.setShowModalFunction(showModalMock);
+        session.setResetFunction(resetFnMock);
         session.register(mockSerializable);
     });
 
@@ -153,7 +156,7 @@ describe('GameSession', () => {
             expect(localStorageMock.setItem).toHaveBeenCalled();
         });
 
-        it('should destroy session, close modal, and resolve when canceled', () => {
+        it('should destroy session, close modal, call resetFn, and resolve when canceled', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
@@ -165,6 +168,7 @@ describe('GameSession', () => {
 
             // [ASSERT]
             expect(localStorageMock.removeItem).toHaveBeenCalledWith('test-game::test-serial');
+            expect(resetFnMock).toHaveBeenCalledTimes(1);
             expect(session.isModalOpen()).toBe(false);
 
             // Should be able to save now

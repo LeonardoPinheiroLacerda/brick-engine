@@ -155,9 +155,20 @@ Called when the game state is `gameOver`. Executed as the primary rendering logi
 
 '''
 
+=== `reset(): void`
 
+Resets the game to its initial state.
 
-'''
+**Behavior**
+
+This method performs a comprehensive reset of the game, including:
+- Clearing the `xref:../interfaces/modules/Grid.adoc[Grid]`.
+- Resetting the `xref:../interfaces/modules/Score.adoc[Score]` and level.
+- Resetting the `xref:../interfaces/modules/Time.adoc[Time]` accumulators.
+- Clearing the active `xref:../interfaces/modules/Session.adoc[Session]`.
+- Restoring all custom game properties to their post-setup values via the `xref:InitialStateSnapshot.adoc[InitialStateSnapshot]`.
+
+This method is called by the `xref:GameEventRegistry.adoc[GameEventRegistry]` during power cycles and manual restarts.
 
 === `destroy(): void`
 

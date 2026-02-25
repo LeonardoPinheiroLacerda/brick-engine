@@ -10,6 +10,7 @@ export default class GameSession implements Session {
     private _isModalOpen: boolean = false;
     private _isEnabled: boolean = true;
     private _showSessionModal: (onConfirm: () => void, onCancel: () => void) => void;
+    private _resetFn: () => void = () => {};
     private _serializables: Serializable[] = [];
 
     register(serializable: Serializable): void {
@@ -32,6 +33,10 @@ export default class GameSession implements Session {
 
     setShowModalFunction(showModal: (onConfirm: () => void, onCancel: () => void) => void): void {
         this._showSessionModal = showModal;
+    }
+
+    setResetFunction(resetFn: () => void): void {
+        this._resetFn = resetFn;
     }
 
     setSessionEnabled(enabled: boolean): void {
@@ -76,6 +81,7 @@ export default class GameSession implements Session {
                     },
                     () => {
                         this.clearSession();
+                        this._resetFn();
                         this._isModalOpen = false;
                         this._isSessionResolved = true;
                     },
@@ -85,15 +91,24 @@ export default class GameSession implements Session {
 
         state.subscribe(StateProperty.ON, isOn => {
             if (!isOn) {
-                this._isSessionResolved = false;
                 this._isModalOpen = false;
+                this._isSessionResolved = false;
+            }
+        });
+
+        state.subscribe(StateProperty.START, isStarted => {
+            if (!isStarted) {
+                this._isSessionResolved = false;
             }
         });
     }
 
     getDebugData(): Record<string, string | number | boolean> {
         return {
-            gameId: this.gameId,
+            game_id: this.gameId,
+            is_session_resolved: this._isSessionResolved,
+            is_modal_open: this._isModalOpen,
+            is_enabled: this._isEnabled,
             serializables: this._serializables.map(serializable => serializable.serialId).join(', '),
         };
     }

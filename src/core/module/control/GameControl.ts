@@ -128,8 +128,9 @@ export default class GameControl implements Control, Debuggable {
         const session = this._modules.session;
 
         let isAllowed = false;
-
-        if (session.isModalOpen() || !session.isSessionResolved()) {
+        if (session.isModalOpen()) {
+            isAllowed = false;
+        } else if (state.isPlaying() && !session.isSessionResolved()) {
             isAllowed = false;
         } else if (state.isOff()) {
             isAllowed = key === ControlKey.POWER;

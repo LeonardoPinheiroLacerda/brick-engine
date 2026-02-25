@@ -23,6 +23,12 @@ Implementation of the interface method. Returns whether the session resolution h
 
 '''
 
+=== `setResetFunction(resetFn: () => void): void`
+
+Stores the reset callback that will be invoked if the user chooses to cancel restoration.
+
+'''
+
 === `setSessionEnabled(enabled: boolean): void`
 
 Enables or disables the session recovery mechanism. When disabled, the engine will neither show the session recovery modal nor save the session.
@@ -54,7 +60,7 @@ Subscribes to `xref:GameState.adoc[GameState]` interactions.
 **Behavior**
 
 Reacts to:
-- `PLAYING`: If a session for the current `gameId` exists, session is enabled, and the modal hasn't been closed, it invokes the modal via `_showSessionModal`. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle.
+- `PLAYING`: If a session for the current `gameId` exists, session is enabled, and the modal hasn't been closed, it invokes the modal via `_showSessionModal`. If accepted, calls deserialize on all registered targets. If canceled or if no previous session exists, proceeds normally. The modal state is tracked to prevent re-triggering during the same power cycle. If canceled, it also invokes the registered `resetFn` to ensure the game starts with a clean state.
 - `ON` (when false): Resets the modal state tracking closure, allowing the session modal to appear again after the device is powered back on.
 - `GAME_OVER`: Clears active session entirely.
 
