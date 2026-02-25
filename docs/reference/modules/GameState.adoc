@@ -286,6 +286,12 @@ This method dispatches to the base property channel AND to state-specific contex
 |`property` |`xref:../enums/StateProperty.adoc[StateProperty]` |The property to trigger notifications for.
 |===
 
+'''
+
+=== `syncState(state: State): void`
+
+Syncs the internal state with the `xref:GameState.adoc[GameState]`. This is required for modules that implement the `xref:../interfaces/StateSyncable.adoc[StateSyncable]` interface.
+
 
 '''
 
@@ -353,6 +359,17 @@ Specialized methods to listen for state changes **ONLY** while the engine is in 
 === `subscribeForPlayingScreen(...) / unsubscribeForPlayingScreen(...)`
 
 Specialized methods to listen for state changes **ONLY** while the engine is in the active Gameplay state.
+
+'''
+
+=== `subscribeForPausedScreen(...) / unsubscribeForPausedScreen(...)`
+
+Specialized methods to listen for state changes **ONLY** while the engine is in the Paused state.
+
+[NOTE]
+====
+These follow the same signature as `subscribe`.
+====
 
 '''
 

@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Handles user input from physical keyboards and virtual buttons.">
-<meta name="keywords" content="input, control, keyboard, interaction">
-<title>GameControl Module Reference</title>
+<meta name="description" content="Interface for querying the current engine lifecycle context.">
+<meta name="keywords" content="interface, state, context, lifecycle">
+<title>StateContext Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,29 +439,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>GameControl Module Reference</h1>
+<h1>StateContext Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></li>
-<li><a href="#api-reference">2. API Reference</a>
-<ul class="sectlevel2">
-<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#bindcontrols-void">2.11. <code>bindControls(): void</code></a></li>
-<li><a href="#unbindcontrols-void">2.12. <code>unbindControls(): void</code></a></li>
-<li><a href="#notifykey-controlkey-type-controleventtype-void">2.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
-</ul>
-</li>
+<li><a href="#methods">1. Methods</a></li>
+<li><a href="#general-usage">2. General Usage</a></li>
 </ul>
 </div>
 </div>
@@ -469,395 +452,52 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameControl</code> module handles user input from physical keyboards and virtual buttons. It provides an event-based system for reacting to player actions.</p>
+<p>The <code>StateContext</code> interface provides a read-only view of the engine&#8217;s current lifecycle state. It is primarily used by the <code><a href="../modules/EventEmitter.html">EventEmitter</a></code> to determine which contextual channels to notify.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="supported-keys-controlkey"><a class="link" href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></h2>
+<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The engine maps physical keys to virtual engine keys:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code><a href="../enums/ControlKey.html">UP</a></code> / <code><a href="../enums/ControlKey.html">DOWN</a></code> / <code><a href="../enums/ControlKey.html">LEFT</a></code> / <code><a href="../enums/ControlKey.html">RIGHT</a></code>: Directional controls.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">ACTION</a></code>: Primary action button.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">START_PAUSE</a></code>: Toggles game start/pause.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">RESET</a></code>: Soft reset of the game session.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">SOUND</a></code>: Toggles master audio mute.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">COLOR</a></code>: Toggles theme color mode.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">POWER</a></code>: Main engine power toggle.</p>
-</li>
-<li>
-<p><code><a href="../enums/ControlKey.html">EXIT</a></code>: Hard stop of the engine.</p>
-</li>
-</ul>
-</div>
-<hr>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Method</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isOn()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>true</code> if the system is powered on.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isStarted()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>true</code> if a game session has begun.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isPlaying()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>true</code> if gameplay is active and not paused.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isPaused()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>true</code> if the game is started but halted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>isGameOver()</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns <code>true</code> if the player has lost.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
-<p>Registers a callback for a specific input event.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key to monitor (e.g., <code>ControlKey.ACTION</code>).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of trigger (<code>PRESSED</code> or <code>HELD</code>).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute when the event occurs.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Adds the callback to the internal subscription list. Multiple callbacks can be registered for the same key/type combination.</p>
-</div>
-<div class="paragraph">
-<p><strong>Example</strong></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">control.subscribe(ControlKey.ACTION, ControlEventType.PRESSED, (event) =&gt; {
-    console.log('Action button pressed!');
-});</code></pre>
-</div>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Removes an existing subscription.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The trigger type.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reference to the function to remove.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Removes the specified callback from the central <code><a href="EventEmitter.html">EventEmitter</a></code>. If the callback is not found, the operation does nothing.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a callback for a specific input event ONLY when the game is on the Title Screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of trigger.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Removes an existing Title Screen subscription.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a callback for a specific input event ONLY when the game is on the Game Over Screen.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of trigger.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Removes an existing Game Over Screen subscription.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a callback for a specific input event ONLY during active gameplay. This is functionally equivalent to <code>subscribe</code> for control keys, but provides explicit intent.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Removes an existing Playing Screen subscription.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Registers a callback for a specific input event ONLY when the game is in a Paused state.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key to monitor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of trigger.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute.</p></td>
-</tr>
-</tbody>
-</table>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
-<div class="paragraph">
-<p>Removes an existing Paused Screen subscription.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">2.11. <code>bindControls(): void</code></a></h3>
-<div class="paragraph">
-<p>Attaches low-level event listeners to the environment.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Enables keyboard and button listeners. This is called automatically by the engine during setup.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">2.12. <code>unbindControls(): void</code></a></h3>
-<div class="paragraph">
-<p>Detaches all input listeners and clears subscriptions.</p>
-</div>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Removes all low-level event listeners and wipes the internal subscription map. Called automatically during engine destruction.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">2.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></h3>
-<div class="paragraph">
-<p>Manually triggers an input event.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The key to notify.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The trigger type to simulate.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Executes all callbacks associated with the given key and event type, subject to the following state-based rules:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>System Off (<code>isOff()</code>)</strong>: Only the <code><a href="../enums/ControlKey.html">POWER</a></code> key is processed. All other keys are ignored.</p>
-</li>
-<li>
-<p><strong>Active States (<code>!isStarted() || isPlaying() || isGameOver()</code>)</strong>: All keys are processed normally.</p>
-</li>
-<li>
-<p><strong>Paused State (<code>isPaused()</code>)</strong>: Only system keys (e.g., <code>START_PAUSE</code>, <code>SOUND</code>, <code>COLOR</code>, <code>RESET</code>, <code>EXIT</code>) are processed. Gameplay keys are ignored.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><strong>Throws an error</strong> if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
-<div class="paragraph">
-<p>Returns metadata for the real-time debugger.</p>
-</div>
-<div class="paragraph">
-<p><strong>Returns</strong></p>
-</div>
-<div class="paragraph">
-<p><code>Record&lt;string, string | number | boolean&gt;</code> - Object containing the number of <code>total_subscribers</code> and <code>tracked_keys</code>.</p>
-</div>
+<p>This interface is implemented by <code><a href="../modules/GameState.html">GameState</a></code> and is consumed by <code>notifyContextual</code> in the <code>EventEmitter</code>.</p>
 </div>
 </div>
 </div>

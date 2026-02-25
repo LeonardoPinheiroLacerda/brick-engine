@@ -77,7 +77,7 @@ Removes an existing subscription.
 
 **Behavior**
 
-Removes the specified callback from the central `EventEmitter`. If the callback is not found, the operation does nothing.
+Removes the specified callback from the central `xref:EventEmitter.adoc[EventEmitter]`. If the callback is not found, the operation does nothing.
 
 
 '''
@@ -136,6 +136,29 @@ Registers a callback for a specific input event ONLY during active gameplay. Thi
 === `unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
 
 Removes an existing Playing Screen subscription.
+
+
+'''
+
+=== `subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Registers a callback for a specific input event ONLY when the game is in a Paused state.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key to monitor.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The type of trigger.
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The function to execute.
+|===
+
+'''
+
+=== `unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void`
+
+Removes an existing Paused Screen subscription.
 
 
 '''

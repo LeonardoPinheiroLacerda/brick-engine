@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#session-management">3. Session Management</a></li>
-<li><a href="#client-state-snapshot-reset">4. Client State Snapshot (Reset)</a></li>
+<li><a href="#automatic-state-restoration-reset">4. Automatic State Restoration (Reset)</a></li>
 <li><a href="#automated-system-controls">5. Automated System Controls</a></li>
 </ul>
 </div>
@@ -719,16 +719,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="client-state-snapshot-reset"><a class="link" href="#client-state-snapshot-reset">4. Client State Snapshot (Reset)</a></h2>
+<h2 id="automatic-state-restoration-reset"><a class="link" href="#automatic-state-restoration-reset">4. Automatic State Restoration (Reset)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To provide a seamless developer experience, the <code>Game</code> class implements an internal mechanism to transparently cache and restore custom client properties.</p>
 </div>
 <div class="paragraph">
-<p>When a game is instantiated and its <code>setupGame()</code> method is invoked, the base <code>Game</code> orchestrates a capture of the client&#8217;s custom properties using the <code><a href="InitialStateSnapshot.html">InitialStateSnapshot</a></code> utility. This ensures that any attributes added by the developer (e.g., player lives, custom counters) are saved in memory without requiring manual implementation.</p>
+<p>When a game is instantiated and its <code>setupGame()</code> method is invoked, the base <code>Game</code> automatically captures a snapshot of the client&#8217;s custom properties. This ensures that any attributes added by the developer (e.g., player lives, custom counters, or game-specific flags) are saved in memory without requiring manual implementation.</p>
 </div>
 <div class="paragraph">
-<p>When the user triggers a <strong>RESET</strong> action, the <code>Game</code> class automatically uses this internal snapshot to restore the custom properties back to their original values, eliminating the need for developers to manually reset their own state variables.</p>
+<p>When a <strong>RESET</strong> action is triggered, the <code>Game</code> class automatically restores these custom properties back to their original post-setup values. This eliminates the need for developers to write boilerplate code for resetting their own state variables. For technical details on how this is achieved, see the <code><a href="InitialStateSnapshot.html">InitialStateSnapshot</a></code> architecture.</p>
 </div>
 </div>
 </div>
