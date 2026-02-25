@@ -64,9 +64,9 @@ describe('GameSession', () => {
             expect(localStorageMock.setItem).not.toHaveBeenCalled();
         });
 
-        it('should return early and not save if it is game-menu instance', () => {
+        it('should return early and not save if session is disabled', () => {
             // [ARRANGE]
-            session.gameId = 'game-menu';
+            session.setSessionEnabled(false);
             session.syncState(mockState);
             // Simulate playing state with no previous session, which closes the modal automatically
             stateSubscriptions[StateProperty.PLAYING]?.(true);
@@ -78,7 +78,7 @@ describe('GameSession', () => {
             expect(localStorageMock.setItem).not.toHaveBeenCalled();
         });
 
-        it('should save session when modal is closed and game is not menu', () => {
+        it('should save session when modal is closed and session is enabled', () => {
             // [ARRANGE]
             session.syncState(mockState);
             // Close the modal automatically since no session exists
@@ -107,11 +107,11 @@ describe('GameSession', () => {
             expect(localStorageMock.setItem).toHaveBeenCalled();
         });
 
-        it('should automatically close modal and not show when it is a game-menu instance', () => {
+        it('should automatically close modal and not show when session is disabled', () => {
             // [ARRANGE]
-            session.gameId = 'game-menu';
+            session.setSessionEnabled(false);
             // Simulate existing session
-            localStorageMock.setItem('game-menu::test-serial', 'some-data');
+            localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
 
             // [ACT]
@@ -121,7 +121,7 @@ describe('GameSession', () => {
             expect(showModalMock).not.toHaveBeenCalled();
         });
 
-        it('should show session modal when playing, has session, and is not game-menu', () => {
+        it('should show session modal when playing, has session, and is enabled', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);
@@ -133,7 +133,7 @@ describe('GameSession', () => {
             expect(showModalMock).toHaveBeenCalledTimes(1);
         });
 
-        it('should load session when modal is confirmed and a session exists', () => {
+        it('should load session when modal is confirmed and session is enabled', () => {
             // [ARRANGE]
             localStorageMock.setItem('test-game::test-serial', 'some-data');
             session.syncState(mockState);

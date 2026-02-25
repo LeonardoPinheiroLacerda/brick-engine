@@ -3,27 +3,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const dotenv = require('dotenv');
-const fs = require('fs');
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
-
-    // Load .env files, .env.local takes precedence.
-    const envFileLocal = path.resolve(__dirname, '.env.local');
-    const envFile = path.resolve(__dirname, '.env');
-
-    let envConfig = {};
-    if (fs.existsSync(envFile)) {
-        Object.assign(envConfig, dotenv.config({ path: envFile }).parsed);
-    }
-    if (fs.existsSync(envFileLocal)) {
-        Object.assign(envConfig, dotenv.config({ path: envFileLocal }).parsed);
-    }
-
-    // Fallback logic for webpack
-    const SUPABASE_URL = process.env.SUPABASE_URL || envConfig.SUPABASE_URL || 'http://127.0.0.1:54321';
-    const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || envConfig.SUPABASE_ANON_KEY || '';
 
     return {
         mode: isProduction ? 'production' : 'development',
@@ -57,13 +39,13 @@ module.exports = (env, argv) => {
                         {
                             loader: MiniCssExtractPlugin.loader,
                             options: {
-                                publicPath: '../', // CSS is in css/ folder, needs to go up to find images/fonts
+                                publicPath: '../',
                             },
                         },
                         {
                             loader: 'css-loader',
                             options: {
-                                url: false, // Don't resolve url() in CSS, rely on CopyWebpackPlugin
+                                url: false,
                             },
                         },
                     ],
@@ -85,10 +67,6 @@ module.exports = (env, argv) => {
             historyApiFallback: true,
         },
         plugins: [
-            new webpack.DefinePlugin({
-                'process.env.SUPABASE_URL': JSON.stringify(SUPABASE_URL),
-                'process.env.SUPABASE_ANON_KEY': JSON.stringify(SUPABASE_ANON_KEY),
-            }),
             new HtmlWebpackPlugin({
                 template: './public/index.html',
                 filename: 'index.html',
