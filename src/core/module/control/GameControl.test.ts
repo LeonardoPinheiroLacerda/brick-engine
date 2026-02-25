@@ -79,4 +79,19 @@ describe('GameControl', () => {
             expect(debug.tracked_keys).toBe(2); // UP and DOWN
         });
     });
+    describe('getDebugData', () => {
+        it('should return subscriber counts', () => {
+            // [ARRANGE]
+            control.subscribe(ControlKey.UP, ControlEventType.PRESSED, vi.fn());
+            control.subscribe(ControlKey.DOWN, ControlEventType.PRESSED, vi.fn());
+            control.subscribe(ControlKey.DOWN, ControlEventType.HELD, vi.fn());
+
+            // [ACT]
+            const debug = control.getDebugData();
+
+            // [ASSERT]
+            expect(debug.total_subscribers).toBe(3);
+            expect(debug.tracked_keys).toBe(2); // UP and DOWN
+        });
+    });
 });

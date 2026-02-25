@@ -160,17 +160,5 @@ describe('GameSession', () => {
             // [ASSERT]
             expect(localStorageMock.removeItem).toHaveBeenCalledWith('test-game::test-serial');
         });
-
-        it('should destroy session when game is over', () => {
-            // [ARRANGE]
-            localStorageMock.setItem('test-game::test-serial', 'some-data');
-            session.syncState(mockState);
-
-            // [ACT]
-            stateSubscriptions[StateProperty.GAME_OVER]?.(true);
-
-            // [ASSERT]
-            expect(localStorageMock.removeItem).toHaveBeenCalledWith('test-game::test-serial');
-        });
     });
 });

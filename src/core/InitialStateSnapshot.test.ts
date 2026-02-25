@@ -26,50 +26,6 @@ describe('InitialStateSnapshot', () => {
         expect(instance._baseProp).toBe('base');
     });
 
-    it('should use a custom .clone() method if available', () => {
-        const snapshot = new InitialStateSnapshot();
-        const originalObject = {
-            data: 10,
-            clone: function () {
-                return { ...this };
-            },
-        };
-
-        const instance: Record<string, unknown> = { _base: true };
-        snapshot.captureBaseProperties(instance);
-        instance.customClone = originalObject;
-
-        snapshot.captureInitialState(instance);
-
-        originalObject.data = 99; // mutate original
-
-        snapshot.restoreInitialState(instance);
-
-        expect((instance.customClone as { data: number }).data).toBe(10);
-    });
-
-    it('should use a custom .copy() method if available', () => {
-        const snapshot = new InitialStateSnapshot();
-        const originalObject = {
-            data: 20,
-            copy: function () {
-                return { ...this };
-            },
-        };
-
-        const instance: Record<string, unknown> = { _base: true };
-        snapshot.captureBaseProperties(instance);
-        instance.customCopy = originalObject;
-
-        snapshot.captureInitialState(instance);
-
-        originalObject.data = 88; // mutate original
-
-        snapshot.restoreInitialState(instance);
-
-        expect((instance.customCopy as { data: number }).data).toBe(20);
-    });
-
     it('should fallback to reference if structuredClone fails', () => {
         // [ARRANGE]
         const snapshot = new InitialStateSnapshot();

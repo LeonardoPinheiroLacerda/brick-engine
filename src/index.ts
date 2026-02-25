@@ -7,5 +7,6 @@ export * from './core/types/Types';
 export { default as Game } from './core/Game';
 export { default as GameView } from './view/GameView';
 export { default as RendererContext } from './core/context/RendererContext';
+export { default as EventEmitter } from './core/event/EventEmitter';
 export { default as configs } from './config/configs';
 export { bootstrap, setActiveGame } from './bootstrap';
