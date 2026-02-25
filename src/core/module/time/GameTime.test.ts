@@ -38,6 +38,48 @@ describe('GameTime', () => {
             expect(tick2).toBe(true);
             expect(tick3).toBe(false);
         });
+
+        it('should track totalTicks and elapsedTime', () => {
+            // [ACT]
+            gameTime.update(100);
+            gameTime.shouldTick();
+            gameTime.update(100);
+            gameTime.shouldTick();
+
+            // [ASSERT]
+            expect(gameTime.totalTicks).toBe(2);
+            expect(gameTime.elapsedTime).toBe(200);
+        });
+
+        it('should return true for isTickEvery at correct multiples', () => {
+            // [ARRANGE]
+            gameTime.update(100);
+            gameTime.shouldTick(); // Tick 1
+
+            // [ASSERT]
+            expect(gameTime.isTickEvery(2)).toBe(false);
+
+            // [ACT]
+            gameTime.update(100);
+            gameTime.shouldTick(); // Tick 2
+
+            // [ASSERT]
+            expect(gameTime.isTickEvery(2)).toBe(true);
+            expect(gameTime.isTickEvery(3)).toBe(false);
+
+            // [ACT]
+            gameTime.update(100);
+            gameTime.shouldTick(); // Tick 3
+
+            // [ASSERT]
+            expect(gameTime.isTickEvery(3)).toBe(true);
+            expect(gameTime.isTickEvery(2)).toBe(false);
+        });
+
+        it('should return false for isTickEvery at tick 0', () => {
+            expect(gameTime.totalTicks).toBe(0);
+            expect(gameTime.isTickEvery(1)).toBe(false);
+        });
     });
 
     describe('FPS & TPS calculation', () => {

@@ -742,6 +742,20 @@ export interface Control extends Initializable {
 export interface Time extends Initializable {
     /** The interval between logic ticks in milliseconds. */
     tickInterval: number;
+    /** The total number of ticks since the game started. */
+    readonly totalTicks: number;
+
+    /** Total elapsed time in milliseconds since the game started. */
+    readonly elapsedTime: number;
+
+    /**
+     * Checks if enough time has passed for a game tick based on a specific interval.
+     *
+     * @param {number} interval - The tick interval to check.
+     * @returns {boolean} `true` if the current tick is a multiple of the interval.
+     */
+    isTickEvery(interval: number): boolean;
+
     /**
      * Accumulates passed time and calculates FPS/TPS.
      *

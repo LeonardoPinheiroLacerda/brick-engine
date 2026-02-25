@@ -9,15 +9,17 @@ import configs from '../../../config/configs';
  */
 export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
-    protected _accumulatedTime: number = 0;
+    protected _tickAccumulator: number = 0;
     /** The tick interval at the start of the game session. Used for resets. */
-    protected _initialTickInterval: number = configs.game.tickInterval;
-    protected _minTickInterval: number = configs.game.minTickInterval;
-    protected _tickInterval: number = configs.game.tickInterval;
-    protected _fps: number = 0;
-    protected _tps: number = 0;
-    protected _tickCounter: number = 0;
-    protected _timeSinceLastTpsUpdate: number = 0;
+    private _initialTickInterval: number = configs.game.tickInterval;
+    private _minTickInterval: number = configs.game.minTickInterval;
+    private _tickInterval: number = configs.game.tickInterval;
+    private _fps: number = 0;
+    private _tps: number = 0;
+    private _tickCounter: number = 0;
+    private _totalTicks: number = 0;
+    private _timeSinceLastTpsUpdate: number = 0;
+    private _totalElapsedTime: number = 0;
 
     serialId: string = 'time';
 
@@ -36,7 +38,8 @@ export default class GameTime implements Time, Debuggable, Serializable {
      * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
      */
     update(deltaTime: number) {
-        this._accumulatedTime += deltaTime;
+        this._tickAccumulator += deltaTime;
+        this._totalElapsedTime += deltaTime;
         this._fps = 1000 / deltaTime;
 
         this._timeSinceLastTpsUpdate += deltaTime;
@@ -54,9 +57,10 @@ export default class GameTime implements Time, Debuggable, Serializable {
      * @returns {boolean} True if a tick should occur.
      */
     shouldTick(): boolean {
-        if (this._accumulatedTime >= this._tickInterval) {
-            this._accumulatedTime -= this._tickInterval;
+        if (this._tickAccumulator >= this._tickInterval) {
+            this._tickAccumulator -= this._tickInterval;
             this._tickCounter++;
+            this._totalTicks++;
             return true;
         }
         return false;
@@ -66,11 +70,13 @@ export default class GameTime implements Time, Debuggable, Serializable {
      * Resets the time accumulator and debug counters.
      */
     reset() {
-        this._accumulatedTime = 0;
+        this._tickAccumulator = 0;
         this._fps = 0;
         this._tps = 0;
         this._tickCounter = 0;
+        this._totalTicks = 0;
         this._timeSinceLastTpsUpdate = 0;
+        this._totalElapsedTime = 0;
         this._tickInterval = this._initialTickInterval;
     }
 
@@ -123,7 +129,7 @@ export default class GameTime implements Time, Debuggable, Serializable {
             fps: Math.round(this._fps),
             tps: this._tps,
             tick_interval: this._tickInterval.toFixed(2),
-            accumulated_time: this._accumulatedTime.toFixed(2),
+            tick_accumulator: this._tickAccumulator.toFixed(2),
         };
     }
 
@@ -141,6 +147,34 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
     setMinTickInterval(interval: number): void {
         this._minTickInterval = interval;
+    }
+
+    /**
+     * Gets the total number of ticks since the game started.
+     *
+     * @returns {number} Total tick count.
+     */
+    get totalTicks(): number {
+        return this._totalTicks;
+    }
+
+    /**
+     * Gets the total elapsed time in milliseconds.
+     *
+     * @returns {number} Elapsed time in ms.
+     */
+    get elapsedTime(): number {
+        return this._totalElapsedTime;
+    }
+
+    /**
+     * Checks if the current total tick count is a multiple of the provided interval.
+     *
+     * @param {number} interval - The tick interval to check.
+     * @returns {boolean} True if the current tick is a multiple of the interval.
+     */
+    isTickEvery(interval: number): boolean {
+        return this._totalTicks > 0 && this._totalTicks % interval === 0;
     }
 
     /**
