@@ -1,10 +1,6 @@
 import p5 from 'p5';
 import Game from './core/Game';
 import GameView from './view/GameView';
-import GameMenu from './menu/GameMenu';
-
-import { ControlEventType, ControlKey } from './core/types/enums';
-import GameMenuSingleton from './menu/GameMenuSingleton';
 
 /**
  * Represents a constructor for a game class.
@@ -17,53 +13,15 @@ import GameMenuSingleton from './menu/GameMenuSingleton';
 type ClientGameConstructor = new (p: p5, view: GameView) => Game;
 
 let _game: Game;
-let _p: p5;
+
 /**
- * Handles the logic for switching between different games.
+ * Updates the currently active game in the engine's execution loop.
  *
- * This handler unbinds controls from the current game, sets up the new game,
- * propagates shared state, and rebinds controls to the new game's controller.
- *
- * @param {Game} newGame - The new game instance to switch to.
- * @returns {void}
+ * @param {Game} game - The new game instance to become active.
  */
-const _switchHandler = (newGame: Game) => {
-    try {
-        // Unbind the previous game controls
-        _game.view.unbindControls();
-
-        // Propagate the switch handler to the new game
-        newGame.propagateSwitchHandler(_game);
-
-        // Set the new game
-        newGame.setup();
-
-        const { control, state } = newGame.modules;
-
-        // Update debugger
-        newGame.view.updateDebuggerGameModules(newGame.modules);
-
-        // Bind the new game controls
-        newGame.view.bindControls(control);
-        state.turnOn();
-
-        // Setup exit and power buttons
-        if (GameMenuSingleton.hasInstance() && newGame !== GameMenuSingleton.getInstance()) {
-            control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-                newGame.switchGame(GameMenuSingleton.getInstance());
-            });
-
-            control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-                newGame.switchGame(GameMenuSingleton.getInstance());
-                state.turnOff();
-            });
-        }
-        _game = newGame;
-    } catch (error) {
-        console.error('Error switching game:', error);
-    }
-    _p.loop();
-};
+export function setActiveGame(game: Game) {
+    _game = game;
+}
 
 /**
  * Bootstraps the brick engine and initializes the game.
@@ -78,20 +36,12 @@ export function bootstrap(ClientGame: ClientGameConstructor) {
     window.BrickEngineGame = ClientGame;
 
     return new p5((p: p5) => {
-        _p = p;
-
         const view = new GameView(p, document.body);
 
-        if (ClientGame === GameMenu) {
-            _game = new ClientGame(p, view);
-            _game.gameId = 'game-menu';
-            GameMenuSingleton.setInstance(_game as GameMenu);
-        } else {
-            _game = new ClientGame(p, view);
+        setActiveGame(new ClientGame(p, view));
+        if (_game.gameId === 'unknown') {
             _game.gameId = 'game';
         }
-
-        _game.setSwitchHandler(_switchHandler);
 
         p.setup = () => {
             _game.setup();

@@ -1,7 +1,5 @@
 /** @vitest-environment jsdom */
-import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
-import p5 from 'p5';
-import Game from './core/Game';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mocking everything before importing main.ts logic
 /**
@@ -58,14 +56,6 @@ vi.mock('./view/GameView', () => {
     };
 });
 
-vi.mock('./menu/GameMenu', () => {
-    return {
-        default: vi.fn().mockImplementation(function () {
-            return mockGame;
-        }),
-    };
-});
-
 vi.mock('./core/Debugger', () => ({
     default: vi.fn().mockImplementation(function () {
         return { setup: vi.fn(), update: vi.fn(), destroy: vi.fn() };
@@ -83,52 +73,18 @@ vi.mock('@client-game', () => ({
     }),
 }));
 
-vi.mock('./menu/GameMenuSingleton', () => ({
-    default: {
-        setInstance: vi.fn(),
-        getInstance: vi.fn().mockReturnValue(mockGame),
-        hasInstance: vi.fn().mockReturnValue(true),
-    },
-}));
-
 describe('main.ts', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         vi.resetModules();
     });
 
-    it('should initialize the p5 instance and GameMenu in server mode', async () => {
-        const GameMenu = (await import('./menu/GameMenu')).default;
-
-        const { bootstrap } = await import('./bootstrap');
-        bootstrap(GameMenu);
-
-        expect(p5).toHaveBeenCalled();
-        expect(GameMenu).toHaveBeenCalled();
-        expect(bootstrap).toBeDefined();
-    });
-
-    it('should initialize ClientGame in client mode', async () => {
+    it('should initialize ClientGame', async () => {
         const ClientGame = (await import('@client-game')).default;
 
         const { bootstrap } = await import('./bootstrap');
         bootstrap(ClientGame);
 
         expect(ClientGame).toHaveBeenCalled();
-    });
-
-    it('should handle game switching', async () => {
-        const GameMenu = (await import('./menu/GameMenu')).default;
-
-        const { bootstrap } = await import('./bootstrap');
-        bootstrap(GameMenu);
-
-        const switchHandler = (mockGame.setSwitchHandler as unknown as Mock).mock.calls[0][0];
-        const nextGame = createMockGame();
-
-        switchHandler(nextGame as unknown as Game);
-
-        expect(nextGame.setup).toHaveBeenCalled();
-        expect(nextGame.modules.state.turnOn).toHaveBeenCalled();
     });
 });
