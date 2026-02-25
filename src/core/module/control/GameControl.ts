@@ -84,16 +84,26 @@ export default class GameControl implements Control, Debuggable {
         this._unsubscribe(key, type, callback, EventSuffix.PLAYING);
     }
 
+    subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        this._subscribe(key, type, callback, EventSuffix.PAUSED);
+    }
+
+    unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void {
+        this._unsubscribe(key, type, callback, EventSuffix.PAUSED);
+    }
+
     private _subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback, suffix?: EventSuffix): void {
-        const eventStr = EventEmitter.formatName(`${key}:${type}`, suffix);
-        EventEmitter.subscribe(eventStr, callback);
-        this._activeListeners.push({ event: eventStr, callback });
+        const baseName = `${key}:${type}`;
+        EventEmitter.subscribe(baseName, callback, suffix);
+        const finalName = suffix ? `${baseName}:${suffix}` : baseName;
+        this._activeListeners.push({ event: finalName, callback });
     }
 
     private _unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback, suffix?: EventSuffix): void {
-        const eventStr = EventEmitter.formatName(`${key}:${type}`, suffix);
-        EventEmitter.unsubscribe(eventStr, callback);
-        this._activeListeners = this._activeListeners.filter(l => !(l.event === eventStr && l.callback === callback));
+        const baseName = `${key}:${type}`;
+        EventEmitter.unsubscribe(baseName, callback, suffix);
+        const finalName = suffix ? `${baseName}:${suffix}` : baseName;
+        this._activeListeners = this._activeListeners.filter(l => !(l.event === finalName && l.callback === callback));
     }
 
     /**

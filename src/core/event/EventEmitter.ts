@@ -9,6 +9,7 @@ export interface StateContext {
     isOn(): boolean;
     isStarted(): boolean;
     isGameOver(): boolean;
+    isPaused(): boolean;
 }
 
 /**
@@ -18,6 +19,7 @@ export enum EventSuffix {
     TITLE = 'title',
     PLAYING = 'playing',
     GAMEOVER = 'gameover',
+    PAUSED = 'paused',
 }
 
 /**
@@ -32,12 +34,14 @@ export default class EventEmitter {
      *
      * @param eventName The name of the event to listen for.
      * @param callback The function to execute when the event is emitted.
+     * @param suffix The optional context suffix.
      */
-    static subscribe<T>(eventName: string, callback: EventCallback<T>): void {
-        if (!this._events[eventName]) {
-            this._events[eventName] = [];
+    static subscribe<T>(eventName: string, callback: EventCallback<T>, suffix?: EventSuffix): void {
+        const finalName = this._formatName(eventName, suffix);
+        if (!this._events[finalName]) {
+            this._events[finalName] = [];
         }
-        this._events[eventName].push(callback);
+        this._events[finalName].push(callback);
     }
 
     /**
@@ -45,10 +49,12 @@ export default class EventEmitter {
      *
      * @param eventName The name of the event.
      * @param callback The specific callback function to remove.
+     * @param suffix The optional context suffix.
      */
-    static unsubscribe<T>(eventName: string, callback: EventCallback<T>): void {
-        if (!this._events[eventName]) return;
-        this._events[eventName] = this._events[eventName].filter(cb => cb !== callback);
+    static unsubscribe<T>(eventName: string, callback: EventCallback<T>, suffix?: EventSuffix): void {
+        const finalName = this._formatName(eventName, suffix);
+        if (!this._events[finalName]) return;
+        this._events[finalName] = this._events[finalName].filter(cb => cb !== callback);
     }
 
     /**
@@ -64,7 +70,7 @@ export default class EventEmitter {
 
     /**
      * Dispatches an event to the base channel and automatically to contextual channels
-     * (:playing, :title, :gameover) based on the provided state context.
+     * (:playing, :title, :gameover, :paused) based on the provided state context.
      *
      * @param eventName The base name of the event.
      * @param payload Optional data to pass to the callbacks.
@@ -76,11 +82,13 @@ export default class EventEmitter {
 
         // Context-specific channel dispatch
         if (context.isPlaying()) {
-            this.notify(this.formatName(eventName, EventSuffix.PLAYING), payload);
+            this.notify(this._formatName(eventName, EventSuffix.PLAYING), payload);
+        } else if (context.isPaused()) {
+            this.notify(this._formatName(eventName, EventSuffix.PAUSED), payload);
         } else if (context.isOn() && !context.isStarted()) {
-            this.notify(this.formatName(eventName, EventSuffix.TITLE), payload);
+            this.notify(this._formatName(eventName, EventSuffix.TITLE), payload);
         } else if (context.isGameOver()) {
-            this.notify(this.formatName(eventName, EventSuffix.GAMEOVER), payload);
+            this.notify(this._formatName(eventName, EventSuffix.GAMEOVER), payload);
         }
     }
 
@@ -91,7 +99,7 @@ export default class EventEmitter {
      * @param suffix The optional context suffix.
      * @returns The formatted event string.
      */
-    static formatName(base: string, suffix?: EventSuffix): string {
+    private static _formatName(base: string, suffix?: EventSuffix): string {
         return suffix ? `${base}:${suffix}` : base;
     }
 

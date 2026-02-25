@@ -588,6 +588,16 @@ export interface State extends Initializable {
      */
     unsubscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
+    /**
+     * Registers a callback for a specific state change ONLY during the paused screen.
+     */
+    subscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Removes an existing paused screen subscription.
+     */
+    unsubscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
     /** Turn the game system on. */
     turnOn(): void;
 
@@ -684,6 +694,16 @@ export interface Control extends Initializable {
      * Removes an existing playing screen subscription.
      */
     unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Registers a callback for a specific control event ONLY during the paused screen.
+     */
+    subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
+
+    /**
+     * Removes an existing paused screen subscription.
+     */
+    unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Injects the module references required for populating the event context.

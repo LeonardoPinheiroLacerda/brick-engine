@@ -318,12 +318,20 @@ export default class GameState implements State, Debuggable {
         this._unsubscribe(property, callback, EventSuffix.PLAYING);
     }
 
+    subscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
+        this._subscribe(property, callback, EventSuffix.PAUSED);
+    }
+
+    unsubscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void {
+        this._unsubscribe(property, callback, EventSuffix.PAUSED);
+    }
+
     private _subscribe(property: StateProperty, callback: (value: boolean | number) => void, suffix?: EventSuffix): void {
-        EventEmitter.subscribe(EventEmitter.formatName(property, suffix), callback);
+        EventEmitter.subscribe(property, callback, suffix);
     }
 
     private _unsubscribe(property: StateProperty, callback: (value: boolean | number) => void, suffix?: EventSuffix): void {
-        EventEmitter.unsubscribe(EventEmitter.formatName(property, suffix), callback);
+        EventEmitter.unsubscribe(property, callback, suffix);
     }
 
     /**

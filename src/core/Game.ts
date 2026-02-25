@@ -9,13 +9,14 @@ import GameSound from './module/sound/GameSound';
 import GameScore from './module/score/GameScore';
 
 import { Initializable } from './types/Interfaces';
-import { ControlEventType, ControlKey, GameModules, StateProperty } from './types/Types';
+import { GameModules } from './types/Types';
 import GameHudGrid from './module/grid/GameHudGrid';
 import InterfaceIdentifierHelper from './helpers/InterfaceIdentifierHelper';
 import InitialStateSnapshot from './InitialStateSnapshot';
 import GameSession from './module/session/GameSession';
 import p5 from 'p5';
 import RendererContext from './context/RendererContext';
+import GameEventRegistry from './event/GameEventRegistry';
 
 /**
  * Base abstract class for the game.
@@ -139,7 +140,8 @@ export default abstract class Game implements Initializable {
 
         this.setupGame();
 
-        this._subscribeSystemControls();
+        GameEventRegistry.setupControlEvents(this._modules, () => this._initialStateSnapshot.restoreInitialState(this));
+        GameEventRegistry.setupStateEvents(this._modules);
 
         this._view.bindControls(control);
 
@@ -230,77 +232,4 @@ export default abstract class Game implements Initializable {
      * Called when the game is in GAME OVER state.
      */
     abstract drawGameOverScreen(): void;
-
-    private _subscribeSystemControls(): void {
-        const { control, state, grid } = this._modules;
-
-        control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
-            if (state.isGameOver()) {
-                grid.resetGrid();
-                this.modules.score.resetScore();
-                this.modules.score.resetLevel();
-                this.modules.time.reset();
-                this.modules.session.clearSession();
-                this._initialStateSnapshot.restoreInitialState(this);
-                state.resetGameOver();
-            }
-            if (state.isOn()) {
-                state.turnOff();
-                this.modules.sound.stopAll();
-            } else {
-                state.turnOn();
-            }
-        });
-        control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
-        control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
-
-        control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
-            if (!state.isPlaying() && !state.isPaused()) return;
-
-            grid.resetGrid();
-            this.modules.score.resetScore();
-            this.modules.score.resetLevel();
-            this.modules.time.reset();
-            this._modules.session.clearSession();
-            state.resetGame();
-            this._initialStateSnapshot.restoreInitialState(this);
-        });
-
-        control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => {
-            this._modules.session.clearSession();
-        });
-
-        control.subscribe(ControlKey.START_PAUSE, ControlEventType.PRESSED, () => {
-            if (!state.isStarted()) {
-                state.startGame();
-            } else if (state.isPlaying()) {
-                state.pause();
-            } else if (state.isPaused()) {
-                state.resume();
-            } else if (state.isGameOver()) {
-                grid.resetGrid();
-                this.modules.score.resetScore();
-                this.modules.score.resetLevel();
-                this.modules.time.reset();
-                this.modules.session.clearSession();
-                this._initialStateSnapshot.restoreInitialState(this);
-                state.resetGameOver();
-            }
-        });
-
-        state.subscribe(StateProperty.ON, isOn => {
-            if (!isOn) {
-                grid.resetGrid();
-                this.modules.score.resetScore();
-                this.modules.score.resetLevel();
-                this.modules.time.reset();
-            }
-        });
-
-        state.subscribe(StateProperty.GAME_OVER, isGameOver => {
-            if (isGameOver) {
-                this._modules.session.clearSession();
-            }
-        });
-    }
 }
