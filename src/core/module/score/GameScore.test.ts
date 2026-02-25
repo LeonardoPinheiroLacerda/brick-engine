@@ -6,12 +6,15 @@ describe('GameScore', () => {
 
     beforeEach(() => {
         vi.stubGlobal('localStorage', {
-            getItem: vi.fn().mockReturnValue('100'),
+            getItem: vi.fn((key: string) => {
+                if (key === 'test-game::highScore') return '100';
+                return null;
+            }),
             setItem: vi.fn(),
         });
 
         gameScore = new GameScore();
-        gameScore.setup();
+        gameScore.setupGameHighScore('test-game');
     });
 
     describe('increaseScore', () => {
@@ -31,7 +34,7 @@ describe('GameScore', () => {
             gameScore.increaseScore(150);
 
             // [ASSERT]
-            expect(localStorage.setItem).toHaveBeenCalledWith('highScore', '150');
+            expect(localStorage.setItem).toHaveBeenCalledWith('test-game::highScore', '150');
             expect(gameScore.highScore).toBe(150);
         });
 
