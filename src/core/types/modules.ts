@@ -834,6 +834,11 @@ export interface Session extends StateSyncable, Debuggable {
     clearSession(): void;
 
     /**
+     * Sets whether the session is enabled.
+     * @param {boolean} enabled - Whether the session should be enabled.
+     */
+    setSessionEnabled(enabled: boolean): void;
+    /**
      * Sets the function to be called when the session modal should be shown.
      * @param {function} callback - The function to be called.
      */

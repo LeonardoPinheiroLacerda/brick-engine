@@ -7,6 +7,7 @@ export default class GameSession implements Session {
     gameId: string;
 
     private _isModalClosed: boolean = false;
+    private _isEnabled: boolean = true;
     private _showSessionModal: (onConfirm: () => void, onCancel: () => void) => void;
     private _serializables: Serializable[] = [];
 
@@ -15,7 +16,7 @@ export default class GameSession implements Session {
     }
 
     saveSession(): void {
-        if (!this._isModalClosed || this._isGameMenuInstance()) return;
+        if (!this._isModalClosed || !this._isEnabled) return;
 
         this._serializables.forEach(serializable => {
             localStorage.setItem(this._key(serializable.serialId), serializable.serialize());
@@ -32,8 +33,8 @@ export default class GameSession implements Session {
         this._showSessionModal = showModal;
     }
 
-    private _isGameMenuInstance(): boolean {
-        return this.gameId === 'game-menu';
+    setSessionEnabled(enabled: boolean): void {
+        this._isEnabled = enabled;
     }
 
     private _hasSession(): boolean {
@@ -57,14 +58,14 @@ export default class GameSession implements Session {
     syncState(state: State): void {
         state.subscribe(StateProperty.PLAYING, isPlaying => {
             if (isPlaying && this._isModalClosed === false) {
-                if (!this._hasSession() || this._isGameMenuInstance()) {
+                if (!this._hasSession() || !this._isEnabled) {
                     this._isModalClosed = true;
                     return;
                 }
 
                 this._showSessionModal(
                     () => {
-                        if (this._hasSession() && !this._isGameMenuInstance()) {
+                        if (this._hasSession() && this._isEnabled) {
                             this._loadSession();
                         }
                         this._isModalClosed = true;
