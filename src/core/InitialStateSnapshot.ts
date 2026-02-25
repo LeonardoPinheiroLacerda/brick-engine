@@ -21,10 +21,31 @@ export default class InitialStateSnapshot {
             if (!this._baseProperties.includes(key) && typeof value !== 'function') {
                 let initialValue = value;
                 try {
-                    initialValue = structuredClone(value);
+                    // Try to use a custom clone method first
+                    if (value && typeof value === 'object') {
+                        // Only use structuredClone for plain objects or arrays
+                        const isPlainObject = Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null;
+                        const isArray = Array.isArray(value);
+
+                        if (isPlainObject || isArray) {
+                            initialValue = structuredClone(value);
+                        } else {
+                            // It's a class instance without a clone/copy method.
+                            // Save a reference to avoid stripping its prototype.
+                            console.warn(
+                                `[BrickEngine] Property '${key}' is a complex object without a clone() or copy() method. A reference will be saved. State reset might not work for its internal properties.`,
+                            );
+                            initialValue = value;
+                        }
+                    } else {
+                        initialValue = value;
+                    }
                     console.log('capturing property', key, initialValue);
                 } catch (e) {
-                    console.error(`Failed to clone property ${key}:`, e);
+                    console.error(
+                        `Failed to clone property '${key}' (value: ${String(value)}). Saving reference instead. Reset may not work as expected for this property. Error:`,
+                        e,
+                    );
                 }
                 this._initialState.set(key, initialValue);
             }

@@ -79,6 +79,10 @@ export default abstract class Game implements Initializable {
     /**
      * Sets up the game, initializing all modules and viewing components.
      * Called automatically by the engine key sequence.
+     *
+     * Internally calls `setupGame()` and then `captureInitialState()`.
+     * This means that all subclass properties (including those initialized in `setupGame`)
+     * are captured as the initial state for the resetting mechanism.
      */
     setup() {
         this._view.build();
@@ -126,11 +130,12 @@ export default abstract class Game implements Initializable {
         score.setupGameHighScore(this.gameId);
 
         this.setupGame();
-        this._initialStateSnapshot.captureInitialState(this);
 
         this._subscribeSystemControls();
 
         this._view.bindControls(control);
+
+        this._initialStateSnapshot.captureInitialState(this);
     }
 
     /**
@@ -202,6 +207,10 @@ export default abstract class Game implements Initializable {
     /**
      * Abstract method for setting up the game specific logic.
      * Called after the game modules are initialized.
+     *
+     * Note: All initial properties should be fully assigned here,
+     * as `captureInitialState()` is invoked immediately after this method,
+     * taking a snapshot for the reset mechanism.
      */
     abstract setupGame(): void;
 
@@ -232,6 +241,8 @@ export default abstract class Game implements Initializable {
         control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
 
         control.subscribe(ControlKey.RESET, ControlEventType.PRESSED, () => {
+            if (!state.isPlaying() && !state.isPaused()) return;
+
             grid.resetGrid();
             this.modules.score.resetScore();
             this.modules.score.resetLevel();
