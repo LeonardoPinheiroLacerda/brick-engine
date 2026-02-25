@@ -30,7 +30,7 @@ export default class GridTransformEngine {
         const isPartofSelf = (coord: Coordinate) => piece.some(c => c.coordinate.x === coord.x && c.coordinate.y === coord.y);
 
         const isInvalid = newPiece.some(cell => {
-            if (!this.grid.isValidCoordinate(cell.coordinate)) return true;
+            if (!this.grid.isCoordinateValid(cell.coordinate)) return true;
             return this.grid.isCellActive(cell.coordinate) && !isPartofSelf(cell.coordinate);
         });
 

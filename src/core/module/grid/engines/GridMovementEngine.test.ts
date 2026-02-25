@@ -11,7 +11,7 @@ describe('GridMovementEngine', () => {
     beforeEach(() => {
         // [ARRANGE] Mock Grid facade
         mockGrid = {
-            isValidCoordinate: vi.fn(),
+            isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
         } as unknown as Grid;
         engine = new GridMovementEngine(mockGrid);
@@ -22,7 +22,7 @@ describe('GridMovementEngine', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 5, y: 5 }, value: 1, color: Color.RED }];
             const direction: Vector = { x: 1, y: 0 };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -36,7 +36,7 @@ describe('GridMovementEngine', () => {
         it('should return null if the move is out of bounds', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 0, y: 0 }, value: 1, color: Color.RED }];
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(false);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(false);
 
             // [ACT]
             const result = engine.movePieceLeft(piece);
@@ -48,7 +48,7 @@ describe('GridMovementEngine', () => {
         it('should return null if it collides with an active cell that is NOT part of self', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 5, y: 5 }, value: 1, color: Color.RED }];
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(true); // Obstacle at (6,5)
 
             // [ACT]
@@ -64,7 +64,7 @@ describe('GridMovementEngine', () => {
                 { coordinate: { x: 5, y: 5 }, value: 1, color: Color.RED },
                 { coordinate: { x: 6, y: 5 }, value: 1, color: Color.RED },
             ];
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
 
             // isCellActive is true for (5,5) and (6,5)
             vi.mocked(mockGrid.isCellActive).mockImplementation((c: Coordinate) => c.x === 5 || c.x === 6);
@@ -84,7 +84,7 @@ describe('GridMovementEngine', () => {
         it('should return the furthest possible position downwards', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 5, y: 0 }, value: 1, color: Color.RED }];
-            vi.mocked(mockGrid.isValidCoordinate).mockImplementation((c: Coordinate) => c.y >= 0 && c.y <= 10);
+            vi.mocked(mockGrid.isCoordinateValid).mockImplementation((c: Coordinate) => c.y >= 0 && c.y <= 10);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -99,7 +99,7 @@ describe('GridMovementEngine', () => {
         it('should move a single cell if path is clear', () => {
             // [ARRANGE]
             const cell = { coordinate: { x: 1, y: 1 }, value: 1, color: Color.RED };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -112,7 +112,7 @@ describe('GridMovementEngine', () => {
         it('should return null if single cell path is blocked', () => {
             // [ARRANGE]
             const cell = { coordinate: { x: 1, y: 1 }, value: 1, color: Color.RED };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(true);
 
             // [ACT]

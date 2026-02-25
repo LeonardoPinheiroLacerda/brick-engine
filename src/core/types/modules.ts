@@ -132,7 +132,7 @@ export interface Grid extends Initializable {
      * @param {Coordinate} coordinate - The coordinate to check.
      * @returns {boolean} `true` if valid, `false` otherwise.
      */
-    isValidCoordinate(coordinate: Coordinate): boolean;
+    isCoordinateValid(coordinate: Coordinate): boolean;
 
     /**
      * Retrieves a cell at a specific location.
@@ -776,6 +776,12 @@ export interface Time extends Initializable {
      * @param {number} interval - The new minimum tick interval in milliseconds.
      */
     setMinTickInterval(interval: number): void;
+
+    /**
+     * Captures the current tick interval as the initial state.
+     * Use this after games have set their starting speed.
+     */
+    captureInitialState(): void;
 }
 
 /**

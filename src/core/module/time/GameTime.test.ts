@@ -82,5 +82,18 @@ describe('GameTime', () => {
             // [ASSERT]
             expect(gameTime.tickInterval).toBe(150);
         });
+
+        it('should restore tick interval to captured initial state on reset', () => {
+            // [ARRANGE]
+            gameTime.setTickInterval(200);
+            gameTime.captureInitialState();
+            gameTime.setTickInterval(50); // Speed up the game
+
+            // [ACT]
+            gameTime.reset();
+
+            // [ASSERT]
+            expect(gameTime.tickInterval).toBe(200);
+        });
     });
 });

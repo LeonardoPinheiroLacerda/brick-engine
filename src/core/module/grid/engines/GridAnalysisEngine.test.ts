@@ -12,7 +12,7 @@ describe('GridAnalysisEngine', () => {
         mockGrid = {
             width: 10,
             height: 20,
-            isValidCoordinate: vi.fn(),
+            isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
             getCell: vi.fn(),
             stampCell: vi.fn(),
@@ -61,7 +61,7 @@ describe('GridAnalysisEngine', () => {
         it('should return only orthogonally adjacent cells by default', () => {
             // [ARRANGE]
             const coord = { x: 5, y: 5 };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
 
             // [ACT]
@@ -78,7 +78,7 @@ describe('GridAnalysisEngine', () => {
         it('should return 8 neighbors if includeDiagonal is true', () => {
             // [ARRANGE]
             const coord = { x: 5, y: 5 };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
 
             // [ACT]
@@ -92,7 +92,7 @@ describe('GridAnalysisEngine', () => {
         it('should skip invalid coordinates (e.g., edges)', () => {
             // [ARRANGE] Center at (0,0)
             const coord = { x: 0, y: 0 };
-            vi.mocked(mockGrid.isValidCoordinate).mockImplementation(c => c.x >= 0 && c.y >= 0);
+            vi.mocked(mockGrid.isCoordinateValid).mockImplementation(c => c.x >= 0 && c.y >= 0);
             vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
 
             // [ACT]
@@ -122,7 +122,7 @@ describe('GridAnalysisEngine', () => {
             const neighbor = { x: 6, y: 5 };
 
             vi.mocked(mockGrid.isCellActive).mockImplementation(c => (c.x === 5 && c.y === 5) || (c.x === 6 && c.y === 5));
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.RED }));
 
             // [ACT]

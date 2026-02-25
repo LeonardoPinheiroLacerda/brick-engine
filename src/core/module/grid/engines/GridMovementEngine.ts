@@ -22,7 +22,7 @@ export default class GridMovementEngine {
         const isPartofSelf = (coord: Coordinate) => piece.some(c => c.coordinate.x === coord.x && c.coordinate.y === coord.y);
 
         const isInvalid = newPiece.some(cell => {
-            if (!this.grid.isValidCoordinate(cell.coordinate)) return true;
+            if (!this.grid.isCoordinateValid(cell.coordinate)) return true;
             return this.grid.isCellActive(cell.coordinate) && !isPartofSelf(cell.coordinate);
         });
 
@@ -51,7 +51,7 @@ export default class GridMovementEngine {
             y: cell.coordinate.y + (direction.y || 0),
         };
 
-        if (!this.grid.isValidCoordinate(newCoord) || this.grid.isCellActive(newCoord)) {
+        if (!this.grid.isCoordinateValid(newCoord) || this.grid.isCellActive(newCoord)) {
             return null;
         }
 

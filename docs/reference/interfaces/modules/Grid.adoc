@@ -58,7 +58,7 @@ Iterates over every cell in the grid, executing the provided callback.
 
 '''
 
-=== `isValidCoordinate(coordinate: xref:../../types/Coordinate.adoc[Coordinate]): boolean`
+=== `isCoordinateValid(coordinate: xref:../../types/Coordinate.adoc[Coordinate]): boolean`
 
 Returns `true` if the given coordinate falls within the grid boundaries.
 

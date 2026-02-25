@@ -132,10 +132,28 @@ Sets the minimum limit for the tick interval, preventing the game from speeding 
 
 '''
 
+=== `captureInitialState(): void`
+
+Captures the current `tickInterval` as the initial state. This should be called after a game has performed its specific initialization to ensure that future resets restore the correct starting speed.
+
+
+'''
+
 === `getDebugData(): Record<string, string | number | boolean>`
 
 Returns metadata for the real-time debugger.
 
 **Returns**
 
-`Record<string, string | number | boolean>` - Object containing `fps` (Frames Per Second) and `tps` (Ticks Per Second).
+`Record<string, string | number | boolean>` - Object containing `fps` (Frames Per Second), `tps` (Ticks Per Second), `tick_interval`, and `accumulated_time`.
+
+
+'''
+
+=== `captureInitialState(): void`
+
+Captures the current `tickInterval` as the starting speed for the game session.
+
+**Behavior**
+
+This method is called by the `Game` engine after the game-specific `setupGame()` has executed. It ensures that when `reset()` is called, the game returns to its intended initial speed rather than the engine's global default.

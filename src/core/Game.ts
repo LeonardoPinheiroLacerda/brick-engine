@@ -146,6 +146,8 @@ export default abstract class Game implements Initializable {
 
         this._view.bindControls(control);
 
+        this._modules.time.captureInitialState();
+
         this._initialStateSnapshot.captureInitialState(this);
     }
 

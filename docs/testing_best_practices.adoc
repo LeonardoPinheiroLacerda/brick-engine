@@ -22,7 +22,7 @@ Execute the specific method or behavior being tested. Limit this to a single act
 [source,typescript]
 ----
 // [ACT]
-const result = grid.isValidCoordinate(coordinate);
+const result = grid.isCoordinateValid(coordinate);
 ----
 
 === [ASSERT]

@@ -20,9 +20,9 @@ describe('GameGrid', () => {
         });
 
         it('should validate coordinates', () => {
-            expect(grid.isValidCoordinate({ x: 0, y: 0 })).toBe(true);
-            expect(grid.isValidCoordinate({ x: -1, y: 0 })).toBe(false);
-            expect(grid.isValidCoordinate({ x: grid.width, y: 0 })).toBe(false);
+            expect(grid.isCoordinateValid({ x: 0, y: 0 })).toBe(true);
+            expect(grid.isCoordinateValid({ x: -1, y: 0 })).toBe(false);
+            expect(grid.isCoordinateValid({ x: grid.width, y: 0 })).toBe(false);
         });
 
         it('should get and set cell values/colors', () => {

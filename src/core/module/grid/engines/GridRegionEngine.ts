@@ -13,7 +13,7 @@ export default class GridRegionEngine {
      */
     isAreaOccupied(coordinates: Coordinate[]): boolean {
         return coordinates.some(coord => {
-            if (!this.grid.isValidCoordinate(coord)) return true;
+            if (!this.grid.isCoordinateValid(coord)) return true;
             return this.grid.isCellActive(coord);
         });
     }

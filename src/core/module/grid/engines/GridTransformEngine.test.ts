@@ -10,7 +10,7 @@ describe('GridTransformEngine', () => {
     beforeEach(() => {
         // [ARRANGE] Mock Grid facade
         mockGrid = {
-            isValidCoordinate: vi.fn(),
+            isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
         } as unknown as Grid;
         engine = new GridTransformEngine(mockGrid);
@@ -23,7 +23,7 @@ describe('GridTransformEngine', () => {
             // Clockwise rotation should move it to (6,5) (right)
             const piece = [{ coordinate: { x: 5, y: 4 }, value: 1, color: Color.RED }];
             const origin = { x: 5, y: 5 };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -38,7 +38,7 @@ describe('GridTransformEngine', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 5, y: 4 }, value: 1, color: Color.RED }];
             const origin = { x: 5, y: 5 };
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(true); // Obstacle at (6,5)
 
             // [ACT]

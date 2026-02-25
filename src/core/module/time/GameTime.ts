@@ -10,6 +10,7 @@ import configs from '../../../config/configs';
 export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
     protected _accumulatedTime: number = 0;
+    /** The tick interval at the start of the game session. Used for resets. */
     protected _initialTickInterval: number = configs.game.tickInterval;
     protected _minTickInterval: number = configs.game.minTickInterval;
     protected _tickInterval: number = configs.game.tickInterval;
@@ -140,5 +141,13 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
     setMinTickInterval(interval: number): void {
         this._minTickInterval = interval;
+    }
+
+    /**
+     * Captures the current tick interval as the initial state.
+     * This is useful for restoring the game speed on reset.
+     */
+    captureInitialState(): void {
+        this._initialTickInterval = this._tickInterval;
     }
 }

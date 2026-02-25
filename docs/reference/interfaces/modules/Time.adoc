@@ -114,6 +114,13 @@ Sets the minimum limit for the tick interval, preventing the game from speeding 
 |`interval` |`number` |The minimum interval allowed (in milliseconds).
 |===
 
+
+'''
+
+=== `captureInitialState(): void`
+
+Captures the current `tickInterval` as the initial state. This should be called after a game has performed its specific initialization to ensure that future resets restore the correct starting speed.
+
 == General Usage
 
 Implemented by `xref:../../modules/GameTime.adoc[GameTime]`. This module ensures that game logic (like falling pieces) runs at a consistent speed regardless of the render frame rate.

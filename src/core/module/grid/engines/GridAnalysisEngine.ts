@@ -61,7 +61,7 @@ export default class GridAnalysisEngine {
 
         offsets.forEach(offset => {
             const neighborCoord = { x: coord.x + offset.x, y: coord.y + offset.y };
-            if (this.grid.isValidCoordinate(neighborCoord)) {
+            if (this.grid.isCoordinateValid(neighborCoord)) {
                 neighbors.push(this.grid.getCell(neighborCoord));
             }
         });
@@ -100,7 +100,7 @@ export default class GridAnalysisEngine {
 
                 neighbors.forEach(n => {
                     const key = getCoordKey(n);
-                    if (this.grid.isValidCoordinate(n) && !visited.has(key) && this.grid.isCellActive(n)) {
+                    if (this.grid.isCoordinateValid(n) && !visited.has(key) && this.grid.isCellActive(n)) {
                         visited.add(key);
                         queue.push(n);
                     }

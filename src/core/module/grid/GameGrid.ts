@@ -114,7 +114,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @param {Coordinate} coordinate - The coordinate to validate.
      * @returns {boolean} True if the coordinate is valid, false otherwise.
      */
-    isValidCoordinate(coordinate: Coordinate): boolean {
+    isCoordinateValid(coordinate: Coordinate): boolean {
         return coordinate.x >= 0 && coordinate.x < this.width && coordinate.y >= 0 && coordinate.y < this.height;
     }
 
@@ -125,7 +125,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @returns {Cell | null} The cell object, or null if out of bounds.
      */
     getCell(coordinate: Coordinate): Cell | null {
-        if (!this.isValidCoordinate(coordinate)) {
+        if (!this.isCoordinateValid(coordinate)) {
             return null;
         }
         return this._grid[coordinate.y][coordinate.x];
@@ -139,7 +139,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @returns {void}
      */
     setCellValue(coordinate: Coordinate, value: number): void {
-        if (!this.isValidCoordinate(coordinate)) {
+        if (!this.isCoordinateValid(coordinate)) {
             return;
         }
         this._grid[coordinate.y][coordinate.x].value = value;
@@ -153,7 +153,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @returns {void}
      */
     setCellColor(coordinate: Coordinate, color: Color): void {
-        if (!this.isValidCoordinate(coordinate)) {
+        if (!this.isCoordinateValid(coordinate)) {
             return;
         }
         this._grid[coordinate.y][coordinate.x].color = color;

@@ -12,7 +12,7 @@ describe('GridRegionEngine', () => {
         mockGrid = {
             width: 10,
             height: 20,
-            isValidCoordinate: vi.fn(),
+            isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
             setCellValue: vi.fn(),
             setCellColor: vi.fn(),
@@ -28,7 +28,7 @@ describe('GridRegionEngine', () => {
                 { x: 0, y: 0 },
                 { x: -1, y: 0 },
             ];
-            vi.mocked(mockGrid.isValidCoordinate).mockImplementation(c => c.x >= 0);
+            vi.mocked(mockGrid.isCoordinateValid).mockImplementation(c => c.x >= 0);
 
             // [ACT]
             const result = engine.isAreaOccupied(coords);
@@ -43,7 +43,7 @@ describe('GridRegionEngine', () => {
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
             ];
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockImplementation(c => c.x === 2);
 
             // [ACT]
@@ -59,7 +59,7 @@ describe('GridRegionEngine', () => {
                 { x: 1, y: 1 },
                 { x: 2, y: 2 },
             ];
-            vi.mocked(mockGrid.isValidCoordinate).mockReturnValue(true);
+            vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
