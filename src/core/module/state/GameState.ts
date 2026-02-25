@@ -1,6 +1,7 @@
 import { Debuggable } from '../../types/Interfaces';
 import { State } from '../../types/modules';
 import { StateProperty } from '../../types/Types';
+import EventEmitter from '../../event/EventEmitter';
 
 type StateMetadata = {
     defaultValue: boolean | number;
@@ -31,10 +32,6 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
  */
 export default class GameState implements State, Debuggable {
     private _state: Map<StateProperty, boolean | number> = new Map();
-
-    /** Map to store property names and their associated subscription callbacks. */
-
-    private _subscribers: Map<StateProperty, Array<(value: boolean | number) => void>> = new Map();
 
     /**
      * Initializes the state module.
@@ -92,10 +89,7 @@ export default class GameState implements State, Debuggable {
      * @param {boolean | number} value - The new value of the property.
      */
     private _notify(property: StateProperty, value: boolean | number): void {
-        const callbacks = this._subscribers.get(property);
-        if (callbacks) {
-            callbacks.forEach(callback => callback(value));
-        }
+        EventEmitter.notify(property, value);
     }
 
     /**
@@ -298,10 +292,7 @@ export default class GameState implements State, Debuggable {
      * @param {function(boolean | number): void} callback - The function to execute when the property changes.
      */
     subscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
-        if (!this._subscribers.has(property)) {
-            this._subscribers.set(property, []);
-        }
-        this._subscribers.get(property)?.push(callback);
+        EventEmitter.subscribe(property, callback);
     }
 
     /**
@@ -311,13 +302,7 @@ export default class GameState implements State, Debuggable {
      * @param {function(boolean | number): void} callback - The function to remove.
      */
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
-        const callbacks = this._subscribers.get(property);
-        if (callbacks) {
-            this._subscribers.set(
-                property,
-                callbacks.filter(cb => cb !== callback),
-            );
-        }
+        EventEmitter.unsubscribe(property, callback);
     }
 
     /**
