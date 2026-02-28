@@ -443,35 +443,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#tickinterval-number">1.1. <code>tickInterval: number</code></a></li>
-<li><a href="#shouldtick-boolean">1.2. <code>shouldTick(): boolean</code></a></li>
-<li><a href="#updatedeltatime-number-void">1.3. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#reset-void">1.4. <code>reset(): void</code></a></li>
-<li><a href="#incrementtickintervalamount-number-void">1.5. <code>incrementTickInterval(amount: number): void</code></a></li>
-<li><a href="#decrementtickintervalamount-number-void">1.6. <code>decrementTickInterval(amount: number): void</code></a></li>
-<li><a href="#settickintervalinterval-number-void">1.7. <code>setTickInterval(interval: number): void</code></a></li>
-<li><a href="#setmintickintervalinterval-number-void">1.8. <code>setMinTickInterval(interval: number): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.9. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#tickinterval-number">2.1. <code>tickInterval: number</code></a></li>
+<li><a href="#totalticks-number">2.2. <code>totalTicks: number</code></a></li>
+<li><a href="#elapsedtime-number">2.3. <code>elapsedTime: number</code></a></li>
+<li><a href="#shouldtick-boolean">2.4. <code>shouldTick(): boolean</code></a></li>
+<li><a href="#updatedeltatime-number-void">2.5. <code>update(deltaTime: number): void</code></a></li>
+<li><a href="#reset-void">2.6. <code>reset(): void</code></a></li>
+<li><a href="#istickeveryinterval-number-boolean">2.7. <code>isTickEvery(interval: number): boolean</code></a></li>
+<li><a href="#incrementtickintervalamount-number-void">2.8. <code>incrementTickInterval(amount: number): void</code></a></li>
+<li><a href="#decrementtickintervalamount-number-void">2.9. <code>decrementTickInterval(amount: number): void</code></a></li>
+<li><a href="#settickintervalinterval-number-void">2.10. <code>setTickInterval(interval: number): void</code></a></li>
+<li><a href="#setmintickintervalinterval-number-void">2.11. <code>setMinTickInterval(interval: number): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#captureinitialstate-void">2.13. <code>captureInitialState(): void</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameTime</code> module manages the engine&#8217;s logical clock. It decouples game logic "ticks" from the visual frame rate, ensuring consistent gameplay speed regardless of the device&#8217;s performance.</p>
+<p>The <code>GameTime</code> module manages the engine&#8217;s logical clock independent of the visual context. By decoupling the deterministic game logic "ticks" from the unpredictable visual frame rate of the browser, it ensures consistent gameplay speed and difficulty-progression physics regardless of the device&#8217;s hardware performance capabilities.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="tickinterval-number"><a class="link" href="#tickinterval-number">1.1. <code>tickInterval: number</code></a></h3>
+<h3 id="tickinterval-number"><a class="link" href="#tickinterval-number">2.1. <code>tickInterval: number</code></a></h3>
 <div class="paragraph">
 <p>Getter/Setter for the game logic speed in milliseconds.</p>
 </div>
@@ -490,7 +496,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="shouldtick-boolean"><a class="link" href="#shouldtick-boolean">1.2. <code>shouldTick(): boolean</code></a></h3>
+<h3 id="totalticks-number"><a class="link" href="#totalticks-number">2.2. <code>totalTicks: number</code></a></h3>
+<div class="paragraph">
+<p>Read-only property returning the total number of logic ticks that have occurred since the game started.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="elapsedtime-number"><a class="link" href="#elapsedtime-number">2.3. <code>elapsedTime: number</code></a></h3>
+<div class="paragraph">
+<p>Read-only property returning the total time in milliseconds elapsed since the game started.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="shouldtick-boolean"><a class="link" href="#shouldtick-boolean">2.4. <code>shouldTick(): boolean</code></a></h3>
 <div class="paragraph">
 <p>Determines if a logic update should be executed.</p>
 </div>
@@ -498,20 +518,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Returns</strong></p>
 </div>
 <div class="paragraph">
-<p><code>boolean</code> - <code>true</code> if the internal accumulator has exceeded the <code>tickInterval</code>.</p>
+<p><code>boolean</code> - <code>true</code> if the internal ticker buffer (accumulator) has exceeded the <code>tickInterval</code>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Called by the main loop. If it returns true, it automatically subtracts the <code>tickInterval</code> from the accumulator to maintain a stable clock.</p>
+<p>Called by the main loop. If it returns true, it automatically subtracts the <code>tickInterval</code> from the <code>tickAccumulator</code> to maintain a stable clock.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">1.3. <code>update(deltaTime: number): void</code></a></h3>
+<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">2.5. <code>update(deltaTime: number): void</code></a></h3>
 <div class="paragraph">
-<p>Advances the internal time accumulator.</p>
+<p>Advances the internal time buffer (tick accumulator).</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -531,16 +551,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>deltaTime</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Time elapsed since the last render frame (in milliseconds).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time physically elapsed since the last rendering frame (in milliseconds).</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="reset-void"><a class="link" href="#reset-void">1.4. <code>reset(): void</code></a></h3>
+<h3 id="reset-void"><a class="link" href="#reset-void">2.6. <code>reset(): void</code></a></h3>
 <div class="paragraph">
-<p>Clears the time accumulator.</p>
+<p>Clears the tick accumulator.</p>
 </div>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
@@ -551,7 +571,42 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="incrementtickintervalamount-number-void"><a class="link" href="#incrementtickintervalamount-number-void">1.5. <code>incrementTickInterval(amount: number): void</code></a></h3>
+<h3 id="istickeveryinterval-number-boolean"><a class="link" href="#istickeveryinterval-number-boolean">2.7. <code>isTickEvery(interval: number): boolean</code></a></h3>
+<div class="paragraph">
+<p>Returns <code>true</code> if the <code>totalTicks</code> is a multiple of the specified <code>interval</code>. Useful for scheduling recurring game events (e.g., spawning an item every 20 ticks).</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>interval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tick frequency interval constraint to check against.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>boolean</code> - <code>true</code> if the current tick is a multiple of the interval (and greater than 0).</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="incrementtickintervalamount-number-void"><a class="link" href="#incrementtickintervalamount-number-void">2.8. <code>incrementTickInterval(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Slows down the game by increasing the time between ticks.</p>
 </div>
@@ -580,7 +635,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="decrementtickintervalamount-number-void"><a class="link" href="#decrementtickintervalamount-number-void">1.6. <code>decrementTickInterval(amount: number): void</code></a></h3>
+<h3 id="decrementtickintervalamount-number-void"><a class="link" href="#decrementtickintervalamount-number-void">2.9. <code>decrementTickInterval(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Speeds up the game by decreasing the time between ticks.</p>
 </div>
@@ -609,7 +664,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="settickintervalinterval-number-void"><a class="link" href="#settickintervalinterval-number-void">1.7. <code>setTickInterval(interval: number): void</code></a></h3>
+<h3 id="settickintervalinterval-number-void"><a class="link" href="#settickintervalinterval-number-void">2.10. <code>setTickInterval(interval: number): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the tick interval exactly to the specified value.</p>
 </div>
@@ -631,14 +686,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>interval</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The new interval between logic updates (in milliseconds).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The precise new integer interval interval between logic updates (in milliseconds).</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setmintickintervalinterval-number-void"><a class="link" href="#setmintickintervalinterval-number-void">1.8. <code>setMinTickInterval(interval: number): void</code></a></h3>
+<h3 id="setmintickintervalinterval-number-void"><a class="link" href="#setmintickintervalinterval-number-void">2.11. <code>setMinTickInterval(interval: number): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the minimum limit for the tick interval, preventing the game from speeding up beyond this point.</p>
 </div>
@@ -660,14 +715,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>interval</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum interval allowed (in milliseconds).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The strict minimum boundary interval allowed (in milliseconds).</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.9. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -675,7 +730,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Returns</strong></p>
 </div>
 <div class="paragraph">
-<p><code>Record&lt;string, string | number | boolean&gt;</code> - Object containing <code>fps</code> (Frames Per Second) and <code>tps</code> (Ticks Per Second).</p>
+<p><code>Record&lt;string, string | number | boolean&gt;</code> - Object containing <code>fps</code> (Frames Per Second), <code>tps</code> (Ticks Per Second), <code>tick_interval</code>, and <code>tick_accumulator</code>.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="captureinitialstate-void"><a class="link" href="#captureinitialstate-void">2.13. <code>captureInitialState(): void</code></a></h3>
+<div class="paragraph">
+<p>Captures the current <code>tickInterval</code> as the starting speed for the game session.</p>
+</div>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>This method is called by the <code>Game</code> engine after the game-specific <code>setupGame()</code> has executed. It ensures that when <code>reset()</code> is called, the game returns to its intended initial speed rather than the engine&#8217;s global default.</p>
 </div>
 </div>
 </div>

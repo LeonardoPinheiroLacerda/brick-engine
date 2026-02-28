@@ -443,22 +443,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#inheritance">1. Inheritance</a></li>
-<li><a href="#usage">2. Usage</a></li>
-<li><a href="#implementation-specifics">3. Implementation Specifics</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#inheritance">2. Inheritance</a></li>
+<li><a href="#usage">3. Usage</a></li>
+<li><a href="#implementation-specifics">4. Implementation Specifics</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameHudGrid</code> is a specialized implementation of the <code>GameGrid</code> class. It is hard-coded to a <strong>4x4</strong> dimension and is intended for use in the HUD area to display meta-information, such as "Next Piece" in a Tetris-style game.</p>
+<p>The <code>GameHudGrid</code> acts as a specialized engine implementation isolating the visual preview logic for upcoming pieces. By statically overriding the fluid dimensions of a standard <code>GameGrid</code> down to a strict 4x4 coordinate plane, it transparently provides rendering modules exactly the same API for iterating over cells, but guarantees the data remains segregated from the primary physics loop resolving active lines.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="inheritance"><a class="link" href="#inheritance">1. Inheritance</a></h2>
+<h2 id="inheritance"><a class="link" href="#inheritance">2. Inheritance</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>GameHudGrid</code> extends <a href="GameGrid.html">GameGrid</a>. It inherits all methods for filling areas, stamping pieces, and checking occupancy.</p>
@@ -466,7 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="usage"><a class="link" href="#usage">2. Usage</a></h2>
+<h2 id="usage"><a class="link" href="#usage">3. Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Accessible via <code>modules.hudGrid</code>.</p>
@@ -485,7 +487,7 @@ hudGrid.stampPiece(nextPieceCoords, 1, Color.BLUE);</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="implementation-specifics"><a class="link" href="#implementation-specifics">3. Implementation Specifics</a></h2>
+<h2 id="implementation-specifics"><a class="link" href="#implementation-specifics">4. Implementation Specifics</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>GameHudGrid</code> overrides the dimensions provided in the global configuration, strictly enforcing a 4x4 matrix. This ensures consistency for HUD-specific rendering logic.</p>

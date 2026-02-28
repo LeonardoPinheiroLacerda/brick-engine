@@ -4,8 +4,12 @@ import { Debuggable, StateSyncable } from '../../types/Interfaces';
 import { SoundModule, State } from '../../types/modules';
 
 /**
- * Manages audio playback and sound effects.
- * Handles the Web Audio API context, loading sound buffers, and managing volume/muting.
+ * Module responsible for managing non-blocking audio playback and preloading sound effects.
+ *
+ * It decouples the raw Web Audio API context management away from generic gameplay
+ * components. By abstracting buffer decoding, volume/gain adjustments, and muting, it
+ * allows systems to simply request `play(Sound.BEEP)` without managing individual audio nodes.
+ * Implements {@link StateSyncable} to actively listen to mute changes from the global state.
  */
 export default class GameSound implements SoundModule, StateSyncable, Debuggable {
     muted: boolean;
@@ -39,8 +43,12 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     _state: State;
 
     /**
-     * Initializes the sound system.
-     * Creates the AudioContext, sets up the master gain node, and starts loading sounds.
+     * Initializes the sound system and buffer caching.
+     * Creates the core standard `AudioContext`, sets up the master audio routing
+     * `GainNode` for volume adjustment, and kicks off asynchronous background downloading
+     * of all game sound assets.
+     *
+     * @returns {void} Returns nothing.
      */
     setup() {
         const { volume } = configs.game.sound;
@@ -64,11 +72,13 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Plays a specific sound effect.
-     * Creates a new source node for each playback instance.
+     * Instantiates an active playback stream for a specific preloaded sound effect.
      *
-     * @param {Sound} sound - The sound identifier/URL to play.
-     * @returns {Promise<void>}
+     * To prevent overlapping audio collision, this creates a new `BufferSource` node
+     * for every individual playback call.
+     *
+     * @param {Sound} sound - The precise enum identity of the targeted soundtrack/effect file to trigger.
+     * @returns {Promise<void>} An asynchronous void promise that resolves immediately upon commanding the API.
      */
     async play(sound: Sound): Promise<void> {
         // Browsers block automatic audio until user interaction.
@@ -111,10 +121,10 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Stops all instances of a specific sound.
+     * Purges and forcefully stops all active playback instances of a specific sound.
      *
-     * @param {Sound} sound - The sound to stop.
-     * @returns {Promise<void>}
+     * @param {Sound} sound - The exact enum identity of the looping audio channel to abruptly halt.
+     * @returns {Promise<void>} An asynchronous void promise resolving upon completion.
      */
     async stop(sound: Sound): Promise<void> {
         const sources = this._activeSources.get(sound);
@@ -133,9 +143,10 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Stops all currently playing sounds.
+     * A global panic method that physically stops every localized sound immediately
+     * looping in the actively managed list.
      *
-     * @returns {Promise<void>}
+     * @returns {Promise<void>} An asynchronous void promise resolving after mass stopping concludes.
      */
     async stopAll(): Promise<void> {
         const activeSounds = Array.from(this._activeSources.keys());
@@ -145,7 +156,9 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Updates the master volume based on the muted state.
+     * Internal utility to update the master audio routing node based on active configuration limits.
+     *
+     * @returns {void} Returns nothing.
      */
     private _updateGain() {
         // setValueAtTime is the safe way to change audio parameters in Web Audio API.
@@ -164,8 +177,9 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Loads all sound assets defined in the Sound enum.
-     * Fetches, buffers, and decodes the audio data.
+     * Preloads and decodes binary chunks for all physical asset bundles defined in the `Sound` configuration.
+     *
+     * @returns {Promise<void>} An asynchronous void promise resolving upon resolving all fetch requests.
      */
     private async _loadAll() {
         // Load all sounds defined in the Sound Enum.
@@ -186,8 +200,9 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Toggles the mute state of the game.
-     * Updates the state module and the audio gain.
+     * Public proxy bound cleanly to the internal UI to swap the active muting preference stringent rule.
+     *
+     * @returns {void} Returns nothing.
      */
     toggleMute(): void {
         this._state.toggleMuted();
@@ -195,10 +210,11 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Receives the shared game state module.
-     * Subscribes to mute state changes.
+     * Hook implemented to attach contextual state triggers immediately after standard `setup` completes.
+     * Subscribes to the single source of truth {@link GameState} to actively track the `MUTED` flag.
      *
-     * @param {State} state - The game state module.
+     * @param {State} state - The injected active singleton logic state context instance to observe securely.
+     * @returns {void} Returns nothing.
      */
     syncState(state: State): void {
         this._state = state;
@@ -211,9 +227,9 @@ export default class GameSound implements SoundModule, StateSyncable, Debuggable
     }
 
     /**
-     * Retrieves debug information about the audio system.
+     * Collects and exposes internal mapping metrics required by the Engine's Real-time Development Monitor.
      *
-     * @returns {Record<string, string | number | boolean>} The debug data.
+     * @returns {Record<string, string | number | boolean>} A shallow payload containing current buffering counts and audio scaling rules.
      */
     getDebugData(): Record<string, string | number | boolean> {
         let activeSourcesCount = 0;

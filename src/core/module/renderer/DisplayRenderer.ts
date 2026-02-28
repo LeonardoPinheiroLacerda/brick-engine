@@ -8,8 +8,12 @@ import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import RendererContext from '../../context/RendererContext';
 
 /**
- * Responsible for rendering the main game field (the grid where the game is played).
- * Handles cell rendering, background drawing, and optimizes static elements using an off-screen buffer.
+ * Dedicated visual presentation component isolating grid drawing loops.
+ *
+ * It decouples the performance-intensive grid enumeration from general game loops.
+ * Through pre-compilation (off-screen buffer for background elements) and heavy caching
+ * of explicit geometry boundaries (inner offset, padding, strokes), it minimizes real-time
+ * calculation depth, effectively stabilizing engine framerate limits.
  */
 export default class DisplayRenderer implements Renderer {
     private _rendererMetrics: RendererMetrics;
@@ -27,10 +31,10 @@ export default class DisplayRenderer implements Renderer {
     private _staticGraphics: p5.Graphics;
 
     /**
-     * Initializes the renderer with the calculated metrics.
-     * Pre-calculates cell geometry for faster rendering.
+     * Implements specific internal matrix caches consuming injected absolute layout metrics.
      *
-     * @param {RendererMetrics} rendererMetrics - The shared renderer metrics.
+     * @param {RendererMetrics} rendererMetrics - The shared pre-compiled dimension dictionaries.
+     * @returns {void} Returns nothing.
      */
     setup(rendererMetrics: RendererMetrics) {
         this._rendererMetrics = rendererMetrics;
@@ -53,10 +57,14 @@ export default class DisplayRenderer implements Renderer {
     }
 
     /**
-     * Renders the game grid.
-     * Draws the static background first, then iterates over the grid to draw cells.
+     * The continuous execution sequence re-painting the primary logical bounds on-screen.
      *
-     * @param {Cell[][]} grid - The current grid state.
+     * It efficiently pastes the off-screen cached background texture before procedurally computing
+     * transient piece overlay graphics.
+     *
+     * @param {Cell[][]} grid - The 2D target matrix identifying block coordinates.
+     * @param {GameModules} modules - Dynamic context properties passed directly by the Engine.
+     * @returns {void} Returns nothing.
      */
     render(grid: Cell[][], modules: GameModules) {
         const { p } = RendererContext;
@@ -69,8 +77,9 @@ export default class DisplayRenderer implements Renderer {
     }
 
     /**
-     * Renders static elements (background and borders) to an off-screen buffer.
-     * This improves performance by avoiding re-drawing static shapes every frame.
+     * Executes the initial setup closure defining fixed off-screen graphics buffer textures.
+     *
+     * @returns {void} Returns nothing.
      */
     private _renderStaticElements() {
         const { p } = RendererContext;
@@ -92,10 +101,11 @@ export default class DisplayRenderer implements Renderer {
     }
 
     /**
-     * Renders a single brick at grid coordinates.
-     * Uses translation matrices to keep drawing logic clean.
+     * Processes individual cell geometric construction dynamically translating matrices to prevent nested complex mathematics.
      *
-     * @param {Cell} cell - The cell data to render.
+     * @param {Cell} cell - The structured data representing logical bounds and status coloring.
+     * @param {State} state - Actively running environment configuration (like color schemes or game over logic).
+     * @returns {void} Returns nothing.
      */
     protected renderCell({ coordinate, color, value }: Cell, state: State) {
         const { p } = RendererContext;
@@ -131,9 +141,11 @@ export default class DisplayRenderer implements Renderer {
     }
 
     /**
-     * Iterates through the grid and renders each cell.
+     * Executes the rapid sequence loop covering the active logic matrix.
      *
-     * @param {Cell[][]} grid - The grid to render.
+     * @param {Cell[][]} grid - The logical target state collection.
+     * @param {State} state - Active environment flags modifying visual styling.
+     * @returns {void} Returns nothing.
      */
     protected renderGrid(grid: Cell[][], state: State) {
         grid.forEach(row => {

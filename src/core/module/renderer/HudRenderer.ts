@@ -7,8 +7,12 @@ import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import RendererContext from '../../context/RendererContext';
 
 /**
- * Responsible for rendering the Heads-Up Display (HUD).
- * Displays game information like Score, High Score, Level, and the Next Piece Preview.
+ * Dedicated visual presentation component isolating Heads-Up Display (HUD) mechanics.
+ *
+ * Implements the {@link Renderer} interface to decouple metadata logic (level, scores, Next Piece
+ * visuals) away from core game physics. By translating absolute space constraints mapped in
+ * `configs.screenLayout`, it creates responsive graphical UI outputs without expensive real-time
+ * geometry processing on each execution tick.
  */
 export default class HudRenderer implements Renderer {
     private _gridOrigin: Coordinate;
@@ -23,10 +27,10 @@ export default class HudRenderer implements Renderer {
     };
 
     /**
-     * Initializes the HUD with calculated metrics.
-     * Sets up the grid origin and border rectangle for the "next piece" preview area.
+     * Binds strictly defined initial layouts mapping dynamically sized objects over absolute space.
      *
-     * @param {RendererMetrics} rendererMetrics - The shared renderer metrics.
+     * @param {RendererMetrics} rendererMetrics - Pre-calculated scale components established globally.
+     * @returns {void} Returns nothing.
      */
     setup(rendererMetrics: RendererMetrics): void {
         this._cellSize = rendererMetrics.cell.size;
@@ -44,10 +48,11 @@ export default class HudRenderer implements Renderer {
     }
 
     /**
-     * Renders all HUD elements.
+     * Orchestrates the active frame-tick UI compilation logic sequences.
      *
-     * @param {Cell[][]} grid - The main game grid (unused in HUD, but required by interface).
-     * @param {GameModules} modules - The game modules for retrieving state and score.
+     * @param {Cell[][]} grid - A standard mapping hook currently unused by this context explicitly.
+     * @param {GameModules} modules - The active registry exposing GameScore and GameState values.
+     * @returns {void} Returns nothing.
      */
     render(grid: Cell[][], modules: GameModules): void {
         this._renderHud(modules);
@@ -55,9 +60,10 @@ export default class HudRenderer implements Renderer {
     }
 
     /**
-     * Renders the text-based HUD elements (Score, Level, Status).
+     * Compiles dynamic string payloads over absolute canvas locations tracking user data metrics.
      *
-     * @param {GameModules} modules - The game modules.
+     * @param {GameModules} modules - Global registry resolving access to the Score system.
+     * @returns {void} Returns nothing.
      */
     private _renderHud(modules: GameModules): void {
         const { p } = RendererContext;
@@ -115,9 +121,10 @@ export default class HudRenderer implements Renderer {
     }
 
     /**
-     * Renders the preview grid for the next piece.
+     * Maps the static inner-HUD coordinate box defining where piece previews exist natively.
      *
-     * @param {GameModules} modules - The game modules.
+     * @param {GameModules} modules - Engine registry exposing the `GameHudGrid` explicitly.
+     * @returns {void} Returns nothing.
      */
     private _drawHudGrid(modules: GameModules): void {
         const { p } = RendererContext;
@@ -156,14 +163,15 @@ export default class HudRenderer implements Renderer {
     }
 
     /**
-     * Helper method to draw a single cell on the HUD.
-     * Identical in logic to DisplayRenderer's cell drawing but localized for HUD.
+     * Optimized internal draw operation processing graphical offsets for the sub-grid layer.
      *
-     * @param {object} params - The drawing parameters.
-     * @param {number} params.w - Width of the cell.
-     * @param {number} params.posX - Absolute X position.
-     * @param {number} params.posY - Absolute Y position.
-     * @param {Color} params.color - Color of the cell.
+     * @param {object} params - Explicit physical boundary configuration dictionary.
+     * @param {number} params.w - The scale cell width footprint constraint.
+     * @param {number} params.h - The scale cell height footprint constraint.
+     * @param {number} params.posX - Translating X absolute starting point coordinate limit.
+     * @param {number} params.posY - Translating Y absolute starting point coordinate limit.
+     * @param {Color} params.color - The specific string enum resolving rendering palette strokes.
+     * @returns {void} Returns nothing.
      */
     private drawCellElement({ w, posX, posY, color }: { w: number; h: number; posX: number; posY: number; color: Color }): void {
         const { p } = RendererContext;

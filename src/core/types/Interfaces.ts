@@ -8,6 +8,8 @@ export interface Initializable {
     /**
      * Initializes the module.
      * Should be called after the instance is created and dependencies are injected.
+     *
+     * @returns {void} Returns nothing.
      */
     setup(): void;
 }
@@ -24,6 +26,7 @@ export interface StateSyncable {
      * Binds the module to the game state.
      *
      * @param {State} state - The game state instance to sync with.
+     * @returns {void} Returns nothing.
      */
     syncState(state: State): void;
 }
@@ -36,6 +39,7 @@ export interface RendererInitializable {
      * Initializes the renderer with calculated screen metrics.
      *
      * @param {RendererMetrics} rendererMetrics - The layout metrics (dimensions, origins).
+     * @returns {void} Returns nothing.
      */
     setup(rendererMetrics: RendererMetrics): void;
 }
@@ -54,6 +58,18 @@ export interface Debuggable {
 
 export interface Serializable {
     serialId: string;
+    /**
+     * Serializes the object state into a string.
+     *
+     * @returns {string} The serialized string payload.
+     */
     serialize(): string;
+
+    /**
+     * Deserializes the object state from a string payload.
+     *
+     * @param {string} data - The string payload.
+     * @returns {void} Returns nothing.
+     */
     deserialize(data: string): void;
 }

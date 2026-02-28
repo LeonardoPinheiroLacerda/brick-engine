@@ -12,10 +12,12 @@ import GridRegionEngine from './engines/GridRegionEngine';
 import { Serializable } from '../../types/Interfaces';
 
 /**
- * Manages the game's logical grid state and operations.
+ * Core module responsible for managing the logical 2D grid matrix and spatial states.
  *
- * Provides a robust API for cell manipulation, row/column management,
- * collision detection, and mass grid modifications.
+ * It serves as the authoritative boundary for all coordinate mathematics,
+ * cell modifications, and collision detection logic, completely agnostic
+ * to the physical rendering loop. It ensures no pieces can mathematically
+ * step out of bounds or override occupied spaces incorrectly.
  */
 export default class GameGrid implements Grid, Debuggable, Serializable {
     /**
@@ -107,7 +109,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
     /**
      * Initializes the grid by resetting its content to an empty state.
      *
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     setup(): void {
         this.resetGrid();
@@ -118,7 +120,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * Populates the grid with empty cells using {@link CellHelper.emptyCell}.
      *
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     resetGrid(): void {
         this._grid = [];
@@ -134,7 +136,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Iterates over every cell in the grid and executes a callback.
      *
      * @param {function(Cell): void} callback - The function to execute for each cell.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     forEach(callback: (cell: Cell) => void): void {
         for (let y = 0; y < this.height; y++) {
@@ -172,7 +174,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * @param {Coordinate} coordinate - The target coordinate.
      * @param {number} value - The new value (e.g., 0 for inactive, >0 for active).
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     setCellValue(coordinate: Coordinate, value: number): void {
         if (!this.isCoordinateValid(coordinate)) {
@@ -186,7 +188,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * @param {Coordinate} coordinate - The target coordinate.
      * @param {Color} color - The new color enum value.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     setCellColor(coordinate: Coordinate, color: Color): void {
         if (!this.isCoordinateValid(coordinate)) {
@@ -241,7 +243,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Resets all cells in a specific row to their default empty state.
      *
      * @param {number} y - The row index to clear.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     clearRow(y: number): void {
         this._lineEngine.clearRow(y);
@@ -253,7 +255,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Clears the top-most row after shifting.
      *
      * @param {number} fromY - The starting row index for the shift down.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     shiftRowsDown(fromY: number): void {
         this._lineEngine.shiftRowsDown(fromY);
@@ -265,7 +267,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Clears the bottom-most row after shifting.
      *
      * @param {number} fromY - The starting row index for the shift up.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     shiftRowsUp(fromY: number): void {
         this._lineEngine.shiftRowsUp(fromY);
@@ -308,7 +310,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Resets all cells in a specific column to their default empty state.
      *
      * @param {number} x - The column index to clear.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     clearColumn(x: number): void {
         this._lineEngine.clearColumn(x);
@@ -320,7 +322,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Clears the left-most column (index 0) after shifting.
      *
      * @param {number} fromX - The starting column index for the shift right.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     shiftColumnsRight(fromX: number): void {
         this._lineEngine.shiftColumnsRight(fromX);
@@ -332,7 +334,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Clears the right-most column after shifting.
      *
      * @param {number} fromX - The starting column index for the shift left.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     shiftColumnsLeft(fromX: number): void {
         this._lineEngine.shiftColumnsLeft(fromX);
@@ -368,7 +370,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @param {Coordinate} end - The opposite corner of the rectangle.
      * @param {number} value - The cell status value to apply.
      * @param {Color} color - The color to apply.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void {
         this._regionEngine.fillArea(start, end, value, color);
@@ -380,7 +382,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Effectively "stamps" a piece's shape onto the static grid.
      *
      * @param {Piece | Cell[]} piece - The collection of cells to stamp.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     stampPiece(piece: Piece | Cell[]): void {
         this._regionEngine.stampPiece(piece);
@@ -390,7 +392,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Updates a single coordinate with a specific value and color from a Cell.
      *
      * @param {Cell} cell - The cell containing coordinate, value and color.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     stampCell(cell: Cell): void {
         this._regionEngine.stampCell(cell);
@@ -603,7 +605,7 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * @param {Coordinate} a - First coordinate.
      * @param {Coordinate} b - Second coordinate.
-     * @returns {void}
+     * @returns {void} Returns nothing.
      */
     swapCells(a: Coordinate, b: Coordinate): void {
         this._analysisEngine.swapCells(a, b);
@@ -629,15 +631,26 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
         };
     }
 
+    /**
+     * Extracts and converts the internal 2D grid matrix into a flat string payload limit.
+     * Required by the Engine's {@link Session} component for persisting cross-session layouts.
+     *
+     * @returns {string} The JSON stringified representation of the dynamic objects mapped.
+     */
     serialize(): string {
-        console.log('serialize');
         return JSON.stringify({
             grid: this._grid,
         });
     }
 
+    /**
+     * Hydrates the grid layout from a previously frozen flat string blob.
+     * Executes dynamically during engine session recovery.
+     *
+     * @param {string} data - The compacted JSON representation resolving back to standard Cell instances.
+     * @returns {void} Returns nothing.
+     */
     deserialize(data: string): void {
-        console.log('deserialize');
         const parsed = JSON.parse(data);
         this._grid = parsed.grid;
     }

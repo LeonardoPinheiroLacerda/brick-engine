@@ -120,5 +120,6 @@ export interface GameEvent {
  * Callback function type for handling input events.
  *
  * @param {GameEvent} event - The event data containing key, type, and module access.
+ * @returns {void} Returns nothing.
  */
 export type ControlCallback = (event: GameEvent) => void;

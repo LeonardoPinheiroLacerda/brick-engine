@@ -3,9 +3,12 @@ import { Score } from '../../types/modules';
 import { Serializable } from '../../types/Interfaces';
 
 /**
- * Manages game scoring, levels, and high score tracking.
- * Acts as the authority for the game's `highScore`, persisting it directly to `LocalStorage`.
- * Handles multipliers and supports Session serialization out of the box.
+ * Stateful module dedicated to tracking real-time player performance metrics.
+ *
+ * Implements the {@link Score} and {@link Serializable} interfaces to provide
+ * a centralized authority for maintaining score lines, difficulty levels, and
+ * multiplier bonuses. It uniquely tracks the global `highScore` by saving it
+ * directly to `LocalStorage` under an isolated `gameId` namespace.
  */
 export default class GameScore implements Score, Debuggable, Serializable {
     private _score: number = 0;
@@ -19,9 +22,10 @@ export default class GameScore implements Score, Debuggable, Serializable {
     serialId: string = 'score';
 
     /**
-     * Sets up the game high score.
+     * Initializes the High Score context using a distinct installation prefix.
      *
-     * @param {string} id - The game ID.
+     * @param {string} id - The explicit game UUID or namespace string to prevent record collisions.
+     * @returns {void} Returns nothing.
      */
     setupGameHighScore(id: string): void {
         this._gameId = id;
@@ -29,10 +33,11 @@ export default class GameScore implements Score, Debuggable, Serializable {
     }
 
     /**
-     * Increases the score by the given amount, applying the current multiplier.
-     * Automatically checks for high score updates.
+     * Increases the score by the given base amount after calculating active multipliers.
+     * Automatically assesses if the new score surpasses and replaces the persistent High Score.
      *
-     * @param {number} amount - The base amount to increase by.
+     * @param {number} amount - The integer base points to add before multipliers.
+     * @returns {void} Returns nothing.
      */
     increaseScore(amount: number): void {
         this._score += amount * this._multiplier;
@@ -42,33 +47,38 @@ export default class GameScore implements Score, Debuggable, Serializable {
     }
 
     /**
-     * Resets the current score to 0.
+     * Zeroes out the active tracking score.
+     *
+     * @returns {void} Returns nothing.
      */
     resetScore(): void {
         this._score = 0;
     }
 
     /**
-     * Formats the current score as a string with leading zeros.
+     * Exports the raw session score as a physically padded string sequence.
      *
-     * @param {number} [digits=6] - The total number of digits to display.
-     * @returns {string} The formatted score string (e.g., "000150").
+     * @param {number} [digits=6] - The optional total number of sequence places to output (e.g. 6).
+     * @returns {string} The formatted string payload displaying leading zeros (e.g., "000150").
      */
     getFormattedScore(digits: number = 6): string {
         return this._score.toString().padStart(digits, '0');
     }
 
     /**
-     * Increases the game level by a specific amount.
+     * Steps up the active engine difficulty level scaling.
      *
-     * @param {number} amount - The number of levels to add.
+     * @param {number} amount - The integer step of new levels to jump.
+     * @returns {void} Returns nothing.
      */
     increaseLevel(amount: number): void {
         this._level += amount;
     }
 
     /**
-     * Resets the game level back to 1.
+     * Resets the active difficulty level baseline back to initial 1.
+     *
+     * @returns {void} Returns nothing.
      */
     resetLevel(): void {
         this._level = 1;
@@ -177,10 +187,11 @@ export default class GameScore implements Score, Debuggable, Serializable {
     }
 
     /**
-     * Restores score and level progress from a serialized JSON string.
-     * Used by the SessionManager when recovering an active session.
+     * Modifies the running variables based on an injected serialized payload.
+     * Instructed dynamically by the `SessionManager` during initialization recovery.
      *
-     * @param {string} data - The JSON string containing the saved session data.
+     * @param {string} data - The packed string blob enclosing the structured saved session.
+     * @returns {void} Returns nothing.
      */
     deserialize(data: string): void {
         const parsed = JSON.parse(data);

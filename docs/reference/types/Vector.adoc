@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Represents a generic 2D vector for directional or magnitude calculations.
 
 == Attributes

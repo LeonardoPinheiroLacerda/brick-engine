@@ -14,27 +14,27 @@
 
 The `RendererContext` is a singleton utility class used to provide centralized, global access to the P5.js instance (`p5`) throughout the Brick Engine.
 
-== Purpose
+== Motivation
 
-By acting as a central provider, `RendererContext` eliminates the need to pass the `p5` object via dependency injection (constructor arguments) to every component, view, layout, and module in the architecture. It significantly reduces boilerplate code and prevents tightly coupling components to the rendering library from the top down.
+By acting as a central provider, `RendererContext` eliminates the need to pass the `p5` object via dependency injection (constructor arguments) down to every component, view, layout, and module in the architecture. It decouples the rendering logic from the application data flow and prevents tightly coupling components to the rendering library from the top down, solving the core problem of bloated constructors and deep prop drilling.
 
 == API Reference
 
 === `init(p: p5): void`
 
-Initializes the context with the active P5.js instance.
+Initializes the context with the active P5.js instance. This method is designed to be called exactly once during the application startup lifecycle, typically by the engine's entry point.
 
 **Parameters**
 
 [cols="1,1,3", options="header"]
 |===
 |Name |Type |Description
-|`p` |`p5` |The P5.js instance initialized by the engine's entry point.
+|`p` |`p5` |The active, initialized `p5` instance that will be shared across the application ecosystem.
 |===
 
 **Behavior**
 
-This method captures the `p5` instance and stores it internally for global access. It includes a safeguard: trying to call this method if the context is already initialized will output a warning and will not overwrite the existing instance.
+This method captures the `p5` instance and stores it internally for global access. It includes a safeguard: trying to call this method if the context is already initialized will output a console warning and will safely ignore the subsequent initialization so it does not overwrite the existing core rendering capabilities.
 
 
 '''
@@ -45,7 +45,7 @@ Clears the currently stored P5.js instance.
 
 **Behavior**
 
-This is an internal utility primarily used for unit testing. It ensures test isolation by wiping the context between tests when virtual P5 mock instances are created and torn down in `beforeEach` closures.
+The motivation for this method is strictly to support test isolation. It clears the singleton state internally to ensure that unit tests utilizing virtual `p5` mock instances can be created and torn down reliably across test suites in `beforeEach` and `afterEach` configurations without retaining state from previous executions.
 
 
 '''
@@ -56,11 +56,15 @@ Getter property to access the initialized P5.js instance.
 
 **Returns**
 
-The initialized P5.js instance.
+The active, initialized P5.js (`p5`) instance object.
+
+**Exceptions**
+
+*   `Error`: Thrown if this getter is accessed before the `init` method has been successfully executed. This strict error boundary prevents silent failures during render cycles by ensuring components are not drawing against an undefined context.
 
 **Behavior**
 
-Returns the internal reference to the `p5` instance. In standard project operation, it is safe to access. However, accessing this getter before `init()` is called will result in a runtime error, preventing silent failures.
+Returns the internal reference to the `p5` instance. Acts as the primary access point for any drawing or rendering operation across the application ecosystem. In standard project operation, it is safe to access once initialization is complete.
 
 == General Usage
 

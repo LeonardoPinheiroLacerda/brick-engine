@@ -8,10 +8,13 @@ import { Text } from '../../types/modules';
 import RendererContext from '../../context/RendererContext';
 
 /**
- * Handles text rendering and font management within the game.
+ * Core text rendering module bridging engine abstractions to specific pixel scaling.
  *
- * This class orchestrates font initialization, sizing, alignment, and
- * provides methods to render text on specific areas (HUD or Display).
+ * Implements the {@link Text} interface to separate font computation logic from
+ * actual grid and view rendering processes. By pre-calculating relative font dimensions
+ * and actively calculating spatial positions against the display canvas at runtime, it
+ * guarantees that all text objects are purely responsive without causing continuous layout
+ * recalculations on the primary engine CPU loop.
  */
 export default class GameText implements Text, Debuggable {
     /** The default font family used for game text. */
@@ -25,10 +28,12 @@ export default class GameText implements Text, Debuggable {
 
     // prettier-ignore
     /**
-     * Setup the font and pre-calculates relative font sizes.
+     * Setups the active font-family and pre-calculates the array of relative font sizes.
      *
-     * Uses configuration values to define a set of pixel-perfect font sizes
-     * based on current container width.
+     * Extracts values from the local environment to pre-define deterministic font scales
+     * based on the container width to eliminate parsing loops later.
+     *
+     * @returns {void} Returns nothing.
      */
     setup(): void {
         const { p } = RendererContext;
@@ -47,18 +52,20 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Sets the display metrics used for relative text positioning.
+     * Injects the active bounding box metrics used for relative text alignments.
      *
-     * @param {RendererMetrics} rendererMetrics - The current renderer dimensions and origin.
+     * @param {RendererMetrics} rendererMetrics - The extracted immutable origin definitions.
+     * @returns {void} Returns nothing.
      */
     setRendererMetrics(rendererMetrics: RendererMetrics): void {
         this._rendererMetrics = rendererMetrics;
     }
 
     /**
-     * Sets the fill color of the text based on its state.
+     * Internal utility method swapping the drawing context paint buckets directly.
      *
-     * @param {boolean} state - Whether the text should use the active or inactive color.
+     * @param {boolean} state - Flag evaluating to true for active and false for inactive coloring themes.
+     * @returns {void} Returns nothing.
      */
     protected setTextState(state: boolean): void {
         const { p } = RendererContext;
@@ -67,23 +74,28 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Sets the text color to the active theme color.
+     * Sets the context canvas text stroke/fill strictly to the active color theme.
+     *
+     * @returns {void} Returns nothing.
      */
     setActiveText(): void {
         this.setTextState(true);
     }
 
     /**
-     * Sets the text color to the inactive theme color.
+     * Sets the context canvas text stroke/fill strictly to the inactive/faded color theme.
+     *
+     * @returns {void} Returns nothing.
      */
     setInactiveText(): void {
         this.setTextState(false);
     }
 
     /**
-     * Sets the current font size from predefined values.
+     * Assigns the drawing bounds scalar based on pre-compiled values.
      *
-     * @param {FontSize} fontSize - The enum value representing the desired size.
+     * @param {FontSize} fontSize - The enum target corresponding to an active dictionary size entry.
+     * @returns {void} Returns nothing.
      */
     setTextSize(fontSize: FontSize): void {
         const { p } = RendererContext;
@@ -91,10 +103,11 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Configures horizontal and vertical text alignment.
+     * Direct wrapper defining the geometric justification rules inside a bounded region.
      *
-     * @param {FontAlign} fontAlign - Horizontal alignment value.
-     * @param {FontVerticalAlign} fontVerticalAlign - Vertical alignment value.
+     * @param {FontAlign} fontAlign - Horizontal alignment orientation vector.
+     * @param {FontVerticalAlign} fontVerticalAlign - Vertical alignment position plane.
+     * @returns {void} Returns nothing.
      */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void {
         const { p } = RendererContext;
@@ -102,10 +115,11 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Renders text on the HUD area using relative coordinates.
+     * Calculates relative coordinates and natively projects text bounds towards the HUD zone.
      *
-     * @param {string} text - The string to be rendered.
-     * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the HUD area.
+     * @param {string} text - The raw formatted string.
+     * @param {Coordinate} coordinate - Float coordinate vectors from 0.0 to 1.0 restricted to the HUD bounds.
+     * @returns {void} Returns nothing.
      */
     textOnHud(text: string, coordinate: Coordinate): void {
         const { p } = RendererContext;
@@ -116,10 +130,11 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Renders text on the main display area using relative coordinates.
+     * Calculates relative coordinates and natively projects text bounds towards the Main Display zone.
      *
-     * @param {string} text - The string to be rendered.
-     * @param {Coordinate} coordinate - Normalized coordinates (0 to 1) within the display area.
+     * @param {string} text - The raw formatted string sequence.
+     * @param {Coordinate} coordinate - Float coordinate vectors from 0.0 to 1.0 referencing the Main Display bounds.
+     * @returns {void} Returns nothing.
      */
     textOnDisplay(text: string, coordinate: Coordinate): void {
         const { p } = RendererContext;
@@ -131,9 +146,9 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
-     * Retrieves debug information about the text system.
+     * Aggregates configuration details requested by the engine's Debugging Dashboard hook.
      *
-     * @returns {Record<string, string | number | boolean>} The debug data.
+     * @returns {Record<string, string | number | boolean>} A shallow payload of visual metrics dictating memory cache state.
      */
     getDebugData(): Record<string, string | number | boolean> {
         return {

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 The context object delivered to input subscribers.
 
 == Attributes

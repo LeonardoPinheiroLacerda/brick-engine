@@ -2,13 +2,19 @@ import { Cell, Coordinate, Piece } from '../../../types/Types';
 import { Grid } from '../../../types/modules';
 
 /**
- * Handles analysis and search operations on the grid.
+ * Engineering sub-module providing structural data mapping and traversal logic.
+ *
+ * Implements the {@link Grid} analytical operations. It specializes in read-only iterations,
+ * like returning complete line matrices, verifying connected graph components (via logic like BFS),
+ * and securely interacting with cell metadata without persisting changes automatically.
  */
 export default class GridAnalysisEngine {
     constructor(private grid: Grid) {}
 
     /**
-     * Identifies all rows that are completely filled with active cells.
+     * Sweeps horizontally evaluating grid integrity across specific vertical line coordinates.
+     *
+     * @returns {number[]} An array mapping integer strings to valid completed row limits.
      */
     getFullRows(): number[] {
         const fullRows: number[] = [];
@@ -27,7 +33,9 @@ export default class GridAnalysisEngine {
     }
 
     /**
-     * Identifies all columns that are completely filled with active cells.
+     * Sweeps vertically evaluating grid integrity across specific horizontal line coordinates.
+     *
+     * @returns {number[]} An array mapping integer strings to valid completed column limits.
      */
     getFullColumns(): number[] {
         const fullColumns: number[] = [];
@@ -46,7 +54,11 @@ export default class GridAnalysisEngine {
     }
 
     /**
-     * Returns the active cells adjacent to a specific coordinate.
+     * Inspects surrounding spaces around a central anchor leveraging specific pixel offsets.
+     *
+     * @param {Coordinate} coord - The central coordinate checking all immediate directions.
+     * @param {boolean} [includeDiagonal=false] - Broadens strict 4-neighbor searches to all corners.
+     * @returns {Cell[]} Array of loaded grid cells directly interfacing the starting point.
      */
     getNeighbors(coord: Coordinate, includeDiagonal: boolean = false): Cell[] {
         const neighbors: Cell[] = [];
@@ -73,7 +85,10 @@ export default class GridAnalysisEngine {
     }
 
     /**
-     * Finds all connected active cells of the same value starting from a specific coordinate.
+     * Orchestrates a Breadth-First Search (BFS) algorithm chaining adjacent blocks with identical density signatures.
+     *
+     * @param {Coordinate} coord - The starting block containing the desired active target density.
+     * @returns {Piece} An aggregated piece matching every adjacent cell linked continuously.
      */
     findConnectedCells(coord: Coordinate): Piece {
         const startCell = this.grid.getCell(coord);
@@ -116,7 +131,11 @@ export default class GridAnalysisEngine {
     }
 
     /**
-     * Swaps the values and colors of two cells.
+     * Executes an encapsulated memory exchange operation overriding values safely between two points.
+     *
+     * @param {Coordinate} a - First point target.
+     * @param {Coordinate} b - Second point target.
+     * @returns {void} Returns nothing.
      */
     swapCells(a: Coordinate, b: Coordinate): void {
         const cellA = { ...this.grid.getCell(a) };

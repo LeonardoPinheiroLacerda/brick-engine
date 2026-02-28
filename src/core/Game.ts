@@ -19,10 +19,11 @@ import RendererContext from './context/RendererContext';
 import GameEventRegistry from './event/GameEventRegistry';
 
 /**
- * Base abstract class for the game.
+ * The Central integration boundary encapsulating physical logic away from native visual outputs.
  *
- * It manages the game loop, initialization of core modules, and integration with p5.js.
- * All game logic should be implemented in subclasses by overriding `processTick` and `processFrame`.
+ * Implements the {@link Initializable} configuration pipeline orchestrating completely synchronous
+ * frame drawing metrics while processing isolated state iterations without corrupting data models
+ * dynamically mapped across various internal UI states.
  */
 export default abstract class Game implements Initializable {
     protected _view: GameView;
@@ -34,24 +35,28 @@ export default abstract class Game implements Initializable {
     private _gameId: string = 'unknown';
 
     /**
-     * Gets the game ID
+     * Returns the strict string identifier binding data persistently.
+     *
+     * @returns {string} The namespace mapped internally.
      */
     get gameId(): string {
         return this._gameId;
     }
 
     /**
-     * Sets the game ID
+     * Sets the application ID establishing persistent memory keys.
+     *
+     * @param {string} id - The string namespace saving bounds.
+     * @returns {void} Returns nothing.
      */
     set gameId(id: string) {
         this._gameId = id;
     }
 
     /**
-     * Creates an instance of the Game.
+     * Constructs the primary controller wrapping native rendering canvases into controlled pipelines.
      *
-     * @param {p5} p - The p5 instance.
-     * @param {GameView} view - The view strategy associated with this game.
+     * @param {GameView} view - The securely decoupled graphical pointer rendering the root body.
      */
     constructor(view: GameView) {
         this._view = view;
@@ -59,41 +64,40 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Gets the game view.
+     * Yields strictly controlled visibility access to layout injections.
      *
-     * @returns {GameView} The game view instance.
+     * @returns {GameView} The configured view instance formatting user HTML constraints.
      */
     get view(): GameView {
         return this._view;
     }
 
     /**
-     * Gets the game modules.
+     * Yields fully configured physics, inputs, and drawing context tools dynamically mapped.
      *
-     * @returns {GameModules} The collection of initialized game modules.
+     * @returns {GameModules} A secure aggregate object pointer.
      */
     get modules(): GameModules {
         return this._modules;
     }
 
     /**
-     * Gets the p5 instance.
+     * Exposes hardware-accelerated processing calls indirectly via Context bounds.
      *
-     * @returns {p5} The p5 instance.
+     * @returns {p5} The active executing instance map.
      */
     get p(): p5 {
         return RendererContext.p;
     }
 
     /**
-     * Sets up the game, initializing all modules and viewing components.
-     * Called automatically by the engine key sequence.
+     * Triggers sequential logic parsing across dynamically subscribed execution containers internally.
      *
-     * Internally calls `setupGame()` and then `captureInitialState()`.
-     * This means that all subclass properties (including those initialized in `setupGame`)
-     * are captured as the initial state for the resetting mechanism.
+     * Internally synchronizes active memory payloads tracking initialization boundaries automatically.
+     *
+     * @returns {void} Returns nothing.
      */
-    setup() {
+    setup(): void {
         this._view.build();
 
         this._modules = {
@@ -152,10 +156,11 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Main draw loop, called by p5.js.
-     * Handles time updates, logic ticks, and rendering.
+     * Loops mathematically calculating pixel mutations exactly and logically evaluating system limits.
+     *
+     * @returns {void} Returns nothing.
      */
-    draw() {
+    draw(): void {
         const { p } = RendererContext;
 
         if (!this._modules) return;
@@ -191,10 +196,11 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Destroys the game instance, cleaning up all event listeners and stopping the loop.
-     * Call this before switching to another game or when the game is no longer needed.
+     * Orchestrates destruction callbacks erasing references blocking memory sweeps globally.
+     *
+     * @returns {void} Returns nothing.
      */
-    destroy() {
+    destroy(): void {
         RendererContext.p.noLoop();
 
         if (this._modules) {
@@ -204,10 +210,11 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Resets the game to its initial state.
-     * This method is called by the reset event handler and should be used to restore the game to its initial state.
+     * Fires internal overrides mutating internal physics states towards a neutral base metric safely.
+     *
+     * @returns {void} Returns nothing.
      */
-    reset() {
+    reset(): void {
         this._modules.grid.resetGrid();
         this._modules.score.resetScore();
         this._modules.score.resetLevel();
@@ -217,38 +224,38 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Abstract method for processing game logic.
-     * Called every tick, but ONLY when the game is in the 'playing' state.
+     * Subclass abstract delegator resolving physics mathematically based directly on relative speeds.
      *
-     * @param {number} deltaTime - Time elapsed since last tick.
+     * @param {number} deltaTime - Fast ticking number representation capturing elapsed frametimes safely.
+     * @returns {void} Returns nothing.
      */
     abstract update(deltaTime: number): void;
 
     /**
-     * Abstract method for processing visual frames.
-     * Called every frame (depending on frameInterval).
+     * Subclass abstract delegator dispatching independent geometry outputs onto the physical UI constraints.
+     *
+     * @returns {void} Returns nothing.
      */
     abstract render(): void;
 
     /**
-     * Abstract method for setting up the game specific logic.
-     * Called after the game modules are initialized.
+     * Subclass abstract delegator establishing customized rules tracking specific bounds mathematically.
      *
-     * Note: All initial properties should be fully assigned here,
-     * as `captureInitialState()` is invoked immediately after this method,
-     * taking a snapshot for the reset mechanism.
+     * @returns {void} Returns nothing.
      */
     abstract setupGame(): void;
 
     /**
-     * Abstract method for drawing the Title Screen (Welcome).
-     * Called when the game is ON but not yet STARTED.
+     * Subclass abstract delegator dispatching independent UI strings safely evaluating un-started limits.
+     *
+     * @returns {void} Returns nothing.
      */
     abstract drawTitleScreen(): void;
 
     /**
-     * Abstract method for drawing the Game Over Screen.
-     * Called when the game is in GAME OVER state.
+     * Subclass abstract delegator dispatching independent UI strings safely evaluating finished bounds.
+     *
+     * @returns {void} Returns nothing.
      */
     abstract drawGameOverScreen(): void;
 }

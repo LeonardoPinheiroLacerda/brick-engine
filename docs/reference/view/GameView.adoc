@@ -7,7 +7,9 @@
 :sectlinks:
 :icons: font
 
-The `GameView` class acts as the primary View controller in the MVC architecture. It directs the layout, invokes underlying UI components, initializes DOM observers (like the Debugger and Modals), and bridges hardware input (clicks) to engine controls.
+== Architectural Purpose
+
+The `GameView` class acts as the primary View controller bridging logical engine commands to DOM behaviors. By isolating native HTML mutations, Layout calculations, and Button listener bindings away from the standard Canvas execution loops, it guarantees the graphical application skeleton scales and interacts seamlessly matching CSS constraints, without corrupting cross-session physics data.
 
 == Features
 
@@ -35,6 +37,10 @@ Initializes the view, storing the specific parent node where the engine interfac
 === `build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }`
 
 Builds the visual structure by appending structural layers, generating physical buttons, and initializing canvas metrics.
+
+**Returns**
+
+`{ canvas: p5.Element; canvasWidth: number; canvasHeight: number }` - A strictly bound dimensions object mapping physical canvas bounds.
 
 **Behavior**
 

@@ -11,8 +11,9 @@
 :experimental:
 :idprefix:
 :idseparator: -
+== Architectural Purpose
 
-The `CoordinateHelper` is a static utility class that handles translations between different coordinate systems: the logical xref:../modules/GameGrid.adoc[Game Grid], the normalized Display area, and absolute pixel positions.
+The `CoordinateHelper` acts as the engine's translation layer between the different abstract mathematical models (e.g., the logical `xref:../modules/GameGrid.adoc[Game Grid]` or scaling normalized values from 0.0 to 1.0) and the absolute physical layout on screen. It ensures consistency in calculating element sizes dynamically so interfaces remain strictly responsive to the runtime canvas resolution.
 
 == API Reference
 
@@ -30,7 +31,7 @@ Converts a pixel-based coordinate into a normalized relative coordinate (0.0 to 
 
 **Returns**
 
-`xref:../types/Coordinate.adoc[Coordinate]` - The normalized `{x, y}` point.
+`xref:../types/Coordinate.adoc[Coordinate]` - The new coordinate structure scaled proportionately to the physical base canvas width/height.
 
 
 '''
@@ -44,8 +45,8 @@ Calculates the absolute X pixel position on the main game display.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`x` |`number` |Normalized horizontal position (0.0 to 1.0).
-|`displayWidth` |`number` |The total width of the display area.
+|`x` |`number` |The relative or normalized input X horizontal position (0.0 to 1.0).
+|`displayWidth` |`number` |The dynamically calculated width of the central display area.
 |===
 
 **Returns**
@@ -64,8 +65,8 @@ Calculates the absolute Y pixel position on the main game display.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`y` |`number` |Normalized vertical position (0.0 to 1.0).
-|`displayHeight` |`number` |The total height of the display area.
+|`y` |`number` |The relative or normalized input Y vertical position (0.0 to 1.0).
+|`displayHeight` |`number` |The dynamically calculated height of the central display area.
 |===
 
 **Returns**
@@ -84,8 +85,8 @@ Calculates the absolute X pixel position within the HUD area.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`x` |`number` |Normalized horizontal position (0.0 to 1.0) relative to the HUD area.
-|`displayWidth` |`number` |The width of the main display (used to calculate the HUD offset).
+|`x` |`number` |The relative or normalized X position specifically within the bounded HUD compartment.
+|`displayWidth` |`number` |The total real width of the central display (used for zero-point alignment offset calculation).
 |===
 
 **Returns**
@@ -104,8 +105,8 @@ Calculates the absolute Y pixel position within the HUD area.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`y` |`number` |Normalized vertical position (0.0 to 1.0) relative to the HUD area.
-|`displayHeight` |`number` |The total height of the display area.
+|`y` |`number` |The relative or normalized Y position specifically within the bounded HUD compartment.
+|`displayHeight` |`number` |The absolute pixel height assigned logically to the central display (used for scaled positioning bounds).
 |===
 
 **Returns**

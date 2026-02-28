@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameHudGrid` is a specialized implementation of the `GameGrid` class. It is hard-coded to a **4x4** dimension and is intended for use in the HUD area to display meta-information, such as "Next Piece" in a Tetris-style game.
+== Architectural Purpose
+
+The `GameHudGrid` acts as a specialized engine implementation isolating the visual preview logic for upcoming pieces. By statically overriding the fluid dimensions of a standard `GameGrid` down to a strict 4x4 coordinate plane, it transparently provides rendering modules exactly the same API for iterating over cells, but guarantees the data remains segregated from the primary physics loop resolving active lines.
 
 == Inheritance
 

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Defines the calculated dimensions and offsets for the physical layout.
 
 == Attributes

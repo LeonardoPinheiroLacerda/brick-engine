@@ -443,80 +443,85 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#specialized-instances">1. Specialized Instances</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#specialized-instances">2. Specialized Instances</a></li>
+<li><a href="#api-reference">3. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#core-utilities">2.1. Core &amp; Utilities</a>
+<li><a href="#core-utilities">3.1. Core &amp; Utilities</a>
 <ul class="sectlevel3">
-<li><a href="#width-number">2.1.1. <code>width: number</code></a></li>
-<li><a href="#height-number">2.1.2. <code>height: number</code></a></li>
-<li><a href="#resetgrid-void">2.1.3. <code>resetGrid(): void</code></a></li>
-<li><a href="#getgrid-cell">2.1.4. <code>getGrid(): Cell[][]</code></a></li>
-<li><a href="#foreachcallback-cell-cell-void-void">2.1.5. <code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
-<li><a href="#isvalidcoordinatecoordinate-coordinate-boolean">2.1.6. <code>isValidCoordinate(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#getcellcoordinate-coordinate-cell-null">2.1.7. <code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
-<li><a href="#setcellvaluecoordinate-coordinate-value-number-void">2.1.8. <code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
-<li><a href="#setcellcolorcoordinate-coordinate-color-color-void">2.1.9. <code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
-<li><a href="#iscellactivecoordinate-coordinate-boolean">2.1.10. <code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#iscellinactivecoordinate-coordinate-boolean">2.1.11. <code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#width-number">3.1.1. <code>width: number</code></a></li>
+<li><a href="#height-number">3.1.2. <code>height: number</code></a></li>
+<li><a href="#toprow-number">3.1.3. <code>topRow: number</code></a></li>
+<li><a href="#bottomrow-number">3.1.4. <code>bottomRow: number</code></a></li>
+<li><a href="#leftcolumn-number">3.1.5. <code>leftColumn: number</code></a></li>
+<li><a href="#rightcolumn-number">3.1.6. <code>rightColumn: number</code></a></li>
+<li><a href="#resetgrid-void">3.1.7. <code>resetGrid(): void</code></a></li>
+<li><a href="#getgrid-cell">3.1.8. <code>getGrid(): Cell[][]</code></a></li>
+<li><a href="#foreachcallback-cell-cell-void-void">3.1.9. <code>forEach(callback: (cell: Cell) &#8658; void): void</code></a></li>
+<li><a href="#iscoordinatevalidcoordinate-coordinate-boolean">3.1.10. <code>isCoordinateValid(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#getcellcoordinate-coordinate-cell-null">3.1.11. <code>getCell(coordinate: Coordinate): Cell | null</code></a></li>
+<li><a href="#setcellvaluecoordinate-coordinate-value-number-void">3.1.12. <code>setCellValue(coordinate: Coordinate, value: number): void</code></a></li>
+<li><a href="#setcellcolorcoordinate-coordinate-color-color-void">3.1.13. <code>setCellColor(coordinate: Coordinate, color: Color): void</code></a></li>
+<li><a href="#iscellactivecoordinate-coordinate-boolean">3.1.14. <code>isCellActive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#iscellinactivecoordinate-coordinate-boolean">3.1.15. <code>isCellInactive(coordinate: Coordinate): boolean</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">3.1.16. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
-<li><a href="#line-column-management">2.2. Line &amp; Column Management</a>
+<li><a href="#line-column-management">3.2. Line &amp; Column Management</a>
 <ul class="sectlevel3">
-<li><a href="#isrowfully-number-boolean">2.2.1. <code>isRowFull(y: number): boolean</code></a></li>
-<li><a href="#isrowemptyy-number-boolean">2.2.2. <code>isRowEmpty(y: number): boolean</code></a></li>
-<li><a href="#clearrowy-number-void">2.2.3. <code>clearRow(y: number): void</code></a></li>
-<li><a href="#shiftrowsdownfromy-number-void">2.2.4. <code>shiftRowsDown(fromY: number): void</code></a></li>
-<li><a href="#shiftrowsupfromy-number-void">2.2.5. <code>shiftRowsUp(fromY: number): void</code></a></li>
-<li><a href="#clearfullrows-number">2.2.6. <code>clearFullRows(): number</code></a></li>
-<li><a href="#iscolumnfullx-number-boolean">2.2.7. <code>isColumnFull(x: number): boolean</code></a></li>
-<li><a href="#iscolumnemptyx-number-boolean">2.2.8. <code>isColumnEmpty(x: number): boolean</code></a></li>
-<li><a href="#clearcolumnx-number-void">2.2.9. <code>clearColumn(x: number): void</code></a></li>
-<li><a href="#shiftcolumnsrightfromx-number-void">2.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></li>
-<li><a href="#shiftcolumnsleftfromx-number-void">2.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></li>
-<li><a href="#clearfullcolumns-number">2.2.12. <code>clearFullColumns(): number</code></a></li>
+<li><a href="#isrowfully-number-boolean">3.2.1. <code>isRowFull(y: number): boolean</code></a></li>
+<li><a href="#isrowemptyy-number-boolean">3.2.2. <code>isRowEmpty(y: number): boolean</code></a></li>
+<li><a href="#clearrowy-number-void">3.2.3. <code>clearRow(y: number): void</code></a></li>
+<li><a href="#shiftrowsdownfromy-number-void">3.2.4. <code>shiftRowsDown(fromY: number): void</code></a></li>
+<li><a href="#shiftrowsupfromy-number-void">3.2.5. <code>shiftRowsUp(fromY: number): void</code></a></li>
+<li><a href="#clearfullrows-number">3.2.6. <code>clearFullRows(): number</code></a></li>
+<li><a href="#iscolumnfullx-number-boolean">3.2.7. <code>isColumnFull(x: number): boolean</code></a></li>
+<li><a href="#iscolumnemptyx-number-boolean">3.2.8. <code>isColumnEmpty(x: number): boolean</code></a></li>
+<li><a href="#clearcolumnx-number-void">3.2.9. <code>clearColumn(x: number): void</code></a></li>
+<li><a href="#shiftcolumnsrightfromx-number-void">3.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></li>
+<li><a href="#shiftcolumnsleftfromx-number-void">3.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></li>
+<li><a href="#clearfullcolumns-number">3.2.12. <code>clearFullColumns(): number</code></a></li>
 </ul>
 </li>
-<li><a href="#region-area-management">2.3. Region &amp; Area Management</a>
+<li><a href="#region-area-management">3.3. Region &amp; Area Management</a>
 <ul class="sectlevel3">
-<li><a href="#isareaoccupiedcoordinates-coordinate-boolean">2.3.1. <code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
-<li><a href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.3.2. <code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
-<li><a href="#stamppiecepiece-piece-void">2.3.3. <code>stampPiece(piece: Piece): void</code></a></li>
-<li><a href="#stampcellcell-cell-void">2.3.4. <code>stampCell(cell: Cell): void</code></a></li>
+<li><a href="#isareaoccupiedcoordinates-coordinate-boolean">3.3.1. <code>isAreaOccupied(coordinates: Coordinate[]): boolean</code></a></li>
+<li><a href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">3.3.2. <code>fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void</code></a></li>
+<li><a href="#stamppiecepiece-piece-void">3.3.3. <code>stampPiece(piece: Piece): void</code></a></li>
+<li><a href="#stampcellcell-cell-void">3.3.4. <code>stampCell(cell: Cell): void</code></a></li>
 </ul>
 </li>
-<li><a href="#movement-projections">2.4. Movement &amp; Projections</a>
+<li><a href="#movement-projections">3.4. Movement &amp; Projections</a>
 <ul class="sectlevel3">
-<li><a href="#movepiecepiece-piece-direction-vector-piece-null">2.4.1. <code>movePiece(piece: Piece, direction: Vector): Piece | null</code></a></li>
-<li><a href="#movepieceleftpiece-piece-piece-null">2.4.2. <code>movePieceLeft(piece: Piece): Piece | null</code></a></li>
-<li><a href="#movepiecerightpiece-piece-piece-null">2.4.3. <code>movePieceRight(piece: Piece): Piece | null</code></a></li>
-<li><a href="#movepieceuppiece-piece-piece-null">2.4.4. <code>movePieceUp(piece: Piece): Piece | null</code></a></li>
-<li><a href="#movepiecedownpiece-piece-piece-null">2.4.5. <code>movePieceDown(piece: Piece): Piece | null</code></a></li>
-<li><a href="#movecellcell-cell-direction-vector-cell-null">2.4.6. <code>moveCell(cell: Cell, direction: Vector): Cell | null</code></a></li>
-<li><a href="#movecellleftcell-cell-cell-null">2.4.7. <code>moveCellLeft(cell: Cell): Cell | null</code></a></li>
-<li><a href="#movecellrightcell-cell-cell-null">2.4.8. <code>moveCellRight(cell: Cell): Cell | null</code></a></li>
-<li><a href="#movecellupcell-cell-cell-null">2.4.9. <code>moveCellUp(cell: Cell): Cell | null</code></a></li>
-<li><a href="#movecelldowncell-cell-cell-null">2.4.10. <code>moveCellDown(cell: Cell): Cell | null</code></a></li>
-<li><a href="#getdroppathpiece-piece-piece">2.4.11. <code>getDropPath(piece: Piece): Piece</code></a></li>
-<li><a href="#getrisepathpiece-piece-piece">2.4.12. <code>getRisePath(piece: Piece): Piece</code></a></li>
-<li><a href="#getreachpathleftpiece-piece-piece">2.4.13. <code>getReachPathLeft(piece: Piece): Piece</code></a></li>
-<li><a href="#getreachpathrightpiece-piece-piece">2.4.14. <code>getReachPathRight(piece: Piece): Piece</code></a></li>
+<li><a href="#movepiecepiece-piece-direction-vector-piece-null">3.4.1. <code>movePiece(piece: Piece, direction: Vector): Piece | null</code></a></li>
+<li><a href="#movepieceleftpiece-piece-piece-null">3.4.2. <code>movePieceLeft(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepiecerightpiece-piece-piece-null">3.4.3. <code>movePieceRight(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepieceuppiece-piece-piece-null">3.4.4. <code>movePieceUp(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movepiecedownpiece-piece-piece-null">3.4.5. <code>movePieceDown(piece: Piece): Piece | null</code></a></li>
+<li><a href="#movecellcell-cell-direction-vector-cell-null">3.4.6. <code>moveCell(cell: Cell, direction: Vector): Cell | null</code></a></li>
+<li><a href="#movecellleftcell-cell-cell-null">3.4.7. <code>moveCellLeft(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecellrightcell-cell-cell-null">3.4.8. <code>moveCellRight(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecellupcell-cell-cell-null">3.4.9. <code>moveCellUp(cell: Cell): Cell | null</code></a></li>
+<li><a href="#movecelldowncell-cell-cell-null">3.4.10. <code>moveCellDown(cell: Cell): Cell | null</code></a></li>
+<li><a href="#getdroppathpiece-piece-piece">3.4.11. <code>getDropPath(piece: Piece): Piece</code></a></li>
+<li><a href="#getrisepathpiece-piece-piece">3.4.12. <code>getRisePath(piece: Piece): Piece</code></a></li>
+<li><a href="#getreachpathleftpiece-piece-piece">3.4.13. <code>getReachPathLeft(piece: Piece): Piece</code></a></li>
+<li><a href="#getreachpathrightpiece-piece-piece">3.4.14. <code>getReachPathRight(piece: Piece): Piece</code></a></li>
 </ul>
 </li>
-<li><a href="#transformations">2.5. Transformations</a>
+<li><a href="#transformations">3.5. Transformations</a>
 <ul class="sectlevel3">
-<li><a href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">2.5.1. <code>rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null</code></a></li>
-<li><a href="#mirrorpiecepiece-piece-axis-axis-piece">2.5.2. <code>mirrorPiece(piece: Piece, axis: Axis): Piece</code></a></li>
+<li><a href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">3.5.1. <code>rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null</code></a></li>
+<li><a href="#mirrorpiecepiece-piece-axis-axis-piece">3.5.2. <code>mirrorPiece(piece: Piece, axis: Axis): Piece</code></a></li>
 </ul>
 </li>
-<li><a href="#grid-analysis">2.6. Grid Analysis</a>
+<li><a href="#grid-analysis">3.6. Grid Analysis</a>
 <ul class="sectlevel3">
-<li><a href="#getfullrows-number">2.6.1. <code>getFullRows(): number[]</code></a></li>
-<li><a href="#getfullcolumns-number">2.6.2. <code>getFullColumns(): number[]</code></a></li>
-<li><a href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">2.6.3. <code>getNeighbors(coord: Coordinate, includeDiagonal: boolean = false): Cell[]</code></a></li>
-<li><a href="#findconnectedcellscoord-coordinate-piece">2.6.4. <code>findConnectedCells(coord: Coordinate): Piece</code></a></li>
-<li><a href="#swapcellsa-coordinate-b-coordinate-void">2.6.5. <code>swapCells(a: Coordinate, b: Coordinate): void</code></a></li>
+<li><a href="#getfullrows-number">3.6.1. <code>getFullRows(): number[]</code></a></li>
+<li><a href="#getfullcolumns-number">3.6.2. <code>getFullColumns(): number[]</code></a></li>
+<li><a href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">3.6.3. <code>getNeighbors(coord: Coordinate, includeDiagonal: boolean = false): Cell[]</code></a></li>
+<li><a href="#findconnectedcellscoord-coordinate-piece">3.6.4. <code>findConnectedCells(coord: Coordinate): Piece</code></a></li>
+<li><a href="#swapcellsa-coordinate-b-coordinate-void">3.6.5. <code>swapCells(a: Coordinate, b: Coordinate): void</code></a></li>
 </ul>
 </li>
 </ul>
@@ -525,15 +530,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameGrid</code> module manages the state of a 2D grid, providing a robust API for cell manipulation, row/column operations, and collision detection.</p>
+<p>The <code>GameGrid</code> module manages the state of a 2D matrix, acting as the authoritative logical boundary. It completely isolates mathematics, mass cell modifications, and overlap checks out from the physical canvas. By standardizing bounds and coordinates, it ensures game states (like pieces falling or rows clearing) calculate deterministically, remaining entirely agnostic to visual scaling logic or frame rates.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="specialized-instances"><a class="link" href="#specialized-instances">1. Specialized Instances</a></h2>
+<h2 id="specialized-instances"><a class="link" href="#specialized-instances">2. Specialized Instances</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine provides two main grid instances:
@@ -543,15 +549,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">3. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="core-utilities"><a class="link" href="#core-utilities">2.1. Core &amp; Utilities</a></h3>
+<h3 id="core-utilities"><a class="link" href="#core-utilities">3.1. Core &amp; Utilities</a></h3>
 <div class="paragraph">
 <p>Fundamental methods for grid initialization, basic cell access, and iteration. These methods form the backbone of grid state management.</p>
 </div>
 <div class="sect3">
-<h4 id="width-number"><a class="link" href="#width-number">2.1.1. <code>width: number</code></a></h4>
+<h4 id="width-number"><a class="link" href="#width-number">3.1.1. <code>width: number</code></a></h4>
 <div class="paragraph">
 <p>Read-only property returning the number of columns in the grid.</p>
 </div>
@@ -564,7 +570,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="height-number"><a class="link" href="#height-number">2.1.2. <code>height: number</code></a></h4>
+<h4 id="height-number"><a class="link" href="#height-number">3.1.2. <code>height: number</code></a></h4>
 <div class="paragraph">
 <p>Read-only property returning the number of rows in the grid.</p>
 </div>
@@ -577,7 +583,59 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="resetgrid-void"><a class="link" href="#resetgrid-void">2.1.3. <code>resetGrid(): void</code></a></h4>
+<h4 id="toprow-number"><a class="link" href="#toprow-number">3.1.3. <code>topRow: number</code></a></h4>
+<div class="paragraph">
+<p>Read-only property returning the index of the top-most row (always 0).</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>number</code> - Top row index.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="bottomrow-number"><a class="link" href="#bottomrow-number">3.1.4. <code>bottomRow: number</code></a></h4>
+<div class="paragraph">
+<p>Read-only property returning the index of the bottom-most row.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>number</code> - Bottom row index (<code>height - 1</code>).</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="leftcolumn-number"><a class="link" href="#leftcolumn-number">3.1.5. <code>leftColumn: number</code></a></h4>
+<div class="paragraph">
+<p>Read-only property returning the index of the left-most column (always 0).</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>number</code> - Left column index.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="rightcolumn-number"><a class="link" href="#rightcolumn-number">3.1.6. <code>rightColumn: number</code></a></h4>
+<div class="paragraph">
+<p>Read-only property returning the index of the right-most column.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>number</code> - Right column index (<code>width - 1</code>).</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="resetgrid-void"><a class="link" href="#resetgrid-void">3.1.7. <code>resetGrid(): void</code></a></h4>
 <div class="paragraph">
 <p>Resets the entire grid to its empty state.</p>
 </div>
@@ -590,7 +648,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getgrid-cell"><a class="link" href="#getgrid-cell">2.1.4. <code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></a></h4>
+<h4 id="getgrid-cell"><a class="link" href="#getgrid-cell">3.1.8. <code>getGrid(): <a href="../types/Cell.html">Cell</a>[][]</code></a></h4>
 <div class="paragraph">
 <p>Returns the underlying 2D array of cells.</p>
 </div>
@@ -603,7 +661,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="foreachcallback-cell-cell-void-void"><a class="link" href="#foreachcallback-cell-cell-void-void">2.1.5. <code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></a></h4>
+<h4 id="foreachcallback-cell-cell-void-void"><a class="link" href="#foreachcallback-cell-cell-void-void">3.1.9. <code>forEach(callback: (cell: <a href="../types/Cell.html">Cell</a>) &#8658; void): void</code></a></h4>
 <div class="paragraph">
 <p>Iterates over every cell and executes the provided callback.</p>
 </div>
@@ -632,7 +690,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="isvalidcoordinatecoordinate-coordinate-boolean"><a class="link" href="#isvalidcoordinatecoordinate-coordinate-boolean">2.1.6. <code>isValidCoordinate(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
+<h4 id="iscoordinatevalidcoordinate-coordinate-boolean"><a class="link" href="#iscoordinatevalidcoordinate-coordinate-boolean">3.1.10. <code>isCoordinateValid(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Verifies if a coordinate is within the current grid boundaries.</p>
 </div>
@@ -667,7 +725,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getcellcoordinate-coordinate-cell-null"><a class="link" href="#getcellcoordinate-coordinate-cell-null">2.1.7. <code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="getcellcoordinate-coordinate-cell-null"><a class="link" href="#getcellcoordinate-coordinate-cell-null">3.1.11. <code>getCell(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Retrieves a cell at a specific coordinate.</p>
 </div>
@@ -702,7 +760,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="setcellvaluecoordinate-coordinate-value-number-void"><a class="link" href="#setcellvaluecoordinate-coordinate-value-number-void">2.1.8. <code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></a></h4>
+<h4 id="setcellvaluecoordinate-coordinate-value-number-void"><a class="link" href="#setcellvaluecoordinate-coordinate-value-number-void">3.1.12. <code>setCellValue(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, value: number): void</code></a></h4>
 <div class="paragraph">
 <p>Updates the numeric value of a cell.</p>
 </div>
@@ -742,7 +800,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="setcellcolorcoordinate-coordinate-color-color-void"><a class="link" href="#setcellcolorcoordinate-coordinate-color-color-void">2.1.9. <code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
+<h4 id="setcellcolorcoordinate-coordinate-color-color-void"><a class="link" href="#setcellcolorcoordinate-coordinate-color-color-void">3.1.13. <code>setCellColor(coordinate: <a href="../types/Coordinate.html">Coordinate</a>, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Updates the color of a cell.</p>
 </div>
@@ -776,7 +834,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="iscellactivecoordinate-coordinate-boolean"><a class="link" href="#iscellactivecoordinate-coordinate-boolean">2.1.10. <code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
+<h4 id="iscellactivecoordinate-coordinate-boolean"><a class="link" href="#iscellactivecoordinate-coordinate-boolean">3.1.14. <code>isCellActive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a cell is currently occupied.</p>
 </div>
@@ -811,7 +869,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="iscellinactivecoordinate-coordinate-boolean"><a class="link" href="#iscellinactivecoordinate-coordinate-boolean">2.1.11. <code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
+<h4 id="iscellinactivecoordinate-coordinate-boolean"><a class="link" href="#iscellinactivecoordinate-coordinate-boolean">3.1.15. <code>isCellInactive(coordinate: <a href="../types/Coordinate.html">Coordinate</a>): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a cell is currently empty.</p>
 </div>
@@ -846,7 +904,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.1.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h4>
+<h4 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">3.1.16. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h4>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>
@@ -860,12 +918,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="line-column-management"><a class="link" href="#line-column-management">2.2. Line &amp; Column Management</a></h3>
+<h3 id="line-column-management"><a class="link" href="#line-column-management">3.2. Line &amp; Column Management</a></h3>
 <div class="paragraph">
 <p>Methods for managing entire lines (rows) or columns. These are essential for mechanics like clearing full lines in Tetris-style games or shifting grid content as a single block.</p>
 </div>
 <div class="sect3">
-<h4 id="isrowfully-number-boolean"><a class="link" href="#isrowfully-number-boolean">2.2.1. <code>isRowFull(y: number): boolean</code></a></h4>
+<h4 id="isrowfully-number-boolean"><a class="link" href="#isrowfully-number-boolean">3.2.1. <code>isRowFull(y: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific row has no empty cells.</p>
 </div>
@@ -900,7 +958,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="isrowemptyy-number-boolean"><a class="link" href="#isrowemptyy-number-boolean">2.2.2. <code>isRowEmpty(y: number): boolean</code></a></h4>
+<h4 id="isrowemptyy-number-boolean"><a class="link" href="#isrowemptyy-number-boolean">3.2.2. <code>isRowEmpty(y: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific row is completely empty.</p>
 </div>
@@ -935,7 +993,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="clearrowy-number-void"><a class="link" href="#clearrowy-number-void">2.2.3. <code>clearRow(y: number): void</code></a></h4>
+<h4 id="clearrowy-number-void"><a class="link" href="#clearrowy-number-void">3.2.3. <code>clearRow(y: number): void</code></a></h4>
 <div class="paragraph">
 <p>Resets all cells in a row to the empty state.</p>
 </div>
@@ -964,7 +1022,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="shiftrowsdownfromy-number-void"><a class="link" href="#shiftrowsdownfromy-number-void">2.2.4. <code>shiftRowsDown(fromY: number): void</code></a></h4>
+<h4 id="shiftrowsdownfromy-number-void"><a class="link" href="#shiftrowsdownfromy-number-void">3.2.4. <code>shiftRowsDown(fromY: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all rows above an index down by one position.</p>
 </div>
@@ -999,7 +1057,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="shiftrowsupfromy-number-void"><a class="link" href="#shiftrowsupfromy-number-void">2.2.5. <code>shiftRowsUp(fromY: number): void</code></a></h4>
+<h4 id="shiftrowsupfromy-number-void"><a class="link" href="#shiftrowsupfromy-number-void">3.2.5. <code>shiftRowsUp(fromY: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all rows below an index up by one position.</p>
 </div>
@@ -1034,7 +1092,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="clearfullrows-number"><a class="link" href="#clearfullrows-number">2.2.6. <code>clearFullRows(): number</code></a></h4>
+<h4 id="clearfullrows-number"><a class="link" href="#clearfullrows-number">3.2.6. <code>clearFullRows(): number</code></a></h4>
 <div class="paragraph">
 <p>Scans for, clears, and collapses full rows.</p>
 </div>
@@ -1053,7 +1111,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="iscolumnfullx-number-boolean"><a class="link" href="#iscolumnfullx-number-boolean">2.2.7. <code>isColumnFull(x: number): boolean</code></a></h4>
+<h4 id="iscolumnfullx-number-boolean"><a class="link" href="#iscolumnfullx-number-boolean">3.2.7. <code>isColumnFull(x: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific column has no empty cells.</p>
 </div>
@@ -1088,7 +1146,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="iscolumnemptyx-number-boolean"><a class="link" href="#iscolumnemptyx-number-boolean">2.2.8. <code>isColumnEmpty(x: number): boolean</code></a></h4>
+<h4 id="iscolumnemptyx-number-boolean"><a class="link" href="#iscolumnemptyx-number-boolean">3.2.8. <code>isColumnEmpty(x: number): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks if a specific column is completely empty.</p>
 </div>
@@ -1123,7 +1181,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="clearcolumnx-number-void"><a class="link" href="#clearcolumnx-number-void">2.2.9. <code>clearColumn(x: number): void</code></a></h4>
+<h4 id="clearcolumnx-number-void"><a class="link" href="#clearcolumnx-number-void">3.2.9. <code>clearColumn(x: number): void</code></a></h4>
 <div class="paragraph">
 <p>Resets all cells in a column to the empty state.</p>
 </div>
@@ -1152,7 +1210,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="shiftcolumnsrightfromx-number-void"><a class="link" href="#shiftcolumnsrightfromx-number-void">2.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></h4>
+<h4 id="shiftcolumnsrightfromx-number-void"><a class="link" href="#shiftcolumnsrightfromx-number-void">3.2.10. <code>shiftColumnsRight(fromX: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all columns to the right of an index.</p>
 </div>
@@ -1181,7 +1239,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="shiftcolumnsleftfromx-number-void"><a class="link" href="#shiftcolumnsleftfromx-number-void">2.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></h4>
+<h4 id="shiftcolumnsleftfromx-number-void"><a class="link" href="#shiftcolumnsleftfromx-number-void">3.2.11. <code>shiftColumnsLeft(fromX: number): void</code></a></h4>
 <div class="paragraph">
 <p>Shifts all columns to the left of an index.</p>
 </div>
@@ -1210,7 +1268,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="clearfullcolumns-number"><a class="link" href="#clearfullcolumns-number">2.2.12. <code>clearFullColumns(): number</code></a></h4>
+<h4 id="clearfullcolumns-number"><a class="link" href="#clearfullcolumns-number">3.2.12. <code>clearFullColumns(): number</code></a></h4>
 <div class="paragraph">
 <p>Detects and clears all full columns.</p>
 </div>
@@ -1224,12 +1282,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="region-area-management"><a class="link" href="#region-area-management">2.3. Region &amp; Area Management</a></h3>
+<h3 id="region-area-management"><a class="link" href="#region-area-management">3.3. Region &amp; Area Management</a></h3>
 <div class="paragraph">
 <p>Operations for handling multi-cell areas, rectangular regions, and piece shapes. These methods facilitate the logical placement and validation of game objects within the grid.</p>
 </div>
 <div class="sect3">
-<h4 id="isareaoccupiedcoordinates-coordinate-boolean"><a class="link" href="#isareaoccupiedcoordinates-coordinate-boolean">2.3.1. <code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></a></h4>
+<h4 id="isareaoccupiedcoordinates-coordinate-boolean"><a class="link" href="#isareaoccupiedcoordinates-coordinate-boolean">3.3.1. <code>isAreaOccupied(coordinates: <a href="../types/Coordinate.html">Coordinate</a>[]): boolean</code></a></h4>
 <div class="paragraph">
 <p>Checks for collisions between a list of coordinates and active cells in the grid.</p>
 </div>
@@ -1264,7 +1322,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="fillareastart-coordinate-end-coordinate-value-number-color-color-void"><a class="link" href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">2.3.2. <code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
+<h4 id="fillareastart-coordinate-end-coordinate-value-number-color-color-void"><a class="link" href="#fillareastart-coordinate-end-coordinate-value-number-color-color-void">3.3.2. <code>fillArea(start: <a href="../types/Coordinate.html">Coordinate</a>, end: <a href="../types/Coordinate.html">Coordinate</a>, value: number, color: <a href="../enums/Color.html">Color</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Fills a rectangular area with specified properties.</p>
 </div>
@@ -1308,7 +1366,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="stamppiecepiece-piece-void"><a class="link" href="#stamppiecepiece-piece-void">2.3.3. <code>stampPiece(piece: <a href="../types/Piece.html">Piece</a>): void</code></a></h4>
+<h4 id="stamppiecepiece-piece-void"><a class="link" href="#stamppiecepiece-piece-void">3.3.3. <code>stampPiece(piece: <a href="../types/Piece.html">Piece</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Updates multiple specific coordinates simultaneously with their specific values and colors.</p>
 </div>
@@ -1337,7 +1395,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="stampcellcell-cell-void"><a class="link" href="#stampcellcell-cell-void">2.3.4. <code>stampCell(cell: <a href="../types/Cell.html">Cell</a>): void</code></a></h4>
+<h4 id="stampcellcell-cell-void"><a class="link" href="#stampcellcell-cell-void">3.3.4. <code>stampCell(cell: <a href="../types/Cell.html">Cell</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Updates a single coordinate with a specific value and color from a Cell.</p>
 </div>
@@ -1367,12 +1425,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="movement-projections"><a class="link" href="#movement-projections">2.4. Movement &amp; Projections</a></h3>
+<h3 id="movement-projections"><a class="link" href="#movement-projections">3.4. Movement &amp; Projections</a></h3>
 <div class="paragraph">
 <p>Advanced methods for handling piece and cell movement with built-in collision detection and trajectory prediction.</p>
 </div>
 <div class="sect3">
-<h4 id="movepiecepiece-piece-direction-vector-piece-null"><a class="link" href="#movepiecepiece-piece-direction-vector-piece-null">2.4.1. <code>movePiece(piece: <a href="../types/Piece.html">Piece</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="movepiecepiece-piece-direction-vector-piece-null"><a class="link" href="#movepiecepiece-piece-direction-vector-piece-null">3.4.1. <code>movePiece(piece: <a href="../types/Piece.html">Piece</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Attempts to shift a collection of cells (a piece) in a specified direction.</p>
 </div>
@@ -1418,35 +1476,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movepieceleftpiece-piece-piece-null"><a class="link" href="#movepieceleftpiece-piece-piece-null">2.4.2. <code>movePieceLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="movepieceleftpiece-piece-piece-null"><a class="link" href="#movepieceleftpiece-piece-piece-null">3.4.2. <code>movePieceLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>movePiece</code> shifting one unit to the left.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movepiecerightpiece-piece-piece-null"><a class="link" href="#movepiecerightpiece-piece-piece-null">2.4.3. <code>movePieceRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="movepiecerightpiece-piece-piece-null"><a class="link" href="#movepiecerightpiece-piece-piece-null">3.4.3. <code>movePieceRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>movePiece</code> shifting one unit to the right.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movepieceuppiece-piece-piece-null"><a class="link" href="#movepieceuppiece-piece-piece-null">2.4.4. <code>movePieceUp(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="movepieceuppiece-piece-piece-null"><a class="link" href="#movepieceuppiece-piece-piece-null">3.4.4. <code>movePieceUp(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>movePiece</code> shifting one unit up.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movepiecedownpiece-piece-piece-null"><a class="link" href="#movepiecedownpiece-piece-piece-null">2.4.5. <code>movePieceDown(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="movepiecedownpiece-piece-piece-null"><a class="link" href="#movepiecedownpiece-piece-piece-null">3.4.5. <code>movePieceDown(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>movePiece</code> shifting one unit down.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movecellcell-cell-direction-vector-cell-null"><a class="link" href="#movecellcell-cell-direction-vector-cell-null">2.4.6. <code>moveCell(cell: <a href="../types/Cell.html">Cell</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="movecellcell-cell-direction-vector-cell-null"><a class="link" href="#movecellcell-cell-direction-vector-cell-null">3.4.6. <code>moveCell(cell: <a href="../types/Cell.html">Cell</a>, direction: <a href="../types/Vector.html">Vector</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Attempts to shift a single cell in a specified direction.</p>
 </div>
@@ -1492,35 +1550,35 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movecellleftcell-cell-cell-null"><a class="link" href="#movecellleftcell-cell-cell-null">2.4.7. <code>moveCellLeft(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="movecellleftcell-cell-cell-null"><a class="link" href="#movecellleftcell-cell-cell-null">3.4.7. <code>moveCellLeft(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>moveCell</code> shifting one unit to the left.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movecellrightcell-cell-cell-null"><a class="link" href="#movecellrightcell-cell-cell-null">2.4.8. <code>moveCellRight(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="movecellrightcell-cell-cell-null"><a class="link" href="#movecellrightcell-cell-cell-null">3.4.8. <code>moveCellRight(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>moveCell</code> shifting one unit to the right.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movecellupcell-cell-cell-null"><a class="link" href="#movecellupcell-cell-cell-null">2.4.9. <code>moveCellUp(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="movecellupcell-cell-cell-null"><a class="link" href="#movecellupcell-cell-cell-null">3.4.9. <code>moveCellUp(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>moveCell</code> shifting one unit up.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="movecelldowncell-cell-cell-null"><a class="link" href="#movecelldowncell-cell-cell-null">2.4.10. <code>moveCellDown(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
+<h4 id="movecelldowncell-cell-cell-null"><a class="link" href="#movecelldowncell-cell-cell-null">3.4.10. <code>moveCellDown(cell: <a href="../types/Cell.html">Cell</a>): <a href="../types/Cell.html">Cell</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Alias for <code>moveCell</code> shifting one unit down.</p>
 </div>
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getdroppathpiece-piece-piece"><a class="link" href="#getdroppathpiece-piece-piece">2.4.11. <code>getDropPath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="getdroppathpiece-piece-piece"><a class="link" href="#getdroppathpiece-piece-piece">3.4.11. <code>getDropPath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Calculates the final vertical resting position of a piece if it were dropped continuously downwards.</p>
 </div>
@@ -1555,7 +1613,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getrisepathpiece-piece-piece"><a class="link" href="#getrisepathpiece-piece-piece">2.4.12. <code>getRisePath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="getrisepathpiece-piece-piece"><a class="link" href="#getrisepathpiece-piece-piece">3.4.12. <code>getRisePath(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Calculates the final vertical resting position of a piece if it were moved continuously upwards.</p>
 </div>
@@ -1590,7 +1648,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getreachpathleftpiece-piece-piece"><a class="link" href="#getreachpathleftpiece-piece-piece">2.4.13. <code>getReachPathLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="getreachpathleftpiece-piece-piece"><a class="link" href="#getreachpathleftpiece-piece-piece">3.4.13. <code>getReachPathLeft(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Calculates the final horizontal resting position of a piece if it were moved continuously to the left.</p>
 </div>
@@ -1625,7 +1683,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getreachpathrightpiece-piece-piece"><a class="link" href="#getreachpathrightpiece-piece-piece">2.4.14. <code>getReachPathRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="getreachpathrightpiece-piece-piece"><a class="link" href="#getreachpathrightpiece-piece-piece">3.4.14. <code>getReachPathRight(piece: <a href="../types/Piece.html">Piece</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Calculates the final horizontal resting position of a piece if it were moved continuously to the right.</p>
 </div>
@@ -1661,12 +1719,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="transformations"><a class="link" href="#transformations">2.5. Transformations</a></h3>
+<h3 id="transformations"><a class="link" href="#transformations">3.5. Transformations</a></h3>
 <div class="paragraph">
 <p>Geometric operations for rotating or mirroring complex shapes within the grid boundaries.</p>
 </div>
 <div class="sect3">
-<h4 id="rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null"><a class="link" href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">2.5.1. <code>rotatePiece(piece: <a href="../types/Piece.html">Piece</a>, origin: <a href="../types/Coordinate.html">Coordinate</a>, clockwise: boolean = true): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
+<h4 id="rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null"><a class="link" href="#rotatepiecepiece-piece-origin-coordinate-clockwise-boolean-true-piece-null">3.5.1. <code>rotatePiece(piece: <a href="../types/Piece.html">Piece</a>, origin: <a href="../types/Coordinate.html">Coordinate</a>, clockwise: boolean = true): <a href="../types/Piece.html">Piece</a> | null</code></a></h4>
 <div class="paragraph">
 <p>Attempts to rotate a collection of cells 90 degrees around a specific origin point.</p>
 </div>
@@ -1711,7 +1769,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="mirrorpiecepiece-piece-axis-axis-piece"><a class="link" href="#mirrorpiecepiece-piece-axis-axis-piece">2.5.2. <code>mirrorPiece(piece: <a href="../types/Piece.html">Piece</a>, axis: <a href="../types/Axis.html">Axis</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="mirrorpiecepiece-piece-axis-axis-piece"><a class="link" href="#mirrorpiecepiece-piece-axis-axis-piece">3.5.2. <code>mirrorPiece(piece: <a href="../types/Piece.html">Piece</a>, axis: <a href="../types/Axis.html">Axis</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Mirrors a piece across its own center on a specific axis.</p>
 </div>
@@ -1752,12 +1810,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="grid-analysis"><a class="link" href="#grid-analysis">2.6. Grid Analysis</a></h3>
+<h3 id="grid-analysis"><a class="link" href="#grid-analysis">3.6. Grid Analysis</a></h3>
 <div class="paragraph">
 <p>Methods for inspecting grid state, finding patterns, and performing searches over the active cell data.</p>
 </div>
 <div class="sect3">
-<h4 id="getfullrows-number"><a class="link" href="#getfullrows-number">2.6.1. <code>getFullRows(): number[]</code></a></h4>
+<h4 id="getfullrows-number"><a class="link" href="#getfullrows-number">3.6.1. <code>getFullRows(): number[]</code></a></h4>
 <div class="paragraph">
 <p>Identifies all rows that are completely filled with active cells.</p>
 </div>
@@ -1770,7 +1828,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getfullcolumns-number"><a class="link" href="#getfullcolumns-number">2.6.2. <code>getFullColumns(): number[]</code></a></h4>
+<h4 id="getfullcolumns-number"><a class="link" href="#getfullcolumns-number">3.6.2. <code>getFullColumns(): number[]</code></a></h4>
 <div class="paragraph">
 <p>Identifies all columns that are completely filled with active cells.</p>
 </div>
@@ -1783,7 +1841,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="getneighborscoord-coordinate-includediagonal-boolean-false-cell"><a class="link" href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">2.6.3. <code>getNeighbors(coord: <a href="../types/Coordinate.html">Coordinate</a>, includeDiagonal: boolean = false): <a href="../types/Cell.html">Cell</a>[]</code></a></h4>
+<h4 id="getneighborscoord-coordinate-includediagonal-boolean-false-cell"><a class="link" href="#getneighborscoord-coordinate-includediagonal-boolean-false-cell">3.6.3. <code>getNeighbors(coord: <a href="../types/Coordinate.html">Coordinate</a>, includeDiagonal: boolean = false): <a href="../types/Cell.html">Cell</a>[]</code></a></h4>
 <div class="paragraph">
 <p>Returns all active cells adjacent to a specific coordinate.</p>
 </div>
@@ -1823,7 +1881,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="findconnectedcellscoord-coordinate-piece"><a class="link" href="#findconnectedcellscoord-coordinate-piece">2.6.4. <code>findConnectedCells(coord: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
+<h4 id="findconnectedcellscoord-coordinate-piece"><a class="link" href="#findconnectedcellscoord-coordinate-piece">3.6.4. <code>findConnectedCells(coord: <a href="../types/Coordinate.html">Coordinate</a>): <a href="../types/Piece.html">Piece</a></code></a></h4>
 <div class="paragraph">
 <p>Finds all connected active cells of the same value starting from a specific coordinate using a Breadth-First Search (BFS) algorithm.</p>
 </div>
@@ -1858,7 +1916,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect3">
-<h4 id="swapcellsa-coordinate-b-coordinate-void"><a class="link" href="#swapcellsa-coordinate-b-coordinate-void">2.6.5. <code>swapCells(a: <a href="../types/Coordinate.html">Coordinate</a>, b: <a href="../types/Coordinate.html">Coordinate</a>): void</code></a></h4>
+<h4 id="swapcellsa-coordinate-b-coordinate-void"><a class="link" href="#swapcellsa-coordinate-b-coordinate-void">3.6.5. <code>swapCells(a: <a href="../types/Coordinate.html">Coordinate</a>, b: <a href="../types/Coordinate.html">Coordinate</a>): void</code></a></h4>
 <div class="paragraph">
 <p>Swaps the values and colors of two specified cells on the grid.</p>
 </div>

@@ -11,6 +11,7 @@ export enum Color {
     RED = 'rgb(128, 0, 0)',
     YELLOW = 'rgb(128, 128, 0)',
     INACTIVE = 'rgb(166, 183, 165)',
+    SHADOW = 'rgb(93, 105, 92)',
 }
 
 /**

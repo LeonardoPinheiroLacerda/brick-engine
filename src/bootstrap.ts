@@ -4,36 +4,37 @@ import GameView from './view/GameView';
 import RendererContext from './core/context/RendererContext';
 
 /**
- * Represents a constructor for a game class.
+ * Defines the strict constructor signature for Client games booting via the Engine.
  *
  * @callback ClientGameConstructor
- * @param {p5} p - The p5 instance.
- * @param {GameView} view - The game view instance.
- * @returns {Game} A new game instance.
+ * @param {p5} p - The core rendering context pointer injected at runtime.
+ * @param {GameView} view - The specifically built UI configuration context.
+ * @returns {Game} A newly instantiated concrete subclass encompassing all module logic.
  */
 type ClientGameConstructor = new (view: GameView) => Game;
 
 let _game: Game;
 
 /**
- * Updates the currently active game in the engine's execution loop.
+ * Hotswaps the persistent engine tracking pointer dictating logic execution loops.
  *
- * @param {Game} game - The new game instance to become active.
+ * @param {Game} game - The fully instantiated class implementing custom module rules.
+ * @returns {void} Returns nothing.
  */
-export function setActiveGame(game: Game) {
+export function setActiveGame(game: Game): void {
     _game = game;
 }
 
 /**
- * Bootstraps the brick engine and initializes the game.
+ * Orchestrating structural point of initialization isolating strict client code execution.
  *
- * This is the main entry point for the engine's execution. It creates a new p5 instance,
- * initializes the view, and sets up the initial game provided by the caller.
+ * Acts as the absolute architectural start for the engine lifecycle. It isolates complex P5.js
+ * canvas injection, internal context caching, and DOM viewport creation away from actual Game logic.
  *
- * @param {ClientGameConstructor} ClientGame - The constructor of the game to be loaded.
- * @returns {p5} The p5 instance.
+ * @param {ClientGameConstructor} ClientGame - The non-instantiated class definition targeted.
+ * @returns {p5} The successfully built processing sketch mapping logic safely onto the web document.
  */
-export function bootstrap(ClientGame: ClientGameConstructor) {
+export function bootstrap(ClientGame: ClientGameConstructor): p5 {
     window.BrickEngineGame = ClientGame;
 
     return new p5((p: p5) => {

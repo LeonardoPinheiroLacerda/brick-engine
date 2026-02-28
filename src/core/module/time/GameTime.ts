@@ -4,8 +4,12 @@ import { Serializable } from '../../types/Interfaces';
 import configs from '../../../config/configs';
 
 /**
- * Manages game time, frame rates, and tick intervals.
- * Handles the game loop timing and debug statistics (FPS, TPS).
+ * Module responsible for managing the logical engine clock, hardware frame rates, and tick intervals.
+ *
+ * It decouples the deterministic game logic "ticks" from the unpredictable visual frame rate
+ * of the browser canvas. By separating `update` loops from visual rendering, it ensures
+ * consistent gameplay speed calculations (like difficulty progression) regardless of the
+ * host device's performance capabilities.
  */
 export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
@@ -24,18 +28,21 @@ export default class GameTime implements Time, Debuggable, Serializable {
     serialId: string = 'time';
 
     /**
-     * Initializes the time module.
-     * Resets all timers and counters.
+     * Initializes the time module's core state.
+     * Resets all internal timers and statistical accumulators securely.
+     *
+     * @returns {void} Returns nothing.
      */
     setup(): void {
         this.reset();
     }
 
     /**
-     * Updates the time accumulator and calculates FPS/TPS.
-     * Should be called once per frame.
+     * Updates the internal time accumulator and calculates physical FPS/TPS.
+     * Must be invoked strictly once per hardware visual frame.
      *
-     * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
+     * @param {number} deltaTime - Time physically elapsed since the last rendering frame in milliseconds.
+     * @returns {void} Returns nothing.
      */
     update(deltaTime: number) {
         this._tickAccumulator += deltaTime;
@@ -67,7 +74,9 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
 
     /**
-     * Resets the time accumulator and debug counters.
+     * Safely resets the time accumulator and all debug statistical counters.
+     *
+     * @returns {void} Returns nothing.
      */
     reset() {
         this._tickAccumulator = 0;
@@ -178,8 +187,12 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
 
     /**
-     * Captures the current tick interval as the initial state.
-     * This is useful for restoring the game speed on reset.
+     * Captures the current tick interval as the deterministic initial baseline state.
+     *
+     * This is useful for restoring the intended baseline game speed on session
+     * resets rather than reverting to the engine's hardcoded default.
+     *
+     * @returns {void} Returns nothing.
      */
     captureInitialState(): void {
         this._initialTickInterval = this._tickInterval;

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Represents the state of an individual unit within the 2D game grid.
 
 == Attributes

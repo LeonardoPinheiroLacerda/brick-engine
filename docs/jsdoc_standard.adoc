@@ -24,7 +24,7 @@ IMPORTANT: Strict typing is **mandatory** for all methods and functions document
 
 == Classes
 
-Classes must have a description explaining their responsibility.
+Classes must include a detailed description that explains their architectural purpose, responsibility, and the core problem they solve. This context is essential for understanding why the class exists and how it fits into the broader architecture, without needing repetitive phrasing like "The motivation for this class is...".
 
 WARNING: All class public properties must be documented, explaining what they store.
 
@@ -35,7 +35,10 @@ WARNING: All class public properties must be documented, explaining what they st
 /**
  * Manages the game view layer and user interactions.
  *
- * Orchestrates the rendering of components and binds DOM events to game logic.
+ * Designed to decouple the rendering logic from the core game state and 
+ * input processing. It orchestrates the rendering of sub-components and 
+ * binds DOM events to game logic, ensuring that visual updates happen 
+ * consistently in the render loop.
  */
 export default class GameView {
     private p: P5;
@@ -65,9 +68,11 @@ Every function must explain **what** it does, **how** it behaves (if complex), a
 === Structure
 
 . **Short Description**: One-line summary.
-. **Detailed Description**: (Optional) More context, side-effects, or algorithm details.
-. **@param**: One for each argument, with type and description.
-. **@returns**: The return type and description of what is returned.
+. **Detailed Description**: Provide a detailed base description to make its objective, context, and side-effects completely clear.
+. **Cross-Referencing**: Use inline links (e.g., `{@link EntityName}`) to reference other related entities when useful.
+. **@param**: One for each argument, including the type and a detailed description of its usage and constraints.
+. **@throws**: Document the exceptions thrown in a detailed way, explaining the exception type and the conditions that trigger it.
+. **@returns**: The return type and a detailed description of exactly what is returned.
 
 === Example
 
@@ -77,20 +82,23 @@ Every function must explain **what** it does, **how** it behaves (if complex), a
  * Calculates the optimal dimensions for the game container.
  *
  * It ensures the container maintains the aspect ratio defined by constants
- * while fitting within the parent element's bounds.
+ * while fitting within the parent element's bounds. This is crucial for
+ * supporting multiple screen sizes without distorting the game canvas.
+ * For more details on the layout behavior, see {@link FrameLayout}.
  *
- * @param {number} availableWidth - The maximum available width in pixels.
- * @param {number} availableHeight - The maximum available height in pixels.
- * @returns {Dimensions} An object containing the calculated width and height.
+ * @param {number} availableWidth - The maximum available width in pixels provided by the parent container. Must be greater than zero.
+ * @param {number} availableHeight - The maximum available height in pixels provided by the parent container. Must be greater than zero.
+ * @throws {Error} If `availableWidth` or `availableHeight` are less than or equal to zero.
+ * @returns {Dimensions} An object containing the calculated optimal `width` and `height`, guaranteed to preserve the aspect ratio.
  */
 function calculateDimensions(availableWidth: number, availableHeight: number): Dimensions {
     // ...
 }
 ----
 
-== Interfaces and Types
+== Interfaces, Types, and Enums
 
-Interfaces must describe what object shape they represent and document each property.
+Interfaces, types, and enums must include a detailed description explaining their purpose and architectural context. It should be clear why this specific data structure, type constraint, or set of values was created and how it is meant to be used. They must also document each of their properties or members.
 
 === Example
 
@@ -98,6 +106,11 @@ Interfaces must describe what object shape they represent and document each prop
 ----
 /**
  * Represents the layout response containing container references.
+ *
+ * Provides a standardized structure for UI components when they allocate 
+ * space on the screen. By returning this structured response, the parent 
+ * view can easily align other elements relatively without needing to know 
+ * the implementation details.
  */
 interface ButtonLayoutResponse {
     /** The container for small system buttons (e.g., Reset, Power). */

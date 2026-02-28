@@ -458,7 +458,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_example_2">Example</a></li>
 </ul>
 </li>
-<li><a href="#_interfaces_and_types">Interfaces and Types</a>
+<li><a href="#_interfaces_types_and_enums">Interfaces, Types, and Enums</a>
 <ul class="sectlevel2">
 <li><a href="#_example_3">Example</a></li>
 </ul>
@@ -520,7 +520,7 @@ Strict typing is <strong>mandatory</strong> for all methods and functions docume
 <h2 id="_classes">Classes</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Classes must have a description explaining their responsibility.</p>
+<p>Classes must include a detailed description that explains their architectural purpose, responsibility, and the core problem they solve. This context is essential for understanding why the class exists and how it fits into the broader architecture, without needing repetitive phrasing like "The motivation for this class is&#8230;&#8203;".</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -541,7 +541,10 @@ All class public properties must be documented, explaining what they store.
 <pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">/**
  * Manages the game view layer and user interactions.
  *
- * Orchestrates the rendering of components and binds DOM events to game logic.
+ * Designed to decouple the rendering logic from the core game state and
+ * input processing. It orchestrates the rendering of sub-components and
+ * binds DOM events to game logic, ensuring that visual updates happen
+ * consistently in the render loop.
  */
 export default class GameView {
     private p: P5;
@@ -581,13 +584,19 @@ export default class GameView {
 <p><strong>Short Description</strong>: One-line summary.</p>
 </li>
 <li>
-<p><strong>Detailed Description</strong>: (Optional) More context, side-effects, or algorithm details.</p>
+<p><strong>Detailed Description</strong>: Provide a detailed base description to make its objective, context, and side-effects completely clear.</p>
 </li>
 <li>
-<p><strong>@param</strong>: One for each argument, with type and description.</p>
+<p><strong>Cross-Referencing</strong>: Use inline links (e.g., <code>{@link EntityName}</code>) to reference other related entities when useful.</p>
 </li>
 <li>
-<p><strong>@returns</strong>: The return type and description of what is returned.</p>
+<p><strong>@param</strong>: One for each argument, including the type and a detailed description of its usage and constraints.</p>
+</li>
+<li>
+<p><strong>@throws</strong>: Document the exceptions thrown in a detailed way, explaining the exception type and the conditions that trigger it.</p>
+</li>
+<li>
+<p><strong>@returns</strong>: The return type and a detailed description of exactly what is returned.</p>
 </li>
 </ol>
 </div>
@@ -600,11 +609,14 @@ export default class GameView {
  * Calculates the optimal dimensions for the game container.
  *
  * It ensures the container maintains the aspect ratio defined by constants
- * while fitting within the parent element's bounds.
+ * while fitting within the parent element's bounds. This is crucial for
+ * supporting multiple screen sizes without distorting the game canvas.
+ * For more details on the layout behavior, see {@link FrameLayout}.
  *
- * @param {number} availableWidth - The maximum available width in pixels.
- * @param {number} availableHeight - The maximum available height in pixels.
- * @returns {Dimensions} An object containing the calculated width and height.
+ * @param {number} availableWidth - The maximum available width in pixels provided by the parent container. Must be greater than zero.
+ * @param {number} availableHeight - The maximum available height in pixels provided by the parent container. Must be greater than zero.
+ * @throws {Error} If `availableWidth` or `availableHeight` are less than or equal to zero.
+ * @returns {Dimensions} An object containing the calculated optimal `width` and `height`, guaranteed to preserve the aspect ratio.
  */
 function calculateDimensions(availableWidth: number, availableHeight: number): Dimensions {
     // ...
@@ -615,10 +627,10 @@ function calculateDimensions(availableWidth: number, availableHeight: number): D
 </div>
 </div>
 <div class="sect1">
-<h2 id="_interfaces_and_types">Interfaces and Types</h2>
+<h2 id="_interfaces_types_and_enums">Interfaces, Types, and Enums</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Interfaces must describe what object shape they represent and document each property.</p>
+<p>Interfaces, types, and enums must include a detailed description explaining their purpose and architectural context. It should be clear why this specific data structure, type constraint, or set of values was created and how it is meant to be used. They must also document each of their properties or members.</p>
 </div>
 <div class="sect2">
 <h3 id="_example_3">Example</h3>
@@ -626,6 +638,11 @@ function calculateDimensions(availableWidth: number, availableHeight: number): D
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">/**
  * Represents the layout response containing container references.
+ *
+ * Provides a standardized structure for UI components when they allocate
+ * space on the screen. By returning this structured response, the parent
+ * view can easily align other elements relatively without needing to know
+ * the implementation details.
  */
 interface ButtonLayoutResponse {
     /** The container for small system buttons (e.g., Reset, Power). */
@@ -642,7 +659,7 @@ interface ButtonLayoutResponse {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-13 12:20:51 -0300
+Last updated 2026-02-27 21:30:24 -0300
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>

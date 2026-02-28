@@ -7,6 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="description" content="Generic utilities for calculating relative sizes and positions within containers.">
 <meta name="keywords" content="relative, sizing, positioning, layout, helper">
+<meta name="author" content="== Architectural Purpose">
 <title>RelativeValuesHelper Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -440,6 +441,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>RelativeValuesHelper Reference</h1>
+<div class="details">
+<span id="author" class="author">== Architectural Purpose</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -456,7 +460,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>RelativeValuesHelper</code> provides conversion utilities for scaling absolute sizes to the current canvas dimensions, enabling responsive layouts.</p>
+<p>The <code>RelativeValuesHelper</code> provides isolated mathematical layout functions specifically designed to scale absolute sizes to the base runtime canvas. It guarantees isolated calculations for responsive dimensional generation dynamically without hardcoding absolute <code>p5</code> rendering parameters.</p>
 </div>
 </div>
 </div>
@@ -486,7 +490,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A float between 0.0 and 1.0 representing percentage of width.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The desired scale fraction bounded between 0.0 and 1.0 representing percentage of width.</p></td>
 </tr>
 </tbody>
 </table>
@@ -521,7 +525,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A float between 0.0 and 1.0 representing percentage of height.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The desired scale fraction bounded between 0.0 and 1.0 representing percentage of height.</p></td>
 </tr>
 </tbody>
 </table>

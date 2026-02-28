@@ -1,15 +1,17 @@
 import RendererContext from '../context/RendererContext';
 
 /**
- * Static utility for calculating pixel values relative to the canvas size.
- * Allows for responsive design by defining sizes as percentages (0.0 - 1.0).
+ * Static mathematical utility for calculating pixel scalar values relative to the base runtime canvas.
+ *
+ * Provides isolated layout functions specifically for responsive dimensional
+ * generation in drawing or element placement without hardcoding absolute pixels.
  */
 export default class RelativeValuesHelper {
     /**
-     * Calculates a pixel width based on a percentage of the canvas width.
+     * Calculates an absolute pixel width length based against the main display context width.
      *
-     * @param {number} size - The percentage (0.0 to 1.0).
-     * @returns {number} The absolute width in pixels.
+     * @param {number} size - The desired scale fraction bounded between 0.0 and 1.0.
+     * @returns {number} The absolute integer or float mapped width scale in physical pixels.
      */
     static getRelativeWidth(size: number): number {
         const { p } = RendererContext;
@@ -17,10 +19,10 @@ export default class RelativeValuesHelper {
     }
 
     /**
-     * Calculates a pixel height based on a percentage of the canvas height.
+     * Calculates an absolute pixel height length based against the main display context height.
      *
-     * @param {number} size - The percentage (0.0 to 1.0).
-     * @returns {number} The absolute height in pixels.
+     * @param {number} size - The desired scale fraction bounded between 0.0 and 1.0.
+     * @returns {number} The absolute integer or float mapped height scale in physical pixels.
      */
     static getRelativeHeight(size: number): number {
         const { p } = RendererContext;

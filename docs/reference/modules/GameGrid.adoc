@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameGrid` module manages the state of a 2D grid, providing a robust API for cell manipulation, row/column operations, and collision detection.
+== Architectural Purpose
+
+The `GameGrid` module manages the state of a 2D matrix, acting as the authoritative logical boundary. It completely isolates mathematics, mass cell modifications, and overlap checks out from the physical canvas. By standardizing bounds and coordinates, it ensures game states (like pieces falling or rows clearing) calculate deterministically, remaining entirely agnostic to visual scaling logic or frame rates.
 
 == Specialized Instances
 

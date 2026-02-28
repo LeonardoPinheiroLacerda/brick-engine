@@ -443,28 +443,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#setuprenderermetrics-renderermetrics-void">1.1. <code>setup(rendererMetrics: RendererMetrics): void</code></a></li>
-<li><a href="#rendergrid-cell-void">1.2. <code>render(grid: Cell[][]): void</code></a></li>
+<li><a href="#setuprenderermetrics-renderermetrics-void">2.1. <code>setup(rendererMetrics: RendererMetrics): void</code></a></li>
+<li><a href="#rendergrid-cell-void">2.2. <code>render(grid: Cell[][]): void</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>DisplayRenderer</code> is responsible for drawing the main game grid and the active bricks. It implements the standard <code><a href="../interfaces/modules/Renderer.html">Renderer</a></code> interface and is managed by the <code><a href="GameRenderer.html">GameRenderer</a></code>.</p>
+<p>The <code>DisplayRenderer</code> is a dedicated visual presentation component completely isolated from gameplay logic. It translates logical cell matrix data directly into pixel payloads, leveraging hardware-accelerated drawing contexts. By pre-building a static background image buffer, it guarantees the volatile foreground update loop exclusively processes the minimum amount of dynamic rectangles required, aggressively reducing power consumption.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="setuprenderermetrics-renderermetrics-void"><a class="link" href="#setuprenderermetrics-renderermetrics-void">1.1. <code>setup(rendererMetrics: RendererMetrics): void</code></a></h3>
+<h3 id="setuprenderermetrics-renderermetrics-void"><a class="link" href="#setuprenderermetrics-renderermetrics-void">2.1. <code>setup(rendererMetrics: RendererMetrics): void</code></a></h3>
 <div class="paragraph">
 <p>Initializes the renderer and pre-calculates the static scene.</p>
 </div>
@@ -499,7 +501,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="rendergrid-cell-void"><a class="link" href="#rendergrid-cell-void">1.2. <code>render(grid: Cell[][]): void</code></a></h3>
+<h3 id="rendergrid-cell-void"><a class="link" href="#rendergrid-cell-void">2.2. <code>render(grid: Cell[][]): void</code></a></h3>
 <div class="paragraph">
 <p>Executes the main display drawing logic.</p>
 </div>

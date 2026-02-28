@@ -4,16 +4,19 @@ import RelativeValuesHelper from './RelativeValuesHelper';
 import RendererContext from '../context/RendererContext';
 
 /**
- * Static utility class for coordinate transformations.
- * Handles conversions between relative (0-1) coordinates and absolute pixel positions
- * for both the main display and the HUD.
+ * Static mathematical utility class for coordinate transformations and translations.
+ *
+ * Centralizes the logic to transition between abstract engine logical models (e.g.
+ * the relative 0.0-1.0 coordinate plane or abstract {@link GameGrid} spaces) and
+ * the absolute physical layout on screen. It ensures consistency in calculating
+ * element sizes dynamically, keeping UI layouts natively responsive to canvas bounds.
  */
 export default class CoordinateHelper {
     /**
-     * Converts a simplified coordinate object to relative screen dimensions.
+     * Converts a flat abstract coordinate object into relative screen dimensional scaling.
      *
-     * @param {Coordinate} coordinate - The normal coordinate.
-     * @returns {Coordinate} A new coordinate scaled to the canvas width/height.
+     * @param {Coordinate} coordinate - The input logical coordinate structure (x, y).
+     * @returns {Coordinate} A new coordinate scaled proportionately to the physical base canvas width/height.
      */
     static getRelativeCoordinate(coordinate: Coordinate): Coordinate {
         return {
@@ -23,11 +26,11 @@ export default class CoordinateHelper {
     }
 
     /**
-     * Calculates the absolute X pixel position for an element on the Main Display.
+     * Calculates the absolute `X` pixel position for an element rendered on the Main Display.
      *
-     * @param {number} x - The relative or normalized X position.
-     * @param {number} displayWidth - The calculated width of the display area.
-     * @returns {number} The absolute X pixel coordinate.
+     * @param {number} x - The relative or normalized input X horizontal position.
+     * @param {number} displayWidth - The dynamically calculated width of the central display area.
+     * @returns {number} The absolute horizontal offset pixel coordinate formatted for `p5` rendering functions.
      */
     static getDisplayPosX(x: number, displayWidth: number): number {
         const { margin } = configs.screenLayout.display;
@@ -36,11 +39,11 @@ export default class CoordinateHelper {
     }
 
     /**
-     * Calculates the absolute Y pixel position for an element on the Main Display.
+     * Calculates the absolute `Y` pixel position for an element rendered on the Main Display.
      *
-     * @param {number} y - The relative or normalized Y position.
-     * @param {number} displayHeight - The calculated height of the display area.
-     * @returns {number} The absolute Y pixel coordinate.
+     * @param {number} y - The relative or normalized input Y vertical position.
+     * @param {number} displayHeight - The dynamically calculated height of the central display area.
+     * @returns {number} The absolute vertical offset pixel coordinate formatted for `p5` rendering functions.
      */
     static getDisplayPosY(y: number, displayHeight: number): number {
         const { margin } = configs.screenLayout.display;
@@ -48,12 +51,14 @@ export default class CoordinateHelper {
     }
 
     /**
-     * Calculates the absolute X pixel position for an element on the HUD.
-     * Use this to position elements in the sidebar.
+     * Calculates the absolute `X` pixel position for an element docked to the right-side HUD column.
      *
-     * @param {number} x - The relative or normalized X position within the HUD.
-     * @param {number} displayWidth - The width of the main display (used for offset calculation).
-     * @returns {number} The absolute X pixel coordinate.
+     * Automatically adjusts its starting position by determining where the
+     * Main Display ends physically, injecting proper UI margin limits dynamically.
+     *
+     * @param {number} x - The relative or normalized X position specifically within the bounded HUD compartment.
+     * @param {number} displayWidth - The total real width of the central display (used for zero-point alignment calculation).
+     * @returns {number} The absolute X horizontal pixel coordinate within the application layout scale.
      */
     static getHudPosX(x: number, displayWidth: number): number {
         const { p } = RendererContext;
@@ -65,11 +70,11 @@ export default class CoordinateHelper {
     }
 
     /**
-     * Calculates the absolute Y pixel position for an element on the HUD.
+     * Calculates the absolute `Y` pixel position for an element docked to the right-side HUD column.
      *
-     * @param {number} y - The relative or normalized Y position within the HUD.
-     * @param {number} displayHeight - The height of the main display (used for scaling).
-     * @returns {number} The absolute Y pixel coordinate.
+     * @param {number} y - The relative or normalized Y position specifically within the bounded HUD compartment.
+     * @param {number} displayHeight - The absolute pixel height assigned logically to the central display (used for scaled positioning bounds).
+     * @returns {number} The absolute Y vertical pixel coordinate within the application layout scale.
      */
     static getHudPosY(y: number, displayHeight: number): number {
         const { margin } = configs.screenLayout.display;

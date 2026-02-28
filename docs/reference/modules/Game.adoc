@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `Game` class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.
+== Architectural Purpose
+
+The `Game` class establishes the central integration boundary encapsulating physical logic away from native visual outputs. Acting as the core orchestrator, it explicitly synchronizes frame drawing metrics while processing isolated mathematical model iterations. This architecture guarantees the internal data state remains cleanly decoupled and uncorrupted regardless of overlapping browser interfaces or runtime execution layers.
 
 == Properties
 

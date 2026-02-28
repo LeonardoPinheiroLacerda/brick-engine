@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 A fundamental contract for modules that require an assembly phase.
 
 == Methods

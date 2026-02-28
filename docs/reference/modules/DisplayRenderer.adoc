@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `DisplayRenderer` is responsible for drawing the main game grid and the active bricks. It implements the standard `xref:../interfaces/modules/Renderer.adoc[Renderer]` interface and is managed by the `xref:GameRenderer.adoc[GameRenderer]`.
+== Architectural Purpose
+
+The `DisplayRenderer` is a dedicated visual presentation component completely isolated from gameplay logic. It translates logical cell matrix data directly into pixel payloads, leveraging hardware-accelerated drawing contexts. By pre-building a static background image buffer, it guarantees the volatile foreground update loop exclusively processes the minimum amount of dynamic rectangles required, aggressively reducing power consumption.
 
 == API Reference
 

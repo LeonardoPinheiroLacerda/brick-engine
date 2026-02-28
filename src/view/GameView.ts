@@ -22,12 +22,11 @@ import SessionModal from './SessionModal';
 
 // prettier-ignore
 /**
- * Responsible for rendering the game body and handling control events.
+ * Central UI module bridging logical game states to responsive DOM elements.
  *
- * This class acts as the main view controller, orchestrating the layout,
- * styles, and user interaction (clicks and holds) for the game.
- *
- * @class
+ * It serves as the single source of truth for the HTML structure, mapping physical user clicks
+ * safely down into Engine abstraction events. By orchestrating everything from Canvas instantiation
+ * to system Menus, it ensures strictly isolated interactions between the browser window and core logic.
  */
 export default class GameView {
     private _onOffBtn         : p5.Element;
@@ -53,18 +52,18 @@ export default class GameView {
     private _sessionModal     : SessionModal;
 
     /**
-     * Creates an instance of GameView.
+     * Bootstraps the root listener binding it to a persistent layout container.
      *
-     * @param p - The p5 instance used for rendering and event handling.
-     * @param parent - The DOM element where the game view will be attached.
+     * @param {HTMLElement} parent - The DOM element where the game view will be attached.
      */
     constructor(parent: HTMLElement) {
         this._parent = parent;
     }
 
     /**
-     * Checks if the game body has been built.
-     * @returns True if the game body has been built, false otherwise.
+     * Verifies if the physical Canvas context has successfully mounted into the Document structure.
+     *
+     * @returns {boolean} True if the game body has been built, false otherwise.
      */
     isBodyBuilt() {
         return this._cachedCanvas != null;
@@ -133,44 +132,61 @@ export default class GameView {
     }
 
     /**
-     * Sets up the session modal with the current game modules.
-     * @param gameModules - The game modules to be used in the session modal.
+     * Injects the strictly structured overlay handling interrupted restoration flows.
+     *
+     * @returns {void} Returns nothing.
      */
     setupSessionModal() {
         this._sessionModal = new SessionModal();
         this._sessionModal.setup();
     }
 
+    /**
+     * Invokes the blocking popup intercepting control until the User forces a choice.
+     *
+     * @param {function(): void} onConfirm - The mapped execution sequence if the dialog is accepted.
+     * @param {function(): void} onCancel - The mapped execution sequence if the dialog is declined.
+     * @returns {void} Returns nothing.
+     */
     showSessionModal(onConfirm: () => void, onCancel: () => void) {
         this._sessionModal.show(onConfirm, onCancel);
     }
 
     /**
-     * Sets up the debugger with the current game modules.
-     * @param gameModules - The game modules to be debugged.
+     * Instantiates the technical UI diagnostics tool aggregating dynamic execution values into the DOM.
+     *
+     * @param {GameModules} gameModules - The specific suite of active modules evaluated by pointers.
+     * @returns {void} Returns nothing.
      */
     setupDebugger(gameModules: GameModules) {
         this._debugger = new Debugger(gameModules);
         this._debugger.setup();
     }
 
+    /**
+     * Points the tracked overlay values dynamically onto a newly injected module configuration suite.
+     *
+     * @param {GameModules} gameModules - The collection of logically active states swapping contexts.
+     * @returns {void} Returns nothing.
+     */
     updateDebuggerGameModules(gameModules: GameModules) {
         this._debugger.setGameModules(gameModules);
     }
 
     /**
-     * Updates the debugger with the current game state.
+     * Forces an execution cycle translating the latest internal module variables to the DOM interface.
+     *
+     * @returns {void} Returns nothing.
      */
     updateDebugger() {
         this._debugger.update();
     }
 
     /**
-     * Binds game control events to the view buttons.
+     * Traps all specific DOM elements mapping pointer and mouse events directly down to engine triggers.
      *
-     * Connects click and hold events from the UI buttons to the game logic controllers.
-     *
-     * @param control - The control module instance.
+     * @param {Control} control - The active translation gateway reading raw clicks.
+     * @returns {void} Returns nothing.
      */
     bindControls(control: Control) {
         this._inputHandler = new ControlInputHandler(control);
@@ -194,10 +210,9 @@ export default class GameView {
     }
 
     /**
-     * Unbinds all events from the view buttons.
+     * Safely disengages all listeners destroying pointer mappings across all buttons.
      *
-     * Replaces all event listeners with empty functions to prevent interaction
-     * (e.g., when the game is paused or stopped).
+     * @returns {void} Returns nothing.
      */
     unbindControls() {
         this._onOffBtn      .mousePressed(() => {}).mouseReleased(() => {});
@@ -216,10 +231,11 @@ export default class GameView {
     }
 
     /**
-     * Helper method to bind press and release events using ControlInputHandler.
+     * Helper injecting standard up/down polling loops directly onto native elements safely.
      *
-     * @param btn - The p5 button element to bind.
-     * @param key - The control key to notify.
+     * @param {p5.Element} btn - The specific HTML reference targeted.
+     * @param {ControlKey} key - The enumerated alias dispatched downstream on interaction.
+     * @returns {void} Returns nothing.
      */
     private _bindButtonEvents(btn: p5.Element, key: ControlKey) {
         btn.mousePressed(() => this._inputHandler.handlePress(key));
@@ -229,9 +245,10 @@ export default class GameView {
     }
 
     /**
-     * Helper method to hide the splash screen after a delay.
+     * Schedules the destructive cleanup sequence fading initialization overlays away gracefully.
      *
-     * @param delay - The delay in milliseconds (defaults to `configs.viewLayout.splashHideDelayMs`).
+     * @param {number} delay - The specific integer mapped in layout configs.
+     * @returns {void} Returns nothing.
      */
     private _hideSplash(delay = configs.viewLayout.splashHideDelayMs) {
         const splash: HTMLDivElement = document.querySelector(configs.selectors.splash);

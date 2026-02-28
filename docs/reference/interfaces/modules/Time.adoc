@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface for managing the game's logical clock and update frequency.
 
 == Properties

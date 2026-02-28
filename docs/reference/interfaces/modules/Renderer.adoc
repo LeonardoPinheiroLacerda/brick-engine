@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Defines the core drawing contract for engine visual layers.
 
 == Methods

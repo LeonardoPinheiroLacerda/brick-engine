@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `EventEmitter` is the backbone of the engine's reactive architecture. It allows modules to communicate without direct dependencies and supports **Contextual Notifications** that automatically target specific game states (e.g., Playing vs. Paused).
+== Architectural Purpose
+
+The `EventEmitter` acts as the centralized communication backbone of the engine reactor. It allows entirely decoupled modules to hook into each other's lifecycles without direct direct method calls. By supporting **Contextual Notifications**, it prevents tight coupling and enables dynamic routing where events can automatically target specific game active states (e.g., Playing vs. Paused).
 
 == Contextual Notification System
 
@@ -28,44 +30,48 @@ This allows modules like `GameControl` to subscribe to keys ONLY when the game i
 
 === `subscribe(eventName: string, callback: EventCallback<T>, suffix?: EventSuffix): void`
 
-Registers a listener for a specific event.
+Registers a listener callback to be executed whenever the specified event is emitted. If a `EventSuffix` is provided, it subscribes to the contextual sub-channel (e.g. `UP:playing`) instead of the base channel.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`eventName` |`string` |The base name of the event.
-|`callback` |`Function` |The function to execute.
-|`suffix` |`xref:../enums/EventSuffix.adoc[EventSuffix]` |(Optional) The context suffix (e.g., `EventSuffix.PAUSED`).
+|`eventName` |`string` |The base string identifier of the event to listen for.
+|`callback` |`Function` |The function to execute when the event triggers. Receives the payload if applicable.
+|`suffix` |`xref:../enums/EventSuffix.adoc[EventSuffix]` |(Optional) The context restricted modifier to listen only on specific lifecycle states.
 |===
 
 '''
 
 === `unsubscribe(eventName: string, callback: EventCallback<T>, suffix?: EventSuffix): void`
 
-Removes a registration. The suffix must match the one used during subscription.
+Safely removes the provided callback from the notification queue. The exact function reference must be used. If the event was subscribed with a suffix, the same suffix must be provided here to target the correct sub-channel.
 
 '''
 
 === `notify(eventName: string, payload: T): void`
 
-Dispatches an event to the base channel.
+**Behavior**
+
+Iterates over all callbacks associated with the given channel key and invokes them sequentially with the provided payload. This acts strictly on the base channel without evaluating current game states.
 
 '''
 
 === `notifyContextual(eventName: string, payload: T, context: StateContext): void`
 
-Dispatches an event to the base channel AND an appropriate state-specific channel.
+**Behavior**
+
+Performs a standard notify on the base `eventName`, and then evaluates the provided `xref:../interfaces/StateContext.adoc[StateContext]` to decide which secondary `xref:../enums/EventSuffix.adoc[EventSuffix]` channel should also receive the payload. This enables multi-cast signals where listeners can opt into receiving only under certain states.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`eventName` |`string` |The base name.
-|`payload` |`any` |The data to pass.
-|`context` |`xref:../interfaces/StateContext.adoc[StateContext]` |The current engine context.
+|`eventName` |`string` |The core string identifier of the event broadcast.
+|`payload` |`any` |The required event data to be passed to callbacks in both base and context channels.
+|`context` |`xref:../interfaces/StateContext.adoc[StateContext]` |The engine state provider used to determine applicable conditions (Playing, Paused, Title, Gameover).
 |===
 
 **Mapping Logic**

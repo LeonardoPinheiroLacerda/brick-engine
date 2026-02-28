@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 A foundational 2D point interface used for positioning.
 
 == Attributes

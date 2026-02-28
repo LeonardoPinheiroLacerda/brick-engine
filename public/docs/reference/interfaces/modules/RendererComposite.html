@@ -443,19 +443,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#methods">2. Methods</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#properties">2. Properties</a></li>
+<li><a href="#methods">3. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#addrendererrenderer-renderer-void">2.1. <code>addRenderer(renderer: Renderer): void</code></a></li>
-<li><a href="#rendergrid-cell-modules-gamemodules-void">2.2. <code>render(grid: Cell[][], modules: GameModules): void</code></a></li>
+<li><a href="#addrendererrenderer-renderer-void">3.1. <code>addRenderer(renderer: Renderer): void</code></a></li>
+<li><a href="#rendergrid-cell-modules-gamemodules-void">3.2. <code>render(grid: Cell[][], modules: GameModules): void</code></a></li>
 </ul>
 </li>
-<li><a href="#general-usage">3. General Usage</a></li>
+<li><a href="#general-usage">4. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>An advanced renderer that manages a collection of individual layers.</p>
@@ -463,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -487,10 +489,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">3. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="addrendererrenderer-renderer-void"><a class="link" href="#addrendererrenderer-renderer-void">2.1. <code>addRenderer(renderer: <a href="Renderer.html">Renderer</a>): void</code></a></h3>
+<h3 id="addrendererrenderer-renderer-void"><a class="link" href="#addrendererrenderer-renderer-void">3.1. <code>addRenderer(renderer: <a href="Renderer.html">Renderer</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Attaches a new visual layer.</p>
 </div>
@@ -519,7 +521,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="rendergrid-cell-modules-gamemodules-void"><a class="link" href="#rendergrid-cell-modules-gamemodules-void">2.2. <code>render(grid: <a href="../../types/Cell.html">Cell</a>[][], modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
+<h3 id="rendergrid-cell-modules-gamemodules-void"><a class="link" href="#rendergrid-cell-modules-gamemodules-void">3.2. <code>render(grid: <a href="../../types/Cell.html">Cell</a>[][], modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Orchestrates the rendering call for all layers.</p>
 </div>
@@ -554,7 +556,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">4. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This interface is the entry point for the visual system. It ensures that the background, the game grid, and the HUD are drawn in the correct order and with synchronized metrics.</p>

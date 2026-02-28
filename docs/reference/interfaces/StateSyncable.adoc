@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Contract for modules that must react to global state changes.
 
 == Properties

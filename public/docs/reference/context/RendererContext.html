@@ -443,7 +443,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#purpose">1. Purpose</a></li>
+<li><a href="#motivation">1. Motivation</a></li>
 <li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
 <li><a href="#initp-p5-void">2.1. <code>init(p: p5): void</code></a></li>
@@ -464,10 +464,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="purpose"><a class="link" href="#purpose">1. Purpose</a></h2>
+<h2 id="motivation"><a class="link" href="#motivation">1. Motivation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By acting as a central provider, <code>RendererContext</code> eliminates the need to pass the <code>p5</code> object via dependency injection (constructor arguments) to every component, view, layout, and module in the architecture. It significantly reduces boilerplate code and prevents tightly coupling components to the rendering library from the top down.</p>
+<p>By acting as a central provider, <code>RendererContext</code> eliminates the need to pass the <code>p5</code> object via dependency injection (constructor arguments) down to every component, view, layout, and module in the architecture. It decouples the rendering logic from the application data flow and prevents tightly coupling components to the rendering library from the top down, solving the core problem of bloated constructors and deep prop drilling.</p>
 </div>
 </div>
 </div>
@@ -477,7 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="initp-p5-void"><a class="link" href="#initp-p5-void">2.1. <code>init(p: p5): void</code></a></h3>
 <div class="paragraph">
-<p>Initializes the context with the active P5.js instance.</p>
+<p>Initializes the context with the active P5.js instance. This method is designed to be called exactly once during the application startup lifecycle, typically by the engine&#8217;s entry point.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -499,7 +499,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>p</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>p5</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The P5.js instance initialized by the engine&#8217;s entry point.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The active, initialized <code>p5</code> instance that will be shared across the application ecosystem.</p></td>
 </tr>
 </tbody>
 </table>
@@ -507,7 +507,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>This method captures the <code>p5</code> instance and stores it internally for global access. It includes a safeguard: trying to call this method if the context is already initialized will output a warning and will not overwrite the existing instance.</p>
+<p>This method captures the <code>p5</code> instance and stores it internally for global access. It includes a safeguard: trying to call this method if the context is already initialized will output a console warning and will safely ignore the subsequent initialization so it does not overwrite the existing core rendering capabilities.</p>
 </div>
 <hr>
 </div>
@@ -520,7 +520,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>This is an internal utility primarily used for unit testing. It ensures test isolation by wiping the context between tests when virtual P5 mock instances are created and torn down in <code>beforeEach</code> closures.</p>
+<p>The motivation for this method is strictly to support test isolation. It clears the singleton state internally to ensure that unit tests utilizing virtual <code>p5</code> mock instances can be created and torn down reliably across test suites in <code>beforeEach</code> and <code>afterEach</code> configurations without retaining state from previous executions.</p>
 </div>
 <hr>
 </div>
@@ -533,13 +533,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Returns</strong></p>
 </div>
 <div class="paragraph">
-<p>The initialized P5.js instance.</p>
+<p>The active, initialized P5.js (<code>p5</code>) instance object.</p>
+</div>
+<div class="paragraph">
+<p><strong>Exceptions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Error</code>: Thrown if this getter is accessed before the <code>init</code> method has been successfully executed. This strict error boundary prevents silent failures during render cycles by ensuring components are not drawing against an undefined context.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Returns the internal reference to the <code>p5</code> instance. In standard project operation, it is safe to access. However, accessing this getter before <code>init()</code> is called will result in a runtime error, preventing silent failures.</p>
+<p>Returns the internal reference to the <code>p5</code> instance. Acts as the primary access point for any drawing or rendering operation across the application ecosystem. In standard project operation, it is safe to access once initialization is complete.</p>
 </div>
 </div>
 </div>

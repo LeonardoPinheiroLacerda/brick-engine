@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameScore` module tracks player performance during a session. It manages the current score, game levels, multipliers, and acts as the authority for the game's `highScore`, persisting it directly to `LocalStorage`. It also fully supports Session serialization out of the box.
+== Architectural Purpose
+
+The `GameScore` module acts as the strict authority dedicated to tracking real-time player performance metrics, levels, and point multipliers. It prevents transient session logic from interacting with persistent storage, explicitly taking over saving the global `highScore` into an isolated `LocalStorage` namespace directly, ensuring different game engines do not overwrite each other's records.
 
 == API Reference
 
@@ -57,7 +59,7 @@ Adds points to the current session.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Base points to add.
+|`amount` |`number` |Base raw integer points to add before multiplier application.
 |===
 
 **Behavior**
@@ -83,7 +85,7 @@ Increases the game difficulty level.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Number of levels to add.
+|`amount` |`number` |Positive integer count of step levels to advance globally.
 |===
 
 
@@ -103,7 +105,7 @@ Initializes the module with the specific game ID and loads the corresponding hig
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`id` |`string` |The unique game identifier used as a prefix for LocalStorage.
+|`id` |`string` |The unique game UUID identifier used as a persistent prefix for namespace isolation.
 |===
 
 
@@ -118,7 +120,7 @@ Returns the score as a padded string suitable for HUD display.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`digits` |`number` |Total length of the string (e.g., 6 for "000150").
+|`digits` |`number` |Total character length to dictate string sequence width (e.g., 6 outputs "000150").
 |===
 
 **Returns**

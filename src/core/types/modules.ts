@@ -13,6 +13,7 @@ export interface Renderer extends RendererInitializable {
      *
      * @param {Cell[][]} grid - The current state of the game grid.
      * @param {GameModules} modules - Access to other engine modules for context (e.g., Score, State).
+     * @returns {void} Returns nothing.
      */
     render(grid: Cell[][], modules: GameModules): void;
 }
@@ -25,6 +26,7 @@ export interface RendererComposite {
      * Registers a new renderer layer to the composite system.
      *
      * @param {Renderer} renderer - The renderer instance to add.
+     * @returns {void} Returns nothing.
      */
     addRenderer(renderer: Renderer): void;
 
@@ -33,6 +35,7 @@ export interface RendererComposite {
      *
      * @param {Cell[][]} grid - The current state of the game grid.
      * @param {GameModules} modules - Access to other engine modules.
+     * @returns {void} Returns nothing.
      */
     render(grid: Cell[][], modules: GameModules): void;
 
@@ -51,16 +54,21 @@ export interface Text extends Initializable {
      * Sets the display metrics used for coordinate calculations.
      *
      * @param {RendererMetrics} rendererMetrics - The calculated layout metrics.
+     * @returns {void} Returns nothing.
      */
     setRendererMetrics(rendererMetrics: RendererMetrics): void;
 
     /**
      * Sets the text color to the "active" theme color.
+     *
+     * @returns {void} Returns nothing.
      */
     setActiveText(): void;
 
     /**
      * Sets the text color to the "inactive" theme color.
+     *
+     * @returns {void} Returns nothing.
      */
     setInactiveText(): void;
 
@@ -68,6 +76,7 @@ export interface Text extends Initializable {
      * Sets the current font size.
      *
      * @param {FontSize} fontSize - The desired size enum value.
+     * @returns {void} Returns nothing.
      */
     setTextSize(fontSize: FontSize): void;
 
@@ -76,6 +85,7 @@ export interface Text extends Initializable {
      *
      * @param {FontAlign} fontAlign - The horizontal alignment.
      * @param {FontVerticalAlign} fontVerticalAlign - The vertical alignment.
+     * @returns {void} Returns nothing.
      */
     setTextAlign(fontAlign: FontAlign, fontVerticalAlign: FontVerticalAlign): void;
 
@@ -84,6 +94,7 @@ export interface Text extends Initializable {
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
+     * @returns {void} Returns nothing.
      */
     textOnHud(text: string, coordinate: Coordinate): void;
 
@@ -92,6 +103,7 @@ export interface Text extends Initializable {
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the Display.
+     * @returns {void} Returns nothing.
      */
     textOnDisplay(text: string, coordinate: Coordinate): void;
 }
@@ -128,6 +140,8 @@ export interface Grid extends Initializable {
 
     /**
      * Resets the entire grid to its empty state.
+     *
+     * @returns {void} Returns nothing.
      */
     resetGrid(): void;
 
@@ -135,6 +149,7 @@ export interface Grid extends Initializable {
      * Iterates over every cell in the grid.
      *
      * @param {function(Cell): void} callback - The function to execute for each cell.
+     * @returns {void} Returns nothing.
      */
     forEach(callback: (cell: Cell) => void): void;
 
@@ -159,6 +174,7 @@ export interface Grid extends Initializable {
      *
      * @param {Coordinate} coordinate - The target location.
      * @param {number} value - The new value (0 for empty).
+     * @returns {void} Returns nothing.
      */
     setCellValue(coordinate: Coordinate, value: number): void;
 
@@ -167,6 +183,7 @@ export interface Grid extends Initializable {
      *
      * @param {Coordinate} coordinate - The target location.
      * @param {Color} color - The new color.
+     * @returns {void} Returns nothing.
      */
     setCellColor(coordinate: Coordinate, color: Color): void;
 
@@ -206,6 +223,7 @@ export interface Grid extends Initializable {
      * Clears all cells in a specific row.
      *
      * @param {number} y - The row index.
+     * @returns {void} Returns nothing.
      */
     clearRow(y: number): void;
 
@@ -213,6 +231,7 @@ export interface Grid extends Initializable {
      * Shifts all rows above the specified index down by one.
      *
      * @param {number} fromY - The row index to start from.
+     * @returns {void} Returns nothing.
      */
     shiftRowsDown(fromY: number): void;
 
@@ -220,6 +239,7 @@ export interface Grid extends Initializable {
      * Shifts all rows below the specified index up by one.
      *
      * @param {number} fromY - The row index to start from.
+     * @returns {void} Returns nothing.
      */
     shiftRowsUp(fromY: number): void;
 
@@ -250,6 +270,7 @@ export interface Grid extends Initializable {
      * Clears all cells in a specific column.
      *
      * @param {number} x - The column index.
+     * @returns {void} Returns nothing.
      */
     clearColumn(x: number): void;
 
@@ -257,6 +278,7 @@ export interface Grid extends Initializable {
      * Shifts all columns to the right of the specified index.
      *
      * @param {number} fromX - The column index to start from.
+     * @returns {void} Returns nothing.
      */
     shiftColumnsRight(fromX: number): void;
 
@@ -264,6 +286,7 @@ export interface Grid extends Initializable {
      * Shifts all columns to the left of the specified index.
      *
      * @param {number} fromX - The column index to start from.
+     * @returns {void} Returns nothing.
      */
     shiftColumnsLeft(fromX: number): void;
 
@@ -289,6 +312,7 @@ export interface Grid extends Initializable {
      * @param {Coordinate} end - Bottom-right coordinate.
      * @param {number} value - The value to fill.
      * @param {Color} color - The color to fill.
+     * @returns {void} Returns nothing.
      */
     fillArea(start: Coordinate, end: Coordinate, value: number, color: Color): void;
 
@@ -296,6 +320,7 @@ export interface Grid extends Initializable {
      * Updates multiple coordinates simultaneously with their specific values and colors.
      *
      * @param {Piece | Cell[]} cells - The collection of cells to stamp.
+     * @returns {void} Returns nothing.
      */
     stampPiece(cells: Piece | Cell[]): void;
 
@@ -303,6 +328,7 @@ export interface Grid extends Initializable {
      * Updates a single coordinate with a specific value and color from a Cell.
      *
      * @param {Cell} cell - The cell containing coordinate, value and color.
+     * @returns {void} Returns nothing.
      */
     stampCell(cell: Cell): void;
 
@@ -475,6 +501,7 @@ export interface Grid extends Initializable {
      *
      * @param {Coordinate} a - First coordinate.
      * @param {Coordinate} b - Second coordinate.
+     * @returns {void} Returns nothing.
      */
     swapCells(a: Coordinate, b: Coordinate): void;
 }
@@ -537,6 +564,7 @@ export interface State extends Initializable {
      * Sets the color rendering preference.
      *
      * @param {boolean} value - The new state.
+     * @returns {void} Returns nothing.
      */
     setColorEnabled(value: boolean): void;
 
@@ -551,6 +579,7 @@ export interface State extends Initializable {
      * Sets the master mute state.
      *
      * @param {boolean} value - The new mute state.
+     * @returns {void} Returns nothing.
      */
     setMuted(value: boolean): void;
 
@@ -559,6 +588,7 @@ export interface State extends Initializable {
      *
      * @param {StateProperty} property - The state property to monitor.
      * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     subscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
@@ -567,81 +597,137 @@ export interface State extends Initializable {
      *
      * @param {StateProperty} property - The state property being monitored.
      * @param {function(boolean | number): void} callback - The callback reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Registers a callback for a specific state change ONLY during the title screen.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     subscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Removes an existing title screen subscription.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Registers a callback for a specific state change ONLY during the game over screen.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     subscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Removes an existing game over screen subscription.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Registers a callback for a specific state change ONLY during active gameplay.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     subscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Removes an existing playing screen subscription.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Registers a callback for a specific state change ONLY during the paused screen.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     subscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
      * Removes an existing paused screen subscription.
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
 
-    /** Turn the game system on. */
+    /**
+     * Turn the game system on.
+     * @returns {void} Returns nothing.
+     */
     turnOn(): void;
 
-    /** Turn the game system off. */
+    /**
+     * Turn the game system off.
+     * @returns {void} Returns nothing.
+     */
     turnOff(): void;
 
-    /** Initiate a new game (transition from Title Screen to Gameplay). */
+    /**
+     * Initiate a new game (transition from Title Screen to Gameplay).
+     * @returns {void} Returns nothing.
+     */
     startGame(): void;
 
-    /** Exit the current game session (transition to Title Screen). */
+    /**
+     * Exit the current game session (transition to Title Screen).
+     * @returns {void} Returns nothing.
+     */
     exitGame(): void;
 
-    /** Pause the current game logic. */
+    /**
+     * Pause the current game logic.
+     * @returns {void} Returns nothing.
+     */
     pause(): void;
 
-    /** Resume the game logic from a paused state. */
+    /**
+     * Resume the game logic from a paused state.
+     * @returns {void} Returns nothing.
+     */
     resume(): void;
 
-    /** Trigger a game over state. */
+    /**
+     * Trigger a game over state.
+     * @returns {void} Returns nothing.
+     */
     triggerGameOver(): void;
 
-    /** Reset the game state flags for a new round (post-Game Over). */
+    /**
+     * Reset the game state flags for a new round (post-Game Over).
+     * @returns {void} Returns nothing.
+     */
     resetGame(): void;
 
-    /** Toggles the {@link StateProperty.COLOR_ENABLED} state. */
+    /**
+     * Toggles the {@link StateProperty.COLOR_ENABLED} state.
+     * @returns {void} Returns nothing.
+     */
     toggleColorEnabled(): void;
 
-    /** Toggles the {@link StateProperty.MUTED} state. */
+    /**
+     * Toggles the {@link StateProperty.MUTED} state.
+     * @returns {void} Returns nothing.
+     */
     toggleMuted(): void;
 
     /**
      * Resets the game over state and starts the game again.
+     * @returns {void} Returns nothing.
      */
     resetGameOver(): void;
 }
@@ -656,6 +742,7 @@ export interface Control extends Initializable {
      *
      * @param {ControlKey} key - The key identity.
      * @param {ControlEventType} type - The type of event (press/hold).
+     * @returns {void} Returns nothing.
      */
     notify(key: ControlKey, type: ControlEventType): void;
 
@@ -665,6 +752,7 @@ export interface Control extends Initializable {
      * @param {ControlKey} key - The key to listen for.
      * @param {ControlEventType} type - The event trigger type.
      * @param {ControlCallback} callback - The function to execute.
+     * @returns {void} Returns nothing.
      */
     subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
@@ -674,46 +762,79 @@ export interface Control extends Initializable {
      * @param {ControlKey} key - The key to stop listening for.
      * @param {ControlEventType} type - The event trigger type.
      * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Registers a callback for a specific control event ONLY during the title screen.
+     * @param {ControlKey} key - The key to listen for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Removes an existing title screen subscription.
+     * @param {ControlKey} key - The key to stop listening for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Registers a callback for a specific control event ONLY during the game over screen.
+     * @param {ControlKey} key - The key to listen for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function to execute.
+     * @returns {void} Returns nothing.
      */
     subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Removes an existing game over screen subscription.
+     * @param {ControlKey} key - The key to stop listening for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Registers a callback for a specific control event ONLY during active gameplay.
+     * @param {ControlKey} key - The key to listen for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function to execute.
+     * @returns {void} Returns nothing.
      */
     subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Removes an existing playing screen subscription.
+     * @param {ControlKey} key - The key to stop listening for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Registers a callback for a specific control event ONLY during the paused screen.
+     * @param {ControlKey} key - The key to listen for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function to execute.
+     * @returns {void} Returns nothing.
      */
     subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
     /**
      * Removes an existing paused screen subscription.
+     * @param {ControlKey} key - The key to stop listening for.
+     * @param {ControlEventType} type - The event trigger type.
+     * @param {ControlCallback} callback - The function reference to remove.
+     * @returns {void} Returns nothing.
      */
     unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void;
 
@@ -721,16 +842,21 @@ export interface Control extends Initializable {
      * Injects the module references required for populating the event context.
      *
      * @param {GameModules} modules - The collection of system modules.
+     * @returns {void} Returns nothing.
      */
     setModules(modules: GameModules): void;
 
     /**
      * Detaches all hardware/DOM event listeners.
+     *
+     * @returns {void} Returns nothing.
      */
     unbindControls(): void;
 
     /**
      * Attaches all hardware/DOM event listeners.
+     *
+     * @returns {void} Returns nothing.
      */
     bindControls(): void;
 }
@@ -760,6 +886,7 @@ export interface Time extends Initializable {
      * Accumulates passed time and calculates FPS/TPS.
      *
      * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
+     * @returns {void} Returns nothing.
      */
     update(deltaTime: number): void;
 
@@ -772,6 +899,8 @@ export interface Time extends Initializable {
 
     /**
      * Resets internal time accumulators and counters.
+     *
+     * @returns {void} Returns nothing.
      */
     reset(): void;
 
@@ -779,6 +908,7 @@ export interface Time extends Initializable {
      * Increases the tick interval (slowing down the game logic).
      *
      * @param {number} amount - Milliseconds to add.
+     * @returns {void} Returns nothing.
      */
     incrementTickInterval(amount: number): void;
 
@@ -786,6 +916,7 @@ export interface Time extends Initializable {
      * Decreases the tick interval (speeding up the game logic).
      *
      * @param {number} amount - Milliseconds to subtract.
+     * @returns {void} Returns nothing.
      */
     decrementTickInterval(amount: number): void;
 
@@ -793,6 +924,7 @@ export interface Time extends Initializable {
      * Sets the tick interval.
      *
      * @param {number} interval - The new tick interval in milliseconds.
+     * @returns {void} Returns nothing.
      */
     setTickInterval(interval: number): void;
 
@@ -800,12 +932,15 @@ export interface Time extends Initializable {
      * Sets the minimum tick interval.
      *
      * @param {number} interval - The new minimum tick interval in milliseconds.
+     * @returns {void} Returns nothing.
      */
     setMinTickInterval(interval: number): void;
 
     /**
      * Captures the current tick interval as the initial state.
      * Use this after games have set their starting speed.
+     *
+     * @returns {void} Returns nothing.
      */
     captureInitialState(): void;
 }
@@ -839,6 +974,7 @@ export interface SoundModule extends Initializable {
 
     /**
      * Toggles the master mute setting.
+     * @returns {void} Returns nothing.
      */
     toggleMute(): void;
 
@@ -857,11 +993,13 @@ export interface TimePerformanceMonitor {
      * Updates performance calculations.
      *
      * @param {number} deltaTime - Time elapsed since last frame.
+     * @returns {void} Returns nothing.
      */
     update(deltaTime: number): void;
 
     /**
      * Records a logic tick occurrence for TPS calculation.
+     * @returns {void} Returns nothing.
      */
     logTick(): void;
 
@@ -870,6 +1008,7 @@ export interface TimePerformanceMonitor {
      *
      * @param {p5} p - The P5 instance to draw on.
      * @param {number} tickInterval - The expected tick interval.
+     * @returns {void} Returns nothing.
      */
     render(p: p5, tickInterval: number): void;
 }
@@ -888,11 +1027,13 @@ export interface Score {
      * Adds points to the score, applying the current multiplier.
      *
      * @param {number} amount - Base points to add.
+     * @returns {void} Returns nothing.
      */
     increaseScore(amount: number): void;
 
     /**
      * Resets the score to zero.
+     * @returns {void} Returns nothing.
      */
     resetScore(): void;
 
@@ -917,11 +1058,13 @@ export interface Score {
      * Increases the difficulty level.
      *
      * @param {number} amount - Levels to advance.
+     * @returns {void} Returns nothing.
      */
     increaseLevel(amount: number): void;
 
     /**
      * Resets the level to the starting value (1).
+     * @returns {void} Returns nothing.
      */
     resetLevel(): void;
 
@@ -929,6 +1072,7 @@ export interface Score {
      * Sets up the game high score.
      *
      * @param {string} id - The game ID.
+     * @returns {void} Returns nothing.
      */
     setupGameHighScore(id: string): void;
 }
@@ -940,21 +1084,25 @@ export interface Session extends StateSyncable, Debuggable {
      * Registers a serializable object to be saved in the session.
      *
      * @param {Serializable} serializable - The object to register.
+     * @returns {void} Returns nothing.
      */
     register(serializable: Serializable): void;
     /**
      * Creates or updates the current session.
+     * @returns {void} Returns nothing.
      */
     saveSession(): void;
 
     /**
      * Clears the current session.
+     * @returns {void} Returns nothing.
      */
     clearSession(): void;
 
     /**
      * Sets whether the session is enabled.
      * @param {boolean} enabled - Whether the session should be enabled.
+     * @returns {void} Returns nothing.
      */
     setSessionEnabled(enabled: boolean): void;
 
@@ -968,11 +1116,13 @@ export interface Session extends StateSyncable, Debuggable {
     /**
      * Sets the function to be called when the session modal should be shown.
      * @param {function} showModal - The function to be called.
+     * @returns {void} Returns nothing.
      */
     setShowModalFunction(showModal: (onConfirm: () => void, onCancel: () => void) => void): void;
     /**
      * Sets the function to be called when the session is canceled/cleared to reset the game.
      * @param {function} resetFn - The function to be called.
+     * @returns {void} Returns nothing.
      */
     setResetFunction(resetFn: () => void): void;
 }

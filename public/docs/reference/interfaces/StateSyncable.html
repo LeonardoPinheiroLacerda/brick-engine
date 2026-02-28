@@ -443,18 +443,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#methods">2. Methods</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#properties">2. Properties</a></li>
+<li><a href="#methods">3. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#syncstatestate-state-void">2.1. <code>syncState(state: State): void</code></a></li>
+<li><a href="#syncstatestate-state-void">3.1. <code>syncState(state: State): void</code></a></li>
 </ul>
 </li>
-<li><a href="#general-usage">3. General Usage</a></li>
+<li><a href="#general-usage">4. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Contract for modules that must react to global state changes.</p>
@@ -462,7 +464,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -486,10 +488,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">3. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">2.1. <code>syncState(state: <a href="modules/State.html">State</a>): void</code></a></h3>
+<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">3.1. <code>syncState(state: <a href="modules/State.html">State</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Links the module instance and allows it to subscribe to properties.</p>
 </div>
@@ -519,7 +521,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">4. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../modules/GameSound.html">GameSound</a></code> and <code><a href="../modules/GameScore.html">GameScore</a></code>. During the start-up sequence, the engine calls <code>syncState()</code> on these modules to ensure they have the latest references to <code>muted</code> flags and <code>highScore</code> data.</p>

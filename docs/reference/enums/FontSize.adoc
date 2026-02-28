@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Predefined logic scales for the retro pixelated typography.
 
 == Values

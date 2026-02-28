@@ -14,6 +14,13 @@ type DebuggerProperty = {
     element: p5.Element;
 };
 
+/**
+ * Specialized DOM overlay for runtime system inspection outside Canvas contexts.
+ *
+ * Implements the {@link Initializable} lifecycle pattern. Automatically binds
+ * to dynamic engine states injecting strictly formatted HTML strings aggregating
+ * whatever data active developers pipe through `getDebugData`.
+ */
 export default class NewDebugger implements Initializable {
     private _gameModules: GameModules;
 
@@ -23,6 +30,11 @@ export default class NewDebugger implements Initializable {
         this._gameModules = gameModules;
     }
 
+    /**
+     * Generates and mounts the initial technical read-outs strictly if `configs` allow it.
+     *
+     * @returns {void} Returns nothing.
+     */
     setup() {
         if (!configs.game.debugger.enabled) return;
         const { p } = RendererContext;
@@ -107,11 +119,22 @@ export default class NewDebugger implements Initializable {
         });
     }
 
+    /**
+     * Hotswaps the array of objects queried by the debugging module during execution.
+     *
+     * @param {GameModules} gameModules - The new collection overriding current tracking configurations.
+     * @returns {void} Returns nothing.
+     */
     setGameModules(gameModules: GameModules) {
         this._gameModules = gameModules;
         this.setup();
     }
 
+    /**
+     * Executes the rapid frame translation pasting mapped numbers and string states into browser Text Nodes.
+     *
+     * @returns {void} Returns nothing.
+     */
     update() {
         this._moduleElements.forEach(moduleProperty => {
             const data = moduleProperty.module.getDebugData();

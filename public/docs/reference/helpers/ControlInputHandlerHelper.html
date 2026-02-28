@@ -7,6 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="description" content="Utilities for normalizing raw hardware keyboard events into abstract ControlKey actions.">
 <meta name="keywords" content="input, handler, keyboard, normalization, helper">
+<meta name="author" content="== Architectural Purpose">
 <title>ControlInputHandlerHelper Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -440,6 +441,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>ControlInputHandlerHelper Reference</h1>
+<div class="details">
+<span id="author" class="author">== Architectural Purpose</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -457,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>ControlInputHandlerHelper</code> manages the complexity of input timing, such as identifying the difference between a quick "press" and a sustained "hold".</p>
+<p>The <code>ControlInputHandlerHelper</code> manages the complexity of input timing, normalizing raw hardware keyboard events or UI button clicks into abstract <code><a href="../enums/ControlKey.html">ControlKey</a></code> actions. It handles the nuance between a quick "press" and a sustained "hold", offloading timer logic from the core <code><a href="../modules/GameControl.html">GameControl</a></code> module.</p>
 </div>
 </div>
 </div>
@@ -494,8 +498,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../enums/ControlKey.html">ControlKey</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key being interacted with.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The abstract configured identity of the control key being interacted with.</p></td>
 </tr>
 </tbody>
 </table>
@@ -539,8 +543,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../enums/ControlKey.html">ControlKey</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The key that was released.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact registered identity of the control key that was released.</p></td>
 </tr>
 </tbody>
 </table>

@@ -442,35 +442,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_lifecycle">1. Lifecycle</a>
+<li><a href="#_architectural_purpose">1. Architectural Purpose</a></li>
+<li><a href="#_lifecycle">2. Lifecycle</a>
 <ul class="sectlevel2">
-<li><a href="#_setup_void">1.1. <code>setup(): void</code></a></li>
-<li><a href="#_showonconfirm_void_oncancel_void_void">1.2. <code>show(onConfirm: () &#8658; void, onCancel: () &#8658; void): void</code></a></li>
+<li><a href="#_setup_void">2.1. <code>setup(): void</code></a></li>
+<li><a href="#_showonconfirm_void_oncancel_void_void">2.2. <code>show(onConfirm: () &#8658; void, onCancel: () &#8658; void): void</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_architectural_purpose"><a class="link" href="#_architectural_purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>SessionModal</code> interacts directly with the DOM outside of the Canvas domain, creating standard HTML elements (divs and buttons) overlapping the P5.js context to prompt users whether they wish to resume their previous game session.</p>
+<p>The <code>SessionModal</code> generates an explicit blocking UI boundary forcing the User to interpret corrupted or previously interrupted memory states safely. Designed as a standalone Vanilla DOM layer hovering entirely above the game Engine canvas, it acts as a synchronized <code>Promise</code> wall. The background engine pauses initial boot sequences until physical button listeners explicitly return 'Confirm' or 'Cancel', thus preventing corrupt states from overriding standard initialization.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_lifecycle"><a class="link" href="#_lifecycle">1. Lifecycle</a></h2>
+<h2 id="_lifecycle"><a class="link" href="#_lifecycle">2. Lifecycle</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_setup_void"><a class="link" href="#_setup_void">1.1. <code>setup(): void</code></a></h3>
+<h3 id="_setup_void"><a class="link" href="#_setup_void">2.1. <code>setup(): void</code></a></h3>
 <div class="paragraph">
 <p>Creates the necessary DOM layer elements. Called typically during engine bootstrap by the <code><a href="../../view/GameView.html">GameView</a></code>.
 Constructs the background container wrapper, title frames, dialogue text, and confirm/cancel action buttons. Sets their initial state utilizing the CSS <code>.hidden</code> class to keep them out of view until queried.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_showonconfirm_void_oncancel_void_void"><a class="link" href="#_showonconfirm_void_oncancel_void_void">1.2. <code>show(onConfirm: () &#8658; void, onCancel: () &#8658; void): void</code></a></h3>
+<h3 id="_showonconfirm_void_oncancel_void_void"><a class="link" href="#_showonconfirm_void_oncancel_void_void">2.2. <code>show(onConfirm: () &#8658; void, onCancel: () &#8658; void): void</code></a></h3>
 <div class="paragraph">
 <p>Reveals the modal.</p>
 </div>
@@ -513,7 +515,7 @@ Constructs the background container wrapper, title frames, dialogue text, and co
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-22 17:04:18 -0300
+Last updated 2026-02-27 21:56:50 -0300
 </div>
 </div>
 </body>

@@ -443,13 +443,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#values">1. Values</a></li>
-<li><a href="#general-usage">2. General Usage</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#values">2. Values</a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Defines the available visual theme colors for grid cells and text.</p>
@@ -457,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="values"><a class="link" href="#values">1. Values</a></h2>
+<h2 id="values"><a class="link" href="#values">2. Values</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -505,12 +507,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>INACTIVE</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Faded color for background/ghost elements.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SHADOW</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Intermediate color between default and inactive for dynamic shadows.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Colors are used throughout the engine to theme the <code><a href="../modules/GameGrid.html">GameGrid</a></code> and the <code>HUD</code>. Use these constants when calling methods like <code>grid.setCellColor(coord, Color.RED)</code>.</p>

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Abstraction layer mapping hardware inputs to logical engine actions.
 
 == Values

@@ -9,9 +9,12 @@ import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 
 /**
- * Composite renderer that manages multiple sub-renderers.
- * Orchestrates the rendering of the main display and the HUD.
- * Handles the calculation of shared rendering metrics (sizes, positions) to ensure consistency.
+ * Orchestrating composite module acting as the visual context manager.
+ *
+ * Implements the {@link RendererComposite} pattern to aggregate the specific display and HUD
+ * pipeline. It bridges the mathematical constraints (e.g. converting a relative 0.0-1.0
+ * grid position into strict P5 canvas pixels) and ensures layout recalculations happen exactly
+ * once during initialization to avoid expensive bounds-checking inside the main draw loops.
  */
 export default class GameRenderer implements RendererComposite, Debuggable {
     private _renderers: Renderer[];
@@ -23,17 +26,20 @@ export default class GameRenderer implements RendererComposite, Debuggable {
     private _rendererMetrics: RendererMetrics;
 
     /**
-     * Adds a sub-renderer to the composition.
+     * Injects a sub-renderer routine into the core pipeline queue.
      *
-     * @param {Renderer} renderer - The renderer to add.
+     * @param {Renderer} renderer - The specific layer or boundary drawer.
+     * @returns {void} Returns nothing.
      */
     addRenderer(renderer: Renderer) {
         this._renderers.push(renderer);
     }
 
     /**
-     * Initializes all sub-renderers and calculates layout metrics.
-     * This method must be called before rendering begins.
+     * Instantiates system geometries and pushes strict calculated metrics down the pipeline.
+     * Must be invoked prior to the first rendering frame trigger.
+     *
+     * @returns {void} Returns nothing.
      */
     setup() {
         this._displayRenderer = new DisplayRenderer();
@@ -50,8 +56,9 @@ export default class GameRenderer implements RendererComposite, Debuggable {
     }
 
     /**
-     * Calculates the layout dimensions for the display and HUD.
-     * Based on screen configuration and relative values.
+     * Pre-compiles absolute geometric values resolving relative design layouts against the physical hardware space.
+     *
+     * @returns {void} Returns nothing.
      */
     private _calculateMetrics() {
         const { width, height, margin: displayMargin } = configs.screenLayout.display;
@@ -96,11 +103,11 @@ export default class GameRenderer implements RendererComposite, Debuggable {
     }
 
     /**
-     * Delegating render method.
-     * Calls render on all registered sub-renderers.
+     * Exposes the single dispatch drawing sequence forwarding contexts down the entire renderer queue.
      *
-     * @param {Cell[][]} grid - The main game grid.
-     * @param {GameModules} modules - The game modules collection.
+     * @param {Cell[][]} grid - The logical playfield state matrix.
+     * @param {GameModules} modules - The active state containers injected dynamically.
+     * @returns {void} Returns nothing.
      */
     render(grid: Cell[][], modules: GameModules) {
         this._renderers.forEach(renderer => renderer.render(grid, modules));

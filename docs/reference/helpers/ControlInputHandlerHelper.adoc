@@ -11,8 +11,9 @@
 :experimental:
 :idprefix:
 :idseparator: -
+== Architectural Purpose
 
-The `ControlInputHandlerHelper` manages the complexity of input timing, such as identifying the difference between a quick "press" and a sustained "hold".
+The `ControlInputHandlerHelper` manages the complexity of input timing, normalizing raw hardware keyboard events or UI button clicks into abstract `xref:../enums/ControlKey.adoc[ControlKey]` actions. It handles the nuance between a quick "press" and a sustained "hold", offloading timer logic from the core `xref:../modules/GameControl.adoc[GameControl]` module.
 
 == Usage
 
@@ -29,7 +30,7 @@ Processes a new interaction with a specific key.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |xref:../enums/ControlKey.adoc[ControlKey] |The virtual key being interacted with.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The abstract configured identity of the control key being interacted with.
 |===
 
 **Behavior**
@@ -49,7 +50,7 @@ Stops tracking an active interaction.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |xref:../enums/ControlKey.adoc[ControlKey] |The key that was released.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The exact registered identity of the control key that was released.
 |===
 
 **Behavior**

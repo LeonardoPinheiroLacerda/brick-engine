@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameControl` module handles user input from physical keyboards and virtual buttons. It provides an event-based system for reacting to player actions.
+== Architectural Purpose
+
+The `GameControl` module functions as the central event bus translating physical browser and hardware DOM inputs into abstract game behaviors. It encapsulates raw environment listeners so distinct module parts can effortlessly subscribe to simplified `xref:../enums/ControlKey.adoc[ControlKey]` hooks. Vitally, it centrally gates input propagation depending intelligently on the global engine `xref:GameState.adoc[GameState]` (e.g. blocking game keys while in modals).
 
 == Supported Keys (`ControlKey`)
 
@@ -40,9 +42,9 @@ Registers a callback for a specific input event.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key to monitor (e.g., `ControlKey.ACTION`).
-|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The type of trigger (`PRESSED` or `HELD`).
-|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The function to execute when the event occurs.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The explicit abstract virtual key string mapping to monitor cleanly (e.g., `ControlKey.ACTION`).
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The lifecycle trigger distinction (`PRESSED` or `HELD`).
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The injected execution sequence called securely when the payload completes.
 |===
 
 **Behavior**
@@ -70,9 +72,9 @@ Removes an existing subscription.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The virtual key.
-|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The trigger type.
-|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The reference to the function to remove.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The registered virtual key name.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The exact behavior trigger.
+|`callback` |`xref:../types/ControlCallback.adoc[ControlCallback]` |The exact memory reference mapping previously used to construct the subscription block.
 |===
 
 **Behavior**
@@ -194,8 +196,8 @@ Manually triggers an input event.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The key to notify.
-|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The trigger type to simulate.
+|`key` |`xref:../enums/ControlKey.adoc[ControlKey]` |The exact abstracted key intent generating the signal.
+|`type` |`xref:../enums/ControlEventType.adoc[ControlEventType]` |The physical user behavior type causing the event (e.g., `PRESSED`).
 |===
 
 **Behavior**

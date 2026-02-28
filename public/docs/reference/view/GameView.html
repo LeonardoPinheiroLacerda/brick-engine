@@ -442,34 +442,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_features">1. Features</a></li>
-<li><a href="#_lifecycle">2. Lifecycle</a>
+<li><a href="#_architectural_purpose">1. Architectural Purpose</a></li>
+<li><a href="#_features">2. Features</a></li>
+<li><a href="#_lifecycle">3. Lifecycle</a>
 <ul class="sectlevel2">
-<li><a href="#_constructorparent_htmlelement">2.1. <code>constructor(parent: HTMLElement)</code></a></li>
-<li><a href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">2.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></li>
-<li><a href="#_setupdebuggergamemodules_gamemodules_void">2.3. <code>setupDebugger(gameModules: GameModules): void</code></a></li>
-<li><a href="#_setupsessionmodal_void">2.4. <code>setupSessionModal(): void</code></a></li>
+<li><a href="#_constructorparent_htmlelement">3.1. <code>constructor(parent: HTMLElement)</code></a></li>
+<li><a href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">3.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></li>
+<li><a href="#_setupdebuggergamemodules_gamemodules_void">3.3. <code>setupDebugger(gameModules: GameModules): void</code></a></li>
+<li><a href="#_setupsessionmodal_void">3.4. <code>setupSessionModal(): void</code></a></li>
 </ul>
 </li>
-<li><a href="#_controls_binding">3. Controls Binding</a>
+<li><a href="#_controls_binding">4. Controls Binding</a>
 <ul class="sectlevel2">
-<li><a href="#_bindcontrolscontrol_control_void">3.1. <code>bindControls(control: Control): void</code></a></li>
-<li><a href="#_unbindcontrols_void">3.2. <code>unbindControls(): void</code></a></li>
+<li><a href="#_bindcontrolscontrol_control_void">4.1. <code>bindControls(control: Control): void</code></a></li>
+<li><a href="#_unbindcontrols_void">4.2. <code>unbindControls(): void</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_architectural_purpose"><a class="link" href="#_architectural_purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameView</code> class acts as the primary View controller in the MVC architecture. It directs the layout, invokes underlying UI components, initializes DOM observers (like the Debugger and Modals), and bridges hardware input (clicks) to engine controls.</p>
+<p>The <code>GameView</code> class acts as the primary View controller bridging logical engine commands to DOM behaviors. By isolating native HTML mutations, Layout calculations, and Button listener bindings away from the standard Canvas execution loops, it guarantees the graphical application skeleton scales and interacts seamlessly matching CSS constraints, without corrupting cross-session physics data.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_features"><a class="link" href="#_features">1. Features</a></h2>
+<h2 id="_features"><a class="link" href="#_features">2. Features</a></h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -487,10 +489,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_lifecycle"><a class="link" href="#_lifecycle">2. Lifecycle</a></h2>
+<h2 id="_lifecycle"><a class="link" href="#_lifecycle">3. Lifecycle</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_constructorparent_htmlelement"><a class="link" href="#_constructorparent_htmlelement">2.1. <code>constructor(parent: HTMLElement)</code></a></h3>
+<h3 id="_constructorparent_htmlelement"><a class="link" href="#_constructorparent_htmlelement">3.1. <code>constructor(parent: HTMLElement)</code></a></h3>
 <div class="paragraph">
 <p>Initializes the view, storing the specific parent node where the engine interface will attach itself.</p>
 </div>
@@ -521,9 +523,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_build_canvas_p5_element_canvaswidth_number_canvasheight_number"><a class="link" href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">2.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></h3>
+<h3 id="_build_canvas_p5_element_canvaswidth_number_canvasheight_number"><a class="link" href="#_build_canvas_p5_element_canvaswidth_number_canvasheight_number">3.2. <code>build(): { canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code></a></h3>
 <div class="paragraph">
 <p>Builds the visual structure by appending structural layers, generating physical buttons, and initializing canvas metrics.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong></p>
+</div>
+<div class="paragraph">
+<p><code>{ canvas: p5.Element; canvasWidth: number; canvasHeight: number }</code> - A strictly bound dimensions object mapping physical canvas bounds.</p>
 </div>
 <div class="paragraph">
 <p><strong>Behavior</strong></p>
@@ -534,14 +542,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setupdebuggergamemodules_gamemodules_void"><a class="link" href="#_setupdebuggergamemodules_gamemodules_void">2.3. <code>setupDebugger(gameModules: GameModules): void</code></a></h3>
+<h3 id="_setupdebuggergamemodules_gamemodules_void"><a class="link" href="#_setupdebuggergamemodules_gamemodules_void">3.3. <code>setupDebugger(gameModules: GameModules): void</code></a></h3>
 <div class="paragraph">
 <p>Initializes and configures the tracking interface connecting registered <code>gameModules</code> to the internal Debugger overlay instance.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_setupsessionmodal_void"><a class="link" href="#_setupsessionmodal_void">2.4. <code>setupSessionModal(): void</code></a></h3>
+<h3 id="_setupsessionmodal_void"><a class="link" href="#_setupsessionmodal_void">3.4. <code>setupSessionModal(): void</code></a></h3>
 <div class="paragraph">
 <p>Orchestrates the DOM creation for the active-session modal element (<code>SessionModal.setup()</code>), allowing transparent pause menus.</p>
 </div>
@@ -549,10 +557,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_controls_binding"><a class="link" href="#_controls_binding">3. Controls Binding</a></h2>
+<h2 id="_controls_binding"><a class="link" href="#_controls_binding">4. Controls Binding</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_bindcontrolscontrol_control_void"><a class="link" href="#_bindcontrolscontrol_control_void">3.1. <code>bindControls(control: Control): void</code></a></h3>
+<h3 id="_bindcontrolscontrol_control_void"><a class="link" href="#_bindcontrolscontrol_control_void">4.1. <code>bindControls(control: Control): void</code></a></h3>
 <div class="paragraph">
 <p>Pairs DOM click events with logical Engine actions.</p>
 </div>
@@ -589,7 +597,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="_unbindcontrols_void"><a class="link" href="#_unbindcontrols_void">3.2. <code>unbindControls(): void</code></a></h3>
+<h3 id="_unbindcontrols_void"><a class="link" href="#_unbindcontrols_void">4.2. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Completely nullifies event listeners on all tracked buttons, preventing interactions when the execution stack prohibits it (e.g., stopping the engine entirely, removing focus).</p>
 </div>
@@ -599,7 +607,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-25 03:55:04 -0300
+Last updated 2026-02-27 21:56:46 -0300
 </div>
 </div>
 </body>

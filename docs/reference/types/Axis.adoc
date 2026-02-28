@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Represents an axis in a 2D coordinate system.
 
 == Possible Values

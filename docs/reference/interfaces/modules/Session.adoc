@@ -7,6 +7,8 @@
 :sectlinks:
 :icons: font
 
+== Architectural Purpose
+
 The `Session` interface defines the core contract for the game's session orchestration. It handles restoring persistent `xref:../Serializable.adoc[Serializable]` data (such as progressive scores or active level states) and presenting UI mechanisms to the user when playing an existing session.
 
 This module is a core part of the `xref:GameModules.adoc[GameModules]` composite.

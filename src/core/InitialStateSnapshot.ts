@@ -1,19 +1,29 @@
+/**
+ * Architectural utility strictly handling transparent auto-save points for custom class boundaries.
+ *
+ * Acts as an agnostic cloning proxy safely evaluating and storing external state payloads without
+ * developers writing boilerplate serialization functions inside native subclasses each time.
+ */
 export default class InitialStateSnapshot {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private _initialState: Map<string, any> = new Map();
     private _baseProperties: string[] = [];
 
     /**
-     * Captures the base properties of the instance before any custom client properties are added.
-     * @param instance The object instance to extract keys from.
+     * Caches native structure references dictating immutable engine properties to ignore visually.
+     *
+     * @param {object} instance - The internal unpopulated layout.
+     * @returns {void} Returns nothing.
      */
     captureBaseProperties(instance: object): void {
         this._baseProperties = Object.keys(instance);
     }
 
     /**
-     * Stores the initial state of custom client properties.
-     * @param instance The object instance containing custom properties.
+     * Caches a fully deep-cloned structural reference encapsulating foreign client properties exactly.
+     *
+     * @param {object} instance - The populated concrete object class.
+     * @returns {void} Returns nothing.
      */
     captureInitialState(instance: object): void {
         console.log('capturing initial state for snapshot');
@@ -53,8 +63,10 @@ export default class InitialStateSnapshot {
     }
 
     /**
-     * Restores the captured custom properties back to the instance.
-     * @param instance The object instance to restore properties onto.
+     * Re-assigns the securely cloned caching snapshot values strictly bypassing getter mutation restrictions.
+     *
+     * @param {object} instance - The active object intended to be hard reset entirely.
+     * @returns {void} Returns nothing.
      */
     restoreInitialState(instance: object): void {
         console.log('restoring initial snapshot');

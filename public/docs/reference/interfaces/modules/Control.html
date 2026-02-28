@@ -443,22 +443,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#methods">1. Methods</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#methods">2. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#notifykey-controlkey-type-controleventtype-void">1.1. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
-<li><a href="#setmodulesmodules-gamemodules-void">1.2. <code>setModules(modules: GameModules): void</code></a></li>
-<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.3. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.4. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unbindcontrols-void">1.5. <code>unbindControls(): void</code></a></li>
-<li><a href="#bindcontrols-void">1.6. <code>bindControls(): void</code></a></li>
+<li><a href="#notifykey-controlkey-type-controleventtype-void">2.1. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
+<li><a href="#setmodulesmodules-gamemodules-void">2.2. <code>setModules(modules: GameModules): void</code></a></li>
+<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unbindcontrols-void">2.5. <code>unbindControls(): void</code></a></li>
+<li><a href="#bindcontrols-void">2.6. <code>bindControls(): void</code></a></li>
 </ul>
 </li>
-<li><a href="#general-usage">2. General Usage</a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Interface for input handling and event-driven control distribution.</p>
@@ -466,10 +468,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">1.1. <code>notify(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>): void</code></a></h3>
+<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">2.1. <code>notify(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Triggers an event manually. Usually called by hardware drivers (like Keyboard listeners).</p>
 </div>
@@ -503,7 +505,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setmodulesmodules-gamemodules-void"><a class="link" href="#setmodulesmodules-gamemodules-void">1.2. <code>setModules(modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
+<h3 id="setmodulesmodules-gamemodules-void"><a class="link" href="#setmodulesmodules-gamemodules-void">2.2. <code>setModules(modules: <a href="../GameModules.html">GameModules</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Provides the context registry required for <code><a href="../../types/GameEvent.html">GameEvent</a></code> construction.</p>
 </div>
@@ -532,7 +534,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.3. <code>subscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
+<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a function to be executed when the specified input occurs.</p>
 </div>
@@ -571,7 +573,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">1.4. <code>unsubscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
+<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribe(key: <a href="../../enums/ControlKey.html">ControlKey</a>, type: <a href="../../enums/ControlEventType.html">ControlEventType</a>, callback: <a href="../../types/ControlCallback.html">ControlCallback</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Detaches a previously registered input listener.</p>
 </div>
@@ -610,14 +612,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">1.5. <code>unbindControls(): void</code></a></h3>
+<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">2.5. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Temporarily disables all input listeners.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">1.6. <code>bindControls(): void</code></a></h3>
+<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">2.6. <code>bindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Re-enables input listeners.</p>
 </div>
@@ -625,7 +627,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/GameControl.html">GameControl</a></code>. Games use this to react to player movements (<code><a href="../../enums/ControlKey.html">LEFT</a></code>, <code><a href="../../enums/ControlKey.html">RIGHT</a></code>) or actions (<code><a href="../../enums/ControlKey.html">ACTION</a></code>).</p>

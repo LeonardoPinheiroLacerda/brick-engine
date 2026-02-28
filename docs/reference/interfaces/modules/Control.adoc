@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface for input handling and event-driven control distribution.
 
 == Methods

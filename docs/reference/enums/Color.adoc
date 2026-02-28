@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Defines the available visual theme colors for grid cells and text.
 
 == Values
@@ -28,6 +30,7 @@ Defines the available visual theme colors for grid cells and text.
 |`RED` |Warning or obstacle red color.
 |`YELLOW` |Gold/Yellow brick color.
 |`INACTIVE` |Faded color for background/ghost elements.
+|`SHADOW` |Intermediate color between default and inactive for dynamic shadows.
 |===
 
 == General Usage

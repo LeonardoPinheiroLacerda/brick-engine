@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Represents a collection of `xref:Cell.adoc[Cell]` objects that form a cohesive game piece or a pattern to be "stamped" onto the grid.
 
 == Definition

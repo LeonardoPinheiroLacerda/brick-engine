@@ -443,23 +443,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#methods">2. Methods</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#properties">2. Properties</a></li>
+<li><a href="#methods">3. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#increasescoreamount-number-void">2.1. <code>increaseScore(amount: number): void</code></a></li>
-<li><a href="#resetscore-void">2.2. <code>resetScore(): void</code></a></li>
-<li><a href="#getformattedscoredigits-number-string">2.3. <code>getFormattedScore(digits?: number): string</code></a></li>
-<li><a href="#increaselevelamount-number-void">2.4. <code>increaseLevel(amount: number): void</code></a></li>
-<li><a href="#resetlevel-void">2.5. <code>resetLevel(): void</code></a></li>
-<li><a href="#setupgamehighscoreid-string-void">2.6. <code>setupGameHighScore(id: string): void</code></a></li>
+<li><a href="#increasescoreamount-number-void">3.1. <code>increaseScore(amount: number): void</code></a></li>
+<li><a href="#resetscore-void">3.2. <code>resetScore(): void</code></a></li>
+<li><a href="#getformattedscoredigits-number-string">3.3. <code>getFormattedScore(digits?: number): string</code></a></li>
+<li><a href="#increaselevelamount-number-void">3.4. <code>increaseLevel(amount: number): void</code></a></li>
+<li><a href="#resetlevel-void">3.5. <code>resetLevel(): void</code></a></li>
+<li><a href="#setupgamehighscoreid-string-void">3.6. <code>setupGameHighScore(id: string): void</code></a></li>
 </ul>
 </li>
-<li><a href="#general-usage">3. General Usage</a></li>
+<li><a href="#general-usage">4. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Interface for tracking session performance, multipliers, and levels.</p>
@@ -467,7 +469,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -506,10 +508,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">3. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">2.1. <code>increaseScore(amount: number): void</code></a></h3>
+<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">3.1. <code>increaseScore(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Adds points to the total, automatically applying any active multipliers.</p>
 </div>
@@ -538,14 +540,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="resetscore-void"><a class="link" href="#resetscore-void">2.2. <code>resetScore(): void</code></a></h3>
+<h3 id="resetscore-void"><a class="link" href="#resetscore-void">3.2. <code>resetScore(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the session score to <code>0</code>.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">2.3. <code>getFormattedScore(digits?: number): string</code></a></h3>
+<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">3.3. <code>getFormattedScore(digits?: number): string</code></a></h3>
 <div class="paragraph">
 <p>Returns a string representation of the score padded with leading zeros (defaulting to 6 digits).</p>
 </div>
@@ -580,7 +582,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">2.4. <code>increaseLevel(amount: number): void</code></a></h3>
+<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">3.4. <code>increaseLevel(amount: number): void</code></a></h3>
 <div class="paragraph">
 <p>Increments the current game level up to <code>maxLevel</code>.</p>
 </div>
@@ -609,14 +611,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">2.5. <code>resetLevel(): void</code></a></h3>
+<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">3.5. <code>resetLevel(): void</code></a></h3>
 <div class="paragraph">
 <p>Resets the game difficulty level to its initial value.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setupgamehighscoreid-string-void"><a class="link" href="#setupgamehighscoreid-string-void">2.6. <code>setupGameHighScore(id: string): void</code></a></h3>
+<h3 id="setupgamehighscoreid-string-void"><a class="link" href="#setupgamehighscoreid-string-void">3.6. <code>setupGameHighScore(id: string): void</code></a></h3>
 <div class="paragraph">
 <p>Initializes the high score for a specific game, loading it from namespaced storage.</p>
 </div>
@@ -646,7 +648,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">4. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/GameScore.html">GameScore</a></code>. It handles the numeric progression of the game and formats the data for display on the HUD.</p>

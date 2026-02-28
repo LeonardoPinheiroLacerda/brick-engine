@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Enumerates the different ways an input can be triggered.
 
 == Values

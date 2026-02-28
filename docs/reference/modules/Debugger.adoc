@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `Debugger` class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the `xref:../interfaces/Debuggable.adoc[Debuggable]` interface.
+== Architectural Purpose
+
+The `Debugger` module establishes an isolated inspection perimeter generating `<details>` tags mirroring runtime property values. Its architecture separates text-rendering diagnostics strictly from the hardware-accelerated Canvas loop allowing it to freely display un-optimized dynamic string representations of data models (`xref:../interfaces/Debuggable.adoc[Debuggable]`) without plummeting framerates dragging continuous geometric translations.
 
 == API Reference
 

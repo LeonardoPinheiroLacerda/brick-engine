@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Enums defining the text anchor points on the canvas.
 
 == `FontAlign`

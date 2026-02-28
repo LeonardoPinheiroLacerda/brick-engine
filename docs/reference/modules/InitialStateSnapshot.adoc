@@ -8,7 +8,9 @@
 :idprefix:
 :idseparator: -
 
-The `InitialStateSnapshot` class manages the transparent caching of a game's state. It is an internal orchestrator utilized by the `Game` base class to capture the properties added by the developer during `setupGame()` and allows restoring them when the game is reset.
+== Architectural Purpose
+
+The `InitialStateSnapshot` acts as an agnostic structural utility handling transparent auto-save boundaries. Rather than forcing developers to write boilerplate serialization functions for their native sub-classes, the Engine relies on this module to dynamically iterate, deeply clone, and selectively safely cache customized attributes into local memory buffers to restore configurations effortlessly upon reset triggers.
 
 == Methods
 

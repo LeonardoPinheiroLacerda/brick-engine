@@ -6,8 +6,12 @@ import GameControlKeyBinding from './GameControlKeyBinding';
 import EventEmitter, { EventSuffix } from '../../event/EventEmitter';
 
 /**
- * Manages game control inputs and event dispatching.
- * Acts as the central hub for handling user input and notifying subscribers.
+ * Central event bus module processing physical hardware inputs into abstract engine events.
+ *
+ * It establishes a dedicated hub that isolates browser/device specific listeners out from
+ * the game domains. It maps normalized key presses directly to {@link ControlKey} abstractions
+ * and actively restricts event propagation downstream depending on the core {@link GameState}
+ * (e.g. blocking inputs during session modals or paused states).
  */
 export default class GameControl implements Control, Debuggable {
     private _modules: GameModules;
@@ -16,8 +20,9 @@ export default class GameControl implements Control, Debuggable {
     private _activeListeners: Array<{ event: string; callback: ControlCallback }> = [];
 
     /**
-     * Initializes the control system.
-     * Sets up key bindings and prepares the input handler.
+     * Initializes the central control system and mounts physical browser DOM listeners.
+     *
+     * @returns {void} Returns nothing.
      */
     setup() {
         this._keyBinding = new GameControlKeyBinding(this);
@@ -26,7 +31,9 @@ export default class GameControl implements Control, Debuggable {
     }
 
     /**
-     * Unbinds all control event listeners.
+     * Unbinds all control event listeners and detaches physical DOM bindings.
+     *
+     * @returns {void} Returns nothing.
      */
     unbindControls() {
         this._keyBinding.unbindControls();
@@ -37,16 +44,19 @@ export default class GameControl implements Control, Debuggable {
     }
 
     /**
-     * Binds all control event listeners.
+     * Re-binds physical control event listeners if detached.
+     *
+     * @returns {void} Returns nothing.
      */
     bindControls() {
         this._keyBinding.bindControls();
     }
 
     /**
-     * Injects the game modules for context-aware events.
+     * Injects the active context game modules needed for state-aware event blocking logic.
      *
-     * @param {GameModules} modules - The collected game modules.
+     * @param {GameModules} modules - The active registered cluster of generic game modules.
+     * @returns {void} Returns nothing.
      */
     setModules(modules: GameModules): void {
         this._modules = modules;
@@ -107,11 +117,13 @@ export default class GameControl implements Control, Debuggable {
     }
 
     /**
-     * Notifies subscribers of a control event.
+     * Natively triggers an abstract game event securely down the core pipeline.
+     * Processes strict architectural logic gates (e.g., blocking during modals) before broadcasting.
      *
-     * @param {ControlKey} key - The key triggering the event.
-     * @param {ControlEventType} type - The type of event.
-     * @throws {Error} If modules have not been initialized.
+     * @param {ControlKey} key - The abstract virtual key intent dispatching the signal.
+     * @param {ControlEventType} type - The behavior suffix (e.g. PRESSED vs HELD).
+     * @returns {void} Returns nothing.
+     * @throws {Error} Immediately if the foundational context modules have not yet been initialized.
      */
     notify(key: ControlKey, type: ControlEventType): void {
         if (!this._modules) {
@@ -146,9 +158,9 @@ export default class GameControl implements Control, Debuggable {
     }
 
     /**
-     * Retrieves debug information about the control system.
+     * Calculates debug metadata mapping arrays for the live diagnostics monitor.
      *
-     * @returns {Record<string, string | number | boolean>} The debug data.
+     * @returns {Record<string, string | number | boolean>} A shallow payload of the list length sizes.
      */
     getDebugData(): Record<string, string | number | boolean> {
         return {

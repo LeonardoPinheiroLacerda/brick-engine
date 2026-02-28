@@ -443,38 +443,40 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#supported-keys-controlkey">2. Supported Keys (<code>ControlKey</code>)</a></li>
+<li><a href="#api-reference">3. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
-<li><a href="#bindcontrols-void">2.11. <code>bindControls(): void</code></a></li>
-<li><a href="#unbindcontrols-void">2.12. <code>unbindControls(): void</code></a></li>
-<li><a href="#notifykey-controlkey-type-controleventtype-void">2.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">3.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">3.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></li>
+<li><a href="#bindcontrols-void">3.11. <code>bindControls(): void</code></a></li>
+<li><a href="#unbindcontrols-void">3.12. <code>unbindControls(): void</code></a></li>
+<li><a href="#notifykey-controlkey-type-controleventtype-void">3.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">3.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameControl</code> module handles user input from physical keyboards and virtual buttons. It provides an event-based system for reacting to player actions.</p>
+<p>The <code>GameControl</code> module functions as the central event bus translating physical browser and hardware DOM inputs into abstract game behaviors. It encapsulates raw environment listeners so distinct module parts can effortlessly subscribe to simplified <code><a href="../enums/ControlKey.html">ControlKey</a></code> hooks. Vitally, it centrally gates input propagation depending intelligently on the global engine <code><a href="GameState.html">GameState</a></code> (e.g. blocking game keys while in modals).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="supported-keys-controlkey"><a class="link" href="#supported-keys-controlkey">1. Supported Keys (<code>ControlKey</code>)</a></h2>
+<h2 id="supported-keys-controlkey"><a class="link" href="#supported-keys-controlkey">2. Supported Keys (<code>ControlKey</code>)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The engine maps physical keys to virtual engine keys:</p>
@@ -511,10 +513,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">3. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="subscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribekey-controlkey-type-controleventtype-callback-controlcallback-void">3.1. <code>subscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event.</p>
 </div>
@@ -536,17 +538,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key to monitor (e.g., <code>ControlKey.ACTION</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The explicit abstract virtual key string mapping to monitor cleanly (e.g., <code>ControlKey.ACTION</code>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The type of trigger (<code>PRESSED</code> or <code>HELD</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The lifecycle trigger distinction (<code>PRESSED</code> or <code>HELD</code>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute when the event occurs.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The injected execution sequence called securely when the payload completes.</p></td>
 </tr>
 </tbody>
 </table>
@@ -569,7 +571,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">2.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribekey-controlkey-type-controleventtype-callback-controlcallback-void">3.2. <code>unsubscribe(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing subscription.</p>
 </div>
@@ -591,17 +593,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The virtual key.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The registered virtual key name.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The trigger type.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact behavior trigger.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/ControlCallback.html">ControlCallback</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The reference to the function to remove.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact memory reference mapping previously used to construct the subscription block.</p></td>
 </tr>
 </tbody>
 </table>
@@ -614,7 +616,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.3. <code>subscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event ONLY when the game is on the Title Screen.</p>
 </div>
@@ -653,14 +655,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribefortitlescreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.4. <code>unsubscribeForTitleScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing Title Screen subscription.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.5. <code>subscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event ONLY when the game is on the Game Over Screen.</p>
 </div>
@@ -699,28 +701,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforgameoverscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.6. <code>unsubscribeForGameOverScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing Game Over Screen subscription.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.7. <code>subscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event ONLY during active gameplay. This is functionally equivalent to <code>subscribe</code> for control keys, but provides explicit intent.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforplayingscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.8. <code>unsubscribeForPlayingScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing Playing Screen subscription.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#subscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.9. <code>subscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a callback for a specific input event ONLY when the game is in a Paused state.</p>
 </div>
@@ -759,14 +761,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">2.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
+<h3 id="unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void"><a class="link" href="#unsubscribeforpausedscreenkey-controlkey-type-controleventtype-callback-controlcallback-void">3.10. <code>unsubscribeForPausedScreen(key: ControlKey, type: ControlEventType, callback: ControlCallback): void</code></a></h3>
 <div class="paragraph">
 <p>Removes an existing Paused Screen subscription.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">2.11. <code>bindControls(): void</code></a></h3>
+<h3 id="bindcontrols-void"><a class="link" href="#bindcontrols-void">3.11. <code>bindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Attaches low-level event listeners to the environment.</p>
 </div>
@@ -779,7 +781,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">2.12. <code>unbindControls(): void</code></a></h3>
+<h3 id="unbindcontrols-void"><a class="link" href="#unbindcontrols-void">3.12. <code>unbindControls(): void</code></a></h3>
 <div class="paragraph">
 <p>Detaches all input listeners and clears subscriptions.</p>
 </div>
@@ -792,7 +794,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">2.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></h3>
+<h3 id="notifykey-controlkey-type-controleventtype-void"><a class="link" href="#notifykey-controlkey-type-controleventtype-void">3.13. <code>notify(key: ControlKey, type: ControlEventType): void</code></a></h3>
 <div class="paragraph">
 <p>Manually triggers an input event.</p>
 </div>
@@ -814,12 +816,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlKey.html">ControlKey</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The key to notify.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact abstracted key intent generating the signal.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/ControlEventType.html">ControlEventType</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The trigger type to simulate.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The physical user behavior type causing the event (e.g., <code>PRESSED</code>).</p></td>
 </tr>
 </tbody>
 </table>
@@ -827,10 +829,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>Behavior</strong></p>
 </div>
 <div class="paragraph">
-<p>Executes all callbacks associated with the given key and event type, subject to the following state-based rules:</p>
+<p>Executes all callbacks associated with the given key and event type, subject to the following logic:</p>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p><strong>Session Modal / Unresolved (<code>isModalOpen() || !isSessionResolved()</code>)</strong>: All inputs are BLOCKED to prevent interactions while the user is making a session restoration choice via the <code><a href="../interfaces/modules/Session.html">Session</a></code> module.</p>
+</li>
 <li>
 <p><strong>System Off (<code>isOff()</code>)</strong>: Only the <code><a href="../enums/ControlKey.html">POWER</a></code> key is processed. All other keys are ignored.</p>
 </li>
@@ -843,12 +848,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Throws an error</strong> if the game modules have not been initialized. It is primarily used internally by the input handler but can be used for automated testing or input simulation.</p>
+<p><strong>Throws an error</strong> if the game modules have not been initialized.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">3.14. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

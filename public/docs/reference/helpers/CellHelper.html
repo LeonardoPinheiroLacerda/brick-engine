@@ -7,6 +7,7 @@
 <meta name="generator" content="Asciidoctor 2.0.20">
 <meta name="description" content="Static factory methods for creating and initializing Cell objects consistently.">
 <meta name="keywords" content="cell, factory, grid, helper">
+<meta name="author" content="== Architectural Purpose">
 <title>CellHelper Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -440,6 +441,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>CellHelper Reference</h1>
+<div class="details">
+<span id="author" class="author">== Architectural Purpose</span><br>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -455,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>CellHelper</code> provides static factory methods for creating and initializing <code>Cell</code> objects consistently.</p>
+<p>The <code>CellHelper</code> provides a reliable and centralized mechanism to instantiate default grid cells. It ensures that every cell generated across the engine instances starts with identical baseline properties, preventing inconsistent matrix states from forming in abstract spaces.</p>
 </div>
 </div>
 </div>
@@ -485,7 +489,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../types/Coordinate.html">Coordinate</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>{x, y}</code> position to assign to the new cell.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The initialized precise <code>{x, y}</code> logical grid position to assign to the new cell instance.</p></td>
 </tr>
 </tbody>
 </table>

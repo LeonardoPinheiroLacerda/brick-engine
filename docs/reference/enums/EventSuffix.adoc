@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 The `EventSuffix` enum defines the available suffixes used to scope events within the engine's contextual notification system.
 
 == Values

@@ -2,6 +2,13 @@ import { Initializable } from '../core/types/Interfaces';
 import RendererContext from '../core/context/RendererContext';
 import p5 from 'p5';
 
+/**
+ * Specialized interrupt overlay confirming persistence restores asynchronously.
+ *
+ * It generates vanilla DOM elements that intentionally block Canvas execution pointers,
+ * preventing game logics from polluting local memory until a Human clearly decides
+ * whether to load or destroy auto-saved metadata safely.
+ */
 export default class SessionModal implements Initializable {
     private _container: p5.Element;
     private _confirmButton: p5.Element;
@@ -9,6 +16,11 @@ export default class SessionModal implements Initializable {
 
     constructor() {}
 
+    /**
+     * Bootstraps the Vanilla DOM creation assigning hidden CSS parameters until execution calls.
+     *
+     * @returns {void} Returns nothing.
+     */
     setup() {
         const { p } = RendererContext;
         this._container = p.createDiv();
@@ -49,6 +61,13 @@ export default class SessionModal implements Initializable {
         this._confirmButton.class('session-modal-button');
     }
 
+    /**
+     * Removes the CSS hidden barrier and binds strictly required callback endpoints to the physical buttons.
+     *
+     * @param {function(): void} onConfirm - The pointer mapped when the player wants to restore data.
+     * @param {function(): void} onCancel - The pointer mapped when the player declines restoration.
+     * @returns {void} Returns nothing.
+     */
     show(onConfirm: () => void, onCancel: () => void) {
         this._confirmButton.mousePressed(() => {
             onConfirm();
@@ -62,6 +81,11 @@ export default class SessionModal implements Initializable {
         this._container.removeClass('hidden');
     }
 
+    /**
+     * Nullifies listeners and applies strictly blocking CSS classes safely.
+     *
+     * @returns {void} Returns nothing.
+     */
     private _hide() {
         this._confirmButton.mousePressed(null);
         this._cancelButton.mousePressed(null);

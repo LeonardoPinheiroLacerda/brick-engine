@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 The central hub providing component-to-component visibility.
 
 == Properties

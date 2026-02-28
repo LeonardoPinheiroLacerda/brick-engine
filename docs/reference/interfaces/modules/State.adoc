@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface for managing global game lifecycle flags, persistence, and preferences.
 
 == Methods

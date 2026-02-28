@@ -443,7 +443,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#objective">1. Objective</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
 <li><a href="#key-features">2. Key Features</a></li>
 <li><a href="#getting-started">3. Getting Started</a></li>
 <li><a href="#publishing-your-game">4. Publishing Your Game</a></li>
@@ -454,10 +454,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="objective"><a class="link" href="#objective">1. Objective</a></h2>
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <strong>Brick Engine</strong> is a modular, TypeScript-based game engine designed for creating retro grid-based games (like Tetris, Snake, Breakout) that run in a browser. It leverages <strong>P5.js</strong> for rendering and simulates the experience of a classic handheld gaming device, complete with a dot-matrix style display, a HUD (Head-Up Display), and physical button controls.</p>
+<p>The <strong>Brick Engine</strong> is a modular, TypeScript-based game engine designed for creating retro grid-based games (like Tetris, Snake, Breakout) that run in a browser. It leverages <strong>P5.js</strong> for rendering and simulates the experience of a physical, classic handheld gaming device. By isolating mathematical states from actual Canvas execution, it guarantees completely deterministic and highly scalable retro physics. It is composed of a dot-matrix style display, a specialized HUD (Head-Up Display), and explicitly bound event-driven physical controls.</p>
 </div>
 </div>
 </div>

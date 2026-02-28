@@ -2,26 +2,28 @@ import { Serializable } from '../../types/Interfaces';
 import GameGrid from './GameGrid';
 
 /**
- * A specialized grid implementation for the Heads-Up Display (HUD).
- * Typically used for previewing the "next piece" in Tetris-like games.
- * It has fixed dimensions (usually 4x4).
+ * Specialized engine module isolating the visual preview logic for upcoming pieces.
+ *
+ * It statically overrides the fluid grid dimensions strictly to a 4x4 coordinate plane.
+ * By extending the core {@link GameGrid}, it transparently inherits all complex collision
+ * and stamping logic without polluting the global game field with temporary shapes.
  */
 export default class GameHudGrid extends GameGrid implements Serializable {
     serialId: string = 'hud_grid';
 
     /**
-     * The fixed width of the HUD grid.
+     * Statically overrides the dynamic configuration to enforce a perfect 4x4 box.
      *
-     * @returns {number} Always returns 4.
+     * @returns {number} The strict integer width threshold (always 4).
      */
     get width(): number {
         return 4;
     }
 
     /**
-     * The fixed height of the HUD grid.
+     * Statically overrides the dynamic configuration to enforce a perfect 4x4 box.
      *
-     * @returns {number} Always returns 4.
+     * @returns {number} The strict integer height threshold (always 4).
      */
     get height(): number {
         return 4;

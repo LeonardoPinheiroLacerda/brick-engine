@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Enumerates all observable and persistent properties of the game system.
 
 == Values

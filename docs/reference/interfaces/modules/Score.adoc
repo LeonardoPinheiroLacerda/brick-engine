@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface for tracking session performance, multipliers, and levels.
 
 == Properties

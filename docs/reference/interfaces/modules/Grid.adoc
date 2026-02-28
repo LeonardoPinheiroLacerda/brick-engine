@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface defining the behaviors of a 2D grid of cells.
 
 == Properties

@@ -443,13 +443,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#general-usage">2. General Usage</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#properties">2. Properties</a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The central hub providing component-to-component visibility.</p>
@@ -457,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -526,7 +528,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This registry is passed to almost every lifecycle method (<code>update</code>, <code>render</code>, <code>ControlCallback</code>). It allows modules to interact without tight coupling. For example, the <code><a href="modules/Sound.html">Sound</a></code> module uses it to play sounds via <code>modules.sound.play()</code>.</p>

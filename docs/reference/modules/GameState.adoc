@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameState` module acts as the central, single source of truth for the game's lifecycle and user preferences. It handles persistence to `LocalStorage` for settings and high scores.
+== Architectural Purpose
+
+The `GameState` module acts as the central singleton source of truth for the game lifecycle and persistent user preferences. It implies solving the problem of having scattered configuration settings across multiple runtime contexts. By designating this class as the sole entity interacting with `LocalStorage`, it completely decouples transient runtime events from cross-session data storage.
 
 == Centralized Persistence
 

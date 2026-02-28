@@ -443,29 +443,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#contextual-notification-system">1. Contextual Notification System</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#contextual-notification-system">2. Contextual Notification System</a></li>
+<li><a href="#api-reference">3. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">2.1. <code>subscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></li>
-<li><a href="#unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">2.2. <code>unsubscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></li>
-<li><a href="#notifyeventname-string-payload-t-void">2.3. <code>notify(eventName: string, payload: T): void</code></a></li>
-<li><a href="#notifycontextualeventname-string-payload-t-context-statecontext-void">2.4. <code>notifyContextual(eventName: string, payload: T, context: StateContext): void</code></a></li>
+<li><a href="#subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">3.1. <code>subscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></li>
+<li><a href="#unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">3.2. <code>unsubscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></li>
+<li><a href="#notifyeventname-string-payload-t-void">3.3. <code>notify(eventName: string, payload: T): void</code></a></li>
+<li><a href="#notifycontextualeventname-string-payload-t-context-statecontext-void">3.4. <code>notifyContextual(eventName: string, payload: T, context: StateContext): void</code></a></li>
 </ul>
 </li>
-<li><a href="#internal-name-formatting">3. Internal Name Formatting</a></li>
+<li><a href="#internal-name-formatting">4. Internal Name Formatting</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>EventEmitter</code> is the backbone of the engine&#8217;s reactive architecture. It allows modules to communicate without direct dependencies and supports <strong>Contextual Notifications</strong> that automatically target specific game states (e.g., Playing vs. Paused).</p>
+<p>The <code>EventEmitter</code> acts as the centralized communication backbone of the engine reactor. It allows entirely decoupled modules to hook into each other&#8217;s lifecycles without direct direct method calls. By supporting <strong>Contextual Notifications</strong>, it prevents tight coupling and enables dynamic routing where events can automatically target specific game active states (e.g., Playing vs. Paused).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="contextual-notification-system"><a class="link" href="#contextual-notification-system">1. Contextual Notification System</a></h2>
+<h2 id="contextual-notification-system"><a class="link" href="#contextual-notification-system">2. Contextual Notification System</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>EventEmitter</code> extends simple pub/sub by supporting event suffixes. When a module notifies a "contextual" event, the emitter propagates the signal to:
@@ -479,12 +481,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">3. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void"><a class="link" href="#subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">2.1. <code>subscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></h3>
+<h3 id="subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void"><a class="link" href="#subscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">3.1. <code>subscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></h3>
 <div class="paragraph">
-<p>Registers a listener for a specific event.</p>
+<p>Registers a listener callback to be executed whenever the specified event is emitted. If a <code>EventSuffix</code> is provided, it subscribes to the contextual sub-channel (e.g. <code>UP:playing</code>) instead of the base channel.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -504,40 +506,46 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eventName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The base name of the event.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The base string identifier of the event to listen for.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute when the event triggers. Receives the payload if applicable.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>suffix</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/EventSuffix.html">EventSuffix</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) The context suffix (e.g., <code>EventSuffix.PAUSED</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) The context restricted modifier to listen only on specific lifecycle states.</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void"><a class="link" href="#unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">2.2. <code>unsubscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></h3>
+<h3 id="unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void"><a class="link" href="#unsubscribeeventname-string-callback-eventcallbackt-suffix-eventsuffix-void">3.2. <code>unsubscribe(eventName: string, callback: EventCallback&lt;T&gt;, suffix?: EventSuffix): void</code></a></h3>
 <div class="paragraph">
-<p>Removes a registration. The suffix must match the one used during subscription.</p>
+<p>Safely removes the provided callback from the notification queue. The exact function reference must be used. If the event was subscribed with a suffix, the same suffix must be provided here to target the correct sub-channel.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="notifyeventname-string-payload-t-void"><a class="link" href="#notifyeventname-string-payload-t-void">2.3. <code>notify(eventName: string, payload: T): void</code></a></h3>
+<h3 id="notifyeventname-string-payload-t-void"><a class="link" href="#notifyeventname-string-payload-t-void">3.3. <code>notify(eventName: string, payload: T): void</code></a></h3>
 <div class="paragraph">
-<p>Dispatches an event to the base channel.</p>
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Iterates over all callbacks associated with the given channel key and invokes them sequentially with the provided payload. This acts strictly on the base channel without evaluating current game states.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="notifycontextualeventname-string-payload-t-context-statecontext-void"><a class="link" href="#notifycontextualeventname-string-payload-t-context-statecontext-void">2.4. <code>notifyContextual(eventName: string, payload: T, context: StateContext): void</code></a></h3>
+<h3 id="notifycontextualeventname-string-payload-t-context-statecontext-void"><a class="link" href="#notifycontextualeventname-string-payload-t-context-statecontext-void">3.4. <code>notifyContextual(eventName: string, payload: T, context: StateContext): void</code></a></h3>
 <div class="paragraph">
-<p>Dispatches an event to the base channel AND an appropriate state-specific channel.</p>
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>Performs a standard notify on the base <code>eventName</code>, and then evaluates the provided <code><a href="../interfaces/StateContext.html">StateContext</a></code> to decide which secondary <code><a href="../enums/EventSuffix.html">EventSuffix</a></code> channel should also receive the payload. This enables multi-cast signals where listeners can opt into receiving only under certain states.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -557,17 +565,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>eventName</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The base name.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The core string identifier of the event broadcast.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>payload</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>any</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The data to pass.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The required event data to be passed to callbacks in both base and context channels.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>context</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/StateContext.html">StateContext</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The current engine context.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The engine state provider used to determine applicable conditions (Playing, Paused, Title, Gameover).</p></td>
 </tr>
 </tbody>
 </table>
@@ -595,7 +603,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="internal-name-formatting"><a class="link" href="#internal-name-formatting">3. Internal Name Formatting</a></h2>
+<h2 id="internal-name-formatting"><a class="link" href="#internal-name-formatting">4. Internal Name Formatting</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>EventEmitter</code> encapsulates its naming convention within a private <code>_formatName</code> method. The current standard uses a colon separator:</p>

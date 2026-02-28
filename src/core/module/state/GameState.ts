@@ -19,23 +19,25 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
 };
 
 /**
- * Manages the core boolean states of the game and handles state-change events.
+ * Central module representing the singleton source of truth for the game lifecycle and persistent user preferences.
  *
- * Provides a central hub for tracking game lifecycle states (on, running, gameOver)
- * and user preferences (color enabled).
+ * Implements the {@link State} and {@link Debuggable} interfaces. Providing a central hub
+ * for tracking high-level system states (ON, PLAYING, PAUSED, GAME_OVER) and user
+ * configurations (Color and Mute toggles).
  *
- *
- * **Persistence Responsibility:**
- * This class is the SOLE responsible for persisting and loading generic, cross-session
- * player preferences (like mute settings and color toggle) from LocalStorage.
- * It does NOT handle transient session data (GameSession) or specific scoring logic (GameScore).
+ * It is designated as the sole entity responsible for interacting with the browser's
+ * LocalStorage to persist player preferences across distinct engine sessions. It explicitly
+ * delegates transient session states to `GameSession`, keeping its scope strictly bounding
+ * global lifecycles and physical preferences.
  */
 export default class GameState implements State, Debuggable {
     private _state: Map<StateProperty, boolean | number> = new Map();
 
     /**
      * Initializes the state module.
-     * Sets default values for all state properties and loads persisted data.
+     * Sets default values for all {@link StateProperty} elements and loads persisted user settings.
+     *
+     * @returns {void} Returns nothing.
      */
     setup(): void {
         // Initialize default values
@@ -48,7 +50,9 @@ export default class GameState implements State, Debuggable {
     }
 
     /**
-     * Loads persistent state from LocalStorage.
+     * Internal utility that loads persistent state configurations directly from `LocalStorage`.
+     *
+     * @returns {void} Returns nothing.
      */
     private _loadPersistentState(): void {
         Object.values(StateProperty).forEach(property => {
@@ -65,8 +69,9 @@ export default class GameState implements State, Debuggable {
     /**
      * Sets a state property value, handling persistence and notification.
      *
-     * @param {StateProperty} property - The property to set.
-     * @param {boolean | number} value - The value to set.
+     * @param {StateProperty} property - The exact property enum key to assign.
+     * @param {boolean | number} value - The primitive value to set.
+     * @returns {void} Returns nothing.
      */
     private _set(property: StateProperty, value: boolean | number): void {
         const currentValue = this._state.get(property);
@@ -83,10 +88,11 @@ export default class GameState implements State, Debuggable {
     }
 
     /**
-     * Notifies all subscribers of a property change.
+     * Notifies all subscribers of a property change via the {@link EventEmitter}.
      * Dispatches to the base property channel and state-specific context channels.
      *
-     * @param {StateProperty} property - The property that changed.
+     * @param {StateProperty} property - The property enum string that dictates the notification channel.
+     * @returns {void} Returns nothing.
      */
     notify(property: StateProperty): void {
         const value = this._state.get(property);
@@ -151,6 +157,8 @@ export default class GameState implements State, Debuggable {
     /**
      * Powers on the game machine.
      * Resets all session states (start, playing, game over).
+     *
+     * @returns {void} Returns nothing.
      */
     turnOn(): void {
         this._set(StateProperty.ON, true);
@@ -162,6 +170,8 @@ export default class GameState implements State, Debuggable {
     /**
      * Powers off the game machine.
      * Resets all states.
+     *
+     * @returns {void} Returns nothing.
      */
     turnOff(): void {
         this._set(StateProperty.ON, false);
@@ -173,6 +183,8 @@ export default class GameState implements State, Debuggable {
     /**
      * Starts a new game session.
      * Only works if the machine is powered on.
+     *
+     * @returns {void} Returns nothing.
      */
     startGame(): void {
         if (!this.isOn()) return;
@@ -183,6 +195,8 @@ export default class GameState implements State, Debuggable {
 
     /**
      * Resets the game over state and starts the game again.
+     *
+     * @returns {void} Returns nothing.
      */
     resetGameOver(): void {
         this._set(StateProperty.GAME_OVER, false);
@@ -192,6 +206,8 @@ export default class GameState implements State, Debuggable {
 
     /**
      * Exits the current game session, returning to the "On" state.
+     *
+     * @returns {void} Returns nothing.
      */
     exitGame(): void {
         this._set(StateProperty.START, false);
@@ -228,6 +244,8 @@ export default class GameState implements State, Debuggable {
 
     /**
      * Resets the game to the initial state (restarts).
+     *
+     * @returns {void} Returns nothing.
      */
     resetGame(): void {
         if (!this.isOn()) return;
@@ -249,6 +267,7 @@ export default class GameState implements State, Debuggable {
      * Enables or disables color mode.
      *
      * @param {boolean} value - True to enable, false to disable.
+     * @returns {void} Returns nothing.
      */
     setColorEnabled(value: boolean): void {
         this._set(StateProperty.COLOR_ENABLED, value);
@@ -267,6 +286,7 @@ export default class GameState implements State, Debuggable {
      * Mutes or unmutes the audio.
      *
      * @param {boolean} value - True to mute, false to unmute.
+     * @returns {void} Returns nothing.
      */
     setMuted(value: boolean): void {
         this._set(StateProperty.MUTED, value);
@@ -274,6 +294,8 @@ export default class GameState implements State, Debuggable {
 
     /**
      * Toggles the color enabled state.
+     *
+     * @returns {void} Returns nothing.
      */
     toggleColorEnabled(): void {
         this.setColorEnabled(!this.isColorEnabled());
@@ -281,6 +303,8 @@ export default class GameState implements State, Debuggable {
 
     /**
      * Toggles the muted state.
+     *
+     * @returns {void} Returns nothing.
      */
     toggleMuted(): void {
         this.setMuted(!this.isMuted());

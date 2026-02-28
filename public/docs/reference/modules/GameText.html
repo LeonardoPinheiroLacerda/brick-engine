@@ -443,34 +443,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#settextsizesize-fontsize-void">1.1. <code>setTextSize(size: FontSize): void</code></a></li>
-<li><a href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">1.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></li>
-<li><a href="#setactivetext-void">1.3. <code>setActiveText(): void</code></a></li>
-<li><a href="#setinactivetext-void">1.4. <code>setInactiveText(): void</code></a></li>
-<li><a href="#textondisplaytext-string-coordinate-coordinate-void">1.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#textonhudtext-string-coordinate-coordinate-void">1.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#setrenderermetricsmetrics-renderermetrics-void">1.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#settextsizesize-fontsize-void">2.1. <code>setTextSize(size: FontSize): void</code></a></li>
+<li><a href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">2.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></li>
+<li><a href="#setactivetext-void">2.3. <code>setActiveText(): void</code></a></li>
+<li><a href="#setinactivetext-void">2.4. <code>setInactiveText(): void</code></a></li>
+<li><a href="#textondisplaytext-string-coordinate-coordinate-void">2.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#textonhudtext-string-coordinate-coordinate-void">2.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#setrenderermetricsmetrics-renderermetrics-void">2.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameText</code> module handles rendering pixelated text on the game display. It manages font initialization, sizing, and ensures text is scaled correctly relative to the canvas size.</p>
+<p>The <code>GameText</code> module isolates all typography and sizing logic away from the rendering pipelines. By pre-calculating relative font sizing constraints and wrapping absolute rendering parameters over internal relative metrics structures (<code><a href="../types/Coordinate.html">Coordinate</a></code>), it guarantees that the HUD or grid components do not have to directly calculate native element boundaries against the volatile physical display size.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="settextsizesize-fontsize-void"><a class="link" href="#settextsizesize-fontsize-void">1.1. <code>setTextSize(size: FontSize): void</code></a></h3>
+<h3 id="settextsizesize-fontsize-void"><a class="link" href="#settextsizesize-fontsize-void">2.1. <code>setTextSize(size: FontSize): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the current font size from predefined responsive values.</p>
 </div>
@@ -492,7 +494,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/FontSize.html">FontSize</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enum value (<code>EXTRA_SMALL</code> to <code>EXTRA_LARGE</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The preset enum scalar value representing the responsive dimension required.</p></td>
 </tr>
 </tbody>
 </table>
@@ -513,7 +515,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="settextalignalign-fontalign-verticalalign-fontverticalalign-void"><a class="link" href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">1.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></h3>
+<h3 id="settextalignalign-fontalign-verticalalign-fontverticalalign-void"><a class="link" href="#settextalignalign-fontalign-verticalalign-fontverticalalign-void">2.2. <code>setTextAlign(align: FontAlign, verticalAlign: FontVerticalAlign): void</code></a></h3>
 <div class="paragraph">
 <p>Configures the alignment of rendered text.</p>
 </div>
@@ -535,33 +537,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>align</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/FontAlignment.html">FontAlign</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Horizontal alignment (LEFT, CENTER, RIGHT).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Horizontal geometric justification anchor orientation (<code>LEFT</code>, <code>CENTER</code>, <code>RIGHT</code>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>verticalAlign</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/FontAlignment.html">FontVerticalAlign</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Vertical alignment (TOP, CENTER, BOTTOM).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vertical bound origin placement orientation (<code>TOP</code>, <code>CENTER</code>, <code>BOTTOM</code>).</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setactivetext-void"><a class="link" href="#setactivetext-void">1.3. <code>setActiveText(): void</code></a></h3>
+<h3 id="setactivetext-void"><a class="link" href="#setactivetext-void">2.3. <code>setActiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text fill color to the active theme color.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setinactivetext-void"><a class="link" href="#setinactivetext-void">1.4. <code>setInactiveText(): void</code></a></h3>
+<h3 id="setinactivetext-void"><a class="link" href="#setinactivetext-void">2.4. <code>setInactiveText(): void</code></a></h3>
 <div class="paragraph">
 <p>Sets the text fill color to the inactive theme color.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">1.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></h3>
+<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">2.5. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the main game display area.</p>
 </div>
@@ -583,12 +585,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>text</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The message to display.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The direct formatted string intended for output.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized coordinates (0.0 to 1.0) within the game grid area.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Floating point proportional coordinate anchor points (between <code>0.0</code> and <code>1.0</code>) relative exclusively to the parent grid bounds.</p></td>
 </tr>
 </tbody>
 </table>
@@ -603,7 +605,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">1.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></h3>
+<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">2.6. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the side HUD area.</p>
 </div>
@@ -625,19 +627,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>text</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The message to display.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The distinct formatted numeric or string label segment intended for the UI.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>coordinate</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/Coordinate.html">Coordinate</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalized coordinates (0.0 to 1.0) within the HUD container.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Relative coordinate vectors bounds scaled strictly according to the active HUD dimensions array.</p></td>
 </tr>
 </tbody>
 </table>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setrenderermetricsmetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsmetrics-renderermetrics-void">1.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></h3>
+<h3 id="setrenderermetricsmetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsmetrics-renderermetrics-void">2.7. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the coordinate conversion reference.</p>
 </div>
@@ -672,7 +674,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.8. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Type definition for functions that handle engine input.
 
 == Structure

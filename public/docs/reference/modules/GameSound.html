@@ -443,32 +443,34 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#playsound-sound-promisevoid">1.1. <code>play(sound: Sound): Promise&lt;void&gt;</code></a></li>
-<li><a href="#stopsound-sound-void">1.2. <code>stop(sound: Sound): void</code></a></li>
-<li><a href="#stopall-void">1.3. <code>stopAll(): void</code></a></li>
-<li><a href="#togglemute-void">1.4. <code>toggleMute(): void</code></a></li>
-<li><a href="#syncstatestate-state-void">1.5. <code>syncState(state: State): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">1.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#playsound-sound-promisevoid">2.1. <code>play(sound: Sound): Promise&lt;void&gt;</code></a></li>
+<li><a href="#stopsound-sound-void">2.2. <code>stop(sound: Sound): void</code></a></li>
+<li><a href="#stopall-void">2.3. <code>stopAll(): void</code></a></li>
+<li><a href="#togglemute-void">2.4. <code>toggleMute(): void</code></a></li>
+<li><a href="#syncstatestate-state-void">2.5. <code>syncState(state: State): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameSound</code> module manages audio playback for the engine using the <strong>Web Audio API</strong>. It provides low-latency sound effects and automatic synchronization with the game&#8217;s mute state.</p>
+<p>The <code>GameSound</code> module manages non-blocking audio playback using the raw <strong>Web Audio API</strong>. It decouples context management and audio file loading processes away from the simple gameplay components. By abstracting buffer decoding and muting operations, it allows modules to securely emit audio triggers without managing active <code>GainNode</code> flows or managing overlaps directly.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="playsound-sound-promisevoid"><a class="link" href="#playsound-sound-promisevoid">1.1. <code>play(sound: Sound): Promise&lt;void&gt;</code></a></h3>
+<h3 id="playsound-sound-promisevoid"><a class="link" href="#playsound-sound-promisevoid">2.1. <code>play(sound: Sound): Promise&lt;void&gt;</code></a></h3>
 <div class="paragraph">
 <p>Plays a preloaded sound effect.</p>
 </div>
@@ -490,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sound</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/Sound.html">Sound</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The enum identifier of the sound to play.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact registered enum identifier of the active soundtrack/effect file to trigger.</p></td>
 </tr>
 </tbody>
 </table>
@@ -517,7 +519,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="stopsound-sound-void"><a class="link" href="#stopsound-sound-void">1.2. <code>stop(sound: Sound): void</code></a></h3>
+<h3 id="stopsound-sound-void"><a class="link" href="#stopsound-sound-void">2.2. <code>stop(sound: Sound): void</code></a></h3>
 <div class="paragraph">
 <p>Stops all active instances of a specific sound.</p>
 </div>
@@ -539,7 +541,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>sound</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../enums/Sound.html">Sound</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The enum identifier of the sound to stop.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The explicit enum identity of the playing audio buffer layer to abruptly physically halt.</p></td>
 </tr>
 </tbody>
 </table>
@@ -552,14 +554,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="stopall-void"><a class="link" href="#stopall-void">1.3. <code>stopAll(): void</code></a></h3>
+<h3 id="stopall-void"><a class="link" href="#stopall-void">2.3. <code>stopAll(): void</code></a></h3>
 <div class="paragraph">
 <p>Stops every sound currently playing in the engine.</p>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="togglemute-void"><a class="link" href="#togglemute-void">1.4. <code>toggleMute(): void</code></a></h3>
+<h3 id="togglemute-void"><a class="link" href="#togglemute-void">2.4. <code>toggleMute(): void</code></a></h3>
 <div class="paragraph">
 <p>Toggles the master mute status.</p>
 </div>
@@ -572,7 +574,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">1.5. <code>syncState(state: State): void</code></a></h3>
+<h3 id="syncstatestate-state-void"><a class="link" href="#syncstatestate-state-void">2.5. <code>syncState(state: State): void</code></a></h3>
 <div class="paragraph">
 <p>Synchronizes audio settings with the global game state.</p>
 </div>
@@ -607,7 +609,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">1.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.6. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

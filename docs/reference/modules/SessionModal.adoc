@@ -7,7 +7,9 @@
 :sectlinks:
 :icons: font
 
-The `SessionModal` interacts directly with the DOM outside of the Canvas domain, creating standard HTML elements (divs and buttons) overlapping the P5.js context to prompt users whether they wish to resume their previous game session.
+== Architectural Purpose
+
+The `SessionModal` generates an explicit blocking UI boundary forcing the User to interpret corrupted or previously interrupted memory states safely. Designed as a standalone Vanilla DOM layer hovering entirely above the game Engine canvas, it acts as a synchronized `Promise` wall. The background engine pauses initial boot sequences until physical button listeners explicitly return 'Confirm' or 'Cancel', thus preventing corrupt states from overriding standard initialization.
 
 == Lifecycle 
 

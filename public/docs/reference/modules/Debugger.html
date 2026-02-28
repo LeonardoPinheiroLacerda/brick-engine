@@ -443,31 +443,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#api-reference">1. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#api-reference">2. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#setup-void">1.1. <code>setup(): void</code></a></li>
-<li><a href="#setgamemodulesgamemodules-gamemodules-void">1.2. <code>setGameModules(gameModules: GameModules): void</code></a></li>
-<li><a href="#update-promisevoid">1.3. <code>update(): Promise&lt;void&gt;</code></a></li>
+<li><a href="#setup-void">2.1. <code>setup(): void</code></a></li>
+<li><a href="#setgamemodulesgamemodules-gamemodules-void">2.2. <code>setGameModules(gameModules: GameModules): void</code></a></li>
+<li><a href="#update-promisevoid">2.3. <code>update(): Promise&lt;void&gt;</code></a></li>
 </ul>
 </li>
-<li><a href="#configuration">2. Configuration</a></li>
-<li><a href="#implementation">3. Implementation</a></li>
+<li><a href="#configuration">3. Configuration</a></li>
+<li><a href="#implementation">4. Implementation</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>Debugger</code> class provides a real-time, HTML-based overlay for monitoring the state of all engine modules. It automatically identifies and extracts data from any module that implements the <code><a href="../interfaces/Debuggable.html">Debuggable</a></code> interface.</p>
+<p>The <code>Debugger</code> module establishes an isolated inspection perimeter generating <code>&lt;details&gt;</code> tags mirroring runtime property values. Its architecture separates text-rendering diagnostics strictly from the hardware-accelerated Canvas loop allowing it to freely display un-optimized dynamic string representations of data models (<code><a href="../interfaces/Debuggable.html">Debuggable</a></code>) without plummeting framerates dragging continuous geometric translations.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">1. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="setup-void"><a class="link" href="#setup-void">1.1. <code>setup(): void</code></a></h3>
+<h3 id="setup-void"><a class="link" href="#setup-void">2.1. <code>setup(): void</code></a></h3>
 <div class="paragraph">
 <p>Initializes the debugger&#8217;s DOM structure.</p>
 </div>
@@ -480,7 +482,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setgamemodulesgamemodules-gamemodules-void"><a class="link" href="#setgamemodulesgamemodules-gamemodules-void">1.2. <code>setGameModules(gameModules: GameModules): void</code></a></h3>
+<h3 id="setgamemodulesgamemodules-gamemodules-void"><a class="link" href="#setgamemodulesgamemodules-gamemodules-void">2.2. <code>setGameModules(gameModules: GameModules): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the active game modules being monitored by the debugger.</p>
 </div>
@@ -517,7 +519,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="update-promisevoid"><a class="link" href="#update-promisevoid">1.3. <code>update(): Promise&lt;void&gt;</code></a></h3>
+<h3 id="update-promisevoid"><a class="link" href="#update-promisevoid">2.3. <code>update(): Promise&lt;void&gt;</code></a></h3>
 <div class="paragraph">
 <p>Refreshes the overlay with new data from the modules.</p>
 </div>
@@ -531,7 +533,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuration"><a class="link" href="#configuration">2. Configuration</a></h2>
+<h2 id="configuration"><a class="link" href="#configuration">3. Configuration</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The debugger behavior is controlled via the main <code>configs.ts</code> file:</p>
@@ -549,7 +551,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="implementation"><a class="link" href="#implementation">3. Implementation</a></h2>
+<h2 id="implementation"><a class="link" href="#implementation">4. Implementation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Modules wishing to appear in the debugger must implement the <code>Debuggable</code> interface:</p>

@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Interface for drawing pixelated, responsive typography.
 
 == Methods

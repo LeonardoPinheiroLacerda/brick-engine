@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameTime` module manages the engine's logical clock. It decouples game logic "ticks" from the visual frame rate, ensuring consistent gameplay speed regardless of the device's performance.
+== Architectural Purpose
+
+The `GameTime` module manages the engine's logical clock independent of the visual context. By decoupling the deterministic game logic "ticks" from the unpredictable visual frame rate of the browser, it ensures consistent gameplay speed and difficulty-progression physics regardless of the device's hardware performance capabilities.
 
 == API Reference
 
@@ -69,7 +71,7 @@ Advances the internal time buffer (tick accumulator).
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`deltaTime` |`number` |Time elapsed since the last render frame (in milliseconds).
+|`deltaTime` |`number` |Time physically elapsed since the last rendering frame (in milliseconds).
 |===
 
 
@@ -95,7 +97,7 @@ Returns `true` if the `totalTicks` is a multiple of the specified `interval`. Us
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`interval` |`number` |The tick frequency to check.
+|`interval` |`number` |The tick frequency interval constraint to check against.
 |===
 
 **Returns**
@@ -144,7 +146,7 @@ Sets the tick interval exactly to the specified value.
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`interval` |`number` |The new interval between logic updates (in milliseconds).
+|`interval` |`number` |The precise new integer interval interval between logic updates (in milliseconds).
 |===
 
 
@@ -159,7 +161,7 @@ Sets the minimum limit for the tick interval, preventing the game from speeding 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`interval` |`number` |The minimum interval allowed (in milliseconds).
+|`interval` |`number` |The strict minimum boundary interval allowed (in milliseconds).
 |===
 
 

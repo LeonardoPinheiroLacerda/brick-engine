@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Maps sound identifiers to their relative asset paths.
 
 == Values

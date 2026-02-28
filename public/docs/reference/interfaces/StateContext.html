@@ -443,13 +443,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#methods">1. Methods</a></li>
-<li><a href="#general-usage">2. General Usage</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#methods">2. Methods</a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>StateContext</code> interface provides a read-only view of the engine&#8217;s current lifecycle state. It is primarily used by the <code><a href="../modules/EventEmitter.html">EventEmitter</a></code> to determine which contextual channels to notify.</p>
@@ -457,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -494,7 +496,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This interface is implemented by <code><a href="../modules/GameState.html">GameState</a></code> and is consumed by <code>notifyContextual</code> in the <code>EventEmitter</code>.</p>

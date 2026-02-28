@@ -2,13 +2,20 @@ import { Grid } from '../../../types/modules';
 import CellHelper from '../../../helpers/CellHelper';
 
 /**
- * Handles line-based operations (rows and columns) on the grid.
+ * Engineering sub-module handling comprehensive shifting row operations and grid clearance.
+ *
+ * Implements the {@link Grid} structural line shifts. It drives heavy multi-cell displacement,
+ * manipulating memory locations explicitly when the engine demands sweeping block changes
+ * to simulate gravity or clean completely occupied board bounds.
  */
 export default class GridLineEngine {
     constructor(private grid: Grid) {}
 
     /**
-     * Checks if every cell in a specific row is active.
+     * Executes horizontal sweeping verifying no static empty elements disrupt a physical row footprint.
+     *
+     * @param {number} y - The integer declaring the horizontal map layer mapped to height.
+     * @returns {boolean} A boolean true if density confirms completely loaded limits.
      */
     isRowFull(y: number): boolean {
         const gridData = this.grid.getGrid();
@@ -17,7 +24,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Checks if every cell in a specific row is inactive.
+     * Executes horizontal sweeping verifying no active elements exist across a physical row footprint.
+     *
+     * @param {number} y - The integer declaring the horizontal map layer mapped to height.
+     * @returns {boolean} A boolean true if all limits check out completely zeroed out.
      */
     isRowEmpty(y: number): boolean {
         const gridData = this.grid.getGrid();
@@ -26,7 +36,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Resets all cells in a specific row to their default empty state.
+     * Purges specific memory instances mapping empty metadata objects identically across a row length.
+     *
+     * @param {number} y - The integer mapped horizontally mapping height to wipe.
+     * @returns {void} Returns nothing.
      */
     clearRow(y: number): void {
         const gridData = this.grid.getGrid();
@@ -37,7 +50,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Shifts all rows above a certain index down by one position.
+     * Transplants memory contents shifting row sequences securely down one numerical grid measure.
+     *
+     * @param {number} fromY - The explicit target line evaluating continuous transfers upwards.
+     * @returns {void} Returns nothing.
      */
     shiftRowsDown(fromY: number): void {
         const gridData = this.grid.getGrid();
@@ -52,7 +68,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Shifts all rows below a certain index up by one position.
+     * Transplants memory contents shifting row sequences securely up one numerical grid measure.
+     *
+     * @param {number} fromY - The explicit target line evaluating continuous transfers downwards.
+     * @returns {void} Returns nothing.
      */
     shiftRowsUp(fromY: number): void {
         const gridData = this.grid.getGrid();
@@ -67,7 +86,9 @@ export default class GridLineEngine {
     }
 
     /**
-     * Scans for full rows, clears them, and shifts remaining rows down.
+     * Orchestrates comprehensive cascading block removal across multiple overlapping frame steps.
+     *
+     * @returns {number} The integer metric mapping strictly deleted physical bounds.
      */
     clearFullRows(): number {
         let rowsCleared = 0;
@@ -83,7 +104,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Checks if every cell in a specific column is active.
+     * Executes vertical sweeping verifying no static empty elements disrupt a physical column footprint.
+     *
+     * @param {number} x - The integer declaring the vertical map layer mapped to width.
+     * @returns {boolean} A boolean true if density confirms completely loaded limits.
      */
     isColumnFull(x: number): boolean {
         const gridData = this.grid.getGrid();
@@ -95,7 +119,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Checks if every cell in a specific column is inactive.
+     * Executes vertical sweeping verifying no active elements exist across a physical column footprint.
+     *
+     * @param {number} x - The integer declaring the vertical map layer mapped to width.
+     * @returns {boolean} A boolean true if all limits check out completely zeroed out.
      */
     isColumnEmpty(x: number): boolean {
         const gridData = this.grid.getGrid();
@@ -107,7 +134,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Resets all cells in a specific column to their default empty state.
+     * Purges specific memory instances mapping empty metadata objects identically across a column length.
+     *
+     * @param {number} x - The integer mapped vertically mapping width to wipe.
+     * @returns {void} Returns nothing.
      */
     clearColumn(x: number): void {
         const gridData = this.grid.getGrid();
@@ -118,7 +148,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Shifts all columns to the left of a certain index one position to the right.
+     * Transplants memory contents shifting column sequences securely right one numerical grid measure.
+     *
+     * @param {number} fromX - The explicit target line evaluating continuous transfers.
+     * @returns {void} Returns nothing.
      */
     shiftColumnsRight(fromX: number): void {
         const gridData = this.grid.getGrid();
@@ -133,7 +166,10 @@ export default class GridLineEngine {
     }
 
     /**
-     * Shifts all columns to the right of a certain index one position to the left.
+     * Transplants memory contents shifting column sequences securely left one numerical grid measure.
+     *
+     * @param {number} fromX - The explicit target line evaluating continuous transfers.
+     * @returns {void} Returns nothing.
      */
     shiftColumnsLeft(fromX: number): void {
         const gridData = this.grid.getGrid();
@@ -148,7 +184,9 @@ export default class GridLineEngine {
     }
 
     /**
-     * Scans for full columns, clears them, and shifts remaining columns right.
+     * Orchestrates comprehensive cascading block removal across multiple overlapping frame steps on columns.
+     *
+     * @returns {number} The integer metric mapping strictly deleted physical bounds.
      */
     clearFullColumns(): number {
         let columnsCleared = 0;

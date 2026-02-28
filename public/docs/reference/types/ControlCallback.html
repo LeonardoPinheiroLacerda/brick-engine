@@ -443,13 +443,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#structure">1. Structure</a></li>
-<li><a href="#general-usage">2. General Usage</a></li>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#structure">2. Structure</a></li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Type definition for functions that handle engine input.</p>
@@ -457,7 +459,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="structure"><a class="link" href="#structure">1. Structure</a></h2>
+<h2 id="structure"><a class="link" href="#structure">2. Structure</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>type ControlCallback = (event: <a href="GameEvent.html">GameEvent</a>) &#8658; void;</code></p>
@@ -465,7 +467,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This type ensures that functions passed to <code>modules.control.subscribe(key, type, callback)</code> (see <code><a href="../modules/GameControl.html">GameControl</a></code>) correctly accept the <code><a href="GameEvent.html">GameEvent</a></code> context.</p>

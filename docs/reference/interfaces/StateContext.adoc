@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 The `StateContext` interface provides a read-only view of the engine's current lifecycle state. It is primarily used by the `xref:../modules/EventEmitter.adoc[EventEmitter]` to determine which contextual channels to notify.
 
 == Methods

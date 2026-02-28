@@ -443,35 +443,38 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#properties">1. Properties</a></li>
-<li><a href="#api-reference">2. API Reference</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#properties">2. Properties</a></li>
+<li><a href="#api-reference">3. API Reference</a>
 <ul class="sectlevel2">
-<li><a href="#addserializableserializable-serializable-void">2.1. <code>addSerializable(serializable: Serializable): void</code></a></li>
-<li><a href="#updatedeltatime-number-void">2.2. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#updatedeltatime-number-void-2">2.3. <code>update(deltaTime: number): void</code></a></li>
-<li><a href="#render-void">2.4. <code>render(): void</code></a></li>
-<li><a href="#setupgame-void">2.5. <code>setupGame(): void</code></a></li>
-<li><a href="#drawtitlescreen-void">2.6. <code>drawTitleScreen(): void</code></a></li>
-<li><a href="#drawgameoverscreen-void">2.7. <code>drawGameOverScreen(): void</code></a></li>
-<li><a href="#destroy-void">2.8. <code>destroy(): void</code></a></li>
+<li><a href="#addserializableserializable-serializable-void">3.1. <code>addSerializable(serializable: Serializable): void</code></a></li>
+<li><a href="#updatedeltatime-number-void">3.2. <code>update(deltaTime: number): void</code></a></li>
+<li><a href="#updatedeltatime-number-void-2">3.3. <code>update(deltaTime: number): void</code></a></li>
+<li><a href="#render-void">3.4. <code>render(): void</code></a></li>
+<li><a href="#setupgame-void">3.5. <code>setupGame(): void</code></a></li>
+<li><a href="#drawtitlescreen-void">3.6. <code>drawTitleScreen(): void</code></a></li>
+<li><a href="#drawgameoverscreen-void">3.7. <code>drawGameOverScreen(): void</code></a></li>
+<li><a href="#reset-void">3.8. <code>reset(): void</code></a></li>
+<li><a href="#destroy-void">3.9. <code>destroy(): void</code></a></li>
 </ul>
 </li>
-<li><a href="#session-management">3. Session Management</a></li>
-<li><a href="#automatic-state-restoration-reset">4. Automatic State Restoration (Reset)</a></li>
-<li><a href="#automated-system-controls">5. Automated System Controls</a></li>
+<li><a href="#session-management">4. Session Management</a></li>
+<li><a href="#automatic-state-restoration-reset">5. Automatic State Restoration (Reset)</a></li>
+<li><a href="#automated-system-controls">6. Automated System Controls</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>Game</code> class is the heart of your application. It manages the game loop (ticks and frames), initialization of core modules, and integration with P5.js. All games must extend this class.</p>
+<p>The <code>Game</code> class establishes the central integration boundary encapsulating physical logic away from native visual outputs. Acting as the core orchestrator, it explicitly synchronizes frame drawing metrics while processing isolated mathematical model iterations. This architecture guarantees the internal data state remains cleanly decoupled and uncorrupted regardless of overlapping browser interfaces or runtime execution layers.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -500,11 +503,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">2. API Reference</a></h2>
+<h2 id="api-reference"><a class="link" href="#api-reference">3. API Reference</a></h2>
 <div class="sectionbody">
 <hr>
 <div class="sect2">
-<h3 id="addserializableserializable-serializable-void"><a class="link" href="#addserializableserializable-serializable-void">2.1. <code>addSerializable(serializable: Serializable): void</code></a></h3>
+<h3 id="addserializableserializable-serializable-void"><a class="link" href="#addserializableserializable-serializable-void">3.1. <code>addSerializable(serializable: Serializable): void</code></a></h3>
 <div class="paragraph">
 <p>Registers a custom object or module for session persistence.</p>
 </div>
@@ -539,7 +542,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">2.2. <code>update(deltaTime: number): void</code></a></h3>
+<h3 id="updatedeltatime-number-void"><a class="link" href="#updatedeltatime-number-void">3.2. <code>update(deltaTime: number): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for processing game logic.</p>
 </div>
@@ -568,7 +571,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="updatedeltatime-number-void-2"><a class="link" href="#updatedeltatime-number-void-2">2.3. <code>update(deltaTime: number): void</code></a></h3>
+<h3 id="updatedeltatime-number-void-2"><a class="link" href="#updatedeltatime-number-void-2">3.3. <code>update(deltaTime: number): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for processing game logic.</p>
 </div>
@@ -614,7 +617,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="render-void"><a class="link" href="#render-void">2.4. <code>render(): void</code></a></h3>
+<h3 id="render-void"><a class="link" href="#render-void">3.4. <code>render(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for processing visual frames.</p>
 </div>
@@ -637,7 +640,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setupgame-void"><a class="link" href="#setupgame-void">2.5. <code>setupGame(): void</code></a></h3>
+<h3 id="setupgame-void"><a class="link" href="#setupgame-void">3.5. <code>setupGame(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for setting up the specific game instance.</p>
 </div>
@@ -660,7 +663,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">2.6. <code>drawTitleScreen(): void</code></a></h3>
+<h3 id="drawtitlescreen-void"><a class="link" href="#drawtitlescreen-void">3.6. <code>drawTitleScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the game&#8217;s welcome screen.</p>
 </div>
@@ -673,7 +676,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">2.7. <code>drawGameOverScreen(): void</code></a></h3>
+<h3 id="drawgameoverscreen-void"><a class="link" href="#drawgameoverscreen-void">3.7. <code>drawGameOverScreen(): void</code></a></h3>
 <div class="paragraph">
 <p>Abstract method for rendering the screen after a game ends.</p>
 </div>
@@ -684,10 +687,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Called when the game state is <code>gameOver</code>. Executed as the primary rendering logic during Game Over, replacing the standard <code>render()</code> call to allow for clean menus or high-score displays.</p>
 </div>
 <hr>
-<hr>
 </div>
 <div class="sect2">
-<h3 id="destroy-void"><a class="link" href="#destroy-void">2.8. <code>destroy(): void</code></a></h3>
+<h3 id="reset-void"><a class="link" href="#reset-void">3.8. <code>reset(): void</code></a></h3>
+<div class="paragraph">
+<p>Resets the game to its initial state.</p>
+</div>
+<div class="paragraph">
+<p><strong>Behavior</strong></p>
+</div>
+<div class="paragraph">
+<p>This method performs a comprehensive reset of the game, including:
+- Clearing the <code><a href="../interfaces/modules/Grid.html">Grid</a></code>.
+- Resetting the <code><a href="../interfaces/modules/Score.html">Score</a></code> and level.
+- Resetting the <code><a href="../interfaces/modules/Time.html">Time</a></code> accumulators.
+- Clearing the active <code><a href="../interfaces/modules/Session.html">Session</a></code>.
+- Restoring all custom game properties to their post-setup values via the <code><a href="InitialStateSnapshot.html">InitialStateSnapshot</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>This method is called by the <code><a href="GameEventRegistry.html">GameEventRegistry</a></code> during power cycles and manual restarts.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="destroy-void"><a class="link" href="#destroy-void">3.9. <code>destroy(): void</code></a></h3>
 <div class="paragraph">
 <p>Cleans up the game instance.</p>
 </div>
@@ -701,7 +723,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="session-management"><a class="link" href="#session-management">3. Session Management</a></h2>
+<h2 id="session-management"><a class="link" href="#session-management">4. Session Management</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>Game</code> base class automatically orchestrates gameplay sessions by subscribing to system-level <code><a href="GameState.html">GameState</a></code> events:</p>
@@ -709,7 +731,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Restoring Sessions</strong>: When the state changes to <code>PLAYING</code>, the <code>Game</code> checks if there are any active sessions stored for its registered <code>Serializable</code> instances. If an active session is detected, it triggers a UI modal asking the user if they wish to resume their previous session.</p>
+<p><strong>Restoring Sessions</strong>: When the state changes to <code>PLAYING</code>, the <code>Game</code> checks if there are any active sessions stored. If detected, it triggers a UI modal.</p>
+</li>
+<li>
+<p><strong>Loop Blocking</strong>: While the session restoration modal is open (<code>session.isModalOpen()</code>), the engine <strong>completely skips</strong> the <code>draw()</code> loop content (both logic and rendering) to prevent any background interaction while the user is choosing whether to resume. See <code><a href="../interfaces/modules/Session.html">Session</a></code> for more details.</p>
 </li>
 <li>
 <p><strong>Clearing Sessions</strong>: The active session is automatically wiped when the state changes to <code>GAME_OVER</code>, ensuring that players do not resume a lost game.</p>
@@ -719,7 +744,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="automatic-state-restoration-reset"><a class="link" href="#automatic-state-restoration-reset">4. Automatic State Restoration (Reset)</a></h2>
+<h2 id="automatic-state-restoration-reset"><a class="link" href="#automatic-state-restoration-reset">5. Automatic State Restoration (Reset)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To provide a seamless developer experience, the <code>Game</code> class implements an internal mechanism to transparently cache and restore custom client properties.</p>
@@ -733,7 +758,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="automated-system-controls"><a class="link" href="#automated-system-controls">5. Automated System Controls</a></h2>
+<h2 id="automated-system-controls"><a class="link" href="#automated-system-controls">6. Automated System Controls</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>Game</code> base class automatically registers listeners for system-level buttons:</p>

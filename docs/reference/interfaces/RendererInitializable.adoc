@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 Extension of `xref:Initializable.adoc[Initializable]` specifically for rendering components.
 
 == Methods

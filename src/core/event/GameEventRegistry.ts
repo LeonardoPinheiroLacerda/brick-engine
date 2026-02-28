@@ -2,14 +2,23 @@ import { ControlEventType, ControlKey, GameModules, StateProperty } from '../typ
 
 /**
  * Registry for system-level game events.
+ *
  * Centralizes the logic for power, reset, and state-based notifications.
+ * By moving these registrations out of the core Game class, it maintains
+ * a clean startup sequence and ensures that all modules remain decoupled
+ * while still reacting to global lifecycle changes like turning on/off or Game Over.
  */
 export default class GameEventRegistry {
     /**
      * Sets up all system-level control event subscriptions.
      *
-     * @param modules - The collection of game modules.
-     * @param onReset - Callback to restore the initial state of the game instance.
+     * Injects handlers for core game hardware button mappings like power cycling,
+     * resetting the active game, unpausing, or modifying hardware toggles like
+     * sound and color.
+     *
+     * @param {GameModules} modules - The collection of initialized game modules to bind.
+     * @param {() => void} onReset - Callback to be executed immediately to restore the initial properties of the game instance during soft resets.
+     * @returns {void} Returns nothing.
      */
     static setupControlEvents(modules: GameModules, onReset: () => void): void {
         const { control, state, session, sound } = modules;
@@ -56,7 +65,12 @@ export default class GameEventRegistry {
     /**
      * Sets up all system-level state property subscriptions.
      *
-     * @param modules - The collection of game modules.
+     * Binds lifecycle behaviors to state property changes, such as clearing
+     * current session data upon encountering Game Over, or fully purging
+     * rendering/grid variables when the system is virtually powered down.
+     *
+     * @param {GameModules} modules - The structured collection of engine modules.
+     * @returns {void} Returns nothing.
      */
     static setupStateEvents(modules: GameModules): void {
         const { state, session } = modules;

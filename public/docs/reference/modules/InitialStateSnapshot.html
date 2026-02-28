@@ -441,29 +441,31 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#methods">1. Methods</a>
+<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
+<li><a href="#methods">2. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#capturebaseproperties">1.1. <code>captureBaseProperties</code></a></li>
-<li><a href="#captureinitialstate">1.2. <code>captureInitialState</code></a></li>
-<li><a href="#restoreinitialstate">1.3. <code>restoreInitialState</code></a></li>
+<li><a href="#capturebaseproperties">2.1. <code>captureBaseProperties</code></a></li>
+<li><a href="#captureinitialstate">2.2. <code>captureInitialState</code></a></li>
+<li><a href="#restoreinitialstate">2.3. <code>restoreInitialState</code></a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>InitialStateSnapshot</code> class manages the transparent caching of a game&#8217;s state. It is an internal orchestrator utilized by the <code>Game</code> base class to capture the properties added by the developer during <code>setupGame()</code> and allows restoring them when the game is reset.</p>
+<p>The <code>InitialStateSnapshot</code> acts as an agnostic structural utility handling transparent auto-save boundaries. Rather than forcing developers to write boilerplate serialization functions for their native sub-classes, the Engine relies on this module to dynamically iterate, deeply clone, and selectively safely cache customized attributes into local memory buffers to restore configurations effortlessly upon reset triggers.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">1. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="capturebaseproperties"><a class="link" href="#capturebaseproperties">1.1. <code>captureBaseProperties</code></a></h3>
+<h3 id="capturebaseproperties"><a class="link" href="#capturebaseproperties">2.1. <code>captureBaseProperties</code></a></h3>
 <div class="paragraph">
 <p>Captures the base properties of the instance before any custom client properties are added. In the engine&#8217;s architecture, this should be called at the very end of the base <code>Game</code> constructor, establishing the baseline for what should be ignored during the snapshot phase automatically.</p>
 </div>
@@ -491,7 +493,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="captureinitialstate"><a class="link" href="#captureinitialstate">1.2. <code>captureInitialState</code></a></h3>
+<h3 id="captureinitialstate"><a class="link" href="#captureinitialstate">2.2. <code>captureInitialState</code></a></h3>
 <div class="paragraph">
 <p>Stores the initial state of custom client properties. It selectively clones properties that were not present in the base properties and are not functions. The deep cloning strategy involves:
 1. Checking if the object has a custom <code>clone()</code> method.
@@ -522,7 +524,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="restoreinitialstate"><a class="link" href="#restoreinitialstate">1.3. <code>restoreInitialState</code></a></h3>
+<h3 id="restoreinitialstate"><a class="link" href="#restoreinitialstate">2.3. <code>restoreInitialState</code></a></h3>
 <div class="paragraph">
 <p>Restores the captured custom properties back to the instance, effectively resetting the client&#8217;s state.</p>
 </div>
@@ -553,7 +555,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-02-25 03:59:03 -0300
+Last updated 2026-02-27 22:00:35 -0300
 </div>
 </div>
 </body>

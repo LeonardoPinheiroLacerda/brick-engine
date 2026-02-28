@@ -12,7 +12,9 @@
 :idprefix:
 :idseparator: -
 
-The `GameRenderer` module is the visual engine of the application. It orchestrates multiple specialized renderers to draw the game grid, background, borders, and HUD elements on the HTML5 canvas.
+== Architectural Purpose
+
+The `GameRenderer` module acts as the visual context manager, orchestrating composite drawing pipelines. It bridges the rigid logical `xref:../interfaces/modules/Grid.adoc[Grid]` limits to the fluid, responsive Canvas dimensions. By computing and freezing pixel scaling math precisely once via a `xref:../types/RendererMetrics.adoc[RendererMetrics]` payload during initialization, it guarantees that all nested rendering loops run without any expensive trigonometric boundaries-checking per frame.
 
 == API Reference
 

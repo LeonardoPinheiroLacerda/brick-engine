@@ -12,6 +12,8 @@
 :idprefix:
 :idseparator: -
 
+== Architectural Purpose
+
 An advanced renderer that manages a collection of individual layers.
 
 == Properties
