@@ -173,18 +173,18 @@ export interface Grid extends Initializable {
     /**
      * Checks if a cell is occupied (value > 0).
      *
-     * @param {Coordinate} coordinate - The location to check.
+     * @param {Cell} cell - The cell to check.
      * @returns {boolean} `true` if active.
      */
-    isCellActive(coordinate: Coordinate): boolean;
+    isCellActive(cell: Cell): boolean;
 
     /**
      * Checks if a cell is empty (value == 0).
      *
-     * @param {Coordinate} coordinate - The location to check.
+     * @param {Cell} cell - The cell to check.
      * @returns {boolean} `true` if inactive.
      */
-    isCellInactive(coordinate: Coordinate): boolean;
+    isCellInactive(cell: Cell): boolean;
 
     /**
      * Checks if a specific row is completely full.
@@ -295,9 +295,9 @@ export interface Grid extends Initializable {
     /**
      * Updates multiple coordinates simultaneously with their specific values and colors.
      *
-     * @param {Piece} piece - The collection of cells to stamp.
+     * @param {Piece | Cell[]} cells - The collection of cells to stamp.
      */
-    stampPiece(piece: Piece): void;
+    stampPiece(cells: Piece | Cell[]): void;
 
     /**
      * Updates a single coordinate with a specific value and color from a Cell.
@@ -309,84 +309,84 @@ export interface Grid extends Initializable {
     /**
      * Attempts to move a piece in a given direction.
      *
-     * @param {Piece} piece - The current piece coordinates.
+     * @param {Piece | Cell[]} cells - The current piece coordinates.
      * @param {Vector} direction - The movement vector.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @returns {Piece} The new piece.
      */
-    movePiece(piece: Piece, direction: Vector): Piece | null;
+    movePiece(cells: Piece | Cell[], direction: Vector): Piece;
 
     /**
      * Attempts to move a piece one unit to the left.
      *
-     * @param {Piece} piece - The current piece coordinates.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @param {Piece | Cell[]} cells - The current piece coordinates.
+     * @returns {Piece} The new piece.
      */
-    movePieceLeft(piece: Piece): Piece | null;
+    movePieceLeft(cells: Piece | Cell[]): Piece;
 
     /**
      * Attempts to move a piece one unit to the right.
      *
-     * @param {Piece} piece - The current piece coordinates.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @param {Piece | Cell[]} cells - The current piece coordinates.
+     * @returns {Piece} The new piece.
      */
-    movePieceRight(piece: Piece): Piece | null;
+    movePieceRight(cells: Piece | Cell[]): Piece;
 
     /**
      * Attempts to move a piece one unit up.
      *
-     * @param {Piece} piece - The current piece coordinates.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @param {Piece | Cell[]} cells - The current piece coordinates.
+     * @returns {Piece} The new piece.
      */
-    movePieceUp(piece: Piece): Piece | null;
+    movePieceUp(cells: Piece | Cell[]): Piece;
 
     /**
      * Attempts to move a piece one unit down.
      *
-     * @param {Piece} piece - The current piece coordinates.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @param {Piece | Cell[]} cells - The current piece coordinates.
+     * @returns {Piece} The new piece.
      */
-    movePieceDown(piece: Piece): Piece | null;
+    movePieceDown(cells: Piece | Cell[]): Piece;
 
     /**
      * Attempts to move a single coordinate in a given direction.
      *
      * @param {Cell} cell - The current cell.
      * @param {Vector} direction - The movement vector.
-     * @returns {Cell | null} The new cell or null if blocked.
+     * @returns {Cell} The new cell.
      */
-    moveCell(cell: Cell, direction: Vector): Cell | null;
+    moveCell(cell: Cell, direction: Vector): Cell;
 
     /**
      * Attempts to move a single coordinate one unit to the left.
      *
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null} The new cell or null if blocked.
+     * @returns {Cell} The new cell.
      */
-    moveCellLeft(cell: Cell): Cell | null;
+    moveCellLeft(cell: Cell): Cell;
 
     /**
      * Attempts to move a single coordinate one unit to the right.
      *
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null} The new cell or null if blocked.
+     * @returns {Cell} The new cell.
      */
-    moveCellRight(cell: Cell): Cell | null;
+    moveCellRight(cell: Cell): Cell;
 
     /**
      * Attempts to move a single coordinate one unit up.
      *
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null} The new cell or null if blocked.
+     * @returns {Cell} The new cell.
      */
-    moveCellUp(cell: Cell): Cell | null;
+    moveCellUp(cell: Cell): Cell;
 
     /**
      * Attempts to move a single coordinate one unit down.
      *
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null} The new cell or null if blocked.
+     * @returns {Cell} The new cell.
      */
-    moveCellDown(cell: Cell): Cell | null;
+    moveCellDown(cell: Cell): Cell;
 
     /**
      * Attempts to rotate a piece 90 degrees around a specific origin.
@@ -394,9 +394,9 @@ export interface Grid extends Initializable {
      * @param {Piece} piece - The current piece.
      * @param {Coordinate} origin - The center of rotation.
      * @param {boolean} [clockwise=true] - Direction of rotation.
-     * @returns {Piece | null} The new piece or null if blocked.
+     * @returns {Piece} The new piece.
      */
-    rotatePiece(piece: Piece, origin: Coordinate, clockwise?: boolean): Piece | null;
+    rotatePiece(piece: Piece, origin: Coordinate, clockwise?: boolean): Piece;
 
     /**
      * Identifies all rows that are completely filled with active cells.

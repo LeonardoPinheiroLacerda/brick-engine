@@ -96,7 +96,6 @@ module.exports = (env, argv) => {
                     { from: 'public/fonts', to: 'fonts' },
                     { from: 'public/docs', to: 'docs' },
                     { from: 'public/favicon.ico', to: './' },
-                    { from: 'public/CNAME', to: './' },
                 ],
             }),
         ],

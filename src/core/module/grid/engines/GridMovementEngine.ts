@@ -10,7 +10,7 @@ export default class GridMovementEngine {
     /**
      * Attempts to shift a collection of cells (a piece) in a given direction.
      */
-    movePiece(piece: Piece, direction: Vector): Piece | null {
+    movePiece(piece: Piece, direction: Vector): Piece {
         const newPiece: Piece = piece.map(cell => ({
             ...cell,
             coordinate: {
@@ -23,58 +23,64 @@ export default class GridMovementEngine {
 
         const isInvalid = newPiece.some(cell => {
             if (!this.grid.isCoordinateValid(cell.coordinate)) return true;
-            return this.grid.isCellActive(cell.coordinate) && !isPartofSelf(cell.coordinate);
+            const gridCell = this.grid.getCell(cell.coordinate);
+            return gridCell && this.grid.isCellActive(gridCell) && !isPartofSelf(cell.coordinate);
         });
 
-        return isInvalid ? null : newPiece;
+        return isInvalid ? piece : newPiece;
     }
 
-    movePieceLeft(piece: Piece): Piece | null {
+    movePieceLeft(piece: Piece): Piece {
         return this.movePiece(piece, { x: -1, y: 0 });
     }
-    movePieceRight(piece: Piece): Piece | null {
+    movePieceRight(piece: Piece): Piece {
         return this.movePiece(piece, { x: 1, y: 0 });
     }
-    movePieceUp(piece: Piece): Piece | null {
+    movePieceUp(piece: Piece): Piece {
         return this.movePiece(piece, { x: 0, y: -1 });
     }
-    movePieceDown(piece: Piece): Piece | null {
+    movePieceDown(piece: Piece): Piece {
         return this.movePiece(piece, { x: 0, y: 1 });
     }
 
     /**
      * Attempts to shift a single cell in a given direction.
      */
-    moveCell(cell: Cell, direction: Vector): Cell | null {
+    moveCell(cell: Cell, direction: Vector): Cell {
         const newCoord = {
             x: cell.coordinate.x + (direction.x || 0),
             y: cell.coordinate.y + (direction.y || 0),
         };
 
-        if (!this.grid.isCoordinateValid(newCoord) || this.grid.isCellActive(newCoord)) {
-            return null;
+        if (!this.grid.isCoordinateValid(newCoord)) {
+            return cell;
+        }
+
+        const gridCell = this.grid.getCell(newCoord);
+        if (gridCell && this.grid.isCellActive(gridCell)) {
+            return cell;
         }
 
         return { ...cell, coordinate: newCoord };
     }
 
-    moveCellLeft(cell: Cell): Cell | null {
+    moveCellLeft(cell: Cell): Cell {
         return this.moveCell(cell, { x: -1, y: 0 });
     }
-    moveCellRight(cell: Cell): Cell | null {
+    moveCellRight(cell: Cell): Cell {
         return this.moveCell(cell, { x: 1, y: 0 });
     }
-    moveCellUp(cell: Cell): Cell | null {
+    moveCellUp(cell: Cell): Cell {
         return this.moveCell(cell, { x: 0, y: -1 });
     }
-    moveCellDown(cell: Cell): Cell | null {
+    moveCellDown(cell: Cell): Cell {
         return this.moveCell(cell, { x: 0, y: 1 });
     }
 
     getDropPath(piece: Piece): Piece {
         let currentPiece = piece;
         let nextPiece = this.movePieceDown(currentPiece);
-        while (nextPiece !== null) {
+        while (nextPiece !== currentPiece) {
             currentPiece = nextPiece;
             nextPiece = this.movePieceDown(currentPiece);
         }
@@ -84,7 +90,7 @@ export default class GridMovementEngine {
     getRisePath(piece: Piece): Piece {
         let currentPiece = piece;
         let nextPiece = this.movePieceUp(currentPiece);
-        while (nextPiece !== null) {
+        while (nextPiece !== currentPiece) {
             currentPiece = nextPiece;
             nextPiece = this.movePieceUp(currentPiece);
         }
@@ -94,7 +100,7 @@ export default class GridMovementEngine {
     getReachPathLeft(piece: Piece): Piece {
         let currentPiece = piece;
         let nextPiece = this.movePieceLeft(currentPiece);
-        while (nextPiece !== null) {
+        while (nextPiece !== currentPiece) {
             currentPiece = nextPiece;
             nextPiece = this.movePieceLeft(currentPiece);
         }
@@ -104,7 +110,7 @@ export default class GridMovementEngine {
     getReachPathRight(piece: Piece): Piece {
         let currentPiece = piece;
         let nextPiece = this.movePieceRight(currentPiece);
-        while (nextPiece !== null) {
+        while (nextPiece !== currentPiece) {
             currentPiece = nextPiece;
             nextPiece = this.movePieceRight(currentPiece);
         }

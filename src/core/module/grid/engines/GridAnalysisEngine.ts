@@ -15,7 +15,8 @@ export default class GridAnalysisEngine {
         for (let y = 0; y < this.grid.height; y++) {
             let isFull = true;
             for (let x = 0; x < this.grid.width; x++) {
-                if (!this.grid.isCellActive({ x, y })) {
+                const gridCell = this.grid.getCell({ x, y });
+                if (gridCell && !this.grid.isCellActive(gridCell)) {
                     isFull = false;
                     break;
                 }
@@ -33,7 +34,8 @@ export default class GridAnalysisEngine {
         for (let x = 0; x < this.grid.width; x++) {
             let isFull = true;
             for (let y = 0; y < this.grid.height; y++) {
-                if (!this.grid.isCellActive({ x, y })) {
+                const gridCell = this.grid.getCell({ x, y });
+                if (gridCell && !this.grid.isCellActive(gridCell)) {
                     isFull = false;
                     break;
                 }
@@ -62,7 +64,8 @@ export default class GridAnalysisEngine {
         offsets.forEach(offset => {
             const neighborCoord = { x: coord.x + offset.x, y: coord.y + offset.y };
             if (this.grid.isCoordinateValid(neighborCoord)) {
-                neighbors.push(this.grid.getCell(neighborCoord));
+                const neighborCell = this.grid.getCell(neighborCoord);
+                if (neighborCell) neighbors.push(neighborCell);
             }
         });
 
@@ -73,9 +76,9 @@ export default class GridAnalysisEngine {
      * Finds all connected active cells of the same value starting from a specific coordinate.
      */
     findConnectedCells(coord: Coordinate): Piece {
-        if (!this.grid.isCellActive(coord)) return [];
-
         const startCell = this.grid.getCell(coord);
+        if (!startCell || !this.grid.isCellActive(startCell)) return [];
+
         const targetValue = startCell.value;
         const connected: Piece = [];
         const visited = new Set<string>();
@@ -100,7 +103,8 @@ export default class GridAnalysisEngine {
 
                 neighbors.forEach(n => {
                     const key = getCoordKey(n);
-                    if (this.grid.isCoordinateValid(n) && !visited.has(key) && this.grid.isCellActive(n)) {
+                    const nCell = this.grid.getCell(n);
+                    if (this.grid.isCoordinateValid(n) && !visited.has(key) && nCell && this.grid.isCellActive(nCell)) {
                         visited.add(key);
                         queue.push(n);
                     }

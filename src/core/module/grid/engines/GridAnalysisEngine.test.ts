@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GridAnalysisEngine from './GridAnalysisEngine';
 import { Grid } from '../../../types/modules';
 import { Color } from '../../../types/enums';
+import { Coordinate, Cell } from '../../../types/Types';
 
 describe('GridAnalysisEngine', () => {
     let engine: GridAnalysisEngine;
@@ -23,7 +24,8 @@ describe('GridAnalysisEngine', () => {
     describe('getFullRows', () => {
         it('should return indices of rows where all cells are active', () => {
             // [ARRANGE] Row 2 is full, others are not
-            vi.mocked(mockGrid.isCellActive).mockImplementation(({ y }) => y === 2);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: c.y === 2 ? 1 : 0, color: Color.DEFAULT }) as Cell);
+            vi.mocked(mockGrid.isCellActive).mockImplementation((cell: Cell) => cell.value > 0);
 
             // [ACT]
             const result = engine.getFullRows();
@@ -34,6 +36,7 @@ describe('GridAnalysisEngine', () => {
 
         it('should return an empty array if no rows are full', () => {
             // [ARRANGE]
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: 0, color: Color.DEFAULT }) as Cell);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -47,7 +50,8 @@ describe('GridAnalysisEngine', () => {
     describe('getFullColumns', () => {
         it('should return indices of columns where all cells are active', () => {
             // [ARRANGE] Column 5 is full
-            vi.mocked(mockGrid.isCellActive).mockImplementation(({ x }) => x === 5);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: c.x === 5 ? 1 : 0, color: Color.DEFAULT }) as Cell);
+            vi.mocked(mockGrid.isCellActive).mockImplementation((cell: Cell) => cell.value > 0);
 
             // [ACT]
             const result = engine.getFullColumns();
@@ -62,7 +66,7 @@ describe('GridAnalysisEngine', () => {
             // [ARRANGE]
             const coord = { x: 5, y: 5 };
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
-            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
+            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }) as Cell);
 
             // [ACT]
             const result = engine.getNeighbors(coord);
@@ -79,7 +83,7 @@ describe('GridAnalysisEngine', () => {
             // [ARRANGE]
             const coord = { x: 5, y: 5 };
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
-            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
+            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }) as Cell);
 
             // [ACT]
             const result = engine.getNeighbors(coord, true);
@@ -93,7 +97,7 @@ describe('GridAnalysisEngine', () => {
             // [ARRANGE] Center at (0,0)
             const coord = { x: 0, y: 0 };
             vi.mocked(mockGrid.isCoordinateValid).mockImplementation(c => c.x >= 0 && c.y >= 0);
-            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }));
+            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.DEFAULT }) as Cell);
 
             // [ACT]
             const result = engine.getNeighbors(coord);
@@ -107,6 +111,7 @@ describe('GridAnalysisEngine', () => {
     describe('findConnectedCells', () => {
         it('should return an empty array if starting cell is inactive', () => {
             // [ARRANGE]
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: 0, color: Color.DEFAULT }) as Cell);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
@@ -121,9 +126,11 @@ describe('GridAnalysisEngine', () => {
             const start = { x: 5, y: 5 };
             const neighbor = { x: 6, y: 5 };
 
-            vi.mocked(mockGrid.isCellActive).mockImplementation(c => (c.x === 5 && c.y === 5) || (c.x === 6 && c.y === 5));
+            vi.mocked(mockGrid.isCellActive).mockImplementation(
+                (cell: Cell) => (cell.coordinate.x === 5 && cell.coordinate.y === 5) || (cell.coordinate.x === 6 && cell.coordinate.y === 5),
+            );
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
-            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.RED }));
+            vi.mocked(mockGrid.getCell).mockImplementation(c => ({ coordinate: c, value: 1, color: Color.RED }) as Cell);
 
             // [ACT]
             const result = engine.findConnectedCells(start);
@@ -143,7 +150,7 @@ describe('GridAnalysisEngine', () => {
             const cellA = { coordinate: a, value: 1, color: Color.RED };
             const cellB = { coordinate: b, value: 2, color: Color.BLUE };
 
-            vi.mocked(mockGrid.getCell).mockImplementation(c => (c.x === 1 ? cellA : cellB));
+            vi.mocked(mockGrid.getCell).mockImplementation(c => (c.x === 1 ? cellA : cellB) as Cell);
 
             // [ACT]
             engine.swapCells(a, b);

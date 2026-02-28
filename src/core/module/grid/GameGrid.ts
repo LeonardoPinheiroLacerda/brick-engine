@@ -196,24 +196,22 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
     }
 
     /**
-     * Checks if a cell at a specific coordinate is active (value > 0).
+     * Checks if a cell is active (value > 0).
      *
-     * @param {Coordinate} coordinate - The coordinate to check.
+     * @param {Cell} cell - The cell to check.
      * @returns {boolean} True if active, false otherwise.
      */
-    isCellActive(coordinate: Coordinate): boolean {
-        const cell = this.getCell(coordinate);
+    isCellActive(cell: Cell): boolean {
         return cell !== null && cell.value > 0;
     }
 
     /**
-     * Checks if a cell at a specific coordinate is inactive (value === 0).
+     * Checks if a cell is inactive (value === 0).
      *
-     * @param {Coordinate} coordinate - The coordinate to check.
+     * @param {Cell} cell - The cell to check.
      * @returns {boolean} True if inactive, false otherwise.
      */
-    isCellInactive(coordinate: Coordinate): boolean {
-        const cell = this.getCell(coordinate);
+    isCellInactive(cell: Cell): boolean {
         return cell !== null && cell.value === 0;
     }
 
@@ -381,10 +379,10 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * Effectively "stamps" a piece's shape onto the static grid.
      *
-     * @param {Piece} piece - The collection of cells to stamp.
+     * @param {Piece | Cell[]} piece - The collection of cells to stamp.
      * @returns {void}
      */
-    stampPiece(piece: Piece): void {
+    stampPiece(piece: Piece | Cell[]): void {
         this._regionEngine.stampPiece(piece);
     }
 
@@ -404,47 +402,47 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * Validates that all new positions are within grid boundaries and are not
      * occupied by other active cells (excluding the cells that are part of the original piece).
      *
-     * @param {Piece} piece - The current piece (collection of cells).
+     * @param {Piece | Cell[]} piece - The current piece (collection of cells).
      * @param {Vector} direction - The movement vector (e.g., {x: -1, y: 0} for left).
-     * @returns {Piece | null} The new piece with updated coordinates if the move is valid, or null if blocked.
+     * @returns {Piece} The new piece with updated coordinates if the move is valid, or the original piece if blocked.
      */
-    movePiece(piece: Piece, direction: Vector): Piece | null {
+    movePiece(piece: Piece | Cell[], direction: Vector): Piece {
         return this._movementEngine.movePiece(piece, direction);
     }
 
     /**
      * Alias for {@link movePiece} shifting one unit to the left.
-     * @param {Piece} piece - The current piece.
-     * @returns {Piece | null}
+     * @param {Piece | Cell[]} piece - The current piece.
+     * @returns {Piece}
      */
-    movePieceLeft(piece: Piece): Piece | null {
+    movePieceLeft(piece: Piece | Cell[]): Piece {
         return this._movementEngine.movePieceLeft(piece);
     }
 
     /**
      * Alias for {@link movePiece} shifting one unit to the right.
-     * @param {Piece} piece - The current piece.
-     * @returns {Piece | null}
+     * @param {Piece | Cell[]} piece - The current piece.
+     * @returns {Piece}
      */
-    movePieceRight(piece: Piece): Piece | null {
+    movePieceRight(piece: Piece | Cell[]): Piece {
         return this._movementEngine.movePieceRight(piece);
     }
 
     /**
      * Alias for {@link movePiece} shifting one unit up.
-     * @param {Piece} piece - The current piece.
-     * @returns {Piece | null}
+     * @param {Piece | Cell[]} piece - The current piece.
+     * @returns {Piece}
      */
-    movePieceUp(piece: Piece): Piece | null {
+    movePieceUp(piece: Piece | Cell[]): Piece {
         return this._movementEngine.movePieceUp(piece);
     }
 
     /**
      * Alias for {@link movePiece} shifting one unit down.
-     * @param {Piece} piece - The current piece.
-     * @returns {Piece | null}
+     * @param {Piece | Cell[]} piece - The current piece.
+     * @returns {Piece}
      */
-    movePieceDown(piece: Piece): Piece | null {
+    movePieceDown(piece: Piece | Cell[]): Piece {
         return this._movementEngine.movePieceDown(piece);
     }
 
@@ -455,45 +453,45 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      *
      * @param {Cell} cell - The current cell.
      * @param {Vector} direction - The movement vector.
-     * @returns {Cell | null} The new cell with updated coordinate if the move is valid, or null if blocked.
+     * @returns {Cell} The new cell with updated coordinate if the move is valid, or the original cell if blocked.
      */
-    moveCell(cell: Cell, direction: Vector): Cell | null {
+    moveCell(cell: Cell, direction: Vector): Cell {
         return this._movementEngine.moveCell(cell, direction);
     }
 
     /**
      * Alias for {@link moveCell} shifting one unit to the left.
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null}
+     * @returns {Cell}
      */
-    moveCellLeft(cell: Cell): Cell | null {
+    moveCellLeft(cell: Cell): Cell {
         return this._movementEngine.moveCellLeft(cell);
     }
 
     /**
      * Alias for {@link moveCell} shifting one unit to the right.
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null}
+     * @returns {Cell}
      */
-    moveCellRight(cell: Cell): Cell | null {
+    moveCellRight(cell: Cell): Cell {
         return this._movementEngine.moveCellRight(cell);
     }
 
     /**
      * Alias for {@link moveCell} shifting one unit up.
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null}
+     * @returns {Cell}
      */
-    moveCellUp(cell: Cell): Cell | null {
+    moveCellUp(cell: Cell): Cell {
         return this._movementEngine.moveCellUp(cell);
     }
 
     /**
      * Alias for {@link moveCell} shifting one unit down.
      * @param {Cell} cell - The current cell.
-     * @returns {Cell | null}
+     * @returns {Cell}
      */
-    moveCellDown(cell: Cell): Cell | null {
+    moveCellDown(cell: Cell): Cell {
         return this._movementEngine.moveCellDown(cell);
     }
 
@@ -503,9 +501,9 @@ export default class GameGrid implements Grid, Debuggable, Serializable {
      * @param {Piece} piece - The current piece.
      * @param {Coordinate} origin - The center of rotation.
      * @param {boolean} [clockwise=true] - Direction of rotation.
-     * @returns {Piece | null} The new piece if rotation is valid, or null if blocked.
+     * @returns {Piece} The new piece if rotation is valid, or the original piece if blocked.
      */
-    rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null {
+    rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece {
         return this._transformEngine.rotatePiece(piece, origin, clockwise);
     }
 

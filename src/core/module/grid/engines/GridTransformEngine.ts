@@ -10,7 +10,7 @@ export default class GridTransformEngine {
     /**
      * Attempts to rotate a piece 90 degrees around a specific origin.
      */
-    rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece | null {
+    rotatePiece(piece: Piece, origin: Coordinate, clockwise: boolean = true): Piece {
         const newPiece: Piece = piece.map(cell => {
             const relX = cell.coordinate.x - origin.x;
             const relY = cell.coordinate.y - origin.y;
@@ -31,10 +31,11 @@ export default class GridTransformEngine {
 
         const isInvalid = newPiece.some(cell => {
             if (!this.grid.isCoordinateValid(cell.coordinate)) return true;
-            return this.grid.isCellActive(cell.coordinate) && !isPartofSelf(cell.coordinate);
+            const gridCell = this.grid.getCell(cell.coordinate);
+            return gridCell && this.grid.isCellActive(gridCell) && !isPartofSelf(cell.coordinate);
         });
 
-        return isInvalid ? null : newPiece;
+        return isInvalid ? piece : newPiece;
     }
 
     /**

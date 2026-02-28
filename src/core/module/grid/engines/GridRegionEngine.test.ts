@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GridRegionEngine from './GridRegionEngine';
 import { Grid } from '../../../types/modules';
 import { Color } from '../../../types/enums';
+import { Coordinate, Cell } from '../../../types/Types';
 
 describe('GridRegionEngine', () => {
     let engine: GridRegionEngine;
@@ -14,6 +15,7 @@ describe('GridRegionEngine', () => {
             height: 20,
             isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
+            getCell: vi.fn(),
             setCellValue: vi.fn(),
             setCellColor: vi.fn(),
             stampCell: vi.fn(),
@@ -44,7 +46,8 @@ describe('GridRegionEngine', () => {
                 { x: 2, y: 2 },
             ];
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
-            vi.mocked(mockGrid.isCellActive).mockImplementation(c => c.x === 2);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: c.x === 2 ? 1 : 0, color: Color.DEFAULT }) as Cell);
+            vi.mocked(mockGrid.isCellActive).mockImplementation((cell: Cell) => cell.value > 0);
 
             // [ACT]
             const result = engine.isAreaOccupied(coords);
@@ -60,6 +63,7 @@ describe('GridRegionEngine', () => {
                 { x: 2, y: 2 },
             ];
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: 0, color: Color.DEFAULT }) as Cell);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]

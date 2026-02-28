@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GridTransformEngine from './GridTransformEngine';
 import { Grid } from '../../../types/modules';
 import { Color } from '../../../types/enums';
+import { Coordinate, Cell } from '../../../types/Types';
 
 describe('GridTransformEngine', () => {
     let engine: GridTransformEngine;
@@ -12,6 +13,7 @@ describe('GridTransformEngine', () => {
         mockGrid = {
             isCoordinateValid: vi.fn(),
             isCellActive: vi.fn(),
+            getCell: vi.fn(),
         } as unknown as Grid;
         engine = new GridTransformEngine(mockGrid);
     });
@@ -24,28 +26,30 @@ describe('GridTransformEngine', () => {
             const piece = [{ coordinate: { x: 5, y: 4 }, value: 1, color: Color.RED }];
             const origin = { x: 5, y: 5 };
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: 0, color: Color.DEFAULT }) as Cell);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(false);
 
             // [ACT]
             const result = engine.rotatePiece(piece, origin, true);
 
             // [ASSERT]
-            expect(result).not.toBeNull();
-            expect(result![0].coordinate).toEqual({ x: 6, y: 5 });
+            expect(result).not.toBe(piece);
+            expect(result[0].coordinate).toEqual({ x: 6, y: 5 });
         });
 
-        it('should return null if rotation results in a collision', () => {
+        it('should return original piece if rotation results in a collision', () => {
             // [ARRANGE]
             const piece = [{ coordinate: { x: 5, y: 4 }, value: 1, color: Color.RED }];
             const origin = { x: 5, y: 5 };
             vi.mocked(mockGrid.isCoordinateValid).mockReturnValue(true);
+            vi.mocked(mockGrid.getCell).mockImplementation((c: Coordinate) => ({ coordinate: c, value: 1, color: Color.RED }) as Cell);
             vi.mocked(mockGrid.isCellActive).mockReturnValue(true); // Obstacle at (6,5)
 
             // [ACT]
             const result = engine.rotatePiece(piece, origin, true);
 
             // [ASSERT]
-            expect(result).toBeNull();
+            expect(result).toBe(piece);
         });
     });
 

@@ -30,7 +30,7 @@ describe('GameGrid', () => {
             grid.setCellValue(coord, 1);
             grid.setCellColor(coord, Color.RED);
 
-            expect(grid.isCellActive(coord)).toBe(true);
+            expect(grid.isCellActive(grid.getCell(coord)!)).toBe(true);
             expect(grid.getCell(coord)?.color).toBe(Color.RED);
         });
 
@@ -74,7 +74,16 @@ describe('GameGrid', () => {
             piece[0].value = 1;
 
             const moved = grid.movePiece(piece, { x: 1, y: 0 });
-            expect(moved![0].coordinate).toEqual({ x: 6, y: 5 });
+            expect(moved[0].coordinate).toEqual({ x: 6, y: 5 });
+        });
+
+        it('should return original piece if move is blocked', () => {
+            const piece = [CellHelper.emptyCell({ x: 0, y: 0 })];
+            piece[0].value = 1;
+
+            // Blocked by boundary
+            const blockedMoved = grid.movePiece(piece, { x: -1, y: 0 });
+            expect(blockedMoved).toBe(piece);
         });
     });
 
