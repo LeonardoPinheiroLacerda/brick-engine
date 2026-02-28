@@ -38,6 +38,8 @@ body {
 
         border-radius: 0px !important;
         border: 0px !important;
+        overflow-y: hidden !important;
+        touch-action: none !important;
     }
 
     #debugger {
