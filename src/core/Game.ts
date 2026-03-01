@@ -17,6 +17,7 @@ import GameSession from './module/session/GameSession';
 import p5 from 'p5';
 import RendererContext from './context/RendererContext';
 import GameEventRegistry from './event/GameEventRegistry';
+import EventEmitter from './event/EventEmitter';
 
 /**
  * The Central integration boundary encapsulating physical logic away from native visual outputs.
@@ -98,6 +99,7 @@ export default abstract class Game implements Initializable {
      * @returns {void} Returns nothing.
      */
     setup(): void {
+        EventEmitter.clear();
         this._view.build();
 
         this._modules = {
@@ -207,6 +209,7 @@ export default abstract class Game implements Initializable {
             this._modules.control.unbindControls();
             this._modules.sound.stopAll();
         }
+        EventEmitter.clear();
     }
 
     /**
