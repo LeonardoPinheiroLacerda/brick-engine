@@ -60,7 +60,7 @@ describe('GameText', () => {
 
         it('should call CoordinateHelper.getHudPos and p5.text for HUD text', () => {
             // [ACT]
-            gameText.textOnHud('Hello', { x: 0.5, y: 0.5 });
+            gameText.writeOnHud('Hello', { x: 0.5, y: 0.5 });
 
             // [ASSERT]
             expect(CoordinateHelper.getHudPosX).toHaveBeenCalled();
@@ -69,7 +69,7 @@ describe('GameText', () => {
 
         it('should call CoordinateHelper.getDisplayPos and p5.text for Display text', () => {
             // [ACT]
-            gameText.textOnDisplay('Score', { x: 0.1, y: 0.1 });
+            gameText.writeOnDisplay('Score', { x: 0.1, y: 0.1 });
 
             // [ASSERT]
             expect(CoordinateHelper.getDisplayPosX).toHaveBeenCalled();

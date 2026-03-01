@@ -111,7 +111,7 @@ export interface Text extends Initializable {
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
      * @returns {void} Returns nothing.
      */
-    textOnHud(text: string, coordinate: Coordinate): void;
+    writeOnHud(text: string, coordinate: Coordinate): void;
 
     /**
      * Renders text on the main display area.
@@ -120,29 +120,35 @@ export interface Text extends Initializable {
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the Display.
      * @returns {void} Returns nothing.
      */
-    textOnDisplay(text: string, coordinate: Coordinate): void;
+    writeOnDisplay(text: string, coordinate: Coordinate): void;
 
     /**
      * Renders a pulsing text on the HUD area based on the elapsed time.
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
-     * @param {number} elapsedTime - The elapsed time used to calculate the pulse opacity/visibility.
      * @param {number} [pulseSpeedMs] - Time in milliseconds for one full pulse cycle. Default is 1000.
      * @returns {void} Returns nothing.
      */
-    pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void;
+    writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void;
 
     /**
      * Renders a pulsing text on the display area based on the elapsed time.
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the display.
-     * @param {number} elapsedTime - The elapsed time used to calculate the pulse opacity/visibility.
      * @param {number} [pulseSpeedMs] - Time in milliseconds for one full pulse cycle. Default is 1000.
      * @returns {void} Returns nothing.
      */
-    pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void;
+    writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void;
+
+    /**
+     * Sets the current time. used to calculate pulse speed.
+     *
+     * @param {Time} time - The time to set.
+     * @returns {void} Returns nothing.
+     */
+    setTime(time: Time): void;
 }
 
 /**

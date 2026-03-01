@@ -452,12 +452,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#setinactivetext-void">2.4. <code>setInactiveText(): void</code></a></li>
 <li><a href="#setshadowtext-void">2.5. <code>setShadowText(): void</code></a></li>
 <li><a href="#settextthemetheme-texttheme-void">2.6. <code>setTextTheme(theme: TextTheme): void</code></a></li>
-<li><a href="#textondisplaytext-string-coordinate-coordinate-void">2.7. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#textonhudtext-string-coordinate-coordinate-void">2.8. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.9. <code>pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></li>
-<li><a href="#pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.10. <code>pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></li>
-<li><a href="#setrenderermetricsmetrics-renderermetrics-void">2.11. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
-<li><a href="#getdebugdata-recordstring-string-number-boolean">2.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
+<li><a href="#writeondisplaytext-string-coordinate-coordinate-void">2.7. <code>writeOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#writeonhudtext-string-coordinate-coordinate-void">2.8. <code>writeOnHud(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void">2.9. <code>writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></li>
+<li><a href="#writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void">2.10. <code>writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></li>
+<li><a href="#settimetime-time-void">2.11. <code>setTime(time: Time): void</code></a></li>
+<li><a href="#setrenderermetricsmetrics-renderermetrics-void">2.12. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></li>
+<li><a href="#getdebugdata-recordstring-string-number-boolean">2.13. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></li>
 </ul>
 </li>
 </ul>
@@ -611,7 +612,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">2.7. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></h3>
+<h3 id="writeondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#writeondisplaytext-string-coordinate-coordinate-void">2.7. <code>writeOnDisplay(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the main game display area.</p>
 </div>
@@ -647,13 +648,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">text.textOnDisplay('PAUSED', { x: 0.5, y: 0.5 });</code></pre>
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">text.writeOnDisplay('PAUSED', { x: 0.5, y: 0.5 });</code></pre>
 </div>
 </div>
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">2.8. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></h3>
+<h3 id="writeonhudtext-string-coordinate-coordinate-void"><a class="link" href="#writeonhudtext-string-coordinate-coordinate-void">2.8. <code>writeOnHud(text: string, coordinate: Coordinate): void</code></a></h3>
 <div class="paragraph">
 <p>Renders text on the side HUD area.</p>
 </div>
@@ -687,7 +688,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void"><a class="link" href="#pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.9. <code>pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></h3>
+<h3 id="writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void"><a class="link" href="#writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void">2.9. <code>writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a flashing text on the Main Display iterating across 3 visual themes based on the elapsed time elapsed.</p>
 </div>
@@ -717,11 +718,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Floating point proportional coordinate anchor points.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>elapsedTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total milliseconds progressed since tracking began (e.g. <code>time.elapsedTime</code>).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pulseSpeedMs</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration of a full visualization cycle in milliseconds (default: 1000).</p></td>
@@ -731,7 +727,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void"><a class="link" href="#pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.10. <code>pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></h3>
+<h3 id="writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void"><a class="link" href="#writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void">2.10. <code>writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a flashing text on the side HUD iterating across 3 visual themes based on the elapsed time elapsed.</p>
 </div>
@@ -761,11 +757,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Relative coordinate vectors bounds scaled strictly according to the active HUD dimensions array.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>elapsedTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The total milliseconds progressed since tracking began (e.g. <code>time.elapsedTime</code>).</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pulseSpeedMs</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Duration of a full visualization cycle in milliseconds (default: 1000).</p></td>
@@ -775,7 +766,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="setrenderermetricsmetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsmetrics-renderermetrics-void">2.11. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></h3>
+<h3 id="settimetime-time-void"><a class="link" href="#settimetime-time-void">2.11. <code>setTime(time: Time): void</code></a></h3>
+<div class="paragraph">
+<p>Injects the runtime reference of Time into the component. Used internally to automatically offset rendering pulses based on elapsed timestamps.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>time</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../interfaces/modules/Time.html">Time</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current injected Time contextual module.</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="setrenderermetricsmetrics-renderermetrics-void"><a class="link" href="#setrenderermetricsmetrics-renderermetrics-void">2.12. <code>setRendererMetrics(metrics: RendererMetrics): void</code></a></h3>
 <div class="paragraph">
 <p>Updates the coordinate conversion reference.</p>
 </div>
@@ -810,7 +830,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.12. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
+<h3 id="getdebugdata-recordstring-string-number-boolean"><a class="link" href="#getdebugdata-recordstring-string-number-boolean">2.13. <code>getDebugData(): Record&lt;string, string | number | boolean&gt;</code></a></h3>
 <div class="paragraph">
 <p>Returns metadata for the real-time debugger.</p>
 </div>

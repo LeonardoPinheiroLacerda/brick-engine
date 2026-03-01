@@ -76,26 +76,26 @@ export default class HudRenderer implements Renderer {
         text.setTextAlign(FontAlign.LEFT, FontVerticalAlign.BOTTOM);
 
         //Placeholders text
-        text.textOnHud('88888888', { x: 0.05, y: 0.13 });
-        text.textOnHud('88888888', { x: 0.05, y: 0.3 });
-        text.textOnHud('88 - 88', { x: 0.05, y: 0.8 });
+        text.writeOnHud('88888888', { x: 0.05, y: 0.13 });
+        text.writeOnHud('88888888', { x: 0.05, y: 0.3 });
+        text.writeOnHud('88 - 88', { x: 0.05, y: 0.8 });
 
         if (state.isOn()) {
             text.setActiveText();
         }
 
         //Score text
-        text.textOnHud('Score', { x: 0.05, y: 0.06 });
-        text.textOnHud(score.score.toString(), { x: 0.05, y: 0.13 });
+        text.writeOnHud('Score', { x: 0.05, y: 0.06 });
+        text.writeOnHud(score.score.toString(), { x: 0.05, y: 0.13 });
 
         //Hi-Score text
-        text.textOnHud('Hi-Score', { x: 0.05, y: 0.23 });
-        text.textOnHud(score.highScore.toString(), { x: 0.05, y: 0.3 });
+        text.writeOnHud('Hi-Score', { x: 0.05, y: 0.23 });
+        text.writeOnHud(score.highScore.toString(), { x: 0.05, y: 0.3 });
 
         //Level text
-        text.textOnHud('Level', { x: 0.05, y: 0.72 });
+        text.writeOnHud('Level', { x: 0.05, y: 0.72 });
         const levelValue = `${score.level < 10 ? '0' + score.level : score.level} - ${score.maxLevel}`;
-        text.textOnHud(levelValue, { x: 0.05, y: 0.8 });
+        text.writeOnHud(levelValue, { x: 0.05, y: 0.8 });
 
         text.setTextAlign(FontAlign.CENTER, FontVerticalAlign.BOTTOM);
 
@@ -105,7 +105,7 @@ export default class HudRenderer implements Renderer {
         } else {
             text.setInactiveText();
         }
-        text.textOnHud('Paused', { x: 0.5, y: 0.9 });
+        text.writeOnHud('Paused', { x: 0.5, y: 0.9 });
 
         //Muted text
         if (state.isOn() && state.isMuted()) {
@@ -113,7 +113,7 @@ export default class HudRenderer implements Renderer {
         } else {
             text.setInactiveText();
         }
-        text.textOnHud('Muted', { x: 0.5, y: 0.97 });
+        text.writeOnHud('Muted', { x: 0.5, y: 0.97 });
 
         p.pop();
 

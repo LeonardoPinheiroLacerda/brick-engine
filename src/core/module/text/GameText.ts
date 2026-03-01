@@ -4,7 +4,7 @@ import { Coordinate, RendererMetrics } from '../../types/Types';
 import { Debuggable } from '../../types/Interfaces';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
 import RelativeValuesHelper from '../../helpers/RelativeValuesHelper';
-import { Text } from '../../types/modules';
+import { Text, Time } from '../../types/modules';
 import RendererContext from '../../context/RendererContext';
 
 /**
@@ -25,6 +25,8 @@ export default class GameText implements Text, Debuggable {
 
     /** Stores the current display metrics for relative positioning. */
     private _rendererMetrics: RendererMetrics;
+
+    private _time: Time;
 
     // prettier-ignore
     /**
@@ -49,6 +51,16 @@ export default class GameText implements Text, Debuggable {
         this.fontSizes[FontSize.MEDIUM]      = RelativeValuesHelper.getRelativeWidth(medium);
         this.fontSizes[FontSize.LARGE]       = RelativeValuesHelper.getRelativeWidth(large);
         this.fontSizes[FontSize.EXTRA_LARGE] = RelativeValuesHelper.getRelativeWidth(extraLarge);
+    }
+
+    /**
+     * Injects the active time state used for pulse animation.
+     *
+     * @param {Time} time - The extracted immutable time definitions.
+     * @returns {void} Returns nothing.
+     */
+    setTime(time: Time): void {
+        this._time = time;
     }
 
     /**
@@ -151,7 +163,7 @@ export default class GameText implements Text, Debuggable {
      * @param {Coordinate} coordinate - Float coordinate vectors from 0.0 to 1.0 restricted to the HUD bounds.
      * @returns {void} Returns nothing.
      */
-    textOnHud(text: string, coordinate: Coordinate): void {
+    writeOnHud(text: string, coordinate: Coordinate): void {
         const { p } = RendererContext;
         const x = CoordinateHelper.getHudPosX(coordinate.x, this._rendererMetrics.display.width);
         const y = CoordinateHelper.getHudPosY(coordinate.y, this._rendererMetrics.display.height);
@@ -166,7 +178,7 @@ export default class GameText implements Text, Debuggable {
      * @param {Coordinate} coordinate - Float coordinate vectors from 0.0 to 1.0 referencing the Main Display bounds.
      * @returns {void} Returns nothing.
      */
-    textOnDisplay(text: string, coordinate: Coordinate): void {
+    writeOnDisplay(text: string, coordinate: Coordinate): void {
         const { p } = RendererContext;
         // Fixed argument order: (p, x, displayWidth)
         const x = CoordinateHelper.getDisplayPosX(coordinate.x, this._rendererMetrics.display.width);
@@ -181,19 +193,18 @@ export default class GameText implements Text, Debuggable {
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
-     * @param {number} elapsedTime - The elapsed time, like from time.elapsedTime.
      * @param {number} [pulseSpeedMs=1000] - Duration of a full cycle (visible + hidden) in ms.
      * @returns {void} Returns nothing.
      */
-    pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs: number = 1000): void {
-        const step = Math.floor((elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
+    writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs: number = 1000): void {
+        const step = Math.floor((this._time.elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
 
         if (step === 0) {
             this.setActiveText();
-            this.textOnHud(text, coordinate);
+            this.writeOnHud(text, coordinate);
         } else if (step === 1 || step === 3) {
             this.setShadowText();
-            this.textOnHud(text, coordinate);
+            this.writeOnHud(text, coordinate);
         }
         // step 2 is OFF, do nothing
     }
@@ -204,19 +215,18 @@ export default class GameText implements Text, Debuggable {
      *
      * @param {string} text - The string content to display.
      * @param {Coordinate} coordinate - The normalized position bounds.
-     * @param {number} elapsedTime - The timer state used for modulus.
      * @param {number} [pulseSpeedMs=1000] - Duration of a full cycle in ms.
      * @returns {void} Returns nothing.
      */
-    pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs: number = 1000): void {
-        const step = Math.floor((elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
+    writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs: number = 1000): void {
+        const step = Math.floor((this._time.elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
 
         if (step === 0) {
             this.setActiveText();
-            this.textOnDisplay(text, coordinate);
+            this.writeOnDisplay(text, coordinate);
         } else if (step === 1 || step === 3) {
             this.setShadowText();
-            this.textOnDisplay(text, coordinate);
+            this.writeOnDisplay(text, coordinate);
         }
         // step 2 is OFF, do nothing
     }

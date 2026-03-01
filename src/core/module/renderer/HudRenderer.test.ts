@@ -45,7 +45,7 @@ describe('HudRenderer', () => {
                     setInactiveText: vi.fn(),
                     setActiveText: vi.fn(),
                     setTextAlign: vi.fn(),
-                    textOnHud: vi.fn(),
+                    writeOnHud: vi.fn(),
                 },
                 state: {
                     isOn: vi.fn().mockReturnValue(true),
@@ -72,9 +72,9 @@ describe('HudRenderer', () => {
             renderer.render([], mockModules);
 
             // [ASSERT]
-            expect(mockModules.text.textOnHud).toHaveBeenCalledWith('500', expect.anything());
-            expect(mockModules.text.textOnHud).toHaveBeenCalledWith('1000', expect.anything());
-            expect(mockModules.text.textOnHud).toHaveBeenCalledWith('01 - 10', expect.anything());
+            expect(mockModules.text.writeOnHud).toHaveBeenCalledWith('500', expect.anything());
+            expect(mockModules.text.writeOnHud).toHaveBeenCalledWith('1000', expect.anything());
+            expect(mockModules.text.writeOnHud).toHaveBeenCalledWith('01 - 10', expect.anything());
             expect(mockP5.translate).toHaveBeenCalled(); // Should have drawn the cell
             expect(mockP5.rect).toHaveBeenCalled(); // Should have drawn the border
         });
@@ -87,7 +87,7 @@ describe('HudRenderer', () => {
                     setInactiveText: vi.fn(),
                     setActiveText: vi.fn(),
                     setTextAlign: vi.fn(),
-                    textOnHud: vi.fn(),
+                    writeOnHud: vi.fn(),
                 },
                 state: {
                     isOn: vi.fn().mockReturnValue(true),

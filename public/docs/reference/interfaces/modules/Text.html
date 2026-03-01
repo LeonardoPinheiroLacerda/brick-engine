@@ -448,15 +448,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#settextsizefontsize-fontsize-void">2.1. <code>setTextSize(fontSize: FontSize): void</code></a></li>
 <li><a href="#settextalignfontalign-fontalignment-fontverticalalign-fontalignment-void">2.2. <code>setTextAlign(fontAlign: FontAlignment, fontVerticalAlign: FontAlignment): void</code></a></li>
-<li><a href="#textonhudtext-string-coordinate-coordinate-void">2.3. <code>textOnHud(text: string, coordinate: Coordinate): void</code></a></li>
-<li><a href="#textondisplaytext-string-coordinate-coordinate-void">2.4. <code>textOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#writeonhudtext-string-coordinate-coordinate-void">2.3. <code>writeOnHud(text: string, coordinate: Coordinate): void</code></a></li>
+<li><a href="#writeondisplaytext-string-coordinate-coordinate-void">2.4. <code>writeOnDisplay(text: string, coordinate: Coordinate): void</code></a></li>
 <li><a href="#setrenderermetricsrenderermetrics-renderermetrics-void">2.5. <code>setRendererMetrics(rendererMetrics: RendererMetrics): void</code></a></li>
 <li><a href="#setactivetext-void">2.6. <code>setActiveText(): void</code></a></li>
 <li><a href="#setinactivetext-void">2.7. <code>setInactiveText(): void</code></a></li>
 <li><a href="#setshadowtext-void">2.8. <code>setShadowText(): void</code></a></li>
 <li><a href="#settextthemetheme-texttheme-void">2.9. <code>setTextTheme(theme: TextTheme): void</code></a></li>
-<li><a href="#pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.10. <code>pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></li>
-<li><a href="#pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.11. <code>pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void</code></a></li>
+<li><a href="#writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void">2.10. <code>writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></li>
+<li><a href="#writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void">2.11. <code>writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void</code></a></li>
+<li><a href="#settimetime-time-void">2.12. <code>setTime(time: Time): void</code></a></li>
 </ul>
 </li>
 <li><a href="#general-usage">3. General Usage</a></li>
@@ -539,7 +540,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textonhudtext-string-coordinate-coordinate-void"><a class="link" href="#textonhudtext-string-coordinate-coordinate-void">2.3. <code>textOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
+<h3 id="writeonhudtext-string-coordinate-coordinate-void"><a class="link" href="#writeonhudtext-string-coordinate-coordinate-void">2.3. <code>writeOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a string within the HUD area at the specified normalized coordinate (0.0 to 1.0 relative to HUD bounds).</p>
 </div>
@@ -573,7 +574,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="textondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#textondisplaytext-string-coordinate-coordinate-void">2.4. <code>textOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
+<h3 id="writeondisplaytext-string-coordinate-coordinate-void"><a class="link" href="#writeondisplaytext-string-coordinate-coordinate-void">2.4. <code>writeOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a string within the main game area at the specified normalized coordinate (0.0 to 1.0 relative to display bounds).</p>
 </div>
@@ -686,7 +687,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void"><a class="link" href="#pulsingtextonhudtext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.10. <code>pulsingTextOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>, elapsedTime: number, pulseSpeedMs?: number): void</code></a></h3>
+<h3 id="writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void"><a class="link" href="#writepulsingtextonhudtext-string-coordinate-coordinate-pulsespeedms-number-void">2.10. <code>writePulsingTextOnHud(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>, pulseSpeedMs?: number): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a string within the HUD area that flashes visually synchronized to the engine&#8217;s time elapsed.</p>
 </div>
@@ -716,11 +717,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Normalized position <code>{x, y}</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>elapsedTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Total elapsed time in milliseconds from <code>time.elapsedTime</code>.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pulseSpeedMs</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional. The interval duration of a complete phase loop (in ms).</p></td>
@@ -730,7 +726,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <hr>
 </div>
 <div class="sect2">
-<h3 id="pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void"><a class="link" href="#pulsingtextondisplaytext-string-coordinate-coordinate-elapsedtime-number-pulsespeedms-number-void">2.11. <code>pulsingTextOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>, elapsedTime: number, pulseSpeedMs?: number): void</code></a></h3>
+<h3 id="writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void"><a class="link" href="#writepulsingtextondisplaytext-string-coordinate-coordinate-pulsespeedms-number-void">2.11. <code>writePulsingTextOnDisplay(text: string, coordinate: <a href="../../types/Coordinate.html">Coordinate</a>, pulseSpeedMs?: number): void</code></a></h3>
 <div class="paragraph">
 <p>Renders a flashing string within the main game area synchronized to the engine&#8217;s time elapsed.</p>
 </div>
@@ -760,14 +756,38 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Normalized position <code>{x, y}</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>elapsedTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Total elapsed time in milliseconds from <code>time.elapsedTime</code>.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>pulseSpeedMs</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Optional. The interval duration of a complete phase loop (in ms).</p></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="settimetime-time-void"><a class="link" href="#settimetime-time-void">2.12. <code>setTime(time: <a href="../../interfaces/modules/Time.html">Time</a>): void</code></a></h3>
+<div class="paragraph">
+<p>Sets the active time module to allow pulse speed calculation.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>time</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../../interfaces/modules/Time.html">Time</a></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>Time</code> tracking module.</p></td>
 </tr>
 </tbody>
 </table>

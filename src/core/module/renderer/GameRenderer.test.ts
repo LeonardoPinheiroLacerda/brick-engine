@@ -66,7 +66,7 @@ describe('GameRenderer', () => {
                     setTextSize: vi.fn(),
                     setInactiveText: vi.fn(),
                     setTextAlign: vi.fn(),
-                    textOnHud: vi.fn(),
+                    writeOnHud: vi.fn(),
                     setActiveText: vi.fn(),
                     setRendererMetrics: vi.fn(),
                 },

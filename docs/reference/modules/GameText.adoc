@@ -103,7 +103,7 @@ this.modules.text.setTextTheme(TextTheme.SHADOW);
 
 '''
 
-=== `textOnDisplay(text: string, coordinate: Coordinate): void`
+=== `writeOnDisplay(text: string, coordinate: Coordinate): void`
 
 Renders text on the main game display area.
 
@@ -120,13 +120,13 @@ Renders text on the main game display area.
 
 [source,typescript]
 ----
-text.textOnDisplay('PAUSED', { x: 0.5, y: 0.5 });
+text.writeOnDisplay('PAUSED', { x: 0.5, y: 0.5 });
 ----
 
 
 '''
 
-=== `textOnHud(text: string, coordinate: Coordinate): void`
+=== `writeOnHud(text: string, coordinate: Coordinate): void`
 
 Renders text on the side HUD area.
 
@@ -142,7 +142,7 @@ Renders text on the side HUD area.
 
 '''
 
-=== `pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void`
+=== `writePulsingTextOnDisplay(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void`
 
 Renders a flashing text on the Main Display iterating across 3 visual themes based on the elapsed time elapsed.
 
@@ -153,14 +153,13 @@ Renders a flashing text on the Main Display iterating across 3 visual themes bas
 |Name |Type |Description
 |`text` |`string` |The direct formatted string intended for output.
 |`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Floating point proportional coordinate anchor points.
-|`elapsedTime` |`number` |The total milliseconds progressed since tracking began (e.g. `time.elapsedTime`).
 |`pulseSpeedMs` |`number` |Duration of a full visualization cycle in milliseconds (default: 1000).
 |===
 
 
 '''
 
-=== `pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void`
+=== `writePulsingTextOnHud(text: string, coordinate: Coordinate, pulseSpeedMs?: number): void`
 
 Renders a flashing text on the side HUD iterating across 3 visual themes based on the elapsed time elapsed.
 
@@ -171,8 +170,22 @@ Renders a flashing text on the side HUD iterating across 3 visual themes based o
 |Name |Type |Description
 |`text` |`string` |The distinct formatted numeric or string label segment intended for the UI.
 |`coordinate` |`xref:../types/Coordinate.adoc[Coordinate]` |Relative coordinate vectors bounds scaled strictly according to the active HUD dimensions array.
-|`elapsedTime` |`number` |The total milliseconds progressed since tracking began (e.g. `time.elapsedTime`).
 |`pulseSpeedMs` |`number` |Duration of a full visualization cycle in milliseconds (default: 1000).
+|===
+
+
+'''
+
+=== `setTime(time: Time): void`
+
+Injects the runtime reference of Time into the component. Used internally to automatically offset rendering pulses based on elapsed timestamps.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`time` |`xref:../interfaces/modules/Time.adoc[Time]` |Current injected Time contextual module.
 |===
 
 
