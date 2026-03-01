@@ -20,7 +20,7 @@ describe('FrameLayout', () => {
 
         // [ASSERT]
         expect(mockP5.createDiv).toHaveBeenCalledTimes(2);
-        expect(mockP5.createP).toHaveBeenCalledWith('Brick Game');
+        expect(mockP5.createP).toHaveBeenCalledWith('Brick Engine');
         expect(mockElement.id).toHaveBeenCalledWith('frame');
         expect(result).toBe(mockElement);
     });

@@ -42,6 +42,11 @@ body {
         touch-action: none !important;
     }
 
+    #session-modal-screen p {
+        font-size: 1rem !important;
+        line-height: 1.2rem !important;
+    }
+
     #debugger {
         display: none !important;
     }
