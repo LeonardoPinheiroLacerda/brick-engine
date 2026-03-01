@@ -1,0 +1,32 @@
+= TextTheme Reference
+:description: Defines the available visual themes for text rendering.
+:keywords: theme, text, render, typography, display, retro
+:toc: left
+:toclevels: 3
+:sectnums:
+:sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
+:idprefix:
+:idseparator: -
+
+== Architectural Purpose
+
+Enumerates all available visual themes/states for text rendering across the engine. 
+
+== Values
+
+[cols="1,2"]
+|===
+|Value |Description
+|`ACTIVE` |The primary, high-contrast text theme.
+|`INACTIVE` |The faded, low-contrast background text theme.
+|`SHADOW` |The intermediate shadow text theme used for depth or half-active elements.
+|===
+
+== General Usage
+
+This enumerator provides a typed approach for modifying text color in the Engine. Use it in conjunction with `xref:../interfaces/modules/Text.adoc[Text]` interface methods like `text.setTextTheme(TextTheme.SHADOW)`.
+

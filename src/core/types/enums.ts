@@ -27,6 +27,15 @@ export enum FontAlign {
 }
 
 /**
+ * Enumerates all available visual themes/states for text rendering.
+ */
+export enum TextTheme {
+    ACTIVE = 'active',
+    INACTIVE = 'inactive',
+    SHADOW = 'shadow',
+}
+
+/**
  * Enumerates all available font size presets.
  * These correspond to specific pixel values calculated at runtime based on screen size.
  */

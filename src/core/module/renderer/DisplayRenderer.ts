@@ -115,7 +115,7 @@ export default class DisplayRenderer implements Renderer {
         if (value === 0 || (!state.isPlaying() && !state.isPaused())) {
             color = Color.INACTIVE;
         } else {
-            color = state.isColorEnabled() ? color : Color.DEFAULT;
+            color = state.isColorEnabled() || color === Color.SHADOW ? color : Color.DEFAULT;
         }
 
         p.push();

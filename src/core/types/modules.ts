@@ -1,5 +1,5 @@
 import p5 from 'p5';
-import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound } from './enums';
+import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, TextTheme } from './enums';
 import { Debuggable, Initializable, RendererInitializable, StateSyncable, Serializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty, Vector, Piece, Axis } from './Types';
 
@@ -73,6 +73,21 @@ export interface Text extends Initializable {
     setInactiveText(): void;
 
     /**
+     * Sets the text color to a shadow representation, used as half-tone and for depth.
+     *
+     * @returns {void} Returns nothing.
+     */
+    setShadowText(): void;
+
+    /**
+     * Sets the text color based on the provided text theme state.
+     *
+     * @param {TextTheme} theme - The desired theme state (ACTIVE, INACTIVE, SHADOW).
+     * @returns {void} Returns nothing.
+     */
+    setTextTheme(theme: TextTheme): void;
+
+    /**
      * Sets the current font size.
      *
      * @param {FontSize} fontSize - The desired size enum value.
@@ -106,6 +121,28 @@ export interface Text extends Initializable {
      * @returns {void} Returns nothing.
      */
     textOnDisplay(text: string, coordinate: Coordinate): void;
+
+    /**
+     * Renders a pulsing text on the HUD area based on the elapsed time.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
+     * @param {number} elapsedTime - The elapsed time used to calculate the pulse opacity/visibility.
+     * @param {number} [pulseSpeedMs] - Time in milliseconds for one full pulse cycle. Default is 1000.
+     * @returns {void} Returns nothing.
+     */
+    pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void;
+
+    /**
+     * Renders a pulsing text on the display area based on the elapsed time.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the display.
+     * @param {number} elapsedTime - The elapsed time used to calculate the pulse opacity/visibility.
+     * @param {number} [pulseSpeedMs] - Time in milliseconds for one full pulse cycle. Default is 1000.
+     * @returns {void} Returns nothing.
+     */
+    pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs?: number): void;
 }
 
 /**

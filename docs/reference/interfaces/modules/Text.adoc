@@ -107,6 +107,64 @@ Sets the text rendering style to "active" (high contrast).
 
 Sets the text rendering style to "inactive" (low contrast, background effect).
 
+
+'''
+
+=== `setShadowText(): void`
+
+Sets the text rendering style to "shadow", used for geometric depth and middle steps in visual pulses.
+
+
+'''
+
+=== `setTextTheme(theme: xref:../../enums/TextTheme.adoc[TextTheme]): void`
+
+Sets the text rendering style based on a strongly typed enumerator selection.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`theme` |`xref:../../enums/TextTheme.adoc[TextTheme]` |The selected text theme (`ACTIVE`, `INACTIVE`, `SHADOW`).
+|===
+
+
+'''
+
+=== `pulsingTextOnHud(text: string, coordinate: xref:../../types/Coordinate.adoc[Coordinate], elapsedTime: number, pulseSpeedMs?: number): void`
+
+Renders a string within the HUD area that flashes visually synchronized to the engine's time elapsed.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`text` |`string` |The string content to display.
+|`coordinate` |`xref:../../types/Coordinate.adoc[Coordinate]` |Normalized position `{x, y}`.
+|`elapsedTime` |`number` |Total elapsed time in milliseconds from `time.elapsedTime`.
+|`pulseSpeedMs` |`number` |Optional. The interval duration of a complete phase loop (in ms).
+|===
+
+
+'''
+
+=== `pulsingTextOnDisplay(text: string, coordinate: xref:../../types/Coordinate.adoc[Coordinate], elapsedTime: number, pulseSpeedMs?: number): void`
+
+Renders a flashing string within the main game area synchronized to the engine's time elapsed.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`text` |`string` |The string content to display.
+|`coordinate` |`xref:../../types/Coordinate.adoc[Coordinate]` |Normalized position `{x, y}`.
+|`elapsedTime` |`number` |Total elapsed time in milliseconds from `time.elapsedTime`.
+|`pulseSpeedMs` |`number` |Optional. The interval duration of a complete phase loop (in ms).
+|===
+
 == General Usage
 
 Implemented by `xref:../../modules/GameText.adoc[GameText]`. Used to display scores, labels, and title screen messages across different engine layers.

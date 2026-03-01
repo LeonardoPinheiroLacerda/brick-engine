@@ -171,12 +171,14 @@ export default abstract class Game implements Initializable {
 
         if (session.isModalOpen() || (state.isPlaying() && !session.isSessionResolved())) return;
 
+        time.update(p.deltaTime);
+
         renderer.render(grid.getGrid(), this._modules);
+
         if (state.isOn()) {
             if (!state.isStarted()) {
                 this.drawTitleScreen();
             } else if (state.isPlaying()) {
-                time.update(p.deltaTime);
                 // Update time accumulator
 
                 // Process Logic Tick

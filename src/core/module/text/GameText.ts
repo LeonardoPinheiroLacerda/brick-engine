@@ -1,5 +1,5 @@
 import configs from '../../../config/configs';
-import { FontSize, FontAlign, FontVerticalAlign } from '../../types/enums';
+import { FontSize, FontAlign, FontVerticalAlign, TextTheme, Color } from '../../types/enums';
 import { Coordinate, RendererMetrics } from '../../types/Types';
 import { Debuggable } from '../../types/Interfaces';
 import CoordinateHelper from '../../helpers/CoordinateHelper';
@@ -92,6 +92,36 @@ export default class GameText implements Text, Debuggable {
     }
 
     /**
+     * Sets the context canvas text stroke/fill to the shadow visual theme.
+     *
+     * @returns {void} Returns nothing.
+     */
+    setShadowText(): void {
+        const { p } = RendererContext;
+        p.fill(Color.SHADOW);
+    }
+
+    /**
+     * Sets the text color based on the provided text theme state.
+     *
+     * @param {TextTheme} theme - The desired theme state (ACTIVE, INACTIVE, SHADOW).
+     * @returns {void} Returns nothing.
+     */
+    setTextTheme(theme: TextTheme): void {
+        switch (theme) {
+            case TextTheme.ACTIVE:
+                this.setActiveText();
+                break;
+            case TextTheme.INACTIVE:
+                this.setInactiveText();
+                break;
+            case TextTheme.SHADOW:
+                this.setShadowText();
+                break;
+        }
+    }
+
+    /**
      * Assigns the drawing bounds scalar based on pre-compiled values.
      *
      * @param {FontSize} fontSize - The enum target corresponding to an active dictionary size entry.
@@ -143,6 +173,52 @@ export default class GameText implements Text, Debuggable {
         const y = CoordinateHelper.getDisplayPosY(coordinate.y, this._rendererMetrics.display.height);
 
         p.text(text, x, y);
+    }
+
+    /**
+     * Renders a pulsing text on the HUD area based on the elapsed time.
+     * Use to blink text like scores, or alerts on HUD.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position (0.0 to 1.0) within the HUD.
+     * @param {number} elapsedTime - The elapsed time, like from time.elapsedTime.
+     * @param {number} [pulseSpeedMs=1000] - Duration of a full cycle (visible + hidden) in ms.
+     * @returns {void} Returns nothing.
+     */
+    pulsingTextOnHud(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs: number = 1000): void {
+        const step = Math.floor((elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
+
+        if (step === 0) {
+            this.setActiveText();
+            this.textOnHud(text, coordinate);
+        } else if (step === 1 || step === 3) {
+            this.setShadowText();
+            this.textOnHud(text, coordinate);
+        }
+        // step 2 is OFF, do nothing
+    }
+
+    /**
+     * Renders a pulsing text on the Main Display area based on the elapsed time.
+     * Useful for PRESS START, GAME OVER texts, etc.
+     *
+     * @param {string} text - The string content to display.
+     * @param {Coordinate} coordinate - The normalized position bounds.
+     * @param {number} elapsedTime - The timer state used for modulus.
+     * @param {number} [pulseSpeedMs=1000] - Duration of a full cycle in ms.
+     * @returns {void} Returns nothing.
+     */
+    pulsingTextOnDisplay(text: string, coordinate: Coordinate, elapsedTime: number, pulseSpeedMs: number = 1000): void {
+        const step = Math.floor((elapsedTime % pulseSpeedMs) / (pulseSpeedMs / 4));
+
+        if (step === 0) {
+            this.setActiveText();
+            this.textOnDisplay(text, coordinate);
+        } else if (step === 1 || step === 3) {
+            this.setShadowText();
+            this.textOnDisplay(text, coordinate);
+        }
+        // step 2 is OFF, do nothing
     }
 
     /**
