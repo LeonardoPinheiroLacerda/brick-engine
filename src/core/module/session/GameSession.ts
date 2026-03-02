@@ -1,3 +1,4 @@
+import RendererContext from '../../context/RendererContext';
 import { Serializable } from '../../types/Interfaces';
 import { StateProperty } from '../../types/enums';
 import { Session, State } from '../../types/modules';
@@ -124,17 +125,20 @@ export default class GameSession implements Session {
                 }
 
                 this._isModalOpen = true;
+                RendererContext.p.noLoop();
                 this._showSessionModal(
                     () => {
                         this._loadSession();
                         this._isModalOpen = false;
                         this._isSessionResolved = true;
+                        RendererContext.p.loop();
                     },
                     () => {
                         this.clearSession();
                         this._resetFn();
                         this._isModalOpen = false;
                         this._isSessionResolved = true;
+                        RendererContext.p.loop();
                     },
                 );
             }
