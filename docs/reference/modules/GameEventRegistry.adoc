@@ -51,9 +51,9 @@ Registers listeners for:
 
 '''
 
-=== `setupStateEvents(modules: GameModules): void`
+=== `setupStateEvents(modules: GameModules, view: xref:../view/GameView.adoc[GameView]): void`
 
-Sets up all system-level state property subscriptions. Binds lifecycle behaviors to state property changes, such as clearing current session data upon encountering Game Over, or fully purging rendering/grid variables when the system is virtually powered down.
+Sets up all system-level state property subscriptions. Binds lifecycle behaviors to state property changes, such as clearing current session data upon encountering Game Over, fully purging rendering/grid variables when the system is virtually powered down, or toggling the trackpad layout.
 
 **Parameters**
 
@@ -61,6 +61,7 @@ Sets up all system-level state property subscriptions. Binds lifecycle behaviors
 |===
 |Name |Type |Description
 |`modules` |`xref:../types/GameModules.adoc[GameModules]` |The structured collection of engine modules.
+|`view` |`xref:../view/GameView.adoc[GameView]` |The active game view to notify about visual state changes.
 |===
 
 **Behavior**
@@ -68,5 +69,6 @@ Sets up all system-level state property subscriptions. Binds lifecycle behaviors
 Registers listeners for:
 *   `StateProperty.ON`: Resets all modules when the system is turned off.
 *   `StateProperty.GAME_OVER`: Clears the session when the player loses.
+*   `StateProperty.TRACKPAD`: Toggles the trackpad layout mode.
 
 '''

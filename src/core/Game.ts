@@ -149,7 +149,7 @@ export default abstract class Game implements Initializable {
         this.setupGame();
 
         GameEventRegistry.setupControlEvents(this._modules, this.reset.bind(this));
-        GameEventRegistry.setupStateEvents(this._modules);
+        GameEventRegistry.setupStateEvents(this._modules, this._view);
 
         this._view.bindControls(control);
 

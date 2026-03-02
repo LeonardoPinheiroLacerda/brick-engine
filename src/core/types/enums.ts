@@ -97,6 +97,7 @@ export enum ControlKey {
     RESET = 'reset;system',
     EXIT = 'exit;system',
     COLOR = 'color;system',
+    TRACKPAD = 'trackpad;system',
 }
 
 /**
@@ -120,4 +121,5 @@ export enum StateProperty {
     GAME_OVER = 'gameOver',
     COLOR_ENABLED = 'colorEnabled',
     MUTED = 'muted',
+    TRACKPAD = 'trackpadEnabled',
 }

@@ -19,10 +19,12 @@ vi.mock('./theme/applyColors', () => ({ default: vi.fn() }));
 vi.mock('./theme/dimensions', () => ({ default: vi.fn() }));
 vi.mock('./components/layout/ButtonLayout', () => ({
     default: vi.fn().mockReturnValue({
-        largeButtonContainer: {},
-        smallButtonContainer: {},
-        directionHorizontalContainer: {},
-        directionVerticalContainer: {},
+        largeButtonContainer: { style: vi.fn() },
+        smallButtonContainer: { style: vi.fn() },
+        directionHorizontalContainer: { style: vi.fn() },
+        directionVerticalContainer: { style: vi.fn() },
+        mediumButtonContainer: { style: vi.fn() },
+        trackpadContainer: { style: vi.fn() },
     }),
 }));
 vi.mock('./components/layout/ContainerLayout', () => ({
@@ -42,9 +44,33 @@ describe('GameView', () => {
     let parent: HTMLElement;
 
     beforeEach(() => {
+        Object.defineProperty(window, 'localStorage', {
+            value: {
+                getItem: vi.fn(() => null),
+                setItem: vi.fn(),
+            },
+            writable: true,
+        });
+        window.ResizeObserver = class {
+            observe = vi.fn();
+            unobserve = vi.fn();
+            disconnect = vi.fn();
+        } as unknown as typeof ResizeObserver;
         document.body.innerHTML = '<div id="splash"></div>';
         parent = document.body;
-        mockP5 = {};
+        mockP5 = {
+            createDiv: vi.fn().mockReturnValue({
+                parent: vi.fn(),
+                addClass: vi.fn(),
+                style: vi.fn(),
+                remove: vi.fn(),
+                elt: document.createElement('div'),
+            }),
+            createP: vi.fn().mockReturnValue({
+                parent: vi.fn(),
+                addClass: vi.fn(),
+            }),
+        };
         RendererContext.reset();
         RendererContext.init(mockP5 as unknown as p5);
         gameView = new GameView(parent);

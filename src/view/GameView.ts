@@ -19,6 +19,7 @@ import ControlInputHandler from '../core/helpers/ControlInputHandlerHelper';
 import Debugger from './Debugger';
 import { GameModules } from '../core/types/Types';
 import SessionModal from './SessionModal';
+import Trackpad from './components/ui/Trackpad';
 
 // prettier-ignore
 /**
@@ -35,6 +36,7 @@ export default class GameView {
     private _resetBtn         : p5.Element;
     private _exitBtn          : p5.Element;
     private _enableColorBtn   : p5.Element;
+    private _trackpadBtn      : p5.Element;
 
     private _upBtn            : p5.Element;
     private _downBtn          : p5.Element;
@@ -47,6 +49,11 @@ export default class GameView {
     private _inputHandler     : ControlInputHandler;
 
     private _cachedCanvas     : { canvas: p5.Element; canvasWidth: number; canvasHeight: number };
+
+    private _trackpad         : Trackpad | null = null;
+    private _trackpadContainer: p5.Element;
+    private _mediumButtonContainer: p5.Element;
+    private _largeButtonContainer: p5.Element;
 
     private _debugger         : Debugger;
     private _sessionModal     : SessionModal;
@@ -102,7 +109,13 @@ export default class GameView {
             smallButtonContainer,
             directionHorizontalContainer,
             directionVerticalContainer,
+            mediumButtonContainer,
+            trackpadContainer,
         } = ButtonLayout(container);
+
+        this._mediumButtonContainer = mediumButtonContainer;
+        this._largeButtonContainer = largeButtonContainer;
+        this._trackpadContainer = trackpadContainer;
 
         //System buttons
         this._onOffBtn        = SmallButton(smallButtonContainer    , 'On<br/>Off'        , true);
@@ -111,6 +124,7 @@ export default class GameView {
         this._resetBtn        = SmallButton(smallButtonContainer    , 'Reset'             , false);
         this._exitBtn         = SmallButton(smallButtonContainer    , 'Exit'              , true);
         this._enableColorBtn  = SmallButton(smallButtonContainer    , 'Enable<br/>Colors' , false);
+        this._trackpadBtn     = SmallButton(smallButtonContainer    , 'Track<br/>Pad'     , false);
 
         //Direction buttons
         this._upBtn           = Button(directionVerticalContainer   , 'UP');
@@ -118,7 +132,6 @@ export default class GameView {
         this._downBtn         = Button(directionVerticalContainer   , 'DOWN');
         this._rightBtn        = Button(directionHorizontalContainer , 'RIGHT');
 
-        //Action button
         this._actionBtn       = BigButton(largeButtonContainer      , 'Action');
 
         //Set dimensions
@@ -191,6 +204,11 @@ export default class GameView {
     bindControls(control: Control) {
         this._inputHandler = new ControlInputHandler(control);
 
+        if (this._trackpad) {
+            this._trackpad.destroy();
+        }
+        this._trackpad = new Trackpad(this._trackpadContainer, this._inputHandler);
+
         //System buttons
         this._bindButtonEvents(this._onOffBtn      , ControlKey.POWER);
         this._bindButtonEvents(this._startPauseBtn , ControlKey.START_PAUSE);
@@ -198,6 +216,7 @@ export default class GameView {
         this._bindButtonEvents(this._resetBtn      , ControlKey.RESET);
         this._bindButtonEvents(this._exitBtn       , ControlKey.EXIT);
         this._bindButtonEvents(this._enableColorBtn, ControlKey.COLOR);
+        this._bindButtonEvents(this._trackpadBtn   , ControlKey.TRACKPAD);
 
         //Direction buttons
         this._bindButtonEvents(this._upBtn         , ControlKey.UP);
@@ -221,6 +240,12 @@ export default class GameView {
         this._resetBtn      .mousePressed(() => {}).mouseReleased(() => {});
         this._exitBtn       .mousePressed(() => {}).mouseReleased(() => {});
         this._enableColorBtn.mousePressed(() => {}).mouseReleased(() => {});
+        this._trackpadBtn   .mousePressed(() => {}).mouseReleased(() => {});
+
+        if (this._trackpad) {
+            this._trackpad.destroy();
+            this._trackpad = null;
+        }
 
         this._upBtn         .mousePressed(() => {}).mouseReleased(() => {});
         this._downBtn       .mousePressed(() => {}).mouseReleased(() => {});
@@ -255,5 +280,17 @@ export default class GameView {
         setTimeout(() => {
             splash.style.display = 'none';
         }, delay);
+    }
+
+    applyTrackpadState(enabled: boolean) {
+        if (enabled) {
+            this._mediumButtonContainer.style('display', 'none');
+            this._largeButtonContainer.style('display', 'none');
+            this._trackpadContainer.style('display', 'flex');
+        } else {
+            this._mediumButtonContainer.style('display', 'flex');
+            this._largeButtonContainer.style('display', 'flex');
+            this._trackpadContainer.style('display', 'none');
+        }
     }
 }

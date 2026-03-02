@@ -82,6 +82,7 @@ describe('Game', () => {
             bindControls: vi.fn(),
             showSessionModal: vi.fn(),
             onModal: vi.fn(),
+            applyTrackpadState: vi.fn(),
         } as unknown as GameView;
 
         game = new MockGame(mockView);

@@ -21,7 +21,7 @@ describe('ButtonLayout', () => {
         const result = ButtonLayout(mockContainer);
 
         // [ASSERT]
-        expect(mockP5.createDiv).toHaveBeenCalledTimes(7); // buttonContainer, small, inner, medium, vertical, horizontal, large
+        expect(mockP5.createDiv).toHaveBeenCalledTimes(8); // buttonContainer, small, inner, medium, vertical, horizontal, large, trackpad
         expect(mockElement.id).toHaveBeenCalledWith('button-container');
         expect(mockElement.id).toHaveBeenCalledWith('small-button-container');
         expect(mockElement.id).toHaveBeenCalledWith('large-button-container');

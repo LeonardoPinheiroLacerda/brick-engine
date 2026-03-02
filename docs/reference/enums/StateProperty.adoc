@@ -28,6 +28,7 @@ Enumerates all observable and persistent properties of the game system.
 |`COLOR_ENABLED` |Boolean flag for themed rendering.
 |`MUTED` |Boolean flag for audio suppression.
 |`HIGH_SCORE` |Numeric property for the persistent record.
+|`TRACKPAD` |Boolean flag for the trackpad input mode.
 |===
 
 == General Usage

@@ -150,6 +150,7 @@ export default {
             directionVerticalContainer: 'direction-vertical-container',
             directionHorizontalContainer: 'direction-horizontal-container',
             largeButtonContainer: 'large-button-container',
+            trackpadContainer: 'trackpad-container',
         },
     },
     /** Storage keys for persisting data in LocalStorage. */
@@ -158,6 +159,8 @@ export default {
         muted: 'STATE.MUTED',
         /** Key for color mode preference. */
         colorEnabled: 'STATE.COLOR_ENABLED',
+        /** Key for trackpad mode preference. */
+        trackpadEnabled: 'STATE.TRACKPAD_ENABLED',
 
         /** Key for the current game grid state. */
         grid: 'GAME.GRID',

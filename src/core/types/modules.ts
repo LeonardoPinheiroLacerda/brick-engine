@@ -627,6 +627,28 @@ export interface State extends Initializable {
     setMuted(value: boolean): void;
 
     /**
+     * Checks if the trackpad feature is enabled.
+     *
+     * @returns {boolean} `true` if trackpad is enabled.
+     */
+    isTrackpadEnabled(): boolean;
+
+    /**
+     * Enables or disables the trackpad interface.
+     *
+     * @param {boolean} value - True to enable, false to disable.
+     * @returns {void} Returns nothing.
+     */
+    setTrackpadEnabled(value: boolean): void;
+
+    /**
+     * Toggles the trackpad enabled state.
+     *
+     * @returns {void} Returns nothing.
+     */
+    toggleTrackpadEnabled(): void;
+
+    /**
      * Subscribes to changes in a specific state property.
      *
      * @param {StateProperty} property - The state property to monitor.

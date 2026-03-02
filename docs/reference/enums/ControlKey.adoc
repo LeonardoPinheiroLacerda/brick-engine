@@ -29,6 +29,7 @@ Abstraction layer mapping hardware inputs to logical engine actions.
 |`SOUND` |Mutes or unmutes the audio system.
 |`EXIT` |Exits the current game session back to the menu.
 |`COLOR` |Toggles visual rendering modes.
+|`TRACKPAD` |Toggles the on-screen trackpad input mode.
 |===
 
 == General Usage

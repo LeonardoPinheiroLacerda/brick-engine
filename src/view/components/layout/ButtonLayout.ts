@@ -8,6 +8,7 @@ interface ButtonLayoutResponse {
     largeButtonContainer: p5.Element;
     directionVerticalContainer: p5.Element;
     directionHorizontalContainer: p5.Element;
+    trackpadContainer: p5.Element;
 }
 
 /**
@@ -55,11 +56,16 @@ export default function ButtonLayout(container: p5.Element): ButtonLayoutRespons
     largeButtonContainer.parent(innerButtonContainer);
     largeButtonContainer.id(configs.selectors.viewElementIds.largeButtonContainer);
 
+    const trackpadContainer = p.createDiv();
+    trackpadContainer.parent(innerButtonContainer);
+    trackpadContainer.id(configs.selectors.viewElementIds.trackpadContainer);
+
     return {
         smallButtonContainer,
         mediumButtonContainer,
         largeButtonContainer,
         directionVerticalContainer,
         directionHorizontalContainer,
+        trackpadContainer,
     };
 }

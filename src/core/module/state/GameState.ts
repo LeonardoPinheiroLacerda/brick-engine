@@ -16,6 +16,7 @@ const STATE_CONFIG: Record<StateProperty, StateMetadata> = {
     [StateProperty.GAME_OVER]       : { defaultValue: false },
     [StateProperty.COLOR_ENABLED]   : { defaultValue: true   , storageKey: 'colorEnabled' },
     [StateProperty.MUTED]           : { defaultValue: false  , storageKey: 'muted'        },
+    [StateProperty.TRACKPAD]        : { defaultValue: false  , storageKey: 'trackpadEnabled' },
 };
 
 /**
@@ -310,6 +311,34 @@ export default class GameState implements State, Debuggable {
         this.setMuted(!this.isMuted());
     }
 
+    /**
+     * Checks if the trackpad feature is enabled.
+     *
+     * @returns {boolean} True if trackpad is enabled.
+     */
+    isTrackpadEnabled(): boolean {
+        return this._state.get(StateProperty.TRACKPAD) as boolean;
+    }
+
+    /**
+     * Enables or disables the trackpad interface instead of directional buttons.
+     *
+     * @param {boolean} value - True to enable, false to disable.
+     * @returns {void} Returns nothing.
+     */
+    setTrackpadEnabled(value: boolean): void {
+        this._set(StateProperty.TRACKPAD, value);
+    }
+
+    /**
+     * Toggles the trackpad enabled state.
+     *
+     * @returns {void} Returns nothing.
+     */
+    toggleTrackpadEnabled(): void {
+        this.setTrackpadEnabled(!this.isTrackpadEnabled());
+    }
+
     subscribe(property: StateProperty, callback: (value: boolean | number) => void): void {
         this._subscribe(property, callback);
     }
@@ -372,6 +401,7 @@ export default class GameState implements State, Debuggable {
             game_over: this.isGameOver(),
             color_enabled: this.isColorEnabled(),
             muted: this.isMuted(),
+            trackpad: this.isTrackpadEnabled(),
         };
     }
 }

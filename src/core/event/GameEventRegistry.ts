@@ -1,4 +1,5 @@
 import { ControlEventType, ControlKey, GameModules, StateProperty } from '../types/Types';
+import type GameView from '../../view/GameView';
 
 /**
  * Registry for system-level game events.
@@ -27,6 +28,7 @@ export default class GameEventRegistry {
         control.subscribe(ControlKey.SOUND, ControlEventType.PRESSED, () => state.toggleMuted());
         control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
         control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => session.clearSession());
+        control.subscribe(ControlKey.TRACKPAD, ControlEventType.PRESSED, () => state.toggleTrackpadEnabled());
 
         // --- Power ---
         control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {
@@ -70,9 +72,10 @@ export default class GameEventRegistry {
      * rendering/grid variables when the system is virtually powered down.
      *
      * @param {GameModules} modules - The structured collection of engine modules.
+     * @param {GameView} view - The active game view to notify about visual state changes.
      * @returns {void} Returns nothing.
      */
-    static setupStateEvents(modules: GameModules): void {
+    static setupStateEvents(modules: GameModules, view: GameView): void {
         const { state, session } = modules;
 
         state.subscribe(StateProperty.ON, isOn => {
@@ -87,5 +90,10 @@ export default class GameEventRegistry {
         state.subscribeForGameOverScreen(StateProperty.GAME_OVER, () => {
             session.clearSession();
         });
+
+        state.subscribe(StateProperty.TRACKPAD, (enabled: boolean) => {
+            view.applyTrackpadState(enabled);
+        });
+        view.applyTrackpadState(state.isTrackpadEnabled());
     }
 }

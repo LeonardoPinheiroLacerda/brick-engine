@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import GameEventRegistry from './GameEventRegistry';
 import { ControlKey, ControlEventType, StateProperty, GameModules } from '../types/Types';
 import { Control, State, Session, SoundModule, Grid, Score, Time } from '../types/modules';
+import type GameView from '../../view/GameView';
 
 describe('GameEventRegistry', () => {
     let mockControl: Control;
@@ -11,6 +12,7 @@ describe('GameEventRegistry', () => {
     let mockGrid: Grid;
     let mockScore: Score;
     let mockTime: Time;
+    let mockView: GameView;
     let modules: GameModules;
     let onReset: Mock;
 
@@ -56,6 +58,7 @@ describe('GameEventRegistry', () => {
             subscribeForGameOverScreen: vi.fn((prop, cb) => {
                 stateSubscribers[`${prop}:gameover`] = cb;
             }),
+            isTrackpadEnabled: vi.fn().mockReturnValue(false),
         } as unknown as State;
 
         mockSession = { clearSession: vi.fn() } as unknown as Session;
@@ -63,6 +66,7 @@ describe('GameEventRegistry', () => {
         mockGrid = { resetGrid: vi.fn() } as unknown as Grid;
         mockScore = { resetScore: vi.fn(), resetLevel: vi.fn() } as unknown as Score;
         mockTime = { reset: vi.fn() } as unknown as Time;
+        mockView = { applyTrackpadState: vi.fn() } as unknown as GameView;
 
         modules = {
             control: mockControl,
@@ -200,7 +204,7 @@ describe('GameEventRegistry', () => {
 
     describe('setupStateEvents', () => {
         beforeEach(() => {
-            GameEventRegistry.setupStateEvents(modules);
+            GameEventRegistry.setupStateEvents(modules, mockView);
         });
 
         it('should reset modules when system is turned OFF', () => {
@@ -226,6 +230,14 @@ describe('GameEventRegistry', () => {
 
             // [ASSERT]
             expect(mockSession.clearSession).toHaveBeenCalled();
+        });
+
+        it('should apply trackpad state when TRACKPAD property changes', () => {
+            // [ACT]
+            stateSubscribers[StateProperty.TRACKPAD](true);
+
+            // [ASSERT]
+            expect(mockView.applyTrackpadState).toHaveBeenCalledWith(true);
         });
     });
 });
