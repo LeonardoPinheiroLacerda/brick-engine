@@ -1,6 +1,6 @@
 {
   "name": "brick-engine-js",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "A lightweight brick engine built with p5.js and TypeScript",
   "type": "commonjs",
   "main": "dist/brick-engine.js",
