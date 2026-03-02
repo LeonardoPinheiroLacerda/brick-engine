@@ -124,7 +124,7 @@ export default class GameView {
         this._resetBtn        = SmallButton(smallButtonContainer    , 'Reset'             , false);
         this._exitBtn         = SmallButton(smallButtonContainer    , 'Exit'              , true);
         this._enableColorBtn  = SmallButton(smallButtonContainer    , 'Enable<br/>Colors' , false);
-        this._trackpadBtn     = SmallButton(smallButtonContainer    , 'Track<br/>Pad'     , false);
+        this._trackpadBtn     = SmallButton(smallButtonContainer    , 'Track<br/>Pad'     , true);
 
         //Direction buttons
         this._upBtn           = Button(directionVerticalContainer   , 'UP');
