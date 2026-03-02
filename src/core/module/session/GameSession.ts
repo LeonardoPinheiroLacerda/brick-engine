@@ -152,6 +152,12 @@ export default class GameSession implements Session {
                 this._isSessionResolved = false;
             }
         });
+
+        state.subscribe(StateProperty.GAME_OVER, isGameOver => {
+            if (isGameOver) {
+                this.clearSession();
+            }
+        });
     }
 
     /**

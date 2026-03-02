@@ -133,7 +133,7 @@ export default abstract class Game implements Initializable {
             }
         });
 
-        const { text, control, renderer, session, score } = this._modules;
+        const { text, control, renderer, session, score, time } = this._modules;
 
         session.gameId = this.gameId;
         session.setShowModalFunction(this._view.showSessionModal.bind(this._view));
@@ -142,6 +142,7 @@ export default abstract class Game implements Initializable {
         control.setModules(this._modules);
 
         text.setRendererMetrics(renderer.rendererMetrics);
+        text.setTime(time);
 
         score.setupGameHighScore(this.gameId);
 
