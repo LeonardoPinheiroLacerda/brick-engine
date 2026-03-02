@@ -145,7 +145,7 @@ export default class GameControl implements Control, Debuggable {
         } else if (state.isPlaying() && !session.isSessionResolved()) {
             isAllowed = false;
         } else if (state.isOff()) {
-            isAllowed = key === ControlKey.POWER;
+            isAllowed = key === ControlKey.POWER || key === ControlKey.TRACKPAD;
         } else if (!state.isStarted() || state.isPlaying() || state.isGameOver()) {
             isAllowed = true;
         } else if (state.isPaused()) {
