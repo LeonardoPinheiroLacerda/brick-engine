@@ -26,8 +26,8 @@ interface ContainerResponse {
 export default function ContainerLayout(parent: HTMLElement): ContainerResponse {
     const { p } = RendererContext;
     const container = p.createDiv();
-    container.parent(configs.selectors.parent);
-    container.id(configs.selectors.viewElementIds.container);
+    container.parent('#brick-game');
+    container.id('container');
 
     let width: number;
     let height: number;

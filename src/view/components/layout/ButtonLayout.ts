@@ -1,5 +1,4 @@
 import p5 from 'p5';
-import configs from '../../../config/configs';
 import RendererContext from '../../../core/context/RendererContext';
 
 interface ButtonLayoutResponse {
@@ -20,9 +19,9 @@ interface ButtonLayoutResponse {
  * @param {p5} p - The p5 instance.
  * @param {p5.Element} container - The parent container element.
  * @returns {ButtonLayoutResponse} Object containing the button containers.
- *  - smallButtonContainer: For system buttons (Reset, Sound, etc.), uses `configs.selectors.viewElementIds.smallButtonContainer`.
- *  - mediumButtonContainer: For direction controls, uses `configs.selectors.viewElementIds.mediumButtonContainer`.
- *  - largeButtonContainer: For the main action button, uses `configs.selectors.viewElementIds.largeButtonContainer`.
+ *  - smallButtonContainer: For system buttons (Reset, Sound, etc.), uses ID `'small-button-container'`.
+ *  - mediumButtonContainer: For direction controls, uses ID `'medium-button-container'`.
+ *  - largeButtonContainer: For the main action button, uses ID `'large-button-container'`.
  *  - directionVerticalContainer: For Up/Down buttons.
  *  - directionHorizontalContainer: For Left/Right buttons.
  */
@@ -30,35 +29,35 @@ export default function ButtonLayout(container: p5.Element): ButtonLayoutRespons
     const { p } = RendererContext;
     const buttonContainer = p.createDiv();
     buttonContainer.parent(container);
-    buttonContainer.id(configs.selectors.viewElementIds.buttonContainer);
+    buttonContainer.id('button-container');
 
     const smallButtonContainer = p.createDiv();
     smallButtonContainer.parent(buttonContainer);
-    smallButtonContainer.id(configs.selectors.viewElementIds.smallButtonContainer);
+    smallButtonContainer.id('small-button-container');
 
     const innerButtonContainer = p.createDiv();
     innerButtonContainer.parent(buttonContainer);
-    innerButtonContainer.id(configs.selectors.viewElementIds.innerButtonContainer);
+    innerButtonContainer.id('inner-button-container');
 
     const mediumButtonContainer = p.createDiv();
     mediumButtonContainer.parent(innerButtonContainer);
-    mediumButtonContainer.id(configs.selectors.viewElementIds.mediumButtonContainer);
+    mediumButtonContainer.id('medium-button-container');
 
     const directionVerticalContainer = p.createDiv();
     directionVerticalContainer.parent(mediumButtonContainer);
-    directionVerticalContainer.id(configs.selectors.viewElementIds.directionVerticalContainer);
+    directionVerticalContainer.id('direction-vertical-container');
 
     const directionHorizontalContainer = p.createDiv();
     directionHorizontalContainer.parent(mediumButtonContainer);
-    directionHorizontalContainer.id(configs.selectors.viewElementIds.directionHorizontalContainer);
+    directionHorizontalContainer.id('direction-horizontal-container');
 
     const largeButtonContainer = p.createDiv();
     largeButtonContainer.parent(innerButtonContainer);
-    largeButtonContainer.id(configs.selectors.viewElementIds.largeButtonContainer);
+    largeButtonContainer.id('large-button-container');
 
     const trackpadContainer = p.createDiv();
     trackpadContainer.parent(innerButtonContainer);
-    trackpadContainer.id(configs.selectors.viewElementIds.trackpadContainer);
+    trackpadContainer.id('trackpad-container');
 
     return {
         smallButtonContainer,

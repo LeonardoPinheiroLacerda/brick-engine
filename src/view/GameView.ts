@@ -276,7 +276,7 @@ export default class GameView {
      * @returns {void} Returns nothing.
      */
     private _hideSplash(delay = configs.viewLayout.splashHideDelayMs) {
-        const splash: HTMLDivElement = document.querySelector(configs.selectors.splash);
+        const splash: HTMLDivElement = document.querySelector('#splash');
         setTimeout(() => {
             splash.style.display = 'none';
         }, delay);

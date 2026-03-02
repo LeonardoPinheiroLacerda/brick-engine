@@ -21,12 +21,6 @@ export default {
             rows: 18,
         },
 
-        /** Head-Up Display (HUD) grid dimensions. */
-        hudGrid: {
-            columns: 4,
-            rows: 4,
-        },
-
         /** Logical display settings within the container. */
         display: {
             width: 0.65,
@@ -117,59 +111,6 @@ export default {
         mainColor: 'body-color',
         /** Key for customizing the device body button color. */
         buttonColor: 'button-color',
-        /** Key for detecting if the game is running on a mobile app wrapper. */
-        runningOnApp: 'mobile',
-    },
-    /** Selectors for DOM elements. */
-    selectors: {
-        /** Root container where the p5 instance is attached. */
-        parent: '#brick-game',
-
-        /** Splash screen shown during initial load. */
-        splash: '#splash',
-
-        /** Modal IDs used for session continuation. */
-        modalIds: {
-            /** Modal shown when continuing a previous session. */
-            sessionModal: '#session-modal',
-            /** Confirmation button in the session modal. */
-            sessionContinueYes: '#session-modal-yes',
-            /** Cancellation button in the session modal. */
-            sessionContinueNo: '#session-modal-no',
-        },
-
-        /** Explicit IDs assigned to dynamically created DOM elements. */
-        viewElementIds: {
-            canvas: 'brick-game-canvas',
-            container: 'container',
-            frame: 'frame',
-            buttonContainer: 'button-container',
-            smallButtonContainer: 'small-button-container',
-            innerButtonContainer: 'inner-button-container',
-            mediumButtonContainer: 'medium-button-container',
-            directionVerticalContainer: 'direction-vertical-container',
-            directionHorizontalContainer: 'direction-horizontal-container',
-            largeButtonContainer: 'large-button-container',
-            trackpadContainer: 'trackpad-container',
-        },
-    },
-    /** Storage keys for persisting data in LocalStorage. */
-    storageKeys: {
-        /** Key for audio muting preference. */
-        muted: 'STATE.MUTED',
-        /** Key for color mode preference. */
-        colorEnabled: 'STATE.COLOR_ENABLED',
-        /** Key for trackpad mode preference. */
-        trackpadEnabled: 'STATE.TRACKPAD_ENABLED',
-
-        /** Key for the current game grid state. */
-        grid: 'GAME.GRID',
-        /** Key for the current HUD grid state. */
-        hudGrid: 'GAME.HUD_GRID',
-        /** Key for the game speed/tick interval. */
-        tickInterval: 'GAME.TICK_INTERVAL',
-        /** Key for the user's high score. */
-        score: 'GAME.SCORE',
     },
     /** Button hold settings. */
     buttonHold: {
@@ -187,8 +128,6 @@ export default {
 
         /** Performance Monitor settings. */
         debugger: {
-            /** Number of milliseconds to count before updating the performance. */
-            msInterval: 100,
             /** Enable performance overlay. */
             enabled: true,
         },

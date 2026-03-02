@@ -3,6 +3,8 @@ import GameSession from './GameSession';
 import { State } from '../../types/modules';
 import { Serializable } from '../../types/Interfaces';
 import { StateProperty } from '../../types/enums';
+import RendererContext from '../../context/RendererContext';
+import P5 from 'p5';
 
 const localStorageMock = (() => {
     let store: Record<string, string> = {};
@@ -34,6 +36,11 @@ describe('GameSession', () => {
         // [ARRANGE]
         localStorageMock.clear();
         vi.clearAllMocks();
+
+        RendererContext.init({
+            noLoop: vi.fn(),
+            loop: vi.fn(),
+        } as unknown as P5);
 
         stateSubscriptions = {};
         mockState = {

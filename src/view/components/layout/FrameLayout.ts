@@ -1,5 +1,4 @@
 import p5 from 'p5';
-import configs from '../../../config/configs';
 import RendererContext from '../../../core/context/RendererContext';
 
 /**
@@ -15,7 +14,7 @@ export default function FrameLayout(container: p5.Element): p5.Element {
     const { p } = RendererContext;
     const frame = p.createDiv();
     frame.parent(container);
-    frame.id(configs.selectors.viewElementIds.frame);
+    frame.id('frame');
 
     const div = p.createDiv();
     div.parent(frame);

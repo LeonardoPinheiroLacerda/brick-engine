@@ -29,7 +29,7 @@ export default function Canvas(container: p5.Element, width: number): CanvasResp
 
     const canvas = p.createCanvas(canvasWidth, canvasHeight);
     canvas.parent(container);
-    canvas.id(configs.selectors.viewElementIds.canvas);
+    canvas.id('brick-game-canvas');
 
     return { canvasWidth, canvasHeight, canvas };
 }
