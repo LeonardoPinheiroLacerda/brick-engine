@@ -40,7 +40,7 @@ export default class GameSession implements Session {
      * @returns {void} Returns nothing.
      */
     saveSession(): void {
-        if (!this._isSessionResolved || !this._isEnabled) return;
+        if (!this._isSessionResolved || !this._isEnabled || this._state.isGameOver()) return;
 
         this._serializables.forEach(serializable => {
             localStorage.setItem(this._key(serializable.serialId), serializable.serialize());
@@ -117,6 +117,7 @@ export default class GameSession implements Session {
      * @returns {void} Returns nothing.
      */
     syncState(state: State): void {
+        this._state = state;
         state.subscribe(StateProperty.PLAYING, isPlaying => {
             if (isPlaying && !this._isSessionResolved) {
                 if (!this._hasSession() || !this._isEnabled) {

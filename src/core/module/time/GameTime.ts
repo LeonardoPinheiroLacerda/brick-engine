@@ -65,7 +65,9 @@ export default class GameTime implements Time, Debuggable, Serializable {
      */
     shouldTick(): boolean {
         if (this._tickAccumulator >= this._tickInterval) {
-            this._tickAccumulator -= this._tickInterval;
+            while (this._tickAccumulator >= this._tickInterval) {
+                this._tickAccumulator -= this._tickInterval;
+            }
             this._tickCounter++;
             this._totalTicks++;
             return true;
