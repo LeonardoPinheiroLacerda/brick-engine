@@ -1,78 +1,86 @@
 #debugger {
     font-family: 'retro-gamming', monospace;
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #0f0; /* Green phosphor */
-    border: 2px solid #0f0;
-    box-shadow: 0 0 10px #0f0;
-    padding: 10px;
+    background-color: var(--main-color);
+    color: white;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    padding: 0; /* Removed container padding */
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 300px;
+    width: 320px;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
     user-select: none;
     -webkit-user-select: none;
     z-index: 9999;
     font-size: 14px;
-    /* text-shadow: 0 0 2px #0f0; */
+    box-shadow:
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) black,
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
 }
 
-/* Custom Scrollbar */
+#debugger-summary {
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    text-shadow: 1px 1px var(--color-shadow);
+    outline: none;
+    text-align: center;
+}
+
+#debugger[open] #debugger-summary {
+    margin-bottom: 10px;
+    border-bottom: 1px dashed white;
+}
+
+/* Custom Scrollbar to match retro look */
 #debugger::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 #debugger::-webkit-scrollbar-track {
-    background: #001100;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 #debugger::-webkit-scrollbar-thumb {
-    background: #0f0;
-    border-radius: 4px;
-}
-
-#debugger::-webkit-scrollbar-thumb:hover {
-    background: #0a0;
-}
-
-/* Summary / Header */
-#debugger-summary {
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    /* text-transform: uppercase; */
-    border-bottom: 1px dashed #0f0;
-    padding-bottom: 5px;
-    list-style: none;
+    background: var(--button-color);
+    border-radius: 3px;
 }
 
 /* Module Sections */
 .debugger-module {
-    margin-bottom: 10px;
-    border-left: 1px solid #004400;
+    margin: 0 15px 10px 15px;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
     padding-left: 8px;
 }
 
 .debugger-module-summary {
     cursor: pointer;
     font-weight: bold;
-    color: #cfc;
+    color: #eee;
     margin-bottom: 4px;
 }
 
 .debugger-module-summary:hover {
     color: #fff;
-    /* text-shadow: 0 0 4px #fff; */
 }
 
 /* Data Rows */
 .debugger-container {
     display: flex;
     justify-content: space-between;
-    padding: 2px 0;
-    border-bottom: 1px dotted #003300;
+    padding: 4px 6px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    margin-bottom: 2px;
 }
 
 /* Closed State */
@@ -80,9 +88,19 @@
     width: auto;
     height: auto;
     max-height: none;
-    padding: 5px 10px;
-    border: 1px solid #0f0;
-    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0; /* No padding on container */
+    background-color: var(--main-color);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    box-shadow:
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) black,
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
+    transition: all 0.2s;
+}
+
+#debugger:not([open]):active {
+    transform: translate(-2px, 2px);
     box-shadow: none;
 }
 
@@ -93,25 +111,25 @@
 }
 
 .debugger-container:hover {
-    background-color: rgba(0, 255, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .debugger-container.highlight {
-    background-color: transparent;
-    color: #fff;
-    /* text-shadow: 0 0 5px #fff; */
-    border-bottom: 1px solid #fff;
-}
-
-.debugger-container.highlight span {
-    color: #fff;
+    background-color: #87cefa; /* LightSkyBlue */
+    color: #000;
 }
 
 .debugger-container p {
     margin: 0;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .debugger-container span {
     font-weight: bold;
+}
+
+@media only screen and (max-width: 600px) {
+    #debugger {
+        display: none !important;
+    }
 }

@@ -1,0 +1,206 @@
+#shortcuts-modal-background {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#shortcuts-modal-background.hidden {
+    display: none;
+}
+
+#shortcuts-modal {
+    width: 80%;
+    max-width: 500px;
+    height: auto;
+    max-height: 80vh;
+    min-width: 320px;
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1rem 0;
+
+    background-color: var(--main-color);
+
+    border-radius: var(--border-radius);
+    border: var(--border);
+
+    box-shadow:
+        calc(var(--width) * -0.03) calc(var(--width) * 0.03) var(--dispersion) black,
+        calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
+        calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow) inset;
+}
+
+#shortcuts-modal-frame {
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    position: relative;
+
+    width: 90%;
+    flex: 1;
+    margin: 1rem 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#shortcuts-modal-frame > h2 {
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+
+    text-align: center;
+
+    font-family: 'retro-gamming';
+    font-weight: bold;
+    font-size: clamp(1rem, calc(var(--height) * 0.03), 1.4rem);
+
+    background-color: var(--main-color);
+    padding: 0 calc(var(--width) * 0.02);
+
+    text-shadow:
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) 0 var(--color-shadow),
+        calc(var(--width) * 0.002) calc(var(--width) * -0.002) 0 var(--color-shadow-reflexion);
+}
+
+#shortcuts-modal-screen {
+    width: 84%;
+    height: 80%;
+    margin: 1.5rem 0;
+
+    border: var(--border);
+    box-shadow:
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow-reflexion);
+
+    background-image: url('../images/cell.svg');
+    background-size: 3.7%;
+    background-repeat: repeat;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.shortcuts-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+}
+
+.shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-key {
+    font-family: 'retro-gamming';
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: bold;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-action {
+    font-family: 'retro-gamming';
+    font-size: 1.2rem;
+    color: #222;
+}
+
+#close-shortcuts {
+    width: 40%;
+    max-width: 150px;
+    padding: 0.8rem 0;
+    margin-bottom: 0.5rem;
+
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+    background-color: var(--button-color);
+    box-shadow:
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+
+    font-family: 'retro-gamming';
+    color: white;
+    text-align: center;
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    text-shadow:
+        calc(var(--width) * -0.003) calc(var(--width) * 0.003) 0 var(--button-color-shadow),
+        calc(var(--width) * 0.002) calc(var(--width) * -0.002) 0 var(--button-color-reflexion);
+
+    transition:
+        transform var(--button-animation-duration),
+        box-shadow var(--button-animation-duration);
+}
+
+#close-shortcuts:active {
+    box-shadow:
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) var(--color-shadow),
+        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translate(calc(var(--width) * -0.005), calc(var(--width) * 0.005));
+}
+
+#btn-shortcuts-external {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 0 15px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--main-color);
+    color: white;
+    border: var(--border);
+    font-family: 'retro-gamming', monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 9998;
+    border-radius: var(--border-radius);
+    box-shadow:
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) black,
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
+    transition: all 0.2s;
+    text-shadow: 1px 1px var(--color-shadow);
+    box-sizing: border-box;
+}
+
+#btn-shortcuts-external:active {
+    transform: translate(-2px, 2px);
+    box-shadow: none;
+}
+
+/* Hide external trigger and modal on mobile */
+@media only screen and (max-width: 600px) {
+    #shortcuts-modal-background,
+    #btn-shortcuts-external {
+        display: none !important;
+    }
+}

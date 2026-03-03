@@ -18,10 +18,11 @@ export default class GameEventRegistry {
      * sound and color.
      *
      * @param {GameModules} modules - The collection of initialized game modules to bind.
+     * @param {GameView} view - The active game view to notify about visual state changes.
      * @param {() => void} onReset - Callback to be executed immediately to restore the initial properties of the game instance during soft resets.
      * @returns {void} Returns nothing.
      */
-    static setupControlEvents(modules: GameModules, onReset: () => void): void {
+    static setupControlEvents(modules: GameModules, view: GameView, onReset: () => void): void {
         const { control, state, session, sound } = modules;
 
         // --- System Toggles ---
@@ -29,6 +30,7 @@ export default class GameEventRegistry {
         control.subscribe(ControlKey.COLOR, ControlEventType.PRESSED, () => state.toggleColorEnabled());
         control.subscribe(ControlKey.EXIT, ControlEventType.PRESSED, () => session.clearSession());
         control.subscribe(ControlKey.TRACKPAD, ControlEventType.PRESSED, () => state.toggleTrackpadEnabled());
+        control.subscribe(ControlKey.SHORTCUTS, ControlEventType.PRESSED, () => view.toggleShortcutsModal());
 
         // --- Power ---
         control.subscribe(ControlKey.POWER, ControlEventType.PRESSED, () => {

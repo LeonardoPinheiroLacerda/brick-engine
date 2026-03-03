@@ -85,7 +85,7 @@ describe('GameEventRegistry', () => {
 
     describe('setupControlEvents', () => {
         beforeEach(() => {
-            GameEventRegistry.setupControlEvents(modules, onReset);
+            GameEventRegistry.setupControlEvents(modules, mockView, onReset);
         });
 
         it('should toggle sound when SOUND key is pressed', () => {

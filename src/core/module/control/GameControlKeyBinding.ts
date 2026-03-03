@@ -26,6 +26,7 @@ const DEFAULT_KEY_MAP: Record<string, ControlKey> = {
     Digit5: ControlKey.EXIT,
     Digit6: ControlKey.COLOR,
     Digit7: ControlKey.TRACKPAD,
+    KeyH: ControlKey.SHORTCUTS,
 };
 
 /**

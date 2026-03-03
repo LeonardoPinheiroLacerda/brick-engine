@@ -19,6 +19,7 @@ import ControlInputHandler from '../core/helpers/ControlInputHandlerHelper';
 import Debugger from './Debugger';
 import { GameModules } from '../core/types/Types';
 import SessionModal from './SessionModal';
+import ShortcutsModal from './ShortcutsModal';
 import Trackpad from './components/ui/Trackpad';
 
 // prettier-ignore
@@ -57,6 +58,7 @@ export default class GameView {
 
     private _debugger         : Debugger;
     private _sessionModal     : SessionModal;
+    private _shortcutsModal   : ShortcutsModal;
 
     /**
      * Bootstraps the root listener binding it to a persistent layout container.
@@ -152,6 +154,9 @@ export default class GameView {
     setupSessionModal() {
         this._sessionModal = new SessionModal();
         this._sessionModal.setup();
+
+        this._shortcutsModal = new ShortcutsModal();
+        this._shortcutsModal.setup();
     }
 
     /**
@@ -163,6 +168,15 @@ export default class GameView {
      */
     showSessionModal(onConfirm: () => void, onCancel: () => void) {
         this._sessionModal.show(onConfirm, onCancel);
+    }
+
+    /**
+     * Toggles the shortcuts visual guide overlay.
+     *
+     * @returns {void} Returns nothing.
+     */
+    toggleShortcutsModal() {
+        this._shortcutsModal.toggle();
     }
 
     /**

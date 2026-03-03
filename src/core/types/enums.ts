@@ -98,6 +98,7 @@ export enum ControlKey {
     EXIT = 'exit;system',
     COLOR = 'color;system',
     TRACKPAD = 'trackpad;system',
+    SHORTCUTS = 'shortcuts;system',
 }
 
 /**
