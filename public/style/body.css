@@ -45,7 +45,7 @@
 
     position: relative;
 
-    width: calc(var(--width) * 0.85);
+    width: calc(var(--width) * 0.83);
     height: auto;
     aspect-ratio: 9/10;
     margin: 7.5%;

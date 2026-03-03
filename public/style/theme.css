@@ -33,17 +33,12 @@ body {
 
 @media only screen and (max-width: 600px) {
     #container {
-        width: 99.5% !important;
-        height: 99.5% !important;
-
-        margin: 0.25% !important;
+        width: 99% !important;
+        height: calc(100% - 30px) !important;
+        margin: 0.5% !important;
 
         overflow-y: hidden !important;
         touch-action: none !important;
-    }
-
-    #frame {
-        width: calc(var(--width) * 0.84) !important;
     }
 
     #session-modal-screen p {
