@@ -8,41 +8,44 @@
 
 .sm-btn {
     box-shadow:
-        calc(var(--width) * -0.0075) calc(var(--width) * 0.0075) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--button-color-reflexion) inset;
+        calc(var(--width) * -0.0075) calc(var(--width) * 0.0075) var(--dispersion) rgba(0, 0, 0, 0.6),
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--button-color-reflexion) inset,
+        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--button-color-shadow) inset;
 }
 
 .sm-btn:active {
     box-shadow:
-        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.003) calc(var(--width) * 0.003) var(--dispersion) var(--button-color-reflexion) inset;
-    transform: translateX(calc(var(--width) * -0.0025)) translateY(calc(var(--width) * 0.0025));
+        calc(var(--width) * -0.002) calc(var(--width) * 0.002) var(--dispersion) rgba(0, 0, 0, 0.4),
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translate(calc(var(--width) * -0.0025), calc(var(--width) * 0.0025));
 }
 
 .btn {
     box-shadow:
-        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) calc(var(--dispersion) * 1.5) rgba(0, 0, 0, 0.7),
+        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset,
+        calc(var(--width) * 0.008) calc(var(--width) * -0.008) var(--dispersion) var(--button-color-shadow) inset;
 }
 
 .btn:active {
     box-shadow:
-        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.003) calc(var(--width) * 0.003) var(--dispersion) var(--button-color-reflexion) inset;
-    transform: translateX(calc(var(--width) * -0.005)) translateY(calc(var(--width) * 0.005));
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) rgba(0, 0, 0, 0.5),
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translate(calc(var(--width) * -0.005), calc(var(--width) * 0.005));
 }
 
 .lg-btn {
     box-shadow:
-        calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset;
+        calc(var(--width) * -0.02) calc(var(--width) * 0.02) calc(var(--dispersion) * 2) rgba(0, 0, 0, 0.8),
+        calc(var(--width) * -0.0175) calc(var(--width) * 0.0175) var(--dispersion) var(--button-color-reflexion) inset,
+        calc(var(--width) * 0.012) calc(var(--width) * -0.012) var(--dispersion) var(--button-color-shadow) inset;
 }
 
 .lg-btn:active {
     box-shadow:
-        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) var(--color-shadow),
-        calc(var(--width) * -0.004) calc(var(--width) * 0.004) var(--dispersion) var(--button-color-reflexion) inset;
-    transform: translateX(calc(var(--width) * -0.0075)) translateY(calc(var(--width) * 0.0075));
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) var(--dispersion) rgba(0, 0, 0, 0.5),
+        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--button-color-reflexion) inset;
+    transform: translate(calc(var(--width) * -0.0075), calc(var(--width) * 0.0075));
 }
 
 .sm-btn-p,

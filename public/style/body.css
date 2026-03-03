@@ -25,9 +25,11 @@
     flex-direction: column;
 
     box-shadow:
-        calc(var(--width) * -0.03) calc(var(--width) * 0.03) var(--dispersion) black,
-        calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
-        calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow) inset;
+        /* Sharp outer edge */
+        calc(var(--width) * -0.005) calc(var(--width) * 0.005) 0px rgba(0, 0, 0, 0.9),
+        /* Soft ambient shadow */ calc(var(--width) * -0.04) calc(var(--width) * 0.04) calc(var(--dispersion) * 2.5) rgba(0, 0, 0, 0.6),
+        /* Inner reflection (top-left) */ calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
+        /* Inner depth (bottom-right) */ calc(var(--width) * 0.015) calc(var(--width) * -0.015) var(--dispersion) var(--color-shadow) inset;
 }
 
 #brick-game-canvas {

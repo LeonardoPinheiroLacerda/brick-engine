@@ -93,10 +93,15 @@
     border: var(--border);
     border-radius: var(--border-radius);
     box-shadow:
-        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) black,
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) calc(var(--dispersion) * 1.5) rgba(0, 0, 0, 0.7),
         calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
         calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
     transition: all 0.2s;
+}
+
+#debugger:not([open]):active {
+    transform: translate(-2px, 2px);
+    box-shadow: none;
 }
 
 #debugger:not([open]):active {

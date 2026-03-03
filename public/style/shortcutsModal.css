@@ -33,9 +33,10 @@
     border: var(--border);
 
     box-shadow:
-        calc(var(--width) * -0.03) calc(var(--width) * 0.03) var(--dispersion) black,
-        calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
-        calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow) inset;
+        /* Soft ambient shadow */
+        calc(var(--width) * -0.05) calc(var(--width) * 0.05) calc(var(--dispersion) * 4) rgba(0, 0, 0, 0.6),
+        /* Inner reflection */ calc(var(--width) * -0.02) calc(var(--width) * 0.02) var(--dispersion) var(--color-shadow-reflexion) inset,
+        /* Inner shadow */ calc(var(--width) * 0.01) calc(var(--width) * -0.01) var(--dispersion) var(--color-shadow) inset;
 }
 
 #shortcuts-modal-frame {
@@ -184,9 +185,10 @@
     z-index: 9998;
     border-radius: var(--border-radius);
     box-shadow:
-        calc(var(--width) * -0.015) calc(var(--width) * 0.015) var(--dispersion) black,
-        calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
-        calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
+        /* Outer edge shadow */
+        calc(var(--width) * -0.015) calc(var(--width) * 0.015) calc(var(--dispersion) * 1.5) rgba(0, 0, 0, 0.7),
+        /* Inner reflection */ calc(var(--width) * -0.01) calc(var(--width) * 0.01) var(--dispersion) var(--color-shadow-reflexion) inset,
+        /* Inner shadow */ calc(var(--width) * 0.005) calc(var(--width) * -0.005) var(--dispersion) var(--color-shadow) inset;
     transition: all 0.2s;
     text-shadow: 1px 1px var(--color-shadow);
     box-sizing: border-box;
