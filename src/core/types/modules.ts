@@ -1133,6 +1133,20 @@ export interface Score {
      * @returns {void} Returns nothing.
      */
     setupGameHighScore(id: string): void;
+
+    /**
+     * Subscribes a callback to score changes.
+     * @param {function} callback - The callback function.
+     * @returns {void} Returns nothing.
+     */
+    subscribe(callback: (score: number) => void): void;
+
+    /**
+     * Unsubscribes a callback from score changes.
+     * @param {function} callback - The callback function.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribe(callback: (score: number) => void): void;
 }
 
 export interface Session extends StateSyncable, Debuggable {

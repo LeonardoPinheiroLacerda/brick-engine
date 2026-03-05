@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GameScore from './GameScore';
-import { ScoreProperty } from '../../types/enums';
 
 describe('GameScore', () => {
     let gameScore: GameScore;
@@ -77,7 +76,7 @@ describe('GameScore', () => {
         it('should notify subscribers when score increases', () => {
             // [ARRANGE]
             const callback = vi.fn();
-            gameScore.subscribe(ScoreProperty.SCORE, callback);
+            gameScore.subscribe(callback);
 
             // [ACT]
             gameScore.increaseScore(100);
@@ -86,52 +85,17 @@ describe('GameScore', () => {
             expect(callback).toHaveBeenCalledWith(100);
         });
 
-        it('should notify subscribers when level changes', () => {
+        it('should notify subscribers when score is reset', () => {
             // [ARRANGE]
+            gameScore.increaseScore(100);
             const callback = vi.fn();
-            gameScore.subscribe(ScoreProperty.LEVEL, callback);
+            gameScore.subscribe(callback);
 
             // [ACT]
-            gameScore.increaseLevel(1);
+            gameScore.resetScore();
 
             // [ASSERT]
-            expect(callback).toHaveBeenCalledWith(2);
-        });
-
-        it('should notify subscribers when multiplier changes', () => {
-            // [ARRANGE]
-            const callback = vi.fn();
-            gameScore.subscribe(ScoreProperty.MULTIPLIER, callback);
-
-            // [ACT]
-            gameScore.multiplier = 3;
-
-            // [ASSERT]
-            expect(callback).toHaveBeenCalledWith(3);
-        });
-
-        it('should notify subscribers when high score is broken', () => {
-            // [ARRANGE]
-            const callback = vi.fn();
-            gameScore.subscribe(ScoreProperty.HIGH_SCORE, callback);
-
-            // [ACT]
-            gameScore.increaseScore(200); // 200 > 100 (initial high score)
-
-            // [ASSERT]
-            expect(callback).toHaveBeenCalledWith(200);
-        });
-
-        it('should notify subscribers when max level changes', () => {
-            // [ARRANGE]
-            const callback = vi.fn();
-            gameScore.subscribe(ScoreProperty.MAX_LEVEL, callback);
-
-            // [ACT]
-            gameScore.maxLevel = 50;
-
-            // [ASSERT]
-            expect(callback).toHaveBeenCalledWith(50);
+            expect(callback).toHaveBeenCalledWith(0);
         });
     });
 });

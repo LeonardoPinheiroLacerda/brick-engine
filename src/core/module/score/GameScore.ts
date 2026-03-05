@@ -174,25 +174,23 @@ export default class GameScore implements Score, Debuggable, Serializable {
     }
 
     /**
-     * Subscribes to changes in a specific score property.
+     * Subscribes a callback to score changes.
      *
-     * @param {ScoreProperty} property - The score property to monitor.
-     * @param {function(number): void} callback - The function to execute when the property changes.
+     * @param {function(number): void} callback - The function to execute when the score changes.
      * @returns {void} Returns nothing.
      */
-    subscribe(property: ScoreProperty, callback: (value: number) => void): void {
-        EventEmitter.subscribe(property, callback);
+    subscribe(callback: (score: number) => void): void {
+        EventEmitter.subscribe(ScoreProperty.SCORE, callback);
     }
 
     /**
-     * Unsubscribes a callback from a specific score property.
+     * Unsubscribes a callback from score changes.
      *
-     * @param {ScoreProperty} property - The score property being monitored.
      * @param {function(number): void} callback - The callback reference to remove.
      * @returns {void} Returns nothing.
      */
-    unsubscribe(property: ScoreProperty, callback: (value: number) => void): void {
-        EventEmitter.unsubscribe(property, callback);
+    unsubscribe(callback: (score: number) => void): void {
+        EventEmitter.unsubscribe(ScoreProperty.SCORE, callback);
     }
 
     /**

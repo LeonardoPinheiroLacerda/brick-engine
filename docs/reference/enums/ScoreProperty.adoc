@@ -25,4 +25,4 @@ Enumeration of observable properties within the `xref:../modules/GameScore.adoc[
 
 == General Usage
 
-These values act as the event keys when calling `subscribe` or `unsubscribe` on the `xref:../../interfaces/modules/Score.adoc[Score]` interface.
+These values act as the internal event keys. Public subscriptions to score changes should use the simplified `subscribe` method on the `xref:../../interfaces/modules/Score.adoc[Score]` interface, which internally utilizes `ScoreProperty.SCORE`.
