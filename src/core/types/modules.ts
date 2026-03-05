@@ -667,6 +667,78 @@ export interface State extends Initializable {
     unsubscribe(property: StateProperty, callback: (value: boolean | number) => void): void;
 
     /**
+     * Subscribes to changes in a specific state property only when in the Title Screen.
+     *
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute.
+     * @returns {void} Returns nothing.
+     */
+    subscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Unsubscribes a callback from Title Screen scoped notifications.
+     *
+     * @param {StateProperty} property - The state property being monitored.
+     * @param {function(boolean | number): void} callback - The callback to remove.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribeForTitleScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Subscribes to changes in a specific state property only when in the Game Over screen.
+     *
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute.
+     * @returns {void} Returns nothing.
+     */
+    subscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Unsubscribes a callback from Game Over scoped notifications.
+     *
+     * @param {StateProperty} property - The state property being monitored.
+     * @param {function(boolean | number): void} callback - The callback to remove.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribeForGameOverScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Subscribes to changes in a specific state property only during active Gameplay.
+     *
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute.
+     * @returns {void} Returns nothing.
+     */
+    subscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Unsubscribes a callback from Playing scoped notifications.
+     *
+     * @param {StateProperty} property - The state property being monitored.
+     * @param {function(boolean | number): void} callback - The callback to remove.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribeForPlayingScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Subscribes to changes in a specific state property only when the game is Paused.
+     *
+     * @param {StateProperty} property - The state property to monitor.
+     * @param {function(boolean | number): void} callback - The function to execute.
+     * @returns {void} Returns nothing.
+     */
+    subscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
+     * Unsubscribes a callback from Paused scoped notifications.
+     *
+     * @param {StateProperty} property - The state property being monitored.
+     * @param {function(boolean | number): void} callback - The callback to remove.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribeForPausedScreen(property: StateProperty, callback: (value: boolean | number) => void): void;
+
+    /**
      * Turn the game system on.
      * @returns {void} Returns nothing.
      */
