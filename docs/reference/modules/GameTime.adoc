@@ -1,5 +1,5 @@
 = GameTime Module Reference
-:description: Manages the engine's logical clock, decoupling game logic ticks from the visual frame rate.
+:description: Orchestrates the engine's logical clock and performance metrics.
 :keywords: time, clock, tick, interval, game-loop
 :toc: left
 :toclevels: 3
@@ -14,174 +14,151 @@
 
 == Architectural Purpose
 
-The `GameTime` module manages the engine's logical clock independent of the visual context. By decoupling the deterministic game logic "ticks" from the unpredictable visual frame rate of the browser, it ensures consistent gameplay speed and difficulty-progression physics regardless of the device's hardware performance capabilities.
+The `GameTime` module is designed to decouple deterministic game logic "ticks" from the unpredictable visual frame rate of the browser. By maintaining an internal time accumulator, it ensures that gameplay events (like physics, timers, and difficulty scaling) execute at a consistent speed regardless of the host device's hardware performance or FPS fluctuations.
 
 == API Reference
 
-=== `tickInterval: number`
+=== Core Loop Control
 
-Getter/Setter for the game logic speed in milliseconds.
+These methods are used by the engine's main loop to synchronize logical state updates with the physical rendering time.
 
-**Returns**
+==== `update(deltaTime: number): void`
 
-`number` - The current time between logic ticks.
-
-**Behavior**
-
-Lowering this value makes the game run faster (e.g., used for difficulty progression).
-
-
-'''
-
-=== `totalTicks: number`
-
-Read-only property returning the total number of logic ticks that have occurred since the game started.
-
-
-'''
-
-=== `elapsedTime: number`
-
-Read-only property returning the total time in milliseconds elapsed since the game started.
-
-
-'''
-
-=== `shouldTick(): boolean`
-
-Determines if a logic update should be executed.
-
-**Returns**
-
-`boolean` - `true` if the internal ticker buffer (accumulator) has exceeded the `tickInterval`.
-
-**Behavior**
-
-Called by the main loop. If it returns true, it automatically subtracts the `tickInterval` from the `tickAccumulator` to maintain a stable clock.
-
-
-'''
-
-=== `update(deltaTime: number): void`
-
-Advances the internal time buffer (tick accumulator).
+Calculates the current physical performance metrics (FPS/TPS). This method should be called exactly once per visual frame.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`deltaTime` |`number` |Time physically elapsed since the last rendering frame (in milliseconds).
+|`deltaTime` |`number` |The physical time elapsed since the last rendering frame in milliseconds.
 |===
 
-
 '''
 
-=== `reset(): void`
+==== `accumulate(deltaTime: number): void`
 
-Clears the tick accumulator.
-
-**Behavior**
-
-Prevents a "burst" of logic updates after resuming from a long pause or game restart.
-
-
-'''
-
-=== `isTickEvery(interval: number): boolean`
-
-Returns `true` if the `totalTicks` is a multiple of the specified `interval`. Useful for scheduling recurring game events (e.g., spawning an item every 20 ticks).
+Adds elapsed time to the logical simulation accumulator. This allows the engine to track how much logical time needs to be processed.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`interval` |`number` |The tick frequency interval constraint to check against.
+|`deltaTime` |`number` |Time in milliseconds to add to the logic simulation.
+|===
+
+'''
+
+==== `shouldTick(): boolean`
+
+Evaluates if the engine should execute a logical simulation tick based on the accumulated time.
+
+**Returns**
+
+`boolean` - `true` if at least one tick's worth of time was consumed from the accumulator.
+
+**Behavior**
+
+When this method returns `true`, it has already internally consumed all pending ticks from the `_tickAccumulator` to prevent "speed-up" bursts after lag, while allowing the caller to perform a single logical update.
+
+'''
+
+==== `reset(): void`
+
+Resets all internal timers, statistical accumulators, and logical counters to their baseline values.
+
+**Behavior**
+
+Prevents a "burst" of logic updates after resuming from a long pause or game restart by clearing the time accumulator.
+
+'''
+
+=== Declarative Timing
+
+These methods provide a high-level API for developers to schedule events based on logical game time rather than raw frame counts.
+
+==== `atInterval(ms: number): boolean`
+
+Checks if the logical game clock has just crossed a multiple of the specified millisecond interval.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`ms` |`number` |The millisecond interval to check against.
 |===
 
 **Returns**
 
-`boolean` - `true` if the current tick is a multiple of the interval (and greater than 0).
+`boolean` - `true` if the logical clock just crossed a boundary of the interval.
 
+**Example**
+
+[source,typescript]
+----
+if (time.atInterval(500)) {
+    this.blink();
+}
+----
 
 '''
 
-=== `incrementTickInterval(amount: number): void`
+==== `every(ms: number, action: () => void): void`
 
-Slows down the game by increasing the time between ticks.
+Executes a callback function every N milliseconds of logical game time.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Milliseconds to add to the interval.
+|`ms` |`number` |The millisecond interval between executions.
+|`action` |`() => void` |The callback function to execute.
 |===
 
+**Example**
+
+[source,typescript]
+----
+time.every(1000, () => this.spawnEnemy());
+----
 
 '''
 
-=== `decrementTickInterval(amount: number): void`
+=== Persistence & Debug
 
-Speeds up the game by decreasing the time between ticks.
+Methods for state serialization and performance inspection.
 
-**Parameters**
+==== `getDebugData(): Record<string, string | number | boolean>`
 
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`amount` |`number` |Milliseconds to subtract from the interval.
-|===
-
-
-'''
-
-=== `setTickInterval(interval: number): void`
-
-Sets the tick interval exactly to the specified value.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`interval` |`number` |The precise new integer interval interval between logic updates (in milliseconds).
-|===
-
-
-'''
-
-=== `setMinTickInterval(interval: number): void`
-
-Sets the minimum limit for the tick interval, preventing the game from speeding up beyond this point.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`interval` |`number` |The strict minimum boundary interval allowed (in milliseconds).
-|===
-
-
-'''
-
-=== `getDebugData(): Record<string, string | number | boolean>`
-
-Returns metadata for the real-time debugger.
+Returns metadata for the real-time debugger and performance monitoring.
 
 **Returns**
 
-`Record<string, string | number | boolean>` - Object containing `fps` (Frames Per Second), `tps` (Ticks Per Second), `tick_interval`, and `tick_accumulator`.
-
+`Record<string, string | number | boolean>` - Object containing `fps`, `tps`, and `elapsedTime`.
 
 '''
 
-=== `captureInitialState(): void`
+==== `serialize(): string`
 
-Captures the current `tickInterval` as the starting speed for the game session.
+Converts the persistent time state into a JSON string.
 
-**Behavior**
+**Returns**
 
-This method is called by the `Game` engine after the game-specific `setupGame()` has executed. It ensures that when `reset()` is called, the game returns to its intended initial speed rather than the engine's global default.
+`string` - The serialized state.
+
+'''
+
+==== `deserialize(data: string): void`
+
+Restores the time state from a JSON string.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`data` |`string` |The JSON string containing the state.
+|===

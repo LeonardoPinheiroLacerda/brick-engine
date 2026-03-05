@@ -126,7 +126,7 @@ describe('Game', () => {
 
             // Mock time to trigger tick
             // Tick interval is in configs, let's assume 1000ms
-            game.modules.time.update(2000);
+            game.modules.time.accumulate(2000);
 
             // [ACT]
             game.draw();

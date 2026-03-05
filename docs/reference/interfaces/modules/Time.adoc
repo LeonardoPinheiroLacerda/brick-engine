@@ -1,5 +1,5 @@
 = Time Reference
-:description: Interface for managing the game's logical clock and update frequency.
+:description: Interface defining the contract for logical game time management.
 :keywords: time, clock, tick, interval, game-loop
 :toc: left
 :toclevels: 3
@@ -14,136 +14,89 @@
 
 == Architectural Purpose
 
-Interface for managing the game's logical clock and update frequency.
+The `Time` interface defines the core contract for managing the engine's logical clock and update frequency. It ensures that any implementation provides the necessary tools to decouple deterministic game logic from the visual frame rate.
 
-== Properties
+== API Reference
 
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`tickInterval` |`number` |The duration in milliseconds between logic updates.
-|`totalTicks` |`number` |The total number of logic ticks that have occurred since the game started.
-|`elapsedTime` |`number` |The total time in milliseconds elapsed since the game started.
-|===
+=== Core Simulation
 
-== Methods
+==== `update(deltaTime: number): void`
 
-=== `update(deltaTime: number): void`
-
-Adds elapsed time to the internal tick accumulator. Called every frame.
+Advances the internal physical stats (FPS/TPS).
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`deltaTime` |`number` |Time in milliseconds since last frame.
+|`deltaTime` |`number` |Time physically elapsed since the last rendering frame in milliseconds.
 |===
-
 
 '''
 
-=== `shouldTick(): boolean`
+==== `accumulate(deltaTime: number): void`
 
-Returns `true` if the tick accumulator has exceeded the `tickInterval`, indicating a logic update is due.
+Adds elapsed time to the simulation accumulator.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`deltaTime` |`number` |Time in milliseconds to add to the simulation.
+|===
+
+'''
+
+==== `shouldTick(): boolean`
+
+Evaluates if a logical simulation tick should be executed.
 
 **Returns**
 
-`boolean` - `true` if a tick should occur.
-
-
-'''
-
-=== `reset(): void`
-
-Clears the tick accumulator and resets global time counters. Useful during game restarts.
-
+`boolean` - `true` if at least one tick was consumed.
 
 '''
 
-=== `isTickEvery(interval: number): boolean`
+==== `reset(): void`
 
-Returns `true` if the `totalTicks` is a multiple of the specified `interval`. Useful for scheduling recurring game events.
+Resets all internal timers and counters.
+
+'''
+
+=== Declarative API
+
+==== `atInterval(ms: number): boolean`
+
+Checks if the logical clock has crossed a millisecond interval.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`interval` |`number` |The tick frequency to check.
+|`ms` |`number` |The millisecond interval to check.
 |===
 
 **Returns**
 
-`boolean` - `true` if the current tick is a multiple of the interval (and greater than 0).
-
+`boolean` - `true` if the interval boundary was crossed.
 
 '''
 
-=== `incrementTickInterval(amount: number): void`
+==== `every(ms: number, action: () => void): void`
 
-Slows down the game by increasing the time between ticks.
+Executes a callback every N milliseconds of logical game time.
 
 **Parameters**
 
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`amount` |`number` |Milliseconds to add to the interval.
+|`ms` |`number` |Millisecond interval.
+|`action` |`() => void` |Callback function.
 |===
-
-
-'''
-
-=== `decrementTickInterval(amount: number): void`
-
-Speeds up the game by decreasing the time between ticks.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`amount` |`number` |Milliseconds to subtract from the interval.
-|===
-
-
-'''
-
-=== `setTickInterval(interval: number): void`
-
-Sets the tick interval exactly to the specified value.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`interval` |`number` |The new interval between logic updates (in milliseconds).
-|===
-
-
-'''
-
-=== `setMinTickInterval(interval: number): void`
-
-Sets the minimum limit for the tick interval, preventing the game from speeding up beyond this point.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`interval` |`number` |The minimum interval allowed (in milliseconds).
-|===
-
-
-'''
-
-=== `captureInitialState(): void`
-
-Captures the current `tickInterval` as the initial state. This should be called after a game has performed its specific initialization to ensure that future resets restore the correct starting speed.
 
 == General Usage
 
-Implemented by `xref:../../modules/GameTime.adoc[GameTime]`. This module ensures that game logic (like falling pieces) runs at a consistent speed regardless of the render frame rate.
+Implemented by `xref:../../modules/GameTime.adoc[GameTime]`. This interface allows other modules to depend on a standardized timing contract without being tied to a specific implementation.

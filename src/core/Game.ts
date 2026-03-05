@@ -20,11 +20,13 @@ import GameEventRegistry from './event/GameEventRegistry';
 import EventEmitter from './event/EventEmitter';
 
 /**
- * The Central integration boundary encapsulating physical logic away from native visual outputs.
+ * The core engine orchestrator and central integration boundary.
  *
- * Implements the {@link Initializable} configuration pipeline orchestrating completely synchronous
- * frame drawing metrics while processing isolated state iterations without corrupting data models
- * dynamically mapped across various internal UI states.
+ * Designed to encapsulate physical game logic away from native visual outputs
+ * and hardware-specific events. It implements the {@link Initializable} contract
+ * to manage the lifecycle of all internal modules, ensuring that state
+ * iterations, physics updates, and rendering frames are synchronized
+ * and deterministic.
  */
 export default abstract class Game implements Initializable {
     protected _view: GameView;
@@ -92,11 +94,13 @@ export default abstract class Game implements Initializable {
     }
 
     /**
-     * Triggers sequential logic parsing across dynamically subscribed execution containers internally.
+     * Initializes the engine and its constituent modules.
      *
-     * Internally synchronizes active memory payloads tracking initialization boundaries automatically.
+     * Orchestrates the setup of the internal module registry, links state
+     * synchronization, and prepares the event system. This method must
+     * be called once before starting the game loop.
      *
-     * @returns {void} Returns nothing.
+     * @returns {void}
      */
     setup(): void {
         EventEmitter.clear();
@@ -153,15 +157,17 @@ export default abstract class Game implements Initializable {
 
         this._view.bindControls(control);
 
-        this._modules.time.captureInitialState();
-
         this._initialStateSnapshot.captureInitialState(this);
     }
 
     /**
-     * Loops mathematically calculating pixel mutations exactly and logically evaluating system limits.
+     * The primary game loop executed on every visual frame.
      *
-     * @returns {void} Returns nothing.
+     * Synchronizes the physical time delta with the logical time module.
+     * If the current state allows, it orchestrates the logical update
+     * ticks and the independent rendering pass.
+     *
+     * @returns {void}
      */
     draw(): void {
         const { p } = RendererContext;
@@ -183,7 +189,9 @@ export default abstract class Game implements Initializable {
                 // Update time accumulator
 
                 // Process Logic Tick
-                if (time.shouldTick()) {
+                time.accumulate(p.deltaTime);
+
+                while (time.shouldTick()) {
                     this.update(p.deltaTime);
 
                     this._modules.session.saveSession();
@@ -232,7 +240,6 @@ export default abstract class Game implements Initializable {
     /**
      * Subclass abstract delegator resolving physics mathematically based directly on relative speeds.
      *
-     * @param {number} deltaTime - Fast ticking number representation capturing elapsed frametimes safely.
      * @returns {void} Returns nothing.
      */
     abstract update(deltaTime: number): void;

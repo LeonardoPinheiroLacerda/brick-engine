@@ -7,17 +7,16 @@ describe('GameTime', () => {
     beforeEach(() => {
         gameTime = new GameTime();
         gameTime.setup();
-        gameTime.setTickInterval(100);
-        gameTime.setMinTickInterval(10);
     });
 
     describe('update & shouldTick', () => {
         it('should accumulate time and trigger tick when interval is reached', () => {
+            const tickMs = 1000 / 60;
             // [ACT]
-            gameTime.update(50);
+            gameTime.accumulate(tickMs / 2);
             const firstCheck = gameTime.shouldTick();
 
-            gameTime.update(50);
+            gameTime.accumulate(tickMs / 2);
             const secondCheck = gameTime.shouldTick();
 
             // [ASSERT]
@@ -26,12 +25,13 @@ describe('GameTime', () => {
         });
 
         it('should handle multiple ticks in one large update', () => {
+            const tickMs = 1000 / 60;
             // [ACT]
-            gameTime.update(250);
+            gameTime.accumulate(tickMs * 2.5);
 
-            const tick1 = gameTime.shouldTick(); // consumes 100, rem 150
-            const tick2 = gameTime.shouldTick(); // consumes 100, rem 50
-            const tick3 = gameTime.shouldTick();
+            const tick1 = gameTime.shouldTick(); // consumes 1 tick
+            const tick2 = gameTime.shouldTick(); // consumes 2nd tick
+            const tick3 = gameTime.shouldTick(); // no 3rd tick
 
             // [ASSERT]
             expect(tick1).toBe(true);
@@ -40,45 +40,82 @@ describe('GameTime', () => {
         });
 
         it('should track totalTicks and elapsedTime', () => {
+            const tickMs = 1000 / 60;
             // [ACT]
-            gameTime.update(100);
+            gameTime.update(tickMs);
+            gameTime.accumulate(tickMs);
             gameTime.shouldTick();
-            gameTime.update(100);
+            gameTime.update(tickMs);
+            gameTime.accumulate(tickMs);
             gameTime.shouldTick();
 
             // [ASSERT]
             expect(gameTime.totalTicks).toBe(2);
-            expect(gameTime.elapsedTime).toBe(200);
+            expect(gameTime.elapsedTime).toBe(tickMs * 2);
         });
 
-        it('should return true for isTickEvery at correct multiples', () => {
+        it('should return true for isEveryMs at correct multiples', () => {
+            const tickMs = 1000 / 60;
             // [ARRANGE]
-            gameTime.update(100);
-            gameTime.shouldTick(); // Tick 1
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick(); // Tick 1 (16.66ms)
 
             // [ASSERT]
-            expect(gameTime.isTickEvery(2)).toBe(false);
+            expect(gameTime.atInterval(tickMs * 2)).toBe(false);
 
             // [ACT]
-            gameTime.update(100);
-            gameTime.shouldTick(); // Tick 2
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick(); // Tick 2 (33.33ms)
 
             // [ASSERT]
-            expect(gameTime.isTickEvery(2)).toBe(true);
-            expect(gameTime.isTickEvery(3)).toBe(false);
+            expect(gameTime.atInterval(tickMs * 2)).toBe(true);
+            expect(gameTime.atInterval(tickMs * 3)).toBe(false);
 
             // [ACT]
-            gameTime.update(100);
-            gameTime.shouldTick(); // Tick 3
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick(); // Tick 3 (50ms)
 
             // [ASSERT]
-            expect(gameTime.isTickEvery(3)).toBe(true);
-            expect(gameTime.isTickEvery(2)).toBe(false);
+            expect(gameTime.atInterval(tickMs * 3)).toBe(true);
+            expect(gameTime.atInterval(tickMs * 2)).toBe(false);
         });
 
-        it('should return false for isTickEvery at tick 0', () => {
+        it('should return false for atInterval at tick 0', () => {
             expect(gameTime.totalTicks).toBe(0);
-            expect(gameTime.isTickEvery(1)).toBe(false);
+            expect(gameTime.atInterval(1)).toBe(false);
+        });
+
+        it('should execute action only at correct intervals via every', () => {
+            const tickMs = 1000 / 60;
+            // [ARRANGE]
+            let counter = 0;
+            const action = () => {
+                counter++;
+            };
+
+            // [ACT & ASSERT] - Tick 1
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick();
+            gameTime.every(tickMs * 2, action);
+            expect(counter).toBe(0);
+
+            // [ACT & ASSERT] - Tick 2
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick();
+            gameTime.every(tickMs * 2, action);
+            expect(counter).toBe(1);
+
+            // [ACT & ASSERT] - Tick 3
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick();
+            gameTime.every(tickMs * 2, action);
+            expect(counter).toBe(1);
+
+            // [ACT & ASSERT] - Tick 4
+            gameTime.accumulate(tickMs);
+            gameTime.shouldTick();
+            gameTime.every(tickMs * 2, action);
+            expect(counter).toBe(2);
         });
     });
 
@@ -96,6 +133,7 @@ describe('GameTime', () => {
             // [ARRANGE] Trigger 5 ticks
             for (let i = 0; i < 5; i++) {
                 gameTime.update(100);
+                gameTime.accumulate(100);
                 gameTime.shouldTick();
             }
 
@@ -105,37 +143,6 @@ describe('GameTime', () => {
             // [ASSERT]
             const debug = gameTime.getDebugData();
             expect(debug.tps).toBe(5);
-        });
-    });
-
-    describe('Interval management', () => {
-        it('should decrement interval but stay above minimum', () => {
-            // [ACT]
-            gameTime.decrementTickInterval(200);
-
-            // [ASSERT]
-            expect(gameTime.tickInterval).toBe(10);
-        });
-
-        it('should increment interval', () => {
-            // [ACT]
-            gameTime.incrementTickInterval(50);
-
-            // [ASSERT]
-            expect(gameTime.tickInterval).toBe(150);
-        });
-
-        it('should restore tick interval to captured initial state on reset', () => {
-            // [ARRANGE]
-            gameTime.setTickInterval(200);
-            gameTime.captureInitialState();
-            gameTime.setTickInterval(50); // Speed up the game
-
-            // [ACT]
-            gameTime.reset();
-
-            // [ASSERT]
-            expect(gameTime.tickInterval).toBe(200);
         });
     });
 });

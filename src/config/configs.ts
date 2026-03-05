@@ -115,16 +115,14 @@ export default {
     /** Button hold settings. */
     buttonHold: {
         /** Initial delay before a held button starts repeating (in milliseconds). */
-        holdDelayMs: 250,
+        holdDelayMs: 267,
         /** Interval between repeated actions while a button is held (in milliseconds). */
-        holdIntervalMs: 50,
+        holdIntervalMs: 100,
     },
     /** Game settings. */
     game: {
         /** Interval between game ticks (in milliseconds). */
-        tickInterval: 1000 / 30, // 30 ticks per second
-        /** Minimum interval between game ticks (in milliseconds). */
-        minTickInterval: 1000 / 60, // 60 ticks per second
+        tickInterval: 1000 / 60, // 60 ticks per second
 
         /** Performance Monitor settings. */
         debugger: {

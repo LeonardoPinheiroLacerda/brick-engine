@@ -47,6 +47,7 @@ describe('GameSession', () => {
             subscribe: vi.fn((property: StateProperty, callback: (val: boolean) => void) => {
                 stateSubscriptions[property] = callback;
             }),
+            isGameOver: vi.fn().mockReturnValue(false),
         } as unknown as State;
 
         mockSerializable = {

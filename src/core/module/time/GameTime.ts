@@ -4,19 +4,22 @@ import { Serializable } from '../../types/Interfaces';
 import configs from '../../../config/configs';
 
 /**
- * Module responsible for managing the logical engine clock, hardware frame rates, and tick intervals.
+ * Orchestrates the engine's logical clock and performance metrics.
  *
- * It decouples the deterministic game logic "ticks" from the unpredictable visual frame rate
- * of the browser canvas. By separating `update` loops from visual rendering, it ensures
- * consistent gameplay speed calculations (like difficulty progression) regardless of the
- * host device's performance capabilities.
+ * Designed to decouple deterministic game logic "ticks" from the unpredictable
+ * visual frame rate of the browser. By maintaining an internal time accumulator,
+ * it ensures that gameplay events (like physics, timers, and difficulty scaling)
+ * execute at a consistent speed regardless of the host device's hardware
+ * performance or FPS fluctuations.
+ *
+ * Implements the {@link Time} interface to provide a standardized timing
+ * contract for all engine modules.
  */
 export default class GameTime implements Time, Debuggable, Serializable {
     // Time accumulator
     protected _tickAccumulator: number = 0;
     /** The tick interval at the start of the game session. Used for resets. */
     private _initialTickInterval: number = configs.game.tickInterval;
-    private _minTickInterval: number = configs.game.minTickInterval;
     private _tickInterval: number = configs.game.tickInterval;
     private _fps: number = 0;
     private _tps: number = 0;
@@ -28,24 +31,46 @@ export default class GameTime implements Time, Debuggable, Serializable {
     serialId: string = 'time';
 
     /**
-     * Initializes the time module's core state.
-     * Resets all internal timers and statistical accumulators securely.
+     * Gets the total number of ticks since the game started.
      *
-     * @returns {void} Returns nothing.
+     * @returns {number} Total tick count.
+     */
+    get totalTicks(): number {
+        return this._totalTicks;
+    }
+
+    /**
+     * Gets the total elapsed time in milliseconds.
+     *
+     * @returns {number} Elapsed time in ms.
+     */
+    get elapsedTime(): number {
+        return this._totalElapsedTime;
+    }
+
+    /**
+     * Initializes the time module's core state.
+     *
+     * Resets all internal timers and statistical accumulators to their
+     * baseline values, ensuring a clean state for a new game session.
+     *
+     * @returns {void}
      */
     setup(): void {
         this.reset();
     }
 
     /**
-     * Updates the internal time accumulator and calculates physical FPS/TPS.
-     * Must be invoked strictly once per hardware visual frame.
+     * Updates the physical performance metrics.
      *
-     * @param {number} deltaTime - Time physically elapsed since the last rendering frame in milliseconds.
-     * @returns {void} Returns nothing.
+     * Calculates the current Frames Per Second (FPS) and updates the Ticks
+     * Per Second (TPS) statistics. This method should be called exactly
+     * once per visual frame in the main loop.
+     *
+     * @param {number} deltaTime - The physical time physically elapsed since the last rendering frame in milliseconds.
+     * @returns {void}
      */
     update(deltaTime: number) {
-        this._tickAccumulator += deltaTime;
         this._totalElapsedTime += deltaTime;
         this._fps = 1000 / deltaTime;
 
@@ -58,16 +83,32 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
 
     /**
-     * Checks if enough time has passed for a game tick.
-     * Consumes accumulated time if a tick occurs.
+     * Adds elapsed time to the simulation accumulator.
      *
-     * @returns {boolean} True if a tick should occur.
+     * This time is used to determine when the next logical tick should
+     * be processed. It allows the engine to "catch up" if the frame
+     * rate drops below the target tick rate.
+     *
+     * @param {number} deltaTime - Time in milliseconds to add to the logic simulation.
+     * @returns {void}
+     */
+    accumulate(deltaTime: number): void {
+        this._tickAccumulator += deltaTime;
+    }
+
+    /**
+     * Evaluates if the engine should execute a logical simulation tick.
+     *
+     * Checks if the accumulated time exceeds the required tick interval.
+     * If so, it consumes all pending time in the accumulator and
+     * increments the logical counters.
+     *
+     * @internal Used specifically by the engine's core orchestration loop.
+     * @returns {boolean} `true` if at least one tick's worth of time was consumed.
      */
     shouldTick(): boolean {
         if (this._tickAccumulator >= this._tickInterval) {
-            while (this._tickAccumulator >= this._tickInterval) {
-                this._tickAccumulator -= this._tickInterval;
-            }
+            this._tickAccumulator -= this._tickInterval;
             this._tickCounter++;
             this._totalTicks++;
             return true;
@@ -92,42 +133,33 @@ export default class GameTime implements Time, Debuggable, Serializable {
     }
 
     /**
-     * Gets the current tick interval.
+     * Checks if enough logical time has passed based on a specific millisecond interval.
+     * Use for time-based triggers that need to be stable even if the frame rate varies.
      *
-     * @returns {number} The tick interval in milliseconds.
+     * @param {number} ms - The millisecond interval to check.
+     * @returns {boolean} True if the logical clock just crossed a multiple of the interval.
      */
-    get tickInterval(): number {
-        return this._tickInterval;
+    atInterval(ms: number): boolean {
+        if (this._totalTicks === 0) return false;
+        const currentWindow = Math.floor((this._totalTicks * this._tickInterval) / ms);
+        const previousWindow = Math.floor(((this._totalTicks - 1) * this._tickInterval) / ms);
+        return currentWindow > previousWindow;
     }
 
     /**
-     * Sets the tick interval and resets timing.
+     * Executes a callback function every N milliseconds of logical game time.
      *
-     * @param {number} interval - The new tick interval in milliseconds.
-     */
-    set tickInterval(interval: number) {
-        this._tickInterval = interval;
-        // this.reset(); // Removed reset to prevent stuttering on speed change
-    }
-
-    /**
-     * Increments the tick interval (slowing down the game).
+     * Provides a declarative functional approach to handling recurring game logic,
+     * such as spawning enemies or updating timers.
      *
-     * @param {number} amount - The amount to add to the interval.
+     * @param {number} ms - The millisecond interval between executions.
+     * @param {() => void} action - The callback function to execute if the interval is crossed.
+     * @returns {void}
      */
-    incrementTickInterval(amount: number) {
-        this.tickInterval = this._tickInterval + amount;
-    }
-
-    /**
-     * Decrements the tick interval (speeding up the game).
-     * Enforces a minimum interval of 10ms.
-     *
-     * @param {number} amount - The amount to subtract from the interval.
-     */
-    decrementTickInterval(amount: number) {
-        const newInterval = Math.max(this._minTickInterval, this._tickInterval - amount);
-        this.tickInterval = newInterval;
+    every(ms: number, action: () => void): void {
+        if (this.atInterval(ms)) {
+            action();
+        }
     }
 
     /**
@@ -139,8 +171,7 @@ export default class GameTime implements Time, Debuggable, Serializable {
         return {
             fps: Math.round(this._fps),
             tps: this._tps,
-            tick_interval: this._tickInterval.toFixed(2),
-            tick_accumulator: this._tickAccumulator.toFixed(2),
+            elapsedTime: this._totalElapsedTime,
         };
     }
 
@@ -149,54 +180,9 @@ export default class GameTime implements Time, Debuggable, Serializable {
             tickInterval: this._tickInterval,
         });
     }
+
     deserialize(data: string): void {
         const parsed = JSON.parse(data);
         this._tickInterval = parsed.tickInterval;
-    }
-    setTickInterval(interval: number): void {
-        this._tickInterval = interval;
-    }
-    setMinTickInterval(interval: number): void {
-        this._minTickInterval = interval;
-    }
-
-    /**
-     * Gets the total number of ticks since the game started.
-     *
-     * @returns {number} Total tick count.
-     */
-    get totalTicks(): number {
-        return this._totalTicks;
-    }
-
-    /**
-     * Gets the total elapsed time in milliseconds.
-     *
-     * @returns {number} Elapsed time in ms.
-     */
-    get elapsedTime(): number {
-        return this._totalElapsedTime;
-    }
-
-    /**
-     * Checks if the current total tick count is a multiple of the provided interval.
-     *
-     * @param {number} interval - The tick interval to check.
-     * @returns {boolean} True if the current tick is a multiple of the interval.
-     */
-    isTickEvery(interval: number): boolean {
-        return this._totalTicks > 0 && this._totalTicks % interval === 0;
-    }
-
-    /**
-     * Captures the current tick interval as the deterministic initial baseline state.
-     *
-     * This is useful for restoring the intended baseline game speed on session
-     * resets rather than reverting to the engine's hardcoded default.
-     *
-     * @returns {void} Returns nothing.
-     */
-    captureInitialState(): void {
-        this._initialTickInterval = this._tickInterval;
     }
 }

@@ -931,8 +931,6 @@ export interface Control extends Initializable {
  * Manages the game loop timing, ticks, and delta time.
  */
 export interface Time extends Initializable {
-    /** The interval between logic ticks in milliseconds. */
-    tickInterval: number;
     /** The total number of ticks since the game started. */
     readonly totalTicks: number;
 
@@ -940,20 +938,47 @@ export interface Time extends Initializable {
     readonly elapsedTime: number;
 
     /**
-     * Checks if enough time has passed for a game tick based on a specific interval.
+     * Checks if enough time has passed based on a specific millisecond interval.
      *
-     * @param {number} interval - The tick interval to check.
-     * @returns {boolean} `true` if the current tick is a multiple of the interval.
+     * @param {number} ms - The millisecond interval to check.
+     * @returns {boolean} `true` if the logical clock just crossed a multiple of the interval.
      */
-    isTickEvery(interval: number): boolean;
+    atInterval(ms: number): boolean;
 
     /**
-     * Accumulates passed time and calculates FPS/TPS.
+     * Executes a callback function every N milliseconds of logical game time.
+     *
+     * Provides a declarative functional approach to handling recurring game logic,
+     * such as spawning enemies or updating timers.
+     *
+     * @param {number} ms - The millisecond interval between executions.
+     * @param {() => void} action - The callback function to execute if the interval is crossed.
+     * @returns {void}
+     */
+    every(ms: number, action: () => void): void;
+
+    /**
+     * Updates the system clock, total elapsed time, and performance metrics (FPS/TPS).
+     *
+     * Should be invoked strictly once per hardware visual frame, even when the
+     * game is paused, to maintain accurate UI animations and performance tracking.
      *
      * @param {number} deltaTime - Time elapsed since last frame in milliseconds.
      * @returns {void} Returns nothing.
      */
     update(deltaTime: number): void;
+
+    /**
+     * Accumulates time specifically for the logical engine ticks.
+     *
+     * This should only be invoked when the game logic is active (not paused
+     * or on title screens) to prevent the logic from "catching up" after
+     * periods of inactivity.
+     *
+     * @param {number} deltaTime - Time to add to the logic accumulator.
+     * @returns {void} Returns nothing.
+     */
+    accumulate(deltaTime: number): void;
 
     /**
      * Determines if a logic tick should occur based on the accumulator.
@@ -968,46 +993,6 @@ export interface Time extends Initializable {
      * @returns {void} Returns nothing.
      */
     reset(): void;
-
-    /**
-     * Increases the tick interval (slowing down the game logic).
-     *
-     * @param {number} amount - Milliseconds to add.
-     * @returns {void} Returns nothing.
-     */
-    incrementTickInterval(amount: number): void;
-
-    /**
-     * Decreases the tick interval (speeding up the game logic).
-     *
-     * @param {number} amount - Milliseconds to subtract.
-     * @returns {void} Returns nothing.
-     */
-    decrementTickInterval(amount: number): void;
-
-    /**
-     * Sets the tick interval.
-     *
-     * @param {number} interval - The new tick interval in milliseconds.
-     * @returns {void} Returns nothing.
-     */
-    setTickInterval(interval: number): void;
-
-    /**
-     * Sets the minimum tick interval.
-     *
-     * @param {number} interval - The new minimum tick interval in milliseconds.
-     * @returns {void} Returns nothing.
-     */
-    setMinTickInterval(interval: number): void;
-
-    /**
-     * Captures the current tick interval as the initial state.
-     * Use this after games have set their starting speed.
-     *
-     * @returns {void} Returns nothing.
-     */
-    captureInitialState(): void;
 }
 
 /**
