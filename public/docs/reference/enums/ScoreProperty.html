@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<meta name="description" content="Centralizes the logic for system-level events like power, reset, and state-based notifications.">
-<meta name="keywords" content="event, registry, system, power, reset">
-<title>GameEventRegistry Reference</title>
+<meta name="description" content="Enumeration of observable properties within the GameScore module.">
+<meta name="keywords" content="score, enum, properties, events">
+<title>ScoreProperty Reference</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,142 +439,74 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>GameEventRegistry Reference</h1>
+<h1>ScoreProperty Reference</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
-<li><a href="#core-responsibilities">2. Core Responsibilities</a></li>
-<li><a href="#api-reference">3. API Reference</a>
-<ul class="sectlevel2">
-<li><a href="#setupcontroleventsmodules-gamemodules-onreset-void-void">3.1. <code>setupControlEvents(modules: GameModules, onReset: () &#8658; void): void</code></a></li>
-<li><a href="#setupstateeventsmodules-gamemodules-view-gameview-void">3.2. <code>setupStateEvents(modules: GameModules, view: GameView): void</code></a></li>
-</ul>
-</li>
+<li><a href="#values">1. Values</a></li>
+<li><a href="#general-usage">2. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>GameEventRegistry</code> is a static helper class that centralizes the logic for system-level event subscriptions. By moving these registrations out of the core Game class, it maintains a clean startup sequence and ensures that all modules remain decoupled while still reacting systematically to global lifecycle changes like turning on/off or Game Over.</p>
+<p>Enumeration of observable properties within the <code><a href="../modules/GameScore.html">GameScore</a></code> module, used primarily for event subscriptions via <code><a href="../modules/EventEmitter.html">EventEmitter</a></code>.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="core-responsibilities"><a class="link" href="#core-responsibilities">2. Core Responsibilities</a></h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>System Toggles</strong>: Wiring Sound and Color toggles via the <code><a href="EventEmitter.html">EventEmitter</a></code>.</p>
-</li>
-<li>
-<p><strong>Power Management</strong>: Handling turn on/off logic and cleaning up resources (e.g., stopping sounds).</p>
-</li>
-<li>
-<p><strong>Lifecycle Events</strong>: Managing transitions between Title, Playing, Paused, and Game Over states.</p>
-</li>
-<li>
-<p><strong>Reset Orchestration</strong>: Performing module and session resets during power cycles or manual restarts.</p>
-</li>
-</ol>
-</div>
-<hr>
 </div>
 </div>
 <div class="sect1">
-<h2 id="api-reference"><a class="link" href="#api-reference">3. API Reference</a></h2>
+<h2 id="values"><a class="link" href="#values">1. Values</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="setupcontroleventsmodules-gamemodules-onreset-void-void"><a class="link" href="#setupcontroleventsmodules-gamemodules-onreset-void-void">3.1. <code>setupControlEvents(modules: GameModules, onReset: () &#8658; void): void</code></a></h3>
-<div class="paragraph">
-<p>Sets up all system-level control event subscriptions. Injects handlers for core game hardware button mappings like power cycling, resetting the active game, unpausing, or modifying hardware toggles like sound and color.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
 <col style="width: 60%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>SCORE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The total session sequence points.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>modules</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/GameModules.html">GameModules</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The collection of initialized game modules to bind.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LEVEL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The active difficulty scaling level.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onReset</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Function</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Callback to be executed immediately to restore the initial properties of the game instance during soft resets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MULTIPLIER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current point application multiplier.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MAX_LEVEL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ceiling for level progression.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>HIGH_SCORE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The persistent record value.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="general-usage"><a class="link" href="#general-usage">2. General Usage</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Registers listeners for:
-*   <code>ControlKey.SOUND</code>: Mute toggle.
-*   <code>ControlKey.COLOR</code>: Color mode toggle.
-*   <code>ControlKey.POWER</code>: System on/off.
-*   <code>ControlKey.START_PAUSE</code>: Play/Pause/Resume.
-*   <code>ControlKey.RESET</code>: Soft restart.</p>
-</div>
-<hr>
-</div>
-<div class="sect2">
-<h3 id="setupstateeventsmodules-gamemodules-view-gameview-void"><a class="link" href="#setupstateeventsmodules-gamemodules-view-gameview-void">3.2. <code>setupStateEvents(modules: GameModules, view: <a href="../view/GameView.html">GameView</a>): void</code></a></h3>
-<div class="paragraph">
-<p>Sets up all system-level state property subscriptions. Binds lifecycle behaviors to state property changes, such as clearing current session data upon encountering Game Over, fully purging rendering/grid variables when the system is virtually powered down, or toggling the trackpad layout.</p>
-</div>
-<div class="paragraph">
-<p><strong>Parameters</strong></p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 60%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>modules</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../types/GameModules.html">GameModules</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The structured collection of engine modules.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>view</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><a href="../view/GameView.html">GameView</a></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The active game view to notify about visual state changes.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p><strong>Behavior</strong></p>
-</div>
-<div class="paragraph">
-<p>Registers listeners for:
-*   <code>StateProperty.ON</code>: Resets all modules when the system is turned off.
-*   <code>StateProperty.GAME_OVER</code>: Clears the session when the player loses.
-*   <code>StateProperty.TRACKPAD</code>: Toggles the trackpad layout mode.</p>
-</div>
-<hr>
+<p>These values act as the internal event keys. Public subscriptions to score changes should use the simplified <code>subscribe</code> method on the <code><a href="../../interfaces/modules/Score.html">Score</a></code> interface, which internally utilizes <code>ScoreProperty.SCORE</code>.</p>
 </div>
 </div>
 </div>

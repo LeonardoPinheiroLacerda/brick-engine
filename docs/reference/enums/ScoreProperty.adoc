@@ -5,22 +5,25 @@
 :toclevels: 3
 :sectnums:
 :sectlinks:
+:icons: font
+:source-highlighter: highlight.js
+:reproducible:
+:experimental:
 :idprefix:
 :idseparator: -
-:icons: font
 
 Enumeration of observable properties within the `xref:../modules/GameScore.adoc[GameScore]` module, used primarily for event subscriptions via `xref:../modules/EventEmitter.adoc[EventEmitter]`.
 
-== Attributes
+== Values
 
-[cols="1,3"]
+[cols="1,1,3", options="header"]
 |===
-|Name |Description
-|`SCORE` |The total session sequence points.
-|`LEVEL` |The active difficulty scaling level.
-|`MULTIPLIER` |The current point application multiplier.
-|`MAX_LEVEL` |The ceiling for level progression.
-|`HIGH_SCORE` |The persistent record value.
+|Name |Type |Description
+|`SCORE` |`string` |The total session sequence points.
+|`LEVEL` |`string` |The active difficulty scaling level.
+|`MULTIPLIER` |`string` |The current point application multiplier.
+|`MAX_LEVEL` |`string` |The ceiling for level progression.
+|`HIGH_SCORE` |`string` |The persistent record value.
 |===
 
 == General Usage

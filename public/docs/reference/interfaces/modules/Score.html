@@ -443,25 +443,37 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#architectural-purpose">1. Architectural Purpose</a></li>
-<li><a href="#properties">2. Properties</a></li>
-<li><a href="#methods">3. Methods</a>
+<li><a href="#properties">1. Properties</a></li>
+<li><a href="#methods">2. Methods</a>
 <ul class="sectlevel2">
-<li><a href="#increasescoreamount-number-void">3.1. <code>increaseScore(amount: number): void</code></a></li>
-<li><a href="#resetscore-void">3.2. <code>resetScore(): void</code></a></li>
-<li><a href="#getformattedscoredigits-number-string">3.3. <code>getFormattedScore(digits?: number): string</code></a></li>
-<li><a href="#increaselevelamount-number-void">3.4. <code>increaseLevel(amount: number): void</code></a></li>
-<li><a href="#resetlevel-void">3.5. <code>resetLevel(): void</code></a></li>
-<li><a href="#setupgamehighscoreid-string-void">3.6. <code>setupGameHighScore(id: string): void</code></a></li>
+<li><a href="#score-management">2.1. Score Management</a>
+<ul class="sectlevel3">
+<li><a href="#increasescoreamount-number-void">2.1.1. <code>increaseScore(amount: number): void</code></a></li>
+<li><a href="#resetscore-void">2.1.2. <code>resetScore(): void</code></a></li>
+<li><a href="#getformattedscoredigits-number-string">2.1.3. <code>getFormattedScore(digits?: number): string</code></a></li>
 </ul>
 </li>
-<li><a href="#general-usage">4. General Usage</a></li>
+<li><a href="#level-management">2.2. Level Management</a>
+<ul class="sectlevel3">
+<li><a href="#increaselevelamount-number-void">2.2.1. <code>increaseLevel(amount: number): void</code></a></li>
+<li><a href="#resetlevel-void">2.2.2. <code>resetLevel(): void</code></a></li>
+<li><a href="#setupgamehighscoreid-string-void">2.2.3. <code>setupGameHighScore(id: string): void</code></a></li>
+</ul>
+</li>
+<li><a href="#subscriptions">2.3. Subscriptions</a>
+<ul class="sectlevel3">
+<li><a href="#subscribecallback-score-number-void-void">2.3.1. <code>subscribe(callback: (score: number) &#8658; void): void</code></a></li>
+<li><a href="#unsubscribecallback-score-number-void-void">2.3.2. <code>unsubscribe(callback: (score: number) &#8658; void): void</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#general-usage">3. General Usage</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="architectural-purpose"><a class="link" href="#architectural-purpose">1. Architectural Purpose</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Interface for tracking session performance, multipliers, and levels.</p>
@@ -469,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="properties"><a class="link" href="#properties">2. Properties</a></h2>
+<h2 id="properties"><a class="link" href="#properties">1. Properties</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -477,12 +489,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <col style="width: 20%;">
 <col style="width: 60%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>score</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>number</code></p></td>
@@ -508,10 +522,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="methods"><a class="link" href="#methods">3. Methods</a></h2>
+<h2 id="methods"><a class="link" href="#methods">2. Methods</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">3.1. <code>increaseScore(amount: number): void</code></a></h3>
+<h3 id="score-management"><a class="link" href="#score-management">2.1. Score Management</a></h3>
+<div class="paragraph">
+<p>Methods for adding and resetting session points.</p>
+</div>
+<div class="sect3">
+<h4 id="increasescoreamount-number-void"><a class="link" href="#increasescoreamount-number-void">2.1.1. <code>increaseScore(amount: number): void</code></a></h4>
 <div class="paragraph">
 <p>Adds points to the total, automatically applying any active multipliers.</p>
 </div>
@@ -537,17 +556,34 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">// Adds 100 * multiplier to the total score
+game.score.increaseScore(100);</code></pre>
+</div>
+</div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="resetscore-void"><a class="link" href="#resetscore-void">3.2. <code>resetScore(): void</code></a></h3>
+<div class="sect3">
+<h4 id="resetscore-void"><a class="link" href="#resetscore-void">2.1.2. <code>resetScore(): void</code></a></h4>
 <div class="paragraph">
 <p>Resets the session score to <code>0</code>.</p>
 </div>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">game.score.resetScore();</code></pre>
+</div>
+</div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">3.3. <code>getFormattedScore(digits?: number): string</code></a></h3>
+<div class="sect3">
+<h4 id="getformattedscoredigits-number-string"><a class="link" href="#getformattedscoredigits-number-string">2.1.3. <code>getFormattedScore(digits?: number): string</code></a></h4>
 <div class="paragraph">
 <p>Returns a string representation of the score padded with leading zeros (defaulting to 6 digits).</p>
 </div>
@@ -579,12 +615,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p><code>string</code> - The formatted score (e.g., "001500").</p>
 </div>
-<hr>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">const displayValue = game.score.getFormattedScore(8);
+console.log(displayValue); // "00001500"</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
-<h3 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">3.4. <code>increaseLevel(amount: number): void</code></a></h3>
+<h3 id="level-management"><a class="link" href="#level-management">2.2. Level Management</a></h3>
 <div class="paragraph">
-<p>Increments the current game level up to <code>maxLevel</code>.</p>
+<p>Methods for difficulty scaling and high score initialization.</p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="increaselevelamount-number-void"><a class="link" href="#increaselevelamount-number-void">2.2.1. <code>increaseLevel(amount: number): void</code></a></h4>
+<div class="paragraph">
+<p>Increments the current game level.</p>
 </div>
 <div class="paragraph">
 <p><strong>Parameters</strong></p>
@@ -608,17 +659,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">game.score.increaseLevel(1);</code></pre>
+</div>
+</div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="resetlevel-void"><a class="link" href="#resetlevel-void">3.5. <code>resetLevel(): void</code></a></h3>
+<div class="sect3">
+<h4 id="resetlevel-void"><a class="link" href="#resetlevel-void">2.2.2. <code>resetLevel(): void</code></a></h4>
 <div class="paragraph">
 <p>Resets the game difficulty level to its initial value.</p>
 </div>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">game.score.resetLevel();</code></pre>
+</div>
+</div>
 <hr>
 </div>
-<div class="sect2">
-<h3 id="setupgamehighscoreid-string-void"><a class="link" href="#setupgamehighscoreid-string-void">3.6. <code>setupGameHighScore(id: string): void</code></a></h3>
+<div class="sect3">
+<h4 id="setupgamehighscoreid-string-void"><a class="link" href="#setupgamehighscoreid-string-void">2.2.3. <code>setupGameHighScore(id: string): void</code></a></h4>
 <div class="paragraph">
 <p>Initializes the high score for a specific game, loading it from namespaced storage.</p>
 </div>
@@ -640,15 +707,98 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>string</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique identifier of the game (e.g., from <code><a href="../modules/Game.html">Game.gameId</a></code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique identifier of the game (e.g., from <code><a href="../../modules/Game.html">Game.gameId</a></code>).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">game.score.setupGameHighScore("space-invaders-123");</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="subscriptions"><a class="link" href="#subscriptions">2.3. Subscriptions</a></h3>
+<div class="paragraph">
+<p>Reactivity methods for listening to score updates.</p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="subscribecallback-score-number-void-void"><a class="link" href="#subscribecallback-score-number-void-void">2.3.1. <code>subscribe(callback: (score: number) &#8658; void): void</code></a></h4>
+<div class="paragraph">
+<p>Registers a listener for score changes.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(score: number) &#8658; void</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The function to execute when the score changes.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Example</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-typescript hljs" data-lang="typescript">game.score.subscribe((newScore) =&gt; {
+  hud.updateScore(newScore);
+});</code></pre>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="unsubscribecallback-score-number-void-void"><a class="link" href="#unsubscribecallback-score-number-void-void">2.3.2. <code>unsubscribe(callback: (score: number) &#8658; void): void</code></a></h4>
+<div class="paragraph">
+<p>Removes a previously registered score listener.</p>
+</div>
+<div class="paragraph">
+<p><strong>Parameters</strong></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>callback</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(score: number) &#8658; void</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The function to remove.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="general-usage"><a class="link" href="#general-usage">4. General Usage</a></h2>
+<h2 id="general-usage"><a class="link" href="#general-usage">3. General Usage</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Implemented by <code><a href="../../modules/GameScore.html">GameScore</a></code>. It handles the numeric progression of the game and formats the data for display on the HUD.</p>

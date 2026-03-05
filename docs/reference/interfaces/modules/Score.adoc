@@ -12,13 +12,11 @@
 :idprefix:
 :idseparator: -
 
-== Architectural Purpose
-
 Interface for tracking session performance, multipliers, and levels.
 
 == Properties
 
-[cols="1,1,3"]
+[cols="1,1,3", options="header"]
 |===
 |Name |Type |Description
 |`score` |`number` |The current total score for the session.
@@ -29,7 +27,11 @@ Interface for tracking session performance, multipliers, and levels.
 
 == Methods
 
-=== `increaseScore(amount: number): void`
+=== Score Management
+
+Methods for adding and resetting session points.
+
+==== `increaseScore(amount: number): void`
 
 Adds points to the total, automatically applying any active multipliers.
 
@@ -41,17 +43,30 @@ Adds points to the total, automatically applying any active multipliers.
 |`amount` |`number` |The base points to add before multiplier.
 |===
 
+**Example**
+
+[source,typescript]
+----
+// Adds 100 * multiplier to the total score
+game.score.increaseScore(100);
+----
 
 '''
 
-=== `resetScore(): void`
+==== `resetScore(): void`
 
 Resets the session score to `0`.
 
+**Example**
+
+[source,typescript]
+----
+game.score.resetScore();
+----
 
 '''
 
-=== `getFormattedScore(digits?: number): string`
+==== `getFormattedScore(digits?: number): string`
 
 Returns a string representation of the score padded with leading zeros (defaulting to 6 digits).
 
@@ -67,10 +82,21 @@ Returns a string representation of the score padded with leading zeros (defaulti
 
 `string` - The formatted score (e.g., "001500").
 
+**Example**
+
+[source,typescript]
+----
+const displayValue = game.score.getFormattedScore(8);
+console.log(displayValue); // "00001500"
+----
+
+=== Level Management
+
+Methods for difficulty scaling and high score initialization.
 
 '''
 
-=== `increaseLevel(amount: number): void`
+==== `increaseLevel(amount: number): void`
 
 Increments the current game level.
 
@@ -82,17 +108,29 @@ Increments the current game level.
 |`amount` |`number` |Levels to increase by.
 |===
 
+**Example**
+
+[source,typescript]
+----
+game.score.increaseLevel(1);
+----
 
 '''
 
-=== `resetLevel(): void`
+==== `resetLevel(): void`
 
 Resets the game difficulty level to its initial value.
 
+**Example**
+
+[source,typescript]
+----
+game.score.resetLevel();
+----
 
 '''
 
-=== `setupGameHighScore(id: string): void`
+==== `setupGameHighScore(id: string): void`
 
 Initializes the high score for a specific game, loading it from namespaced storage.
 
@@ -101,13 +139,23 @@ Initializes the high score for a specific game, loading it from namespaced stora
 [cols="1,1,3"]
 |===
 |Name |Type |Description
-|`id` |`string` |The unique identifier of the game (e.g., from `xref:../modules/Game.adoc[Game.gameId]`).
+|`id` |`string` |The unique identifier of the game (e.g., from `xref:../../modules/Game.adoc[Game.gameId]`).
 |===
 
+**Example**
+
+[source,typescript]
+----
+game.score.setupGameHighScore("space-invaders-123");
+----
+
+=== Subscriptions
+
+Reactivity methods for listening to score updates.
 
 '''
 
-=== `subscribe(callback: (score: number) => void): void`
+==== `subscribe(callback: (score: number) => void): void`
 
 Registers a listener for score changes.
 
@@ -119,10 +167,18 @@ Registers a listener for score changes.
 |`callback` |`(score: number) => void` |The function to execute when the score changes.
 |===
 
+**Example**
+
+[source,typescript]
+----
+game.score.subscribe((newScore) => {
+  hud.updateScore(newScore);
+});
+----
 
 '''
 
-=== `unsubscribe(callback: (score: number) => void): void`
+==== `unsubscribe(callback: (score: number) => void): void`
 
 Removes a previously registered score listener.
 
