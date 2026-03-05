@@ -1,5 +1,5 @@
 import p5 from 'p5';
-import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, Sound, TextTheme } from './enums';
+import { Color, ControlKey, FontAlign, FontSize, FontVerticalAlign, ScoreProperty, Sound, TextTheme } from './enums';
 import { Debuggable, Initializable, RendererInitializable, StateSyncable, Serializable } from './Interfaces';
 import { Cell, ControlCallback, ControlEventType, Coordinate, RendererMetrics, GameModules, StateProperty, Vector, Piece, Axis } from './Types';
 
@@ -1135,18 +1135,20 @@ export interface Score {
     setupGameHighScore(id: string): void;
 
     /**
-     * Subscribes a callback to score changes.
+     * Subscribes a callback for a specific score property.
+     * @param {ScoreProperty} property - The property to subscribe to.
      * @param {function} callback - The callback function.
      * @returns {void} Returns nothing.
      */
-    subscribe(callback: (score: number) => void): void;
+    subscribe(property: ScoreProperty, callback: (score: number) => void): void;
 
     /**
-     * Unsubscribes a callback from score changes.
+     * Unsubscribes a callback from a specific score property.
+     * @param {ScoreProperty} property - The property to unsubscribe from.
      * @param {function} callback - The callback function.
      * @returns {void} Returns nothing.
      */
-    unsubscribe(callback: (score: number) => void): void;
+    unsubscribe(property: ScoreProperty, callback: (score: number) => void): void;
 }
 
 export interface Session extends StateSyncable, Debuggable {

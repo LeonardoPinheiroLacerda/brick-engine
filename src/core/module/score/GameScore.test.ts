@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import GameScore from './GameScore';
+import { ScoreProperty } from '../../types/enums';
 
 describe('GameScore', () => {
     let gameScore: GameScore;
@@ -76,7 +77,7 @@ describe('GameScore', () => {
         it('should notify subscribers when score increases', () => {
             // [ARRANGE]
             const callback = vi.fn();
-            gameScore.subscribe(callback);
+            gameScore.subscribe(ScoreProperty.SCORE, callback);
 
             // [ACT]
             gameScore.increaseScore(100);
@@ -89,7 +90,7 @@ describe('GameScore', () => {
             // [ARRANGE]
             gameScore.increaseScore(100);
             const callback = vi.fn();
-            gameScore.subscribe(callback);
+            gameScore.subscribe(ScoreProperty.SCORE, callback);
 
             // [ACT]
             gameScore.resetScore();
