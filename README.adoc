@@ -80,7 +80,7 @@ The engine is organized into the following core modules:
 | Manages audio playback using the Web Audio API, supporting simultaneous sounds and volume control.
 
 | xref:docs/reference/modules/GameScore.adoc[GameScore]
-| Tracks session score, level logic, and syncs high scores with `GameState`.
+| Tracks session score and level logic, managing persistent high scores independently.
 |===
 
 == Core Utilities

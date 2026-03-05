@@ -16,87 +16,15 @@
 
 The `GameScore` module acts as the strict authority dedicated to tracking real-time player performance metrics, levels, and point multipliers. It prevents transient session logic from interacting with persistent storage, explicitly taking over saving the global `highScore` into an isolated `LocalStorage` namespace directly, ensuring different game engines do not overwrite each other's records.
 
+It exposes reactivity through an event-based system using `xref:../enums/ScoreProperty.adoc[ScoreProperty]`.
+
 == API Reference
 
-=== `score: number`
+=== Life Cycle
 
-Read-only property returning the current session's points.
+Methods for initializing the high score context.
 
-
-'''
-
-=== `level: number`
-
-Read-only property returning the current difficulty level.
-
-
-'''
-
-=== `multiplier: number`
-
-Read and Write property for the current points multiplier.
-
-
-'''
-
-=== `highScore: number`
-
-Read and Write property for the highest overall score achieved.
-
-**Behavior**
-
-When set, it automatically persists the value directly to `LocalStorage` under the namespaced key `${gameId}::highScore`. This ensures that different games do not overwrite each other's records.
-
-
-'''
-
-=== `increaseScore(amount: number): void`
-
-Adds points to the current session.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`amount` |`number` |Base raw integer points to add before multiplier application.
-|===
-
-**Behavior**
-
-Increases the score by `amount * multiplier`. Automatically compares the new score against the internal `highScore` property and updates it if a new record is reached (which in turn persists the new record to `LocalStorage`).
-
-
-'''
-
-=== `resetScore(): void`
-
-Resets the session score to zero.
-
-
-'''
-
-=== `increaseLevel(amount: number): void`
-
-Increases the game difficulty level.
-
-**Parameters**
-
-[cols="1,1,3"]
-|===
-|Name |Type |Description
-|`amount` |`number` |Positive integer count of step levels to advance globally.
-|===
-
-
-'''
-
-=== `resetLevel(): void`
-
-Resets the level counter to 1.
-'''
-
-=== `setupGameHighScore(id: string): void`
+==== `setupGameHighScore(id: string): void`
 
 Initializes the module with the specific game ID and loads the corresponding high score.
 
@@ -111,7 +39,138 @@ Initializes the module with the specific game ID and loads the corresponding hig
 
 '''
 
-=== `getFormattedScore(digits: number): string`
+=== Score Management
+
+Methods for adding and resetting points.
+
+==== `score: number`
+
+Read-only property returning the current session's points.
+
+'''
+
+==== `increaseScore(amount: number): void`
+
+Adds points to the current session.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |Base raw integer points to add before multiplier application.
+|===
+
+**Behavior**
+
+Increases the score by `amount * multiplier`. Automatically compares the new score against the internal `highScore` property and updates it if a new record is reached (which in turn persists the new record to `LocalStorage`). Triggers a `SCORE` notification via the `xref:EventEmitter.adoc[EventEmitter]`.
+
+'''
+
+==== `resetScore(): void`
+
+Resets the session score to zero. Triggers a `SCORE` notification.
+
+'''
+
+==== `highScore: number`
+
+Read and Write property for the highest overall score achieved.
+
+**Behavior**
+
+When set, it automatically persists the value directly to `LocalStorage` under the namespaced key `${gameId}::highScore`. This ensures that different games do not overwrite each other's records. Triggers a `HIGH_SCORE` notification.
+
+
+'''
+
+=== Level Management
+
+Methods for difficulty scaling.
+
+==== `level: number`
+
+Read-only property returning the current difficulty level.
+
+'''
+
+==== `increaseLevel(amount: number): void`
+
+Increases the game difficulty level.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`amount` |`number` |Positive integer count of step levels to advance globally.
+|===
+
+**Behavior**
+
+Increases the internal level and triggers a `LEVEL` notification.
+
+'''
+
+==== `resetLevel(): void`
+
+Resets the level counter to 1. Triggers a `LEVEL` notification.
+
+'''
+
+==== `maxLevel: number`
+
+Read and Write property for the maximum game level cap. Triggers a `MAX_LEVEL` notification on change.
+
+
+'''
+
+=== Subscriptions
+
+Enables other modules to listen for score-related updates.
+
+==== `subscribe(property: ScoreProperty, callback: (value: number) => void): void`
+
+Registers a listener for changes to a specific score property.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`property` |`xref:../enums/ScoreProperty.adoc[ScoreProperty]` |The property to monitor.
+|`callback` |`(value: number) => void` |The function to execute when the property changes.
+|===
+
+'''
+
+==== `unsubscribe(property: ScoreProperty, callback: (value: number) => void): void`
+
+Removes an existing score listener.
+
+**Parameters**
+
+[cols="1,1,3"]
+|===
+|Name |Type |Description
+|`property` |`xref:../enums/ScoreProperty.adoc[ScoreProperty]` |The property being monitored.
+|`callback` |`(value: number) => void` |The function to remove.
+|===
+
+
+'''
+
+=== Utility & State
+
+Methods for formatting and serialization.
+
+==== `multiplier: number`
+
+Read and Write property for the current points multiplier. Triggers a `MULTIPLIER` notification on change.
+
+'''
+
+==== `getFormattedScore(digits: number): string`
 
 Returns the score as a padded string suitable for HUD display.
 
@@ -130,7 +189,7 @@ Returns the score as a padded string suitable for HUD display.
 
 '''
 
-=== `serialize(): string`
+==== `serialize(): string`
 
 **Behavior**
 
@@ -139,7 +198,7 @@ Implements `xref:../interfaces/Serializable.adoc[Serializable]`. Packs the curre
 
 '''
 
-=== `deserialize(data: string): void`
+==== `deserialize(data: string): void`
 
 **Behavior**
 
@@ -148,6 +207,6 @@ Implements `xref:../interfaces/Serializable.adoc[Serializable]`. Restores all pr
 
 '''
 
-=== `getDebugData(): Record<string, string | number | boolean>`
+==== `getDebugData(): Record<string, string | number | boolean>`
 
 Returns metadata for the real-time debugger.

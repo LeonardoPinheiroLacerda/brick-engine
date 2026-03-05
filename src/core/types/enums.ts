@@ -124,3 +124,15 @@ export enum StateProperty {
     MUTED = 'muted',
     TRACKPAD = 'trackpadEnabled',
 }
+
+/**
+ * Enumerates all observable score and progression properties.
+ * These keys are used for score subscriptions.
+ */
+export enum ScoreProperty {
+    SCORE = 'score',
+    LEVEL = 'level',
+    MULTIPLIER = 'multiplier',
+    MAX_LEVEL = 'maxLevel',
+    HIGH_SCORE = 'highScore',
+}

@@ -6,10 +6,10 @@ import p5 from 'p5';
 
 describe('ShortcutsModal', () => {
     let modal: ShortcutsModal;
-    let mockP5: any;
-    let mockContainer: any;
-    let mockExternalButton: any;
-    let mockCloseButton: any;
+    let mockP5: Record<string, unknown>;
+    let mockContainer: Record<string, unknown>;
+    let mockExternalButton: Record<string, unknown>;
+    let mockCloseButton: Record<string, unknown>;
 
     beforeEach(() => {
         // [ARRANGE]
@@ -64,7 +64,7 @@ describe('ShortcutsModal', () => {
     it('should toggle visibility when toggle is called', () => {
         // [ARRANGE]
         modal.setup();
-        mockContainer.hasClass.mockReturnValue(true); // Is hidden
+        (mockContainer.hasClass as import('vitest').Mock).mockReturnValue(true); // Is hidden
 
         // [ACT]
         modal.toggle();
@@ -73,7 +73,7 @@ describe('ShortcutsModal', () => {
         expect(mockContainer.removeClass).toHaveBeenCalledWith('hidden');
 
         // [ARRANGE]
-        mockContainer.hasClass.mockReturnValue(false); // Is visible
+        (mockContainer.hasClass as import('vitest').Mock).mockReturnValue(false); // Is visible
 
         // [ACT]
         modal.toggle();
@@ -85,7 +85,7 @@ describe('ShortcutsModal', () => {
     it('should hide modal when close button is pressed', () => {
         // [ARRANGE]
         modal.setup();
-        const closeHandler = mockCloseButton.mousePressed.mock.calls[0][0];
+        const closeHandler = (mockCloseButton.mousePressed as import('vitest').Mock).mock.calls[0][0];
 
         // [ACT]
         closeHandler();

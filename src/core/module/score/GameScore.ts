@@ -1,6 +1,8 @@
 import { Debuggable } from '../../types/Interfaces';
 import { Score } from '../../types/modules';
 import { Serializable } from '../../types/Interfaces';
+import { ScoreProperty } from '../../types/enums';
+import EventEmitter from '../../event/EventEmitter';
 
 /**
  * Stateful module dedicated to tracking real-time player performance metrics.
@@ -41,6 +43,8 @@ export default class GameScore implements Score, Debuggable, Serializable {
      */
     increaseScore(amount: number): void {
         this._score += amount * this._multiplier;
+        this._notify(ScoreProperty.SCORE);
+
         if (this._score > this._highScore) {
             this.highScore = this._score;
         }
@@ -53,6 +57,7 @@ export default class GameScore implements Score, Debuggable, Serializable {
      */
     resetScore(): void {
         this._score = 0;
+        this._notify(ScoreProperty.SCORE);
     }
 
     /**
@@ -73,6 +78,7 @@ export default class GameScore implements Score, Debuggable, Serializable {
      */
     increaseLevel(amount: number): void {
         this._level += amount;
+        this._notify(ScoreProperty.LEVEL);
     }
 
     /**
@@ -82,6 +88,7 @@ export default class GameScore implements Score, Debuggable, Serializable {
      */
     resetLevel(): void {
         this._level = 1;
+        this._notify(ScoreProperty.LEVEL);
     }
 
     /**
@@ -99,7 +106,10 @@ export default class GameScore implements Score, Debuggable, Serializable {
      * @param {number} value - The new multiplier value.
      */
     set multiplier(value: number) {
-        this._multiplier = value;
+        if (this._multiplier !== value) {
+            this._multiplier = value;
+            this._notify(ScoreProperty.MULTIPLIER);
+        }
     }
 
     /**
@@ -135,7 +145,10 @@ export default class GameScore implements Score, Debuggable, Serializable {
      * @param {number} value - The max level cap.
      */
     set maxLevel(value: number) {
-        this._maxLevel = value;
+        if (this._maxLevel !== value) {
+            this._maxLevel = value;
+            this._notify(ScoreProperty.MAX_LEVEL);
+        }
     }
 
     /**
@@ -153,8 +166,44 @@ export default class GameScore implements Score, Debuggable, Serializable {
      * @param {number} value - The new high score.
      */
     set highScore(value: number) {
-        this._highScore = value;
-        localStorage.setItem(`${this._gameId}::highScore`, value.toString());
+        if (this._highScore !== value) {
+            this._highScore = value;
+            localStorage.setItem(`${this._gameId}::highScore`, value.toString());
+            this._notify(ScoreProperty.HIGH_SCORE);
+        }
+    }
+
+    /**
+     * Subscribes to changes in a specific score property.
+     *
+     * @param {ScoreProperty} property - The score property to monitor.
+     * @param {function(number): void} callback - The function to execute when the property changes.
+     * @returns {void} Returns nothing.
+     */
+    subscribe(property: ScoreProperty, callback: (value: number) => void): void {
+        EventEmitter.subscribe(property, callback);
+    }
+
+    /**
+     * Unsubscribes a callback from a specific score property.
+     *
+     * @param {ScoreProperty} property - The score property being monitored.
+     * @param {function(number): void} callback - The callback reference to remove.
+     * @returns {void} Returns nothing.
+     */
+    unsubscribe(property: ScoreProperty, callback: (value: number) => void): void {
+        EventEmitter.unsubscribe(property, callback);
+    }
+
+    /**
+     * Notifies all subscribers of a property change via the {@link EventEmitter}.
+     *
+     * @param {ScoreProperty} property - The property enum string that dictates the notification channel.
+     * @returns {void} Returns nothing.
+     */
+    private _notify(property: ScoreProperty): void {
+        const value = this[property as keyof GameScore] as number;
+        EventEmitter.notify(property, value);
     }
 
     /**
